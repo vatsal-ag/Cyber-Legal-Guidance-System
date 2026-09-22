@@ -1,0 +1,19 @@
+# robots.txt for National Cyber Legal Guidance & Corporate Incident Defense System
+User-agent: *
+Allow: /
+Disallow: /api/vault/private/
+Disallow: /admin/
+
+# AI Agent and LLM Crawlers
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://cybercrime.gov.in/sitemap.xml

@@ -1,0 +1,24 @@
+# National Cyber Legal Guidance & Corporate Incident Defense System
+> Sovereign Indian cyber crime intake, statutory classification, and cryptographic evidence preservation platform.
+
+## Overview
+The Cyber Legal Guidance System is an institutional-grade platform engineered to assist Indian citizens, corporate Data Protection Officers (DPOs), and incident responders in navigating the legal and technical aftermath of cyber offenses. It automates statutory classification under the Information Technology Act 2000 (ITA), Bharatiya Nyaya Sanhita 2023 (BNS), and Bharatiya Sakshya Adhiniyam 2023 (BSA), while enforcing zero-knowledge client-side encryption for sensitive evidentiary payloads.
+
+## Core Capabilities
+- **Statutory Offense Categorization**: Maps digital crimes across 14 vectors (Financial/UPI fraud, Digital Arrest extortion, Ransomware/Wiper attacks, BEC corporate compromise, Non-consensual deepfakes/voyeurism, SIM swapping, and DDoS).
+- **Dual Citizen & Enterprise Intake**: Provides specialized legal paths for individual victims (consumer recovery, 1930 portal integration) and enterprises (CERT-In 6-hour reporting mandates, DPDP Act 2023 data fiduciary compliance, SEBI cybersecurity circulars).
+- **Cryptographic Evidence Vault**: Client-side AES-GCM-256 encryption via W3C Web Crypto API with PBKDF2-derived keys (100,000 iterations). Raw evidence never leaves the victim's device unencrypted.
+- **Evidentiary Integrity (BSA Section 63 / IEA Section 65B)**: Computes deterministic SHA-256 hashes of logs, headers, and transaction receipts with tamper-evident timestamping.
+- **Telecom & Mule Account Intelligence**: Live directory of verified fraudulent caller IDs, UPI VPAs, and bank IFSC mule nodes formatted for carrier blacklisting (Airtel Spam Shield standard).
+- **Instant Police FIR Stationery**: Synthesizes formal legal complaints addressed to the Superintendent of Police / Cyber Crime Cell with statutory penalty citations.
+
+## Legal & Statutory Foundations
+- **Information Technology Act, 2000**: Sections 43, 65, 66, 66C, 66D, 66E, 67, 69, 70B (CERT-In directions).
+- **Bharatiya Nyaya Sanhita, 2023**: Sections 308 (Extortion), 316 (Criminal Breach of Trust), 318 (Cheating), 319 (Cheating by Personation), 351 (Criminal Intimidation).
+- **Digital Personal Data Protection Act, 2023**: Section 8 (Security Safeguards and Breach Reporting to DPBI).
+- **Bharatiya Sakshya Adhiniyam, 2023**: Section 63 (Admissibility of Electronic Records).
+
+## Technical Architecture
+- **In-Browser OCR**: Tesseract.js client-side extraction for screenshot receipts.
+- **Bot Defense Shield**: Client Proof-of-Work (PoW SHA-256 challenge-response), hidden honeypot fields, behavioral cadence entropy tracking, and velocity rate limiting.
+- **Offline Capable**: Standalone zero-dependency HTML5 application with zero tracking cookies or third-party telemetry.
