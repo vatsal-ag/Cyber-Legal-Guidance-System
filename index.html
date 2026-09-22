@@ -3072,8 +3072,8 @@
     <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="ThemeEngine.toggleTheme()" title="Toggle Dark / Light Mode" aria-label="Toggle Dark Mode">
       🌙 <span id="theme-label">Dark Mode</span>
     </button>
-    <button id="lang-toggle-btn" class="lang-pill-btn" onclick="I18nEngine.toggleLanguage()" title="Switch Interface Language (English / हिन्दी)">
-      🌐 <span id="lang-label">हिन्दी (Hindi)</span>
+    <button id="lang-toggle-btn" class="lang-pill-btn" onclick="I18nEngine.toggleLanguage()" title="Switch Interface Language">
+      🌐 <span id="lang-label">हिन्दी</span>
     </button>
     <span><span data-i18n="topbar-helpline">Helpline:</span> <strong>1930</strong></span>
     <a href="https://cybercrime.gov.in" target="_blank" rel="noopener">cybercrime.gov.in ↗</a>
@@ -3189,9 +3189,9 @@
           <div class="express-title-text">
             <h3>
               <span data-i18n="express-title">Express Emergency Assistance for Citizens</span>
-              <span class="express-lang-badge">सरल हिन्दी / Hinglish / English</span>
+              <span class="express-lang-badge" data-i18n="express-lang-badge">Natural Language / English & Hindi</span>
             </h3>
-            <p data-i18n="express-desc">Non-tech friendly: Simply describe what happened in your own words (e.g. <em>"Mere bank se ₹75,000 cut hogaye"</em>) or upload a screenshot. Our system will auto-fill your FIR and give you immediate emergency actions.</p>
+            <p data-i18n="express-desc">Non-tech friendly: Simply describe what happened in your own words (e.g. <em>"₹75,000 debited from my bank without authorization"</em>) or upload a screenshot. Our system will auto-fill your FIR and give you immediate emergency actions.</p>
           </div>
         </div>
       </div>
@@ -3199,32 +3199,32 @@
       <!-- QUICK ONE-CLICK PROMPT CHIPS -->
       <div class="express-chips-container">
         <span class="express-chips-label" data-i18n="express-chips-label">Quick Examples:</span>
-        <button type="button" class="express-chip" onclick="CitizenNLPParser.setPromptAndRun('Mere bank se ₹75,000 cut hogaye unauthorized transaction')">
-          💸 "Mere bank se ₹75,000 cut hogaye"
+        <button type="button" class="express-chip" id="express-chip-1" onclick="CitizenNLPParser.runChipPrompt(1)" data-i18n-chip="1">
+          💸 "₹75,000 debited without authorization"
         </button>
-        <button type="button" class="express-chip" onclick="CitizenNLPParser.setPromptAndRun('Fake loan app install kiya tha ab recovery agent mere contacts ko phone karke gaali aur dhamki de rahe hain')">
+        <button type="button" class="express-chip" id="express-chip-2" onclick="CitizenNLPParser.runChipPrompt(2)" data-i18n-chip="2">
           🛑 "Loan app recovery agent harassment"
         </button>
-        <button type="button" class="express-chip" onclick="CitizenNLPParser.setPromptAndRun('Call aaya tha fake police officer CBI banke parcel me drugs bata ke 1 lakh maang rahe the (Digital Arrest)')">
+        <button type="button" class="express-chip" id="express-chip-3" onclick="CitizenNLPParser.runChipPrompt(3)" data-i18n-chip="3">
           👮 "Fake police call (Digital Arrest)"
         </button>
-        <button type="button" class="express-chip" onclick="CitizenNLPParser.setPromptAndRun('Kisi ne meri photo morph karke private nude banayi aur viral karne ki dhamki deke paise maang raha hai')">
+        <button type="button" class="express-chip" id="express-chip-4" onclick="CitizenNLPParser.runChipPrompt(4)" data-i18n-chip="4">
           📸 "Photo morph / Deepfake blackmail"
         </button>
-        <button type="button" class="express-chip" onclick="CitizenNLPParser.setPromptAndRun('Bijli bill update karne ke liye fake SMS aaya aur APK link download karwaya')">
+        <button type="button" class="express-chip" id="express-chip-5" onclick="CitizenNLPParser.runChipPrompt(5)" data-i18n-chip="5">
           ⚡ "Fake electricity bill SMS / APK"
         </button>
-        <button type="button" class="express-chip" onclick="CitizenNLPParser.setPromptAndRun('FedEx courier se phone aaya ki aapke parcel me MDMA drugs pakdi gayi hai customs me ₹50,000 bhejo')">
+        <button type="button" class="express-chip" id="express-chip-6" onclick="CitizenNLPParser.runChipPrompt(6)" data-i18n-chip="6">
           📦 "FedEx / Customs parcel scam"
         </button>
-        <button type="button" class="express-chip" onclick="CitizenNLPParser.setPromptAndRun('Telegram group me YouTube like task ke naam pe ₹35,000 le liye aur withdraw nahi de rahe')">
+        <button type="button" class="express-chip" id="express-chip-7" onclick="CitizenNLPParser.runChipPrompt(7)" data-i18n-chip="7">
           📱 "Telegram task scam lost ₹35,000"
         </button>
       </div>
 
       <!-- TEXT INPUT & CONTROLS -->
       <div class="express-input-wrapper">
-        <textarea id="express-intake-input" class="express-textarea" placeholder="Describe in simple words: e.g. 'Mere bank account se ₹75000 cut hogaye kisi fraud link par click karne ke baad' OR 'Call aaya tha fake customs officer ka...'" data-i18n-placeholder="placeholder-express-input"></textarea>
+        <textarea id="express-intake-input" class="express-textarea" placeholder="Describe in simple words: e.g. '₹75,000 was debited from my bank account after clicking a link' OR 'Received fake customs parcel call...'" data-i18n-placeholder="placeholder-express-input"></textarea>
       </div>
 
       <div class="express-controls-row">
@@ -3232,7 +3232,7 @@
           <!-- Voice Dictation for Express Box -->
           <button type="button" id="express-voice-btn" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px;" onclick="CitizenNLPParser.toggleVoice()">
             <span id="express-mic-icon">🎙️</span>
-            <span id="express-mic-label" data-i18n="express-mic-label">Speak (बोलकर बताएं)</span>
+            <span id="express-mic-label" data-i18n="express-mic-label">Speak</span>
           </button>
 
           <!-- Screenshot Quick Upload for OCR -->
@@ -3249,7 +3249,7 @@
 
         <div>
           <button type="button" class="btn btn-primary" style="padding: 8px 18px; font-size: 0.9rem; font-weight: 700; background: var(--tiranga-saffron); border-color: var(--saffron-hover);" onclick="CitizenNLPParser.processExpressIntake()" data-i18n="express-btn-submit">
-            🚀 Analyze & Show Immediate Actions (तत्काल सहायता व FIR) ➔
+            🚀 Analyze & Show Immediate Actions ➔
           </button>
         </div>
       </div>
@@ -3632,7 +3632,7 @@
           <div class="trial-header">
             <div class="trial-tag">
               <span class="trial-pill">🧪 TRIAL FEATURE</span>
-              <span class="trial-title">Personalized Incident Questionnaire (अपराध-विशिष्ट प्रश्न मैट्रिक्स)</span>
+              <span class="trial-title" data-i18n="trial-personalized-title">Personalized Incident Questionnaire</span>
             </div>
             <div class="trial-toggle">
               <label class="trial-switch">
@@ -3659,8 +3659,8 @@
             <label style="margin-bottom: 0;">Chronological Narration of Incident * <span class="label-hint">Clear factual statement of events</span></label>
             <div style="display: flex; gap: 8px; align-items: center;">
               <select id="voice-lang-select" style="padding: 4px 8px; font-size: 0.78rem; border: 1px solid var(--border-card); border-radius: var(--radius-sm); background: #ffffff; color: var(--text-primary);">
-                <option value="en-IN">English (India)</option>
-                <option value="hi-IN">हिन्दी (India)</option>
+                <option value="en-IN" id="opt-voice-en">English (India)</option>
+                <option value="hi-IN" id="opt-voice-hi">Hindi (India)</option>
               </select>
               <button type="button" id="voice-dictate-btn" class="btn btn-outline" style="padding: 4px 10px; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 6px;" onclick="VoiceDictation.toggle()">
                 <span id="voice-mic-icon">🎙️</span>
@@ -4276,7 +4276,7 @@
           <div class="sanchar-portal-card blue-accent">
             <div>
               <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                <div style="font-weight: 700; font-size: 0.95rem; color: #1e3a8a;">👁️ Chakshu (चक्षु) Fraud Reporter <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('chakshu')" onmouseenter="GlossaryEngine.showTooltip(this, 'chakshu')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'chakshu')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'chakshu')" title="Learn about Chakshu portal" aria-label="Learn about Chakshu portal">ⓘ</span></div>
+                <div style="font-weight: 700; font-size: 0.95rem; color: #1e3a8a;"><span data-i18n="chakshu-card-title">👁️ Chakshu Fraud Reporter</span> <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('chakshu')" onmouseenter="GlossaryEngine.showTooltip(this, 'chakshu')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'chakshu')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'chakshu')" title="Learn about Chakshu portal" aria-label="Learn about Chakshu portal">ⓘ</span></div>
                 <span class="status-tag verified" style="font-size: 0.68rem;">Pre-Loss Intelligence</span>
               </div>
               <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">
@@ -4817,22 +4817,22 @@
       <div id="term-modal-badge" class="term-badge"></div>
       
       <div class="term-section">
-        <div class="term-section-title">📖 What is this? (सरल भाषा में अर्थ)</div>
+        <div class="term-section-title" data-i18n="glossary-section-what">📖 What is this?</div>
         <p id="term-modal-what" style="margin: 0; font-size: 0.88rem; line-height: 1.5; color: var(--text-primary);"></p>
       </div>
 
       <div class="term-section">
-        <div class="term-section-title">🔍 Where do I find it? (यह आपको कहाँ मिलेगा?)</div>
+        <div class="term-section-title" data-i18n="glossary-section-where">🔍 Where do I find it?</div>
         <p id="term-modal-where" style="margin: 0; font-size: 0.88rem; line-height: 1.5; color: var(--text-secondary);"></p>
       </div>
 
       <div class="term-section" style="margin-bottom: 0;">
-        <div class="term-section-title">⚖️ Why is it crucial for your case? (पुलिस और बैंक के लिए महत्व)</div>
+        <div class="term-section-title" data-i18n="glossary-section-why">⚖️ Why is it crucial for your case?</div>
         <p id="term-modal-why" style="margin: 0; font-size: 0.88rem; line-height: 1.5; color: var(--text-secondary);"></p>
       </div>
     </div>
     <div style="padding: 12px 20px; background: var(--bg-subtle); border-top: 1px solid var(--border-card); display: flex; justify-content: flex-end;">
-      <button class="btn btn-sm btn-primary" onclick="GlossaryEngine.closeModal()">Got it / समझ गया</button>
+      <button class="btn btn-sm btn-primary" onclick="GlossaryEngine.closeModal()" data-i18n="modal-btn-got-it">Got it</button>
     </div>
   </div>
 </div>
@@ -4848,7 +4848,7 @@
       <div style="display: flex; align-items: center; gap: 10px;">
         <span style="font-size: 1.4rem;">🚨</span>
         <div>
-          <h3 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: #ffffff;">Immediate Emergency Action Protocol (तत्काल सुरक्षा कदम)</h3>
+          <h3 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: #ffffff;" data-i18n="emergency-modal-title">Immediate Emergency Action Protocol</h3>
           <div style="font-size: 0.76rem; color: #cbd5e1; margin-top: 2px;">Automated Statutory Incident Response & Financial Preservation</div>
         </div>
       </div>
@@ -4861,7 +4861,7 @@
       <div class="golden-hour-banner">
         <div class="golden-pulse-dot"></div>
         <div>
-          <div style="font-weight: 700; font-size: 0.95rem; letter-spacing: 0.02em;">CRITICAL "GOLDEN HOUR" WINDOW (प्रथम 2 घंटे अति महत्वपूर्ण)</div>
+          <div style="font-weight: 700; font-size: 0.95rem; letter-spacing: 0.02em;" data-i18n="golden-hour-banner-title">CRITICAL "GOLDEN HOUR" WINDOW (FIRST 2 HOURS)</div>
           <div style="font-size: 0.82rem; margin-top: 3px; line-height: 1.4; color: #fee2e2;">
             Calling the National Cyber Crime Helpline <strong>1930</strong> immediately enables the Indian Cyber Crime Coordination Centre (I4C) and banks to put a hold / lien on stolen funds before fraudsters cash them out.
           </div>
@@ -4951,8 +4951,8 @@
             </div>
           </div>
           <div style="flex-shrink: 0;">
-            <button type="button" class="btn btn-primary" style="background: var(--status-green); border-color: #15803d; font-weight: 700; padding: 8px 16px; font-size: 0.9rem;" onclick="EmergencyActionEngine.proceedToFIR()">
-              📄 View My Police FIR ➔
+            <button type="button" class="btn btn-primary" id="emergency-modal-top-btn" style="background: var(--status-green); border-color: #15803d; font-weight: 700; padding: 8px 16px; font-size: 0.9rem;" onclick="EmergencyActionEngine.proceedToFIR()">
+              <span id="emergency-modal-top-btn-text" data-i18n="emergency-modal-view-btn">✍️ Complete Step 1: Complainant KYC ➔</span>
             </button>
           </div>
         </div>
@@ -4961,9 +4961,9 @@
 
     <!-- Modal Footer -->
     <div class="emergency-modal-footer">
-      <button class="btn btn-outline" onclick="EmergencyActionEngine.closeModal()">Close / बाद में देखें</button>
-      <button class="btn btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700;" onclick="EmergencyActionEngine.proceedToFIR()">
-        📄 Proceed to Complete Police FIR Sheet ➔
+      <button class="btn btn-outline" onclick="EmergencyActionEngine.closeModal()" data-i18n="modal-btn-close">Close</button>
+      <button class="btn btn-primary" id="emergency-modal-action-btn" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700;" onclick="EmergencyActionEngine.proceedToFIR()">
+        <span id="emergency-modal-action-text" data-i18n="emergency-modal-action">✍️ Complete Step 1: Complainant KYC ➔</span>
       </button>
     </div>
   </div>
@@ -4975,7 +4975,7 @@
      ════════════════════════════════════════════════════════════════════════ -->
 <div id="cyber-sahayak-fab" class="cyber-sahayak-fab" onclick="CyberSahayakChatbot.toggle()" title="Need Help? Chat with Cyber Sahayak (AI Legal Mitra)">
   <div class="sahayak-avatar">🇮🇳</div>
-  <span id="sahayak-fab-label" data-i18n="sahayak-fab-label">Cyber Sahayak (AI Mitra)</span>
+  <span id="sahayak-fab-label" data-i18n="sahayak-fab-label">Cyber Sahayak (AI Legal Mitra)</span>
 </div>
 
 <div id="cyber-sahayak-window" class="cyber-sahayak-window" role="dialog" aria-labelledby="sahayak-window-title">
@@ -4984,7 +4984,7 @@
     <div style="display: flex; align-items: center; gap: 8px;">
       <div class="sahayak-avatar" style="width: 26px; height: 26px; font-size: 0.9rem;">🇮🇳</div>
       <div>
-        <div id="sahayak-window-title" style="font-weight: 700; font-size: 0.92rem; color: #ffffff;" data-i18n="sahayak-title">Cyber Sahayak (साइबर सहायक)</div>
+        <div id="sahayak-window-title" style="font-weight: 700; font-size: 0.92rem; color: #ffffff;" data-i18n="sahayak-title">Cyber Sahayak (AI Legal Mitra)</div>
         <div id="sahayak-window-subtitle" style="font-size: 0.72rem; color: #93c5fd;" data-i18n="sahayak-subtitle">Online · 24x7 Citizen Cyber Assistance</div>
       </div>
     </div>
@@ -4997,23 +4997,23 @@
   <!-- Messages List -->
   <div id="sahayak-messages" class="sahayak-messages">
     <div class="sahayak-msg bot">
-      🙏 <strong>नमस्ते! मैं आपका साइबर विधिक सहायक (Cyber Sahayak) हूँ।</strong>
+      🙏 <strong>Welcome! I am your Cyber Legal Assistant (Cyber Sahayak).</strong>
       <div style="margin-top: 4px;">
-        अगर आपके साथ कोई ऑनलाइन फ्रॉड या धोखा हुआ है, तो बिल्कुल घबराएं नहीं। मुझे साधारण भाषा (Hinglish/Hindi/English) में बताएं क्या हुआ — जैसे: <em>"Mere bank se ₹75000 cut hogaye"</em>
+        If you have encountered an online scam, banking fraud, or extortion, do not panic. Simply describe what happened in your own words — e.g. <em>"₹75,000 debited from my bank without authorization"</em>
       </div>
       <div class="sahayak-chips-row">
-        <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('Mere bank se ₹75,000 cut hogaye')">💸 Bank se paise kat gaye</span>
-        <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('Call aaya tha police banke parcel me drugs bata rahe hai')">👮 Digital Arrest / Police call</span>
-        <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('Telegram task scam me paise le liye')">📱 Telegram task scam</span>
+        <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('₹75,000 debited from my bank without authorization')">💸 Unauthorized Bank Debit</span>
+        <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('Fake police officer video call extortion (Digital Arrest)')">👮 Digital Arrest / Fake Police Call</span>
+        <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('Telegram task prepaid investment scam')">📱 Telegram Task Scam</span>
       </div>
     </div>
   </div>
 
   <!-- Input Bar -->
   <div class="sahayak-input-bar">
-    <input type="text" id="sahayak-input-text" class="sahayak-input-field" placeholder="Type here: e.g. '75000 cut hogaye'..." data-i18n-placeholder="placeholder-sahayak-input" onkeydown="if(event.key==='Enter') CyberSahayakChatbot.handleSend()">
-    <button type="button" class="btn btn-outline" style="padding: 4px 8px; font-size: 0.8rem; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;" onclick="CyberSahayakChatbot.toggleVoice()" title="Speak in Hindi/English">
-      🎙️
+    <input type="text" id="sahayak-input-text" class="sahayak-input-field" placeholder="Type here: e.g. '₹75,000 debited from bank'..." data-i18n-placeholder="placeholder-sahayak-input" onkeydown="if(event.key==='Enter') CyberSahayakChatbot.handleSend()">
+    <button type="button" id="sahayak-mic-btn" class="btn btn-outline" style="padding: 4px 8px; font-size: 0.8rem; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;" onclick="CyberSahayakChatbot.toggleVoice()" title="Speak Voice Input">
+      <span id="sahayak-mic-icon">🎙️</span>
     </button>
     <button type="button" class="sahayak-send-btn" onclick="CyberSahayakChatbot.handleSend()" title="Send Message">
       ➤
@@ -5872,6 +5872,10 @@ function goToStep(stepNum) {
   });
   document.getElementById('wizard-step-' + stepNum).style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (typeof CyberSahayakChatbot !== 'undefined' && typeof CyberSahayakChatbot.onStepChanged === 'function') {
+    CyberSahayakChatbot.onStepChanged(stepNum);
+  }
 }
 
 function setComplainantMode(mode) {
@@ -6830,22 +6834,162 @@ const TimelineBuilder = {
 };
 
 // ══════════════════════════════════════════════════════════════════════════════
+// UNIVERSAL WEB SPEECH & MICROPHONE PERMISSION ENGINE
+// ══════════════════════════════════════════════════════════════════════════════
+
+const SpeechEngine = {
+  activeRecog: null,
+  activeTarget: null,
+
+  isSupported() {
+    return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+  },
+
+  async requestMicPermission() {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach(t => t.stop());
+        return true;
+      } catch (err) {
+        console.warn('Microphone permission check rejected:', err);
+        return false;
+      }
+    }
+    return true; // fallback if getUserMedia is not directly exposed
+  },
+
+  async startListening({ target, lang, onStart, onResult, onEnd, onError }) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+
+    if (!SpeechRecognition) {
+      showToast(isHi 
+        ? '⚠️ इस ब्राउज़र में वॉइस स्पीच रिकग्निशन समर्थित नहीं है। कृपया टाइप करें।' 
+        : '⚠️ Speech recognition is not supported in this browser. Please type directly.');
+      return false;
+    }
+
+    // Stop any existing session
+    this.stopListening();
+
+    // Verify microphone permission
+    const hasPerm = await this.requestMicPermission();
+    if (!hasPerm) {
+      showToast(isHi 
+        ? '⚠️ माइक्रोफोन की अनुमति नहीं मिली। कृपया अपने ब्राउज़र में अनुमति दें।' 
+        : '⚠️ Microphone permission denied. Please allow microphone access in your browser address bar.');
+      if (onError) onError('not-allowed');
+      return false;
+    }
+
+    try {
+      const recog = new SpeechRecognition();
+      const chosenLang = lang || (isHi ? 'hi-IN' : 'en-IN');
+      recog.lang = chosenLang;
+      recog.continuous = target === 'dictation';
+      recog.interimResults = target === 'dictation';
+
+      recog.onstart = () => {
+        this.activeRecog = recog;
+        this.activeTarget = target;
+        if (onStart) onStart();
+      };
+
+      recog.onresult = (evt) => {
+        if (onResult) onResult(evt);
+      };
+
+      recog.onerror = (evt) => {
+        console.warn('SpeechRecognition event error:', evt.error);
+        const errType = evt.error;
+        if (errType === 'not-allowed') {
+          showToast(isHi 
+            ? '⚠️ माइक्रोफोन की अनुमति नहीं मिली।' 
+            : '⚠️ Microphone permission denied.');
+        } else if (errType === 'network') {
+          if (window.location.protocol === 'file:') {
+            showToast(isHi 
+              ? '⚠️ स्थानीय फ़ाइल (file://) पर वॉइस सेवा सीमित है। कृपया टाइप करें या स्थानीय सर्वर का उपयोग करें।' 
+              : '⚠️ Web Speech API is blocked on local file:// URLs. Please run a local server or type directly.');
+          } else {
+            showToast(isHi 
+              ? '⚠️ वॉइस नेटवर्क त्रुटि। कृपया इंटरनेट कनेक्शन जांचें।' 
+              : '⚠️ Voice network error. Please check your internet connection.');
+          }
+        } else if (errType === 'no-speech') {
+          showToast(isHi 
+            ? '⚠️ कोई आवाज़ नहीं सुनाई दी। कृपया दोबारा माइक दबाकर बोलें।' 
+            : '⚠️ No speech detected. Please click the mic and speak again.');
+        }
+        if (onError) onError(errType);
+      };
+
+      recog.onend = () => {
+        this.activeRecog = null;
+        this.activeTarget = null;
+        if (onEnd) onEnd();
+      };
+
+      recog.start();
+      return true;
+    } catch (e) {
+      console.error('Failed to start SpeechRecognition:', e);
+      showToast(isHi ? '⚠️ माइक्रोफोन शुरू नहीं हो सका।' : '⚠️ Could not start microphone.');
+      if (onError) onError(e);
+      return false;
+    }
+  },
+
+  stopListening() {
+    if (this.activeRecog) {
+      try {
+        this.activeRecog.stop();
+      } catch (e) {}
+      this.activeRecog = null;
+      this.activeTarget = null;
+    }
+  }
+};
+
+// ══════════════════════════════════════════════════════════════════════════════
 // WEB SPEECH API VOICE DICTATION CONTROLLER
 // ══════════════════════════════════════════════════════════════════════════════
 
 const VoiceDictation = {
-  recognition: null,
   isRecording: false,
   targetInputId: 'inc-narration',
   init() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) return;
-    try {
-      this.recognition = new SpeechRecognition();
-      this.recognition.continuous = true;
-      this.recognition.interimResults = true;
+    // Initialized
+  },
+  toggle() {
+    if (this.isRecording) {
+      this.stop();
+    } else {
+      this.start();
+    }
+  },
+  start() {
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+    const langSelect = document.getElementById('voice-lang-select');
+    const selectedLang = langSelect ? langSelect.value : (isHi ? 'hi-IN' : 'en-IN');
 
-      this.recognition.onresult = (event) => {
+    SpeechEngine.startListening({
+      target: 'dictation',
+      lang: selectedLang,
+      onStart: () => {
+        this.isRecording = true;
+        const btn = document.getElementById('voice-dictate-btn');
+        const statusBar = document.getElementById('voice-status-bar');
+        const micIcon = document.getElementById('voice-mic-icon');
+        const btnLabel = document.getElementById('voice-btn-label');
+        if (btn) btn.classList.add('btn-mic-active');
+        if (statusBar) statusBar.style.display = 'flex';
+        if (micIcon) micIcon.textContent = '⏹️';
+        if (btnLabel) btnLabel.textContent = isHi ? 'बोलना बंद करें' : 'Stop Dictation';
+        showToast(isHi ? '🎙️ वॉइस डिक्टेशन सक्रिय है। स्पष्ट बोलें।' : '🎙️ Voice dictation active. Speak clearly.');
+      },
+      onResult: (event) => {
         let finalTranscript = '';
         for (let i = event.resultIndex; i < event.results.length; ++i) {
           if (event.results[i].isFinal) {
@@ -6859,63 +7003,22 @@ const VoiceDictation = {
             input.value += finalTranscript.trim() + '. ';
           }
         }
-      };
-
-      this.recognition.onerror = (event) => {
-        console.warn('Voice recognition error:', event.error);
-        this.stop();
-        if (event.error === 'not-allowed') {
-          showToast('Microphone access denied. Please grant microphone permissions.');
-        }
-      };
-
-      this.recognition.onend = () => {
-        if (this.isRecording) this.stop();
-      };
-    } catch (e) {
-      console.warn('SpeechRecognition initialization notice:', e);
-    }
-  },
-  toggle() {
-    if (this.isRecording) {
-      this.stop();
-    } else {
-      this.start();
-    }
-  },
-  start() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert('Speech Recognition is not supported by your browser engine. Please use Chrome, Edge, or Safari.');
-      return;
-    }
-    if (!this.recognition) this.init();
-
-    const langSelect = document.getElementById('voice-lang-select');
-    const selectedLang = langSelect ? langSelect.value : 'en-IN';
-    this.recognition.lang = selectedLang;
-
-    try {
-      this.recognition.start();
-      this.isRecording = true;
-      const btn = document.getElementById('voice-dictate-btn');
-      const statusBar = document.getElementById('voice-status-bar');
-      const micIcon = document.getElementById('voice-mic-icon');
-      const btnLabel = document.getElementById('voice-btn-label');
-      if (btn) btn.classList.add('btn-mic-active');
-      if (statusBar) statusBar.style.display = 'flex';
-      if (micIcon) micIcon.textContent = '⏹️';
-      if (btnLabel) btnLabel.textContent = 'Stop Dictation';
-      showToast('Voice dictation active. Speak clearly.');
-    } catch (e) {
-      console.warn(e);
-    }
+      },
+      onEnd: () => {
+        this.resetUI();
+      },
+      onError: () => {
+        this.resetUI();
+      }
+    });
   },
   stop() {
-    if (this.recognition && this.isRecording) {
-      try { this.recognition.stop(); } catch(e){}
-    }
+    SpeechEngine.stopListening();
+    this.resetUI();
+  },
+  resetUI() {
     this.isRecording = false;
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
     const btn = document.getElementById('voice-dictate-btn');
     const statusBar = document.getElementById('voice-status-bar');
     const micIcon = document.getElementById('voice-mic-icon');
@@ -6923,7 +7026,7 @@ const VoiceDictation = {
     if (btn) btn.classList.remove('btn-mic-active');
     if (statusBar) statusBar.style.display = 'none';
     if (micIcon) micIcon.textContent = '🎙️';
-    if (btnLabel) btnLabel.textContent = 'Voice Dictation';
+    if (btnLabel) btnLabel.textContent = isHi ? 'आवाज़ द्वारा बोलें' : 'Voice Dictation';
   }
 };
 
@@ -7147,9 +7250,21 @@ const I18nEngine = {
       'express-desc': 'Non-tech friendly: Simply describe what happened in your own words (e.g. <em>"Mere bank se ₹75,000 cut hogaye"</em>) or upload a screenshot. Our system will auto-fill your FIR and give you immediate emergency actions.',
       'express-chips-label': 'Quick Examples:',
       'placeholder-express-input': 'Describe in simple words: e.g. "Mere bank account se ₹75000 cut hogaye kisi fraud link par click karne ke baad" OR "Call aaya tha fake customs officer ka..."',
-      'express-mic-label': 'Speak (बोलकर बताएं)',
+      'express-mic-label': 'Speak',
+      'express-lang-badge': 'Natural Language / English & Hindi',
       'express-upload-label': 'Upload Screenshot (Bank SMS / Chat)',
-      'express-btn-submit': '🚀 Analyze & Show Immediate Actions (तत्काल सहायता व FIR) ➔',
+      'express-btn-submit': '🚀 Analyze & Show Immediate Actions ➔',
+      'chakshu-card-title': '👁️ Chakshu Fraud Reporter',
+      'glossary-section-what': '📖 What is this?',
+      'glossary-section-where': '🔍 Where do I find it?',
+      'glossary-section-why': '⚖️ Why is it crucial for your case?',
+      'modal-btn-got-it': 'Got it',
+      'emergency-modal-title': 'Immediate Emergency Action Protocol',
+      'golden-hour-banner-title': 'CRITICAL "GOLDEN HOUR" WINDOW (FIRST 2 HOURS)',
+      'emergency-modal-view-btn': '✍️ Complete Step 1: Complainant KYC ➔',
+      'emergency-modal-action': '✍️ Complete Step 1: Complainant KYC ➔',
+      'modal-btn-close': 'Close',
+      'trial-personalized-title': 'Personalized Incident Questionnaire',
       'mode-citizen': '👤 Individual Citizen Mode',
       'mode-corporate': '🏢 Corporate / Enterprise / MSME Mode',
       'step1-title': '1. Complainant Entity Selection & Identification',
@@ -7263,10 +7378,10 @@ const I18nEngine = {
       'emergency-card-subtitle': 'Immediate intervention steps to halt funds before they leave the banking network.',
       'emergency-golden-title': 'The Golden Hour Rule (First 60 Minutes):',
       'emergency-golden-desc': 'Reporting fraudulent transfers within 60 minutes gives the National Cybercrime Reporting Portal (1930) and the Indian Cyber Crime Coordination Centre (I4C) the highest chance of freezing beneficiary bank accounts before cash withdrawal or crypto conversion.',
-      'sahayak-fab-label': 'Cyber Sahayak (AI Mitra)',
-      'sahayak-title': 'Cyber Sahayak (साइबर सहायक)',
+      'sahayak-fab-label': 'Cyber Sahayak (AI Legal Mitra)',
+      'sahayak-title': 'Cyber Sahayak (AI Legal Mitra)',
       'sahayak-subtitle': 'Online · 24x7 Citizen Cyber Assistance',
-      'placeholder-sahayak-input': "Type here: e.g. '75000 cut hogaye'..."
+      'placeholder-sahayak-input': "Type here: e.g. '₹75,000 debited from bank'..."
     },
     hi: {
       'topbar-govt': '🇮🇳 भारत सरकार एवं राज्य पुलिस मानकों के अनुरूप',
@@ -7290,10 +7405,22 @@ const I18nEngine = {
       'express-title': 'नागरिकों हेतु तत्काल आपातकालीन सहायता',
       'express-desc': 'सरल एवं सुगम: अपनी भाषा में बताएं क्या हुआ (जैसे: <em>"मेरे बैंक से ₹75,000 कट गए"</em>) या स्क्रीनशॉट अपलोड करें। सिस्टम आपकी FIR स्वतः भर देगा और तुरंत आवश्यक कदम बताएगा।',
       'express-chips-label': 'त्वरित उदाहरण:',
-      'placeholder-express-input': 'सरल भाषा में लिखें: जैसे "मेरे बैंक खाते से ₹75000 कट गए किसी फर्जी लिंक पर क्लिक करने के बाद" या "फर्जी कस्टम/पुलिस अफसर का कॉल आया था..."',
-      'express-mic-label': 'बोलकर बताएं (माइक)',
+      'placeholder-express-input': 'सरल भाषा में लिखें: जैसे "मेरे बैंक खाते से ₹75000 कट गए किसी फर्जी लिंक पर क्लिक करने के बाद" या "फर्जी कस्टम अधिकारी का कॉल आया था..."',
+      'express-mic-label': 'बोलकर बताएं',
+      'express-lang-badge': 'सरल हिन्दी व बोलचाल की भाषा',
       'express-upload-label': 'स्क्रीनशॉट अपलोड करें (बैंक SMS / चैट)',
-      'express-btn-submit': '🚀 विश्लेषण करें व तत्काल सहायता देखें (तत्काल FIR) ➔',
+      'express-btn-submit': '🚀 विश्लेषण करें एवं तत्काल सहायता देखें ➔',
+      'chakshu-card-title': '👁️ चक्षु फ्रॉड रिपोर्टर',
+      'glossary-section-what': '📖 यह क्या है?',
+      'glossary-section-where': '🔍 यह आपको कहाँ मिलेगा?',
+      'glossary-section-why': '⚖️ आपके केस के लिए क्यों महत्वपूर्ण है?',
+      'modal-btn-got-it': 'समझ गया',
+      'emergency-modal-title': 'तत्काल आपातकालीन सहायता प्रोटोकॉल',
+      'golden-hour-banner-title': 'अति-महत्वपूर्ण "गोल्डन ऑवर" समयसीमा (प्रथम 2 घंटे)',
+      'emergency-modal-view-btn': '✍️ चरण 1: शिकायतकर्ता KYC पूरा करें ➔',
+      'emergency-modal-action': '✍️ चरण 1: शिकायतकर्ता KYC पूरा करें ➔',
+      'modal-btn-close': 'बंद करें',
+      'trial-personalized-title': 'अपराध-विशिष्ट प्रश्न मैट्रिक्स',
       'mode-citizen': '👤 व्यक्तिगत नागरिक मोड',
       'mode-corporate': '🏢 कॉर्पोरेट / संस्थागत / MSME मोड',
       'step1-title': '1. शिकायतकर्ता की श्रेणी एवं पहचान (KYC)',
@@ -7335,7 +7462,7 @@ const I18nEngine = {
       'btn-back': '⬅ वापस जाएं',
       'btn-step2-directory': '🛡️ संदिग्ध डेटाबेस में जोड़ें',
       'btn-step2-next': 'अगला: घटना का विवरण ➔',
-      'step3-title': '3. घटना का विवरण एवं अपराध का तरीका (Modus Operandi)',
+      'step3-title': '3. घटना का विवरण एवं अपराध का तरीका',
       'step3-subtitle': 'वर्णन करें कि आरोपी ने आपसे कैसे संपर्क किया और पैसे या डेटा देने के लिए कैसे प्रेरित किया।',
       'form-inc-date': 'घटना की तिथि',
       'form-inc-time': 'घटना का समय',
@@ -7403,14 +7530,14 @@ const I18nEngine = {
       'codex-cat-bns': 'भारतीय न्याय संहिता (BNS 2023)',
       'codex-cat-corp': 'कॉर्पोरेट मानक (CERT-In / DPDP)',
       'codex-cat-evidence': 'इलेक्ट्रॉनिक साक्ष्य (BSA 2023)',
-      'emergency-card-title': 'आपातकालीन प्रोटोकॉल एवं स्वर्णिम घंटे (Golden Hour) दिशानिर्देश',
+      'emergency-card-title': 'आपातकालीन प्रोटोकॉल एवं स्वर्णिम घंटा दिशानिर्देश',
       'emergency-card-subtitle': 'बैंकिंग नेटवर्क से बाहर निकलने से पहले धनराशि को रोकने हेतु तत्काल कदम।',
       'emergency-golden-title': 'स्वर्णिम घंटे का नियम (प्रथम 60 मिनट):',
       'emergency-golden-desc': 'प्रथम 60 मिनट के भीतर धोखाधड़ी की सूचना देने से राष्ट्रीय साइबर हेल्पलाइन (1930) एवं I4C को कैश निकालने या क्रिप्टो बदलने से पहले लाभार्थी बैंक खातों को फ्रीज करने का सर्वाधिक अवसर मिलता है।',
-      'sahayak-fab-label': 'साइबर सहायक (AI मित्र)',
-      'sahayak-title': 'साइबर सहायक (Cyber Sahayak)',
+      'sahayak-fab-label': 'साइबर सहायक (एआई मित्र)',
+      'sahayak-title': 'साइबर सहायक (एआई कानूनी मित्र)',
       'sahayak-subtitle': 'सक्रिय · 24x7 नागरिक साइबर सहायता',
-      'placeholder-sahayak-input': "यहाँ लिखें: जैसे 'बैंक से ₹75000 कट गए' या 'Fraud call आया'..."
+      'placeholder-sahayak-input': "यहाँ लिखें: जैसे 'बैंक से ₹75000 कट गए' या 'फर्जी पुलिस कॉल आया'..."
     }
   },
   init() {
@@ -7420,7 +7547,7 @@ const I18nEngine = {
     }
     const labelEl = document.getElementById('lang-label');
     if (labelEl) {
-      labelEl.textContent = this.currentLang === 'en' ? 'हिन्दी (Hindi)' : 'English';
+      labelEl.textContent = this.currentLang === 'en' ? 'हिन्दी' : 'English';
     }
     this.updateUI();
   },
@@ -7430,7 +7557,7 @@ const I18nEngine = {
     localStorage.setItem('CLGS_LANG_PREF', lang);
     const labelEl = document.getElementById('lang-label');
     if (labelEl) {
-      labelEl.textContent = this.currentLang === 'en' ? 'हिन्दी (Hindi)' : 'English';
+      labelEl.textContent = this.currentLang === 'en' ? 'हिन्दी' : 'English';
     }
     this.updateUI();
     if (typeof showToast === 'function') {
@@ -7441,6 +7568,7 @@ const I18nEngine = {
     this.setLanguage(this.currentLang === 'en' ? 'hi' : 'en');
   },
   updateUI() {
+    const isHi = this.currentLang === 'hi';
     const dict = this.translations[this.currentLang];
     if (!dict) return;
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -7451,13 +7579,75 @@ const I18nEngine = {
       const key = el.getAttribute('data-i18n-placeholder');
       if (dict[key]) el.placeholder = dict[key];
     });
+
+    // Update Express Chips to pure language
+    const chipData = {
+      en: {
+        1: '💸 "₹75,000 debited without authorization"',
+        2: '🛑 "Loan app recovery agent harassment"',
+        3: '👮 "Fake police call (Digital Arrest)"',
+        4: '📸 "Photo morph / Deepfake blackmail"',
+        5: '⚡ "Fake electricity bill SMS / APK"',
+        6: '📦 "FedEx / Customs parcel scam"',
+        7: '📱 "Telegram task scam lost ₹35,000"'
+      },
+      hi: {
+        1: '💸 "मेरे बैंक से ₹75,000 कट गए"',
+        2: '🛑 "लोन ऐप रिकवरी एजेंट की प्रताड़ना"',
+        3: '👮 "फर्जी पुलिस कॉल (डिजिटल अरेस्ट)"',
+        4: '📸 "फोटो मॉर्फ / डीपफेक ब्लैकमेल"',
+        5: '⚡ "बिजली बिल डिस्कनेक्शन फर्जी SMS"',
+        6: '📦 "कूरियर / नारकोटिक्स पार्सल फर्जीवाड़ा"',
+        7: '📱 "टेलीग्राम टास्क फ्रॉड में ₹35,000 गंवाए"'
+      }
+    };
+    const activeChips = chipData[this.currentLang] || chipData.en;
+    for (let i = 1; i <= 7; i++) {
+      const chipEl = document.getElementById('express-chip-' + i);
+      if (chipEl && activeChips[i]) chipEl.textContent = activeChips[i];
+    }
+
+    // Update Emergency Modal buttons if present
+    const modalTopBtnText = document.getElementById('emergency-modal-top-btn-text');
+    const modalActionText = document.getElementById('emergency-modal-action-text');
+    const audit = (typeof CyberSahayakChatbot !== 'undefined' && typeof CyberSahayakChatbot.getFormAudit === 'function') 
+      ? CyberSahayakChatbot.getFormAudit() 
+      : { isReadyForFIR: false };
+
+    if (modalTopBtnText) {
+      modalTopBtnText.textContent = audit.isReadyForFIR 
+        ? (isHi ? '📄 मेरी पुलिस FIR देखें ➔' : '📄 View My Police FIR ➔')
+        : (isHi ? '✍️ चरण 1: शिकायतकर्ता KYC पूरा करें ➔' : '✍️ Complete Step 1: Complainant KYC ➔');
+    }
+    if (modalActionText) {
+      modalActionText.textContent = audit.isReadyForFIR
+        ? (isHi ? '📄 पूर्ण पुलिस FIR पत्र पर जाएं ➔' : '📄 Proceed to Complete Police FIR Sheet ➔')
+        : (isHi ? '✍️ चरण 1: शिकायतकर्ता KYC पूरा करें ➔' : '✍️ Complete Step 1: Complainant KYC ➔');
+    }
+
+    // Voice Dictation button in Step 3
+    const voiceBtnLabel = document.getElementById('voice-btn-label');
+    if (voiceBtnLabel && typeof VoiceDictation !== 'undefined' && !VoiceDictation.isRecording) {
+      voiceBtnLabel.textContent = isHi ? 'आवाज़ द्वारा बोलें' : 'Voice Dictation';
+    }
+    const optVoiceEn = document.getElementById('opt-voice-en');
+    const optVoiceHi = document.getElementById('opt-voice-hi');
+    if (optVoiceEn) optVoiceEn.textContent = isHi ? 'अंग्रेजी (भारत)' : 'English (India)';
+    if (optVoiceHi) optVoiceHi.textContent = isHi ? 'हिन्दी (भारत)' : 'Hindi (India)';
+
+    // Refresh theme toggle button localized label & title
+    if (typeof ThemeEngine !== 'undefined' && typeof ThemeEngine.applyTheme === 'function') {
+      const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      ThemeEngine.applyTheme(currentTheme, false);
+    }
+
     this.updateChatbot();
   },
   updateChatbot() {
     const isHi = this.currentLang === 'hi';
     const sahayakTitle = document.getElementById('sahayak-window-title');
     if (sahayakTitle) {
-      sahayakTitle.textContent = isHi ? 'साइबर सहायक (Cyber Sahayak)' : 'Cyber Sahayak (AI Mitra)';
+      sahayakTitle.textContent = isHi ? 'साइबर सहायक (एआई कानूनी मित्र)' : 'Cyber Sahayak (AI Legal Mitra)';
     }
     const sahayakSub = document.getElementById('sahayak-window-subtitle');
     if (sahayakSub) {
@@ -7471,7 +7661,7 @@ const I18nEngine = {
     }
     const sahayakFab = document.getElementById('sahayak-fab-label');
     if (sahayakFab) {
-      sahayakFab.textContent = isHi ? 'साइबर सहायक (AI मित्र)' : 'Cyber Sahayak (AI Mitra)';
+      sahayakFab.textContent = isHi ? 'साइबर सहायक (एआई मित्र)' : 'Cyber Sahayak (AI Legal Mitra)';
     }
 
     // If only the welcome message is present in the chatbot window, update it cleanly
@@ -7480,14 +7670,14 @@ const I18nEngine = {
       if (isHi) {
         msgContainer.innerHTML = `
           <div class="sahayak-msg bot">
-            🙏 <strong>नमस्ते! मैं आपका साइबर विधिक सहायक (Cyber Sahayak) हूँ।</strong>
+            🙏 <strong>नमस्ते! मैं आपका साइबर विधिक सहायक (एआई कानूनी मित्र) हूँ।</strong>
             <div style="margin-top: 4px;">
-              अगर आपके साथ कोई ऑनलाइन फ्रॉड या धोखाधड़ी हुई है, तो बिल्कुल घबराएं नहीं। मुझे सरल भाषा (हिन्दी/Hinglish/English) में बताएं क्या हुआ — जैसे: <em>"मेरे बैंक से ₹75,000 कट गए"</em> या <em>"फर्जी पुलिस कॉल आया"</em>
+              अगर आपके साथ कोई ऑनलाइन फ्रॉड या धोखाधड़ी हुई है, तो बिल्कुल घबराएं नहीं। मुझे सरल भाषा में बताएं क्या हुआ — जैसे: <em>"मेरे बैंक से ₹75,000 कट गए"</em> या <em>"फर्जी पुलिस कॉल आया"</em>
             </div>
             <div class="sahayak-chips-row">
               <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('मेरे बैंक खाते से ₹75,000 कट गए')">💸 बैंक से पैसे कट गए</span>
               <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('फर्जी पुलिस अफसर का कॉल आया डिजिटल अरेस्ट बता रहे हैं')">👮 डिजिटल अरेस्ट / फर्जी पुलिस कॉल</span>
-              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('टेलीग्राम टास्क स्कैम में पैसे ले लिए')">📱 टेलीग्राम टास्क स्कैम</span>
+              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('टेलीग्राम टास्क फ्रॉड में पैसे ले लिए')">📱 टेलीग्राम टास्क स्कैम</span>
             </div>
           </div>
         `;
@@ -7496,12 +7686,12 @@ const I18nEngine = {
           <div class="sahayak-msg bot">
             🙏 <strong>Welcome! I am your Cyber Legal Assistant (Cyber Sahayak).</strong>
             <div style="margin-top: 4px;">
-              If you have encountered an online scam, financial fraud, or extortion, do not panic. Simply describe what happened in your own words (English, Hindi, or Hinglish) — e.g., <em>"₹75,000 was debited from my bank without OTP"</em>
+              If you have encountered an online scam, banking fraud, or extortion, do not panic. Simply describe what happened in your own words — e.g. <em>"₹75,000 debited from my bank without authorization"</em>
             </div>
             <div class="sahayak-chips-row">
-              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('₹75,000 was debited from my bank without authorization')">💸 Money Debited from Bank</span>
-              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('Received fake police video call threatening digital arrest')">👮 Digital Arrest / Fake Police Call</span>
-              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('Lost money in Telegram work from home task scam')">📱 Telegram Task Scam</span>
+              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('₹75,000 debited from my bank without authorization')">💸 Unauthorized Bank Debit</span>
+              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('Fake police officer video call extortion (Digital Arrest)')">👮 Digital Arrest / Fake Police Call</span>
+              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('Telegram task prepaid investment scam')">📱 Telegram Task Scam</span>
             </div>
           </div>
         `;
@@ -7537,25 +7727,29 @@ const ThemeEngine = {
     const next = isDark ? 'light' : 'dark';
     this.applyTheme(next, true);
     if (typeof showToast === 'function') {
-      showToast(next === 'dark' ? '🌙 Dark Mode Activated (उच्च कंट्रास्ट मोड)' : '☀️ Light Mode Activated (सामान्य मोड)');
+      const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+      showToast(next === 'dark' 
+        ? (isHi ? '🌙 डार्क मोड सक्रिय किया गया' : '🌙 Dark Mode Activated') 
+        : (isHi ? '☀️ लाइट मोड सक्रिय किया गया' : '☀️ Light Mode Activated'));
     }
   },
 
   applyTheme(theme, persist) {
     const btn = document.getElementById('theme-toggle-btn');
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
     if (theme === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
       if (btn) {
-        btn.setAttribute('aria-label', 'Switch to Light Mode');
-        btn.setAttribute('title', 'Switch to Light Mode (सामान्य मोड)');
-        btn.innerHTML = '☀️ <span id="theme-label">Light Mode</span>';
+        btn.setAttribute('aria-label', isHi ? 'लाइट मोड पर स्विच करें' : 'Switch to Light Mode');
+        btn.setAttribute('title', isHi ? 'लाइट मोड पर स्विच करें' : 'Switch to Light Mode');
+        btn.innerHTML = isHi ? '☀️ <span id="theme-label">लाइट मोड</span>' : '☀️ <span id="theme-label">Light Mode</span>';
       }
     } else {
       document.documentElement.removeAttribute('data-theme');
       if (btn) {
-        btn.setAttribute('aria-label', 'Switch to Dark Mode');
-        btn.setAttribute('title', 'Switch to Dark Mode (डार्क मोड)');
-        btn.innerHTML = '🌙 <span id="theme-label">Dark Mode</span>';
+        btn.setAttribute('aria-label', isHi ? 'डार्क मोड पर स्विच करें' : 'Switch to Dark Mode');
+        btn.setAttribute('title', isHi ? 'डार्क मोड पर स्विच करें' : 'Switch to Dark Mode');
+        btn.innerHTML = isHi ? '🌙 <span id="theme-label">डार्क मोड</span>' : '🌙 <span id="theme-label">Dark Mode</span>';
       }
     }
     if (persist) {
@@ -7664,7 +7858,7 @@ const GlossaryEngine = {
       why: "Immediate reporting enables police to freeze the entire nexus of downstream accounts linked to the criminal ring."
     },
     chakshu: {
-      title: "Chakshu (चक्षु) DoT Citizen Reporting Facility",
+      title: "Chakshu Citizen Fraud Reporting Portal",
       badge: "DoT Sanchar Saathi Portal",
       what: "The Department of Telecommunications (DoT) citizen portal for reporting suspected fraud communications (calls, SMS, WhatsApp) before any money is lost.",
       where: "Integrated directly into Tab 5 and at sancharsaathi.gov.in.",
@@ -9025,7 +9219,7 @@ const AuthorityEngine = {
       resBox.style.color = '#1e3a8a';
       resBox.innerHTML = `
         <div style="font-weight: 700; font-size: 0.92rem; display: flex; align-items: center; gap: 6px;">
-          <span>🏛️</span> <span>${typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi' ? 'सत्यापित आधिकारिक संस्था (Protected Whitelist)' : 'Verified Official Institutional Entity (Protected Whitelist)'}</span>
+          <span>🏛️</span> <span>${typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi' ? 'सत्यापित आधिकारिक संस्था (संरक्षित सूची)' : 'Verified Official Institutional Entity (Protected Whitelist)'}</span>
         </div>
         <div style="margin-top: 4px; font-size: 0.82rem; line-height: 1.5;">
           ${typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi'
@@ -10005,18 +10199,48 @@ const CitizenNLPParser = {
     }
   },
 
+  runChipPrompt(id) {
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+    const promptsEn = {
+      1: "₹75,000 was debited from my bank account without my authorization after clicking a link",
+      2: "Received fake police video call threatening digital arrest and money laundering charges",
+      3: "Lost money in Telegram work from home prepaid task scam",
+      4: "Instant loan app harassment with threats to share morphed photos with my contacts",
+      5: "Video call blackmail and sextortion threatening to leak recording",
+      6: "Fake courier customs call claiming drugs found in parcel sent to Taiwan",
+      7: "Fake electricity disconnection message with APK download link"
+    };
+    const promptsHi = {
+      1: "मेरे बैंक खाते से ₹75,000 कट गए किसी फर्जी लिंक पर क्लिक करने के बाद",
+      2: "फर्जी पुलिस अधिकारी का वीडियो कॉल आया और डिजिटल अरेस्ट की धमकी देकर पैसे मांगे",
+      3: "टेलीग्राम वर्क फ्रॉम होम टास्क स्कैम में पैसे निवेश करवाए और ठग लिए",
+      4: "फर्जी लोन ऐप वाले मेरे संपर्कों को कॉल करके धमकी दे रहे हैं",
+      5: "वीडियो कॉल पर रिकॉर्डिंग करके ब्लैकमेल कर रहे हैं और पैसे मांग रहे हैं",
+      6: "कूरियर कस्टम अधिकारी बनकर पार्सल में ड्रग्स बताकर पैसे की मांग कर रहे हैं",
+      7: "बिजली का बिल अपडेट न होने पर रात 9 बजे लाइन काटने की फर्जी धमकी भरा संदेश आया"
+    };
+    const chosen = (isHi ? promptsHi[id] : promptsEn[id]) || promptsEn[1];
+    CitizenNLPParser.setPromptAndRun(chosen);
+  },
+
   processExpressIntake() {
     const input = document.getElementById('express-intake-input');
     const raw = (input?.value || '').trim();
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+
     if (!raw) {
-      showToast('⚠️ कृपया अपने साथ हुई घटना के बारे में बताएं या स्क्रीनशॉट अपलोड करें।');
+      showToast(isHi 
+        ? '⚠️ कृपया अपने साथ हुई घटना के बारे में बताएं या स्क्रीनशॉट अपलोड करें।' 
+        : '⚠️ Please describe what happened or upload a screenshot.');
       input?.focus();
       return;
     }
 
     const parsed = CitizenNLPParser.parse(raw);
     if (!parsed) {
-      showToast('⚠️ Unable to process input. Please try again.');
+      showToast(isHi 
+        ? '⚠️ विवरण का विश्लेषण नहीं हो सका। कृपया पुनः प्रयास करें।' 
+        : '⚠️ Unable to process input. Please try again.');
       return;
     }
 
@@ -10067,64 +10291,54 @@ const CitizenNLPParser = {
 
     // Launch Emergency Action Modal
     EmergencyActionEngine.showModal(parsed);
-    showToast(`✨ Auto-detected: ${parsed.categoryLabel} · Loss: ₹${parsed.amount || '0'}`);
+    showToast(isHi 
+      ? `✨ श्रेणी: ${parsed.categoryLabelHi || parsed.categoryLabel} · हानि: ₹${parsed.amount || '0'}` 
+      : `✨ Auto-detected: ${parsed.categoryLabel} · Loss: ₹${parsed.amount || '0'}`);
   },
 
   toggleVoice() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      showToast('Speech recognition not supported in this browser. Please type directly.');
+    if (typeof SpeechEngine === 'undefined') return;
+    if (SpeechEngine.activeTarget === 'express') {
+      SpeechEngine.stopListening();
       return;
     }
 
-    if (CitizenNLPParser.isRecording) {
-      CitizenNLPParser.voiceRecognition?.stop();
-      CitizenNLPParser.isRecording = false;
-      document.getElementById('express-mic-label').textContent = 'Speak (बोलकर बताएं)';
-      document.getElementById('express-mic-icon').textContent = '🎙️';
-      return;
-    }
-
-    try {
-      const recog = new SpeechRecognition();
-      recog.lang = 'hi-IN'; // accepts Hindi & Hinglish smoothly
-      recog.continuous = false;
-      recog.interimResults = false;
-
-      recog.onstart = () => {
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+    SpeechEngine.startListening({
+      target: 'express',
+      lang: isHi ? 'hi-IN' : 'en-IN',
+      onStart: () => {
         CitizenNLPParser.isRecording = true;
-        document.getElementById('express-mic-label').textContent = 'Listening (बोलिए)...';
-        document.getElementById('express-mic-icon').textContent = '🔴';
-        showToast('🎙️ बोलिए... (Listening in Hindi/English)');
-      };
-
-      recog.onresult = (evt) => {
+        const micLabel = document.getElementById('express-mic-label');
+        const micIcon = document.getElementById('express-mic-icon');
+        if (micLabel) micLabel.textContent = isHi ? 'सुन रहे हैं...' : 'Listening...';
+        if (micIcon) micIcon.textContent = '🔴';
+        showToast(isHi ? '🎙️ बोलिए... (आवाज़ रिकॉर्ड हो रही है)' : '🎙️ Listening... Describe your incident');
+      },
+      onResult: (evt) => {
         const transcript = evt.results[0][0].transcript;
         const input = document.getElementById('express-intake-input');
         if (input) {
           input.value = (input.value ? input.value + ' ' : '') + transcript;
         }
-        showToast('✓ Voice captured! Processing...');
+        showToast(isHi ? '✓ आवाज़ प्राप्त हुई! विश्लेषण किया जा रहा है...' : '✓ Voice captured! Analyzing incident...');
         setTimeout(() => CitizenNLPParser.processExpressIntake(), 400);
-      };
-
-      recog.onerror = () => {
+      },
+      onEnd: () => {
         CitizenNLPParser.isRecording = false;
-        document.getElementById('express-mic-label').textContent = 'Speak (बोलकर बताएं)';
-        document.getElementById('express-mic-icon').textContent = '🎙️';
-      };
-
-      recog.onend = () => {
+        const micLabel = document.getElementById('express-mic-label');
+        const micIcon = document.getElementById('express-mic-icon');
+        if (micLabel) micLabel.textContent = isHi ? 'बोलकर बताएं' : 'Speak';
+        if (micIcon) micIcon.textContent = '🎙️';
+      },
+      onError: (err) => {
         CitizenNLPParser.isRecording = false;
-        document.getElementById('express-mic-label').textContent = 'Speak (बोलकर बताएं)';
-        document.getElementById('express-mic-icon').textContent = '🎙️';
-      };
-
-      CitizenNLPParser.voiceRecognition = recog;
-      recog.start();
-    } catch (e) {
-      showToast('Microphone access unavailable. Please type directly.');
-    }
+        const micLabel = document.getElementById('express-mic-label');
+        const micIcon = document.getElementById('express-mic-icon');
+        if (micLabel) micLabel.textContent = isHi ? 'बोलकर बताएं' : 'Speak';
+        if (micIcon) micIcon.textContent = '🎙️';
+      }
+    });
   },
 
   async handleScreenshotUpload(event) {
@@ -10282,9 +10496,29 @@ const EmergencyActionEngine = {
       BotShield.state.humanVerified = true;
     }
 
+    // Step-Aware Guard: Check if Complainant KYC (Step 1) is filled
+    const audit = (typeof CyberSahayakChatbot !== 'undefined' && typeof CyberSahayakChatbot.getFormAudit === 'function')
+      ? CyberSahayakChatbot.getFormAudit()
+      : { step1: { valid: true } };
+
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+
+    if (!audit.step1.valid) {
+      showToast(isHi
+        ? '⚠️ पुलिस FIR के लिए पहले शिकायतकर्ता की KYC (नाम, फोन, पता) आवश्यक है।'
+        : '⚠️ Please complete Complainant KYC (Step 1) before generating the official Police FIR.', 4000);
+
+      if (typeof CyberSahayakChatbot !== 'undefined' && typeof CyberSahayakChatbot.goToAndFocusStep === 'function') {
+        CyberSahayakChatbot.goToAndFocusStep(1);
+      } else if (typeof goToStep === 'function') {
+        goToStep(1);
+      }
+      return;
+    }
+
     // Switch to Wizard Tab if on another tab
     const wizardTabBtn = document.querySelector('.nav-tab');
-    if (wizardTabBtn) switchMainTab('wizard', wizardTabBtn);
+    if (wizardTabBtn && typeof switchMainTab === 'function') switchMainTab('wizard', wizardTabBtn);
 
     // Execute formal FIR generation (which populates output, generates BSA cert, and calls goToStep(5))
     doGeneratePoliceLetter();
@@ -10299,6 +10533,7 @@ const EmergencyActionEngine = {
 
 // ══════════════════════════════════════════════════════════════════════════════
 // FLOATING CYBER SAHAYAK (CITIZEN AI MITRA) CHATBOT ENGINE
+// Step-Aware Proactive Conversational Assistant with Form Auditing & Auto-Fill
 // ══════════════════════════════════════════════════════════════════════════════
 
 const CyberSahayakChatbot = {
@@ -10325,6 +10560,217 @@ const CyberSahayakChatbot = {
     if (input) {
       input.value = text;
       CyberSahayakChatbot.handleSend();
+    }
+  },
+
+  getFormAudit() {
+    const isCorp = typeof currentComplainantMode !== 'undefined' && currentComplainantMode === 'corporate';
+    let step1Valid = false;
+    let missingStep1 = [];
+    let missingStep1Hi = [];
+    let firstMissingStep1FieldId = null;
+
+    if (isCorp) {
+      const orgName = (document.getElementById('corp-org-name')?.value || '').trim();
+      const repName = (document.getElementById('corp-rep-name')?.value || '').trim();
+      const repPhone = (document.getElementById('corp-rep-phone')?.value || '').trim();
+      const repEmail = (document.getElementById('corp-rep-email')?.value || '').trim();
+      const address = (document.getElementById('corp-address')?.value || '').trim();
+
+      const phoneOk = repPhone && typeof ValidationEngine !== 'undefined' ? ValidationEngine.validatePhone(repPhone, false).valid : false;
+      const emailOk = repEmail && typeof ValidationEngine !== 'undefined' ? ValidationEngine.validateEmail(repEmail, false).valid : false;
+
+      if (!orgName) { missingStep1.push('Company Legal Name'); missingStep1Hi.push('कंपनी का पूरा नाम'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'corp-org-name'; }
+      if (!repName) { missingStep1.push('Representative Legal Name'); missingStep1Hi.push('अधिकृत प्रतिनिधि का नाम'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'corp-rep-name'; }
+      if (!repPhone || !phoneOk) { missingStep1.push('Valid Contact Mobile Number'); missingStep1Hi.push('वैध संपर्क मोबाइल नंबर'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'corp-rep-phone'; }
+      if (!repEmail || !emailOk) { missingStep1.push('Official Email Address'); missingStep1Hi.push('आधिकारिक ईमेल पता'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'corp-rep-email'; }
+      if (!address) { missingStep1.push('Registered Office Address'); missingStep1Hi.push('पंजीकृत कार्यालय का पता'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'corp-address'; }
+
+      step1Valid = !missingStep1.length;
+    } else {
+      const name = (document.getElementById('comp-name')?.value || '').trim();
+      const phone = (document.getElementById('comp-phone')?.value || '').trim();
+      const email = (document.getElementById('comp-email')?.value || '').trim();
+      const address = (document.getElementById('comp-address')?.value || '').trim();
+
+      const phoneOk = phone && typeof ValidationEngine !== 'undefined' ? ValidationEngine.validatePhone(phone, false).valid : false;
+      const emailOk = email && typeof ValidationEngine !== 'undefined' ? ValidationEngine.validateEmail(email, false).valid : false;
+
+      if (!name || name.length < 2) { missingStep1.push('Full Legal Name'); missingStep1Hi.push('पूरा कानूनी नाम'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'comp-name'; }
+      if (!phone || !phoneOk) { missingStep1.push('Valid 10-Digit Mobile Number'); missingStep1Hi.push('10-अंकों का मोबाइल नंबर'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'comp-phone'; }
+      if (!email || !emailOk) { missingStep1.push('Email Address'); missingStep1Hi.push('ईमेल पता'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'comp-email'; }
+      if (!address || address.length < 5) { missingStep1.push('Residential Address'); missingStep1Hi.push('निवास का पता'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'comp-address'; }
+
+      step1Valid = !missingStep1.length;
+    }
+
+    // Step 2 Evidence Check
+    const rawScam = (document.getElementById('raw-scam-text')?.value || '').trim();
+    const suspectPhone = (document.getElementById('suspect-phone')?.value || '').trim();
+    const suspectUpi = (document.getElementById('suspect-upi')?.value || '').trim();
+    const suspectBank = (document.getElementById('suspect-bank')?.value || '').trim();
+    const suspectUrl = (document.getElementById('suspect-url')?.value || '').trim();
+    const hasEvidence = !!(rawScam || suspectPhone || suspectUpi || suspectBank || suspectUrl);
+
+    // Step 3 Incident Check
+    const crimeType = document.getElementById('inc-crime-type')?.value || '';
+    const narration = (document.getElementById('inc-narration')?.value || '').trim();
+    const step3Valid = !!(crimeType && narration && narration.length >= 20);
+
+    // Step 4 Financial Check
+    const amount = (document.getElementById('fin-amount')?.value || '').trim();
+    const utr = (document.getElementById('fin-utr')?.value || '').trim();
+    const isFinancialCrime = [
+      'upi_fraud', 'card_skimming_pos_fraud', 'utility_bill_fraud', 
+      'loan_app_fraud', 'investment_fraud', 'part_time_job', 
+      'lottery_reward_fraud', 'ecommerce_olx_fraud', 'courier_customs_fraud', 
+      'digital_arrest', 'corporate_bec', 'corporate_ransomware', 
+      'corporate_vendor_fraud'
+    ].includes(crimeType);
+    const step4Valid = !isFinancialCrime || (!!amount && !!utr);
+
+    const isReadyForFIR = step1Valid && step3Valid;
+
+    return {
+      isCorp,
+      step1: {
+        valid: step1Valid,
+        missing: missingStep1,
+        missingHi: missingStep1Hi,
+        firstMissingFieldId: firstMissingStep1FieldId
+      },
+      step2: {
+        hasEvidence,
+        suspectPhone,
+        suspectUpi
+      },
+      step3: {
+        valid: step3Valid,
+        crimeType,
+        narration
+      },
+      step4: {
+        isFinancialCrime,
+        valid: step4Valid,
+        hasAmount: !!amount,
+        hasUtr: !!utr,
+        amount,
+        utr
+      },
+      isReadyForFIR
+    };
+  },
+
+  extractAndAutofill(text) {
+    if (!text || typeof text !== 'string') return;
+    const lower = text.toLowerCase();
+    const isCorp = typeof currentComplainantMode !== 'undefined' && currentComplainantMode === 'corporate';
+
+    // 1. Email extraction
+    const emailMatch = text.match(/\b([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,})\b/);
+    if (emailMatch) {
+      const emailField = document.getElementById(isCorp ? 'corp-rep-email' : 'comp-email');
+      if (emailField && (!emailField.value || !emailField.value.trim())) {
+        emailField.value = emailMatch[1].trim();
+        if (typeof ValidationEngine !== 'undefined') ValidationEngine.validateField(emailField.id, 'email', false);
+      }
+    }
+
+    // 2. Personal Phone extraction (e.g., "my phone is 9876543210" or "मेरा नंबर 9876543210")
+    const personalPhoneMatch = text.match(/(?:my\s*(?:phone|mobile|number|no|contact)|mera\s*(?:phone|mobile|number|no)|contact\s*me\s*at|call\s*me\s*at)(?:\s*(?:is|hai|=|:))?[\s:]*(?:\+?91[\s\-]?)?([6-9]\d{9})\b/i) ||
+                               text.match(/(?:phone|mobile|contact)[\s:]*(?:\+?91[\s\-]?)?([6-9]\d{9})\b/i);
+    if (personalPhoneMatch) {
+      const phoneField = document.getElementById(isCorp ? 'corp-rep-phone' : 'comp-phone');
+      if (phoneField && (!phoneField.value || !phoneField.value.trim())) {
+        phoneField.value = personalPhoneMatch[1].trim();
+        if (typeof ValidationEngine !== 'undefined') ValidationEngine.validateField(phoneField.id, 'phone', false);
+      }
+    }
+
+    // 3. Complainant Name extraction (e.g. "my name is Vatsal Agarwal" or "मेरा नाम वत्सल अग्रवाल है")
+    const nameMatchEn = text.match(/(?:my\s*name\s*is|i\s*am)\s+([A-Za-z][A-Za-z\s]{1,30}[A-Za-z])\b/i);
+    const nameMatchHi = text.match(/(?:मेरा\s*नाम|नाम)\s+([\u0900-\u097F\s]{2,30})(?:\s*है|\s*$)/);
+    const extractedName = (nameMatchEn && nameMatchEn[1]) || (nameMatchHi && nameMatchHi[1]);
+    if (extractedName) {
+      const cleaned = extractedName.trim();
+      if (!cleaned.toLowerCase().match(/\b(the|a|an|cyber|police|bank|sahayak|bot|mitra)\b/)) {
+        const nameField = document.getElementById(isCorp ? 'corp-rep-name' : 'comp-name');
+        if (nameField && (!nameField.value || !nameField.value.trim())) {
+          nameField.value = cleaned;
+          if (typeof ValidationEngine !== 'undefined') ValidationEngine.validateField(nameField.id, 'text', false);
+        }
+      }
+    }
+
+    // 4. PIN Code extraction
+    const pinMatch = text.match(/\b(?:pin|pincode|pin\s*code)[\s:]*([1-9]\d{5})\b/i) || text.match(/\b([1-9]\d{5})\b/);
+    if (pinMatch) {
+      const pinField = document.getElementById('comp-pincode');
+      if (pinField && (!pinField.value || !pinField.value.trim())) {
+        pinField.value = pinMatch[1];
+        if (typeof JurisdictionEngine !== 'undefined') {
+          JurisdictionEngine.onPinInput(pinMatch[1], isCorp ? 'corporate' : 'citizen');
+        }
+      }
+    }
+
+    // 5. Address extraction (e.g., "my address is 12 Main St, Delhi" or "mera pata hai ...")
+    const addrMatch = text.match(/(?:my\s*address\s*is|address\s*is|mera\s*pata\s*hai|pata\s*hai|address\s*:)[\s:]*([^,.\n]{5,100})/i);
+    if (addrMatch) {
+      const addrField = document.getElementById(isCorp ? 'corp-address' : 'comp-address');
+      if (addrField && (!addrField.value || !addrField.value.trim())) {
+        addrField.value = addrMatch[1].trim();
+        if (typeof ValidationEngine !== 'undefined') ValidationEngine.validateField(addrField.id, 'text', false);
+      }
+    }
+  },
+
+  goToAndFocusStep(stepNum, focusFieldId) {
+    // Switch to Wizard Tab
+    const wizardTabBtn = document.querySelector('.nav-tab');
+    if (wizardTabBtn && typeof switchMainTab === 'function') {
+      switchMainTab('wizard', wizardTabBtn);
+    }
+
+    // Navigate to step
+    if (typeof goToStep === 'function') {
+      goToStep(stepNum);
+    }
+
+    // Focus target element
+    setTimeout(() => {
+      const audit = CyberSahayakChatbot.getFormAudit();
+      const targetId = focusFieldId || (stepNum === 1 ? audit.step1.firstMissingFieldId : null);
+      const el = targetId ? document.getElementById(targetId) : null;
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.focus();
+        el.style.outline = '2px solid var(--tiranga-saffron)';
+        setTimeout(() => { el.style.outline = ''; }, 2500);
+      }
+    }, 250);
+  },
+
+  onStepChanged(stepNum) {
+    if (!CyberSahayakChatbot.isOpen) return;
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+    const stepTipsHi = {
+      1: "✍️ <strong>चरण 1 (शिकायतकर्ता पहचान):</strong> कृपया अपना सही नाम, फोन और पता दर्ज करें। यह पुलिस प्राथमिकी में शिकायतकर्ता के रूप में दर्ज होगा।",
+      2: "📁 <strong>चरण 2 (डिजिटल साक्ष्य):</strong> धोखाधड़ी का स्क्रीनशॉट या संदिग्ध फोन नंबर / यूपीआई आईडी दर्ज करें।",
+      3: "🕒 <strong>चरण 3 (घटना का समयक्रम):</strong> घटना की तारीख, माध्यम और कानूनी विवरण जांचें। आप बोलकर भी लिखवा सकते हैं।",
+      4: "💳 <strong>चरण 4 (वित्तीय विवरण):</strong> यदि पैसे कटे हैं, तो बैंक से प्राप्त 12 अंकों का यूटीआर नंबर दर्ज करें ताकि बैंक तुरंत पैसा फ्रीज कर सके।",
+      5: "📄 <strong>चरण 5 (पुलिस प्राथमिकी प्रारूप):</strong> आपकी न्यायालय-मान्य पुलिस शिकायत और धारा 63 बीएसए इलेक्ट्रॉनिक प्रमाणपत्र तैयार है!"
+    };
+    const stepTipsEn = {
+      1: "✍️ <strong>Step 1 (Complainant KYC):</strong> Please provide your legal name, contact phone, and residential address for police records.",
+      2: "📁 <strong>Step 2 (Digital Evidence):</strong> Upload transaction/chat screenshots or enter the suspect's phone/UPI handle.",
+      3: "🕒 <strong>Step 3 (Chronological Narration):</strong> Verify incident date, attack medium, and legal narrative. You can also use voice dictation.",
+      4: "💳 <strong>Step 4 (Financial Loss & UTR):</strong> Enter the 12-digit transaction UTR number to enable rapid account freeze under Section 106 BNSS.",
+      5: "📄 <strong>Step 5 (Official Police FIR):</strong> Your court-admissible Police FIR complaint and Section 63 BSA evidence certificate are generated!"
+    };
+    const tip = isHi ? stepTipsHi[stepNum] : stepTipsEn[stepNum];
+    if (tip) {
+      CyberSahayakChatbot.appendMessage(tip, 'bot', true);
     }
   },
 
@@ -10380,7 +10826,10 @@ const CyberSahayakChatbot = {
       }
     }
 
-    // Parse with CitizenNLPParser
+    // Auto-extract personal KYC info from chat if user mentioned it
+    CyberSahayakChatbot.extractAndAutofill(text);
+
+    // Parse incident with CitizenNLPParser
     const parsed = CitizenNLPParser.parse(text);
 
     setTimeout(() => {
@@ -10419,25 +10868,26 @@ const CyberSahayakChatbot = {
           if (utrField) utrField.value = parsed.utr;
         }
 
+        // Emergency safety advice
         let emergAdviceHtml = '';
         if (isHi) {
           if (parsed.category === 'loan_app_fraud') {
             emergAdviceHtml = `
               1. तुरंत लोन ऐप अनइंस्टॉल करें और फोन की कॉन्टैक्ट्स परमिशन हटाएं<br/>
               2. अपने WhatsApp स्टेटस पर चेतावनी डालें कि फर्जी लोन ऐप आपके संपर्कों को परेशान कर रहा है<br/>
-              3. आरबीआई सचेत पोर्टल (sachet.rbi.org.in) पर रिपोर्ट करें और ब्लैकमेलर को कभी पैसे न दें
+              3. आरबीआई सचेत पोर्टल पर रिपोर्ट करें और ब्लैकमेलर को कभी पैसे न दें
             `;
           } else if (parsed.category === 'deepfake_morphing_harassment' || parsed.category === 'sextortion') {
             emergAdviceHtml = `
               1. ब्लैकमेलर को ₹1 भी न भेजें (पैसे देने पर और ब्लैकमेल करेंगे)<br/>
-              2. IT Rules 2021 नियम 3(2)(b) के तहत 24 घंटे में फोटो/वीडियो हटवाने के लिए cybercrime.gov.in पर रिपोर्ट करें<br/>
+              2. आईटी नियम 2021 के तहत 24 घंटे में फोटो/वीडियो हटवाने के लिए राष्ट्रीय साइबर पोर्टल पर रिपोर्ट करें<br/>
               3. सोशल मीडिया प्रोफाइल को प्राइवेट/लॉक करें और सभी चैट सबूत संभालें
             `;
           } else if (parsed.category === 'utility_bill_fraud') {
             emergAdviceHtml = `
-              1. तुरंत फोन को एयरप्लेन मोड (Airplane Mode) पर डालें<br/>
-              2. कोई भी फर्जी APK / AnyDesk / RustDesk तुरंत डिलीट करें<br/>
-              3. बैंक को कॉल करके नेटबैंकिंग/UPI तुरंत ब्लॉक करवाएं
+              1. तुरंत फोन को एयरप्लेन मोड पर डालें<br/>
+              2. कोई भी फर्जी ऐप तुरंत डिलीट करें<br/>
+              3. बैंक को कॉल करके नेटबैंकिंग एवं UPI तुरंत ब्लॉक करवाएं
             `;
           } else if (parsed.category === 'courier_customs_fraud' || parsed.category === 'digital_arrest') {
             emergAdviceHtml = `
@@ -10448,25 +10898,10 @@ const CyberSahayakChatbot = {
           } else {
             emergAdviceHtml = `
               1. तुरंत <a href="tel:1930" style="color: #b91c1c; font-weight: 700;">1930</a> पर कॉल करें (पैसा फ्रीज कराने के लिए)<br/>
-              2. अपने बैंक के हेल्पलाइन पर कॉल करके खाता/UPI ब्लॉक करवाएं<br/>
-              3. स्क्रीनशॉट और सबूत (Section 63 BSA) संभाल कर रखें
+              2. अपने बैंक के हेल्पलाइन पर कॉल करके खाता एवं UPI ब्लॉक करवाएं<br/>
+              3. स्क्रीनशॉट और सबूत (धारा 63 बीएसए) संभाल कर रखें
             `;
           }
-
-          replyHtml = `
-            ⚠️ <strong>चिंता मत कीजिए, हम तुरंत आपकी मदद करेंगे!</strong><br/>
-            मैंने पाया कि यह <strong>${escapeHtml(parsed.categoryLabelHi || parsed.categoryLabel)}</strong> का मामला है${parsed.amount ? ` और लगभग <strong>₹${escapeHtml(parsed.amount)}</strong> का नुकसान हुआ है` : ''}।
-            <div style="margin: 8px 0; padding: 8px 10px; background: var(--status-red-bg); border-left: 3px solid #dc2626; border-radius: 4px; font-size: 0.8rem;">
-              <strong>🚨 तुरंत ये कदम उठाएं (Emergency Action):</strong><br/>
-              ${emergAdviceHtml}
-            </div>
-            मैंने आपकी <strong>कोर्ट-मान्य पुलिस FIR और BSA Sec 63 प्रमाणपत्र</strong> पूरी तरह तैयार कर दी है:
-            <div style="margin-top: 8px;">
-              <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="EmergencyActionEngine.proceedToFIR()">
-                📄 मेरी पुलिस FIR और प्रमाणपत्र देखें ➔
-              </button>
-            </div>
-          `;
         } else {
           if (parsed.category === 'loan_app_fraud') {
             emergAdviceHtml = `
@@ -10499,6 +10934,127 @@ const CyberSahayakChatbot = {
               3. Preserve transaction SMS, UTR receipts, and chat logs for Section 63 BSA electronic certification
             `;
           }
+        }
+
+        // Perform live Step-Aware Audit
+        const audit = CyberSahayakChatbot.getFormAudit();
+
+        if (isHi) {
+          let stepAssistanceHtml = '';
+          if (!audit.step1.valid) {
+            stepAssistanceHtml = `
+              <div style="margin-top: 10px; padding: 10px; background: rgba(245, 158, 11, 0.08); border-left: 3px solid #f59e0b; border-radius: 4px; font-size: 0.82rem; line-height: 1.5;">
+                📋 <strong>अगला कदम: शिकायतकर्ता पहचान (KYC) आवश्यक है</strong><br/>
+                कानूनी पुलिस FIR और धारा 63 BSA साक्ष्य प्रमाणपत्र हेतु आपकी पहचान जरूरी है। कृपया ये विवरण दें:<br/>
+                • ${audit.step1.missingHi.join('<br/>• ')}<br/>
+                <span style="color: var(--text-muted); font-size: 0.78rem;">आप यह जानकारी मुझे यहीं चैट में बता सकते हैं (उदा. "मेरा नाम ... है, फोन नंबर ...") या नीचे बटन दबाकर चरण 1 में भर सकते हैं।</span>
+              </div>
+              <div style="margin-top: 8px;">
+                <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="CyberSahayakChatbot.goToAndFocusStep(1)">
+                  ✍️ चरण 1: शिकायतकर्ता KYC पूरा करें ➔
+                </button>
+              </div>
+            `;
+          } else if (!audit.step2.hasEvidence) {
+            stepAssistanceHtml = `
+              <div style="margin-top: 10px; padding: 10px; background: rgba(37, 99, 235, 0.08); border-left: 3px solid #2563eb; border-radius: 4px; font-size: 0.82rem; line-height: 1.5;">
+                🛡️ <strong>KYC विवरण सत्यापित!</strong><br/>
+                क्या आपके पास ठग का कोई मोबाइल नंबर, संदिग्ध UPI आईडी या चैट का स्क्रीनशॉट है? इसे जोड़ने से पुलिस जांच तेज होती है।
+              </div>
+              <div style="margin-top: 8px;">
+                <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="CyberSahayakChatbot.goToAndFocusStep(2)">
+                  🛡️ चरण 2: संदिग्ध साक्ष्य एवं विवरण जोड़ें ➔
+                </button>
+              </div>
+            `;
+          } else if (audit.step4.isFinancialCrime && !audit.step4.hasUtr) {
+            stepAssistanceHtml = `
+              <div style="margin-top: 10px; padding: 10px; background: rgba(37, 99, 235, 0.08); border-left: 3px solid #2563eb; border-radius: 4px; font-size: 0.82rem; line-height: 1.5;">
+                💳 <strong>वित्तीय लेन-देन का UTR नंबर आवश्यक है</strong><br/>
+                बैंक द्वारा धोखाधड़ी वाले खाते को तुरंत फ्रीज कराने के लिए 12 अंकों का UTR नंबर आवश्यक है।
+              </div>
+              <div style="margin-top: 8px;">
+                <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="CyberSahayakChatbot.goToAndFocusStep(4)">
+                  💳 चरण 4: UTR एवं वित्तीय विवरण जोड़ें ➔
+                </button>
+              </div>
+            `;
+          } else if (audit.isReadyForFIR) {
+            stepAssistanceHtml = `
+              <div style="margin-top: 10px; padding: 10px; background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981; border-radius: 4px; font-size: 0.82rem; line-height: 1.5;">
+                ✓ <strong>सभी आवश्यक कानूनी विवरण पूर्ण हैं!</strong><br/>
+                आपकी न्यायालय-मान्य पुलिस FIR और धारा 63 BSA इलेक्ट्रॉनिक रिकॉर्ड प्रमाणपत्र पूरी तरह तैयार है।
+              </div>
+              <div style="margin-top: 8px;">
+                <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="EmergencyActionEngine.proceedToFIR()">
+                  📄 मेरी पुलिस FIR और प्रमाणपत्र देखें ➔
+                </button>
+              </div>
+            `;
+          }
+
+          replyHtml = `
+            ⚠️ <strong>चिंता मत कीजिए, हम तुरंत आपकी मदद करेंगे!</strong><br/>
+            मैंने पाया कि यह <strong>${escapeHtml(parsed.categoryLabelHi || parsed.categoryLabel)}</strong> का मामला है${parsed.amount ? ` और लगभग <strong>₹${escapeHtml(parsed.amount)}</strong> का नुकसान हुआ है` : ''}।
+            <div style="margin: 8px 0; padding: 8px 10px; background: var(--status-red-bg); border-left: 3px solid #dc2626; border-radius: 4px; font-size: 0.8rem;">
+              <strong>🚨 तुरंत ये कदम उठाएं (तत्काल सुरक्षा):</strong><br/>
+              ${emergAdviceHtml}
+            </div>
+            ${stepAssistanceHtml}
+          `;
+        } else {
+          let stepAssistanceHtml = '';
+          if (!audit.step1.valid) {
+            stepAssistanceHtml = `
+              <div style="margin-top: 10px; padding: 10px; background: rgba(245, 158, 11, 0.08); border-left: 3px solid #f59e0b; border-radius: 4px; font-size: 0.82rem; line-height: 1.5;">
+                📋 <strong>Next Step: Complainant KYC Required</strong><br/>
+                To draft a court-admissible Police FIR and Section 63 BSA certificate, statutory complainant details are needed. Missing:<br/>
+                • ${audit.step1.missing.join('<br/>• ')}<br/>
+                <span style="color: var(--text-muted); font-size: 0.78rem;">You can type these details directly to me in chat (e.g. "My name is ..., phone ...") or click below to fill Step 1.</span>
+              </div>
+              <div style="margin-top: 8px;">
+                <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="CyberSahayakChatbot.goToAndFocusStep(1)">
+                  ✍️ Complete Step 1: Complainant KYC ➔
+                </button>
+              </div>
+            `;
+          } else if (!audit.step2.hasEvidence) {
+            stepAssistanceHtml = `
+              <div style="margin-top: 10px; padding: 10px; background: rgba(37, 99, 235, 0.08); border-left: 3px solid #2563eb; border-radius: 4px; font-size: 0.82rem; line-height: 1.5;">
+                🛡️ <strong>Complainant KYC Verified!</strong><br/>
+                Do you have suspect contacting details (calling number, UPI handle) or chat screenshots? Adding suspect dossiers accelerates police action.
+              </div>
+              <div style="margin-top: 8px;">
+                <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="CyberSahayakChatbot.goToAndFocusStep(2)">
+                  🛡️ Proceed to Step 2: Add Suspect Evidence ➔
+                </button>
+              </div>
+            `;
+          } else if (audit.step4.isFinancialCrime && !audit.step4.hasUtr) {
+            stepAssistanceHtml = `
+              <div style="margin-top: 10px; padding: 10px; background: rgba(37, 99, 235, 0.08); border-left: 3px solid #2563eb; border-radius: 4px; font-size: 0.82rem; line-height: 1.5;">
+                💳 <strong>Transaction UTR Reference Required</strong><br/>
+                To enforce a rapid bank account freeze under Section 106 BNSS, please supply the 12-digit transaction UTR reference.
+              </div>
+              <div style="margin-top: 8px;">
+                <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="CyberSahayakChatbot.goToAndFocusStep(4)">
+                  💳 Step 4: Add Transaction UTR & Bank Details ➔
+                </button>
+              </div>
+            `;
+          } else if (audit.isReadyForFIR) {
+            stepAssistanceHtml = `
+              <div style="margin-top: 10px; padding: 10px; background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981; border-radius: 4px; font-size: 0.82rem; line-height: 1.5;">
+                ✓ <strong>All statutory details are complete and verified!</strong><br/>
+                Your court-admissible Police FIR complaint and Section 63 BSA evidence certificate are generated and ready.
+              </div>
+              <div style="margin-top: 8px;">
+                <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="EmergencyActionEngine.proceedToFIR()">
+                  📄 View My Generated Police FIR ➔
+                </button>
+              </div>
+            `;
+          }
 
           replyHtml = `
             ⚠️ <strong>Do not worry, we are here to assist you immediately!</strong><br/>
@@ -10507,18 +11063,32 @@ const CyberSahayakChatbot = {
               <strong>🚨 Immediate Emergency Action Steps:</strong><br/>
               ${emergAdviceHtml}
             </div>
-            Your <strong>Court-admissible Police FIR Complaint and Section 63 BSA Evidence Certificate</strong> are ready:
-            <div style="margin-top: 8px;">
-              <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="EmergencyActionEngine.proceedToFIR()">
-                📄 View My Generated Police FIR ➔
-              </button>
-            </div>
+            ${stepAssistanceHtml}
           `;
         }
       } else {
-        replyHtml = isHi
-          ? 'कृपया मुझे बताएं कि क्या हुआ (जैसे: बैंक से पैसे कटे, कोई फर्जी कॉल आया, या टेलीग्राम पर टास्क दिया गया)? आप बोलकर भी बता सकते हैं।'
-          : 'Please describe what happened (e.g.: money debited from bank, fake police/customs call, or Telegram task scam)? You can also speak using the microphone.';
+        const audit = CyberSahayakChatbot.getFormAudit();
+        if (isHi) {
+          replyHtml = `
+            🙏 <strong>नमस्ते!</strong> मैं आपकी पूरी कानूनी FIR और साक्ष्य तैयार करने में सहायता करूँगा।<br/>
+            कृपया मुझे बताएं कि आपके साथ क्या हुआ है (जैसे: बैंक से पैसे कटे, फर्जी पुलिस या कस्टम कॉल आई, या टेलीग्राम टास्क दिया गया)।<br/>
+            <div style="margin-top: 8px;">
+              ${!audit.step1.valid 
+                ? '<button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-size: 0.8rem;" onclick="CyberSahayakChatbot.goToAndFocusStep(1)">✍️ चरण 1: शिकायतकर्ता KYC भरें ➔</button>'
+                : '<button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-size: 0.8rem;" onclick="CyberSahayakChatbot.goToAndFocusStep(2)">🛡️ चरण 2: साक्ष्य जोड़ें ➔</button>'}
+            </div>
+          `;
+        } else {
+          replyHtml = `
+            🙏 <strong>Hello!</strong> I am here to assist you in drafting your formal Police FIR and Section 63 BSA evidence certificate.<br/>
+            Please describe what happened (e.g.: money debited from bank, fake police/customs call, or Telegram task scam). You can also speak using the microphone.<br/>
+            <div style="margin-top: 8px;">
+              ${!audit.step1.valid 
+                ? '<button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-size: 0.8rem;" onclick="CyberSahayakChatbot.goToAndFocusStep(1)">✍️ Complete Step 1: Complainant KYC ➔</button>'
+                : '<button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-size: 0.8rem;" onclick="CyberSahayakChatbot.goToAndFocusStep(2)">🛡️ Proceed to Step 2: Evidence ➔</button>'}
+            </div>
+          `;
+        }
       }
 
       CyberSahayakChatbot.appendMessage(replyHtml, 'bot', true);
@@ -10541,29 +11111,53 @@ const CyberSahayakChatbot = {
   },
 
   toggleVoice() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      showToast('Speech recognition unavailable in this browser.');
+    if (typeof SpeechEngine === 'undefined') return;
+    if (SpeechEngine.activeTarget === 'sahayak') {
+      SpeechEngine.stopListening();
       return;
     }
 
-    try {
-      const recog = new SpeechRecognition();
-      recog.lang = 'hi-IN';
-      recog.continuous = false;
-      recog.onresult = (evt) => {
+    const micBtn = document.getElementById('sahayak-mic-btn');
+    const micIcon = document.getElementById('sahayak-mic-icon');
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+
+    SpeechEngine.startListening({
+      target: 'sahayak',
+      lang: isHi ? 'hi-IN' : 'en-IN',
+      onStart: () => {
+        if (micBtn) {
+          micBtn.style.background = '#dc2626';
+          micBtn.style.borderColor = '#b91c1c';
+          micBtn.style.color = '#ffffff';
+        }
+        if (micIcon) micIcon.textContent = '🔴';
+        showToast(isHi ? '🎙️ सहायक सुन रहा है... बोलिए' : '🎙️ Cyber Sahayak is listening... Speak now');
+      },
+      onResult: (evt) => {
         const transcript = evt.results[0][0].transcript;
         const input = document.getElementById('sahayak-input-text');
         if (input) {
           input.value = transcript;
           CyberSahayakChatbot.handleSend();
         }
-      };
-      recog.start();
-      showToast('🎙️ Listening... (बोलिए)');
-    } catch (e) {
-      showToast('Microphone access unavailable.');
-    }
+      },
+      onEnd: () => {
+        if (micBtn) {
+          micBtn.style.background = '';
+          micBtn.style.borderColor = '';
+          micBtn.style.color = '';
+        }
+        if (micIcon) micIcon.textContent = '🎙️';
+      },
+      onError: (err) => {
+        if (micBtn) {
+          micBtn.style.background = '';
+          micBtn.style.borderColor = '';
+          micBtn.style.color = '';
+        }
+        if (micIcon) micIcon.textContent = '🎙️';
+      }
+    });
   }
 };
 
