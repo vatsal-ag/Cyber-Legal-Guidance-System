@@ -132,7 +132,6 @@
     --shadow-sm: 0 1px 2px 0 rgba(14, 36, 66, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(14, 36, 66, 0.07), 0 2px 4px -1px rgba(14, 36, 66, 0.04);
     --shadow-lg: 0 10px 15px -3px rgba(14, 36, 66, 0.09), 0 4px 6px -2px rgba(14, 36, 66, 0.04);
-    --cmp-banner-height: 0px;
   }
 
   /* ── PERSISTENT INSTITUTIONAL DARK THEME ── */
@@ -1598,13 +1597,14 @@
     to { transform: translateY(0); }
   }
   .cmp-container {
-    max-width: 1280px;
+    max-width: 1400px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
     flex-wrap: wrap;
+    padding-right: 220px; /* Reserves clear zone so banner buttons NEVER collide with Cyber Sahayak FAB on desktop */
   }
   .cmp-content {
     flex: 1;
@@ -2323,8 +2323,8 @@
   /* ── FLOATING CYBER SAHAYAK CHATBOT WIDGET ── */
   .cyber-sahayak-fab {
     position: fixed;
-    bottom: calc(24px + var(--cmp-banner-height, 0px));
-    right: 28px;
+    bottom: calc(20px + var(--cmp-banner-height, 0px));
+    right: 24px;
     z-index: 9998;
     background: var(--primary-navy);
     color: #ffffff;
@@ -2346,7 +2346,7 @@
     box-shadow: 0 8px 24px rgba(14, 36, 66, 0.45);
   }
   body.has-cmp-banner .cyber-sahayak-fab {
-    bottom: calc(24px + var(--cmp-banner-height, 160px));
+    bottom: calc(20px + var(--cmp-banner-height, 85px));
   }
   .sahayak-avatar {
     width: 28px;
@@ -2972,6 +2972,7 @@
       gap: 10px;
       flex-direction: column;
       align-items: stretch;
+      padding-right: 0 !important;
     }
     .cmp-content {
       min-width: 100%;
@@ -5679,33 +5680,33 @@ const CMPManager = {
     try {
       const consent = localStorage.getItem(this.storageKey);
       if (!consent) {
-        setTimeout(() => {
-          const banner = document.getElementById('cmp-consent-banner');
-          if (banner) {
-            banner.style.display = 'block';
-            document.body.classList.add('has-cmp-banner');
-            requestAnimationFrame(() => {
-              CMPManager.updateBannerOffset();
-            });
-          }
-        }, 800);
+        const banner = document.getElementById('cmp-consent-banner');
+        if (banner) {
+          banner.style.display = 'block';
+          document.body.classList.add('has-cmp-banner');
+          requestAnimationFrame(() => {
+            CMPManager.updateBannerOffset();
+          });
+        }
       }
     } catch (e) {
       console.warn('Storage unavailable for CMP', e);
     }
 
     window.addEventListener('resize', () => {
-      CMPManager.updateBannerOffset();
+      if (document.body.classList.contains('has-cmp-banner')) {
+        CMPManager.updateBannerOffset();
+      }
     });
   },
 
   updateBannerOffset() {
     const banner = document.getElementById('cmp-consent-banner');
     if (banner && banner.style.display !== 'none' && banner.offsetHeight > 0) {
-      document.documentElement.style.setProperty('--cmp-banner-height', (banner.offsetHeight + 10) + 'px');
+      document.documentElement.style.setProperty('--cmp-banner-height', (banner.offsetHeight + 12) + 'px');
       document.body.classList.add('has-cmp-banner');
     } else {
-      document.documentElement.style.setProperty('--cmp-banner-height', '0px');
+      document.documentElement.style.removeProperty('--cmp-banner-height');
       document.body.classList.remove('has-cmp-banner');
     }
   },
@@ -5721,7 +5722,7 @@ const CMPManager = {
       localStorage.setItem(this.storageKey, JSON.stringify(payload));
       const banner = document.getElementById('cmp-consent-banner');
       if (banner) banner.style.display = 'none';
-      document.documentElement.style.setProperty('--cmp-banner-height', '0px');
+      document.documentElement.style.removeProperty('--cmp-banner-height');
       document.body.classList.remove('has-cmp-banner');
       showToast(type === 'all' ? '✅ Privacy settings saved. Full session protection active.' : '🛡️ Essential cryptographic storage active.');
     } catch (e) {
@@ -5752,7 +5753,7 @@ const CMPManager = {
       this.closePreferences();
       const banner = document.getElementById('cmp-consent-banner');
       if (banner) banner.style.display = 'none';
-      document.documentElement.style.setProperty('--cmp-banner-height', '0px');
+      document.documentElement.style.removeProperty('--cmp-banner-height');
       document.body.classList.remove('has-cmp-banner');
       showToast('✅ Custom storage preferences saved.');
     } catch (e) {
