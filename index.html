@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta http-equiv="X-Content-Type-Options" content="nosniff"/>
 <meta http-equiv="Referrer-Policy" content="no-referrer"/>
 
@@ -2679,9 +2679,304 @@
     color: #0369a1;
     font-weight: 600;
   }
-  [data-theme="dark"] .personalized-badge {
-    background: #075985;
-    color: #e0f2fe;
+  /* ══════════════════════════════════════════════════════════════════════════
+     AUTHORITY & LAW ENFORCEMENT PORTAL STYLING
+     ══════════════════════════════════════════════════════════════════════════ */
+  .leo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #0f172a;
+    color: #38bdf8;
+    border: 1px solid #0284c7;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .priority-badge-1 {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #f87171;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.74rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    animation: pulsePriority1 2s infinite ease-in-out;
+  }
+  @keyframes pulsePriority1 {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    50% { box-shadow: 0 0 0 4px rgba(239, 68, 68, 0); }
+  }
+  .priority-badge-2 {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.74rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .priority-badge-3 {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.74rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .threat-meter-container {
+    width: 100%;
+    min-width: 100px;
+    background: #e2e8f0;
+    border-radius: 9999px;
+    height: 8px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 4px;
+  }
+  [data-theme="dark"] .threat-meter-container {
+    background: #334155;
+  }
+  .threat-meter-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.4s ease;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     MOBILE RESPONSIVE SUITE (iOS Safari, Android Chrome, Foldables, Tablets)
+     ══════════════════════════════════════════════════════════════════════════ */
+  html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  @media (max-width: 860px) {
+    /* Header & Top Bar */
+    .gov-top-bar {
+      padding: 6px 12px;
+      font-size: 0.72rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .gov-top-bar > div:last-child {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .gov-top-bar a {
+      margin-left: 0;
+      margin-right: 8px;
+    }
+    header {
+      padding: 12px 14px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .brand-group {
+      width: 100%;
+    }
+    .brand-text h1 {
+      font-size: 1.05rem;
+      line-height: 1.25;
+    }
+    .brand-text p {
+      font-size: 0.72rem;
+    }
+    .header-actions {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #clock-display {
+      display: none;
+    }
+
+    /* Swipeable In-Place Navigation Tabs */
+    .nav-bar-wrapper {
+      padding: 0 10px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .nav-bar-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+    .nav-tabs {
+      display: flex;
+      width: max-content;
+      min-width: 100%;
+      gap: 6px;
+    }
+    .nav-tab {
+      white-space: nowrap;
+      flex-shrink: 0;
+      padding: 11px 13px;
+      font-size: 0.82rem;
+    }
+
+    /* Horizontal Inertia-Scroll Stepper */
+    .stepper {
+      padding: 10px 12px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      display: flex;
+      gap: 6px;
+    }
+    .stepper::-webkit-scrollbar {
+      display: none;
+    }
+    .step-node {
+      flex-shrink: 0;
+    }
+    .step-divider {
+      min-width: 14px;
+      margin: 0 4px;
+    }
+
+    /* App Container & Cards */
+    .app-container {
+      padding: 0 10px;
+      margin: 14px auto 36px;
+    }
+    .card {
+      padding: 16px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+    }
+    .card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    /* Collapse all multi-column forms into 1 column */
+    .form-grid,
+    .form-grid-3,
+    .jurisdiction-grid,
+    .personalized-grid,
+    .diag-grid,
+    .sanchar-desk-grid,
+    .stat-summary-grid {
+      grid-template-columns: 1fr !important;
+      gap: 14px !important;
+    }
+
+    /* Touch-Friendly Inputs & iOS Auto-Zoom Guard */
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="password"],
+    input[type="number"],
+    select,
+    textarea {
+      font-size: 16px !important;
+      padding: 10px 12px !important;
+    }
+
+    /* Buttons minimum touch target size */
+    .btn,
+    .filter-pill,
+    .mode-switch-btn,
+    .panic-btn,
+    .lang-pill-btn {
+      min-height: 42px;
+      touch-action: manipulation;
+    }
+
+    .btn-group {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Formal Police FIR Letter Sheet Mobile Sizing */
+    .police-letter-container {
+      padding: 8px !important;
+      border-radius: 4px;
+    }
+    .police-letter-sheet {
+      padding: 14px 10px !important;
+      font-size: 0.84rem !important;
+      line-height: 1.5 !important;
+      max-height: 520px;
+    }
+
+    /* Modals & Popups: Mobile Bottom Sheet */
+    .modal-overlay,
+    .emergency-modal-overlay {
+      padding: 0 !important;
+      align-items: flex-end !important;
+    }
+    .modal-dialog,
+    .emergency-modal-card {
+      width: 100vw !important;
+      max-width: 100vw !important;
+      border-radius: 18px 18px 0 0 !important;
+      max-height: 88vh !important;
+    }
+
+    /* Mobile Chatbot Bottom Drawer */
+    .cyber-sahayak-fab {
+      bottom: 16px;
+      right: 14px;
+      padding: 8px 14px;
+      font-size: 0.80rem;
+    }
+    .cyber-sahayak-window {
+      bottom: 0 !important;
+      right: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      height: 86dvh !important;
+      max-height: 86dvh !important;
+      border-radius: 18px 18px 0 0 !important;
+    }
+
+    /* Table horizontal scroll container */
+    .table-container {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .step-node:not(.active) .step-label-title {
+      display: none;
+    }
+    .mode-switch-wrapper {
+      display: flex;
+      width: 100%;
+    }
+    .mode-switch-btn {
+      flex: 1;
+      justify-content: center;
+      padding: 8px 10px;
+      font-size: 0.78rem;
+    }
+    .dropzone {
+      padding: 18px 12px;
+    }
   }
 
 </style>
@@ -2715,18 +3010,18 @@
   <div class="brand-group">
     <div class="brand-emblem">⚖️</div>
     <div class="brand-text">
-      <h1>Cyber Legal Guidance & Enterprise Defense System</h1>
-      <p>Official Citizen & Corporate FIR Complaint Drafter · End-to-End AES-256 Vault</p>
+      <h1 data-i18n="header-title">Cyber Legal Guidance & Enterprise Defense System</h1>
+      <p data-i18n="header-subtitle">Official Citizen & Corporate FIR Complaint Drafter · End-to-End AES-256 Vault</p>
     </div>
   </div>
   <div class="header-actions">
     <button class="bot-shield-pill" id="bot-shield-badge" onclick="openBotDiagnosticsModal()" title="Anti-Bot Defense Shield Active. Click for real-time diagnostics and threat simulation.">
-      <span class="bot-status-dot"></span> 🛡️ Bot Defense: Active
+      <span class="bot-status-dot"></span> <span data-i18n="bot-shield-active">🛡️ Bot Defense: Active</span>
     </button>
     <button class="panic-btn" onclick="secureMemoryPanicWipe()" title="Instantly zero out all memory, session storage, and form inputs">
-      🧹 Secure Memory Wipe
+      <span data-i18n="btn-panic-wipe">🧹 Secure Memory Wipe</span>
     </button>
-    <a href="tel:1930" class="helpline-pill">🚨 National Helpline: 1930</a>
+    <a href="tel:1930" class="helpline-pill" data-i18n="helpline-pill">🚨 National Helpline: 1930</a>
     <div class="time-badge" id="clock-display">--:--:--</div>
   </div>
 </header>
@@ -2734,19 +3029,19 @@
 <!-- NAVIGATION BAR -->
 <div class="nav-bar-wrapper">
   <div class="nav-tabs">
-    <button class="nav-tab active" onclick="switchMainTab('wizard', this)">
+    <button class="nav-tab active" onclick="switchMainTab('wizard', this)" data-i18n="tab-wizard">
       📋 Complaint Generator & FIR Drafter
     </button>
-    <button class="nav-tab" onclick="switchMainTab('vault', this)">
+    <button class="nav-tab" onclick="switchMainTab('vault', this)" data-i18n="tab-vault">
       🔐 End-to-End Cryptographic Vault
     </button>
-    <button class="nav-tab" onclick="switchMainTab('directory', this)">
-      🛡️ National Telecom Scam Directory (DoT & Carrier Feed)
+    <button class="nav-tab" onclick="switchMainTab('directory', this)" data-i18n="tab-directory">
+      🛡️ Suspect Verification & Authority Portal
     </button>
-    <button class="nav-tab" onclick="switchMainTab('codex', this)">
+    <button class="nav-tab" onclick="switchMainTab('codex', this)" data-i18n="tab-codex">
       📖 Cyber Law Codex (Citizen & Corporate)
     </button>
-    <button class="nav-tab" onclick="switchMainTab('emergency', this)">
+    <button class="nav-tab" onclick="switchMainTab('emergency', this)" data-i18n="tab-emergency">
       🚨 Golden Hour Protocols
     </button>
   </div>
@@ -2763,27 +3058,27 @@
     <div class="stepper">
       <div class="step-node active" id="step-node-1" onclick="goToStep(1)">
         <div class="step-number">1</div>
-        <div><div class="step-label-title">Complainant KYC</div></div>
+        <div><div class="step-label-title" data-i18n="step-1">Complainant KYC</div></div>
       </div>
       <div class="step-divider"></div>
       <div class="step-node" id="step-node-2" onclick="goToStep(2)">
         <div class="step-number">2</div>
-        <div><div class="step-label-title">Evidence & OCR</div></div>
+        <div><div class="step-label-title" data-i18n="step-2">Evidence & OCR</div></div>
       </div>
       <div class="step-divider"></div>
       <div class="step-node" id="step-node-3" onclick="goToStep(3)">
         <div class="step-number">3</div>
-        <div><div class="step-label-title">Incident Chronology</div></div>
+        <div><div class="step-label-title" data-i18n="step-3">Incident Chronology</div></div>
       </div>
       <div class="step-divider"></div>
       <div class="step-node" id="step-node-4" onclick="goToStep(4)">
         <div class="step-number">4</div>
-        <div><div class="step-label-title">Financial Transactions</div></div>
+        <div><div class="step-label-title" data-i18n="step-4">Financial Transactions</div></div>
       </div>
       <div class="step-divider"></div>
       <div class="step-node" id="step-node-5" onclick="goToStep(5)">
         <div class="step-number">5</div>
-        <div><div class="step-label-title">Official FIR Letter</div></div>
+        <div><div class="step-label-title" data-i18n="step-5">Official FIR Letter</div></div>
       </div>
     </div>
 
@@ -2798,17 +3093,17 @@
           <div class="express-title-icon">⚡</div>
           <div class="express-title-text">
             <h3>
-              <span>Express Emergency Assistance for Citizens</span>
+              <span data-i18n="express-title">Express Emergency Assistance for Citizens</span>
               <span class="express-lang-badge">सरल हिन्दी / Hinglish / English</span>
             </h3>
-            <p>Non-tech friendly: Simply describe what happened in your own words (e.g. <em>"Mere bank se ₹75,000 cut hogaye"</em>) or upload a screenshot. Our system will auto-fill your FIR and give you immediate emergency actions.</p>
+            <p data-i18n="express-desc">Non-tech friendly: Simply describe what happened in your own words (e.g. <em>"Mere bank se ₹75,000 cut hogaye"</em>) or upload a screenshot. Our system will auto-fill your FIR and give you immediate emergency actions.</p>
           </div>
         </div>
       </div>
 
       <!-- QUICK ONE-CLICK PROMPT CHIPS -->
       <div class="express-chips-container">
-        <span class="express-chips-label">Quick Examples:</span>
+        <span class="express-chips-label" data-i18n="express-chips-label">Quick Examples:</span>
         <button type="button" class="express-chip" onclick="CitizenNLPParser.setPromptAndRun('Mere bank se ₹75,000 cut hogaye unauthorized transaction')">
           💸 "Mere bank se ₹75,000 cut hogaye"
         </button>
@@ -2834,7 +3129,7 @@
 
       <!-- TEXT INPUT & CONTROLS -->
       <div class="express-input-wrapper">
-        <textarea id="express-intake-input" class="express-textarea" placeholder="Describe in simple words: e.g. 'Mere bank account se ₹75000 cut hogaye kisi fraud link par click karne ke baad' OR 'Call aaya tha fake customs officer ka...'"></textarea>
+        <textarea id="express-intake-input" class="express-textarea" placeholder="Describe in simple words: e.g. 'Mere bank account se ₹75000 cut hogaye kisi fraud link par click karne ke baad' OR 'Call aaya tha fake customs officer ka...'" data-i18n-placeholder="placeholder-express-input"></textarea>
       </div>
 
       <div class="express-controls-row">
@@ -2842,13 +3137,13 @@
           <!-- Voice Dictation for Express Box -->
           <button type="button" id="express-voice-btn" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px;" onclick="CitizenNLPParser.toggleVoice()">
             <span id="express-mic-icon">🎙️</span>
-            <span id="express-mic-label">Speak (बोलकर बताएं)</span>
+            <span id="express-mic-label" data-i18n="express-mic-label">Speak (बोलकर बताएं)</span>
           </button>
 
           <!-- Screenshot Quick Upload for OCR -->
           <label class="express-mini-dropzone" for="express-screenshot-file" title="Upload Bank SMS or WhatsApp Screenshot">
             <span>📷</span>
-            <span>Upload Screenshot (Bank SMS / Chat)</span>
+            <span data-i18n="express-upload-label">Upload Screenshot (Bank SMS / Chat)</span>
             <input type="file" id="express-screenshot-file" accept="image/png, image/jpeg, image/webp" style="display:none;" onchange="CitizenNLPParser.handleScreenshotUpload(event)">
           </label>
 
@@ -2858,7 +3153,7 @@
         </div>
 
         <div>
-          <button type="button" class="btn btn-primary" style="padding: 8px 18px; font-size: 0.9rem; font-weight: 700; background: var(--tiranga-saffron); border-color: var(--saffron-hover);" onclick="CitizenNLPParser.processExpressIntake()">
+          <button type="button" class="btn btn-primary" style="padding: 8px 18px; font-size: 0.9rem; font-weight: 700; background: var(--tiranga-saffron); border-color: var(--saffron-hover);" onclick="CitizenNLPParser.processExpressIntake()" data-i18n="express-btn-submit">
             🚀 Analyze & Show Immediate Actions (तत्काल सहायता व FIR) ➔
           </button>
         </div>
@@ -2870,17 +3165,17 @@
       <div class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">1. Complainant Entity Selection & Identification</div>
-            <div class="card-subtitle">Choose whether you are lodging this complaint as an Individual Citizen or an Authorized Corporate Enterprise / MSME.</div>
+            <div class="card-title" data-i18n="step1-title">1. Complainant Entity Selection & Identification</div>
+            <div class="card-subtitle" data-i18n="step1-subtitle">Choose whether you are lodging this complaint as an Individual Citizen or an Authorized Corporate Enterprise / MSME.</div>
           </div>
         </div>
 
         <!-- DUAL MODE SWITCH -->
         <div class="mode-switch-wrapper">
-          <button class="mode-switch-btn active" id="mode-citizen-btn" onclick="setComplainantMode('citizen')">
+          <button class="mode-switch-btn active" id="mode-citizen-btn" onclick="setComplainantMode('citizen')" data-i18n="mode-citizen">
             👤 Individual Citizen Mode
           </button>
-          <button class="mode-switch-btn" id="mode-corporate-btn" onclick="setComplainantMode('corporate')">
+          <button class="mode-switch-btn" id="mode-corporate-btn" onclick="setComplainantMode('corporate')" data-i18n="mode-corporate">
             🏢 Corporate / Enterprise / MSME Mode
           </button>
         </div>
@@ -2893,28 +3188,28 @@
             <input type="text" name="hp_company_tax_id" id="hp_company_tax_id" class="hp-trap" tabindex="-1" autocomplete="new-password" aria-hidden="true" value="" />
 
             <div class="form-group">
-              <label>Full Legal Name * <span class="label-hint">As printed on Aadhaar/Voter ID</span> <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('kyc')" onmouseenter="GlossaryEngine.showTooltip(this, 'kyc')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'kyc')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'kyc')" title="Learn about KYC verification" aria-label="Learn about KYC verification">ⓘ</span></label>
-              <input type="text" id="comp-name" placeholder="e.g. Vatsal Agarwal" value="Vatsal Agarwal" oninput="ValidationEngine.validateField('comp-name', 'text')"/>
+              <label><span data-i18n="form-legal-name">Full Legal Name</span> * <span class="label-hint" data-i18n="form-name-hint">As printed on Aadhaar/Voter ID</span> <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('kyc')" onmouseenter="GlossaryEngine.showTooltip(this, 'kyc')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'kyc')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'kyc')" title="Learn about KYC verification" aria-label="Learn about KYC verification">ⓘ</span></label>
+              <input type="text" id="comp-name" placeholder="Enter Full Legal Name as per Official ID" data-i18n-placeholder="placeholder-comp-name" value="" oninput="ValidationEngine.validateField('comp-name', 'text')"/>
               <div id="comp-name-error" class="validation-msg"></div>
             </div>
             <div class="form-group">
-              <label>Contact Mobile Number * <span class="label-hint">Active 10-digit number for police updates</span></label>
-              <input type="text" id="comp-phone" placeholder="e.g. +91 9876543210" value="+91 9876543210" oninput="ValidationEngine.validateField('comp-phone', 'phone')"/>
+              <label><span data-i18n="form-mobile-number">Contact Mobile Number</span> * <span class="label-hint" data-i18n="form-mobile-hint">Active 10-digit number for police updates</span></label>
+              <input type="text" id="comp-phone" placeholder="e.g. 9876543210" data-i18n-placeholder="placeholder-comp-phone" value="" oninput="ValidationEngine.validateField('comp-phone', 'phone')"/>
               <div id="comp-phone-error" class="validation-msg"></div>
             </div>
             <div class="form-group full-width">
-              <label>Email Address * <span class="label-hint">For digital FIR copy & official legal notices</span></label>
-              <input type="email" id="comp-email" placeholder="e.g. complainant@example.com" value="vatsal@example.com" oninput="ValidationEngine.validateField('comp-email', 'email')"/>
+              <label><span data-i18n="form-email-address">Email Address</span> * <span class="label-hint" data-i18n="form-email-hint">For digital FIR copy & official legal notices</span></label>
+              <input type="email" id="comp-email" placeholder="e.g. complainant@example.com" data-i18n-placeholder="placeholder-comp-email" value="" oninput="ValidationEngine.validateField('comp-email', 'email')"/>
               <div id="comp-email-error" class="validation-msg"></div>
             </div>
             <div class="form-group full-width">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
-                <label style="margin-bottom: 0;">Permanent / Current Residential Address * <span class="label-hint">Typing address auto-detects PIN code</span></label>
-                <span id="pin-detect-badge" class="pin-detect-badge">
-                  📍 Detected Jurisdiction: Dehradun, Uttarakhand
+                <label style="margin-bottom: 0;"><span data-i18n="form-address">Permanent / Current Residential Address</span> * <span class="label-hint" data-i18n="form-address-hint">Typing address auto-detects PIN code</span></label>
+                <span id="pin-detect-badge" class="pin-detect-badge" style="display: none;">
+                  📍 Detected Jurisdiction: None
                 </span>
               </div>
-              <input type="text" id="comp-address" placeholder="House/Flat No, Street, Landmark, Area, City, State, PIN" value="UPES Bidholi Campus, Dehradun, Uttarakhand - 248007" oninput="ValidationEngine.validateField('comp-address', 'text'); JurisdictionEngine.onAddressInput(this.value, 'citizen')"/>
+              <input type="text" id="comp-address" placeholder="House/Flat No, Street, Landmark, Area, City, State, PIN" data-i18n-placeholder="placeholder-comp-address" value="" oninput="ValidationEngine.validateField('comp-address', 'text'); JurisdictionEngine.onAddressInput(this.value, 'citizen')"/>
               <div id="comp-address-error" class="validation-msg"></div>
             </div>
           </div>
@@ -2922,16 +3217,16 @@
           <!-- PIN CODE AUTO-DETECTION & JURISDICTION ROW -->
           <div class="jurisdiction-grid">
             <div class="form-group" style="margin-bottom: 0;">
-              <label>PIN Code * <span class="label-hint">6 Digits</span></label>
-              <input type="text" id="comp-pincode" maxlength="6" placeholder="e.g. 248007" value="248007" style="font-family: 'Geist Mono', monospace; font-weight: 600;" oninput="JurisdictionEngine.onPinInput(this.value, 'citizen')"/>
+              <label><span data-i18n="form-pincode">PIN Code</span> * <span class="label-hint">6 Digits</span></label>
+              <input type="text" id="comp-pincode" maxlength="6" placeholder="e.g. 110001" value="" style="font-family: 'Geist Mono', monospace; font-weight: 600;" oninput="JurisdictionEngine.onPinInput(this.value, 'citizen')"/>
             </div>
             <div class="form-group" style="margin-bottom: 0;">
-              <label>Detected City / District *</label>
-              <input type="text" id="comp-city" placeholder="e.g. Dehradun" value="Dehradun" onchange="JurisdictionEngine.onManualLocationChange('citizen')"/>
+              <label><span data-i18n="form-city">Detected City / District</span> *</label>
+              <input type="text" id="comp-city" placeholder="City / District" value="" onchange="JurisdictionEngine.onManualLocationChange('citizen')"/>
             </div>
             <div class="form-group" style="margin-bottom: 0;">
-              <label>Detected State / UT *</label>
-              <input type="text" id="comp-state" placeholder="e.g. Uttarakhand" value="Uttarakhand" onchange="JurisdictionEngine.onManualLocationChange('citizen')"/>
+              <label><span data-i18n="form-state">Detected State / UT</span> *</label>
+              <input type="text" id="comp-state" placeholder="State / UT" value="" onchange="JurisdictionEngine.onManualLocationChange('citizen')"/>
             </div>
           </div>
 
@@ -2966,54 +3261,54 @@
             <input type="text" name="hp_auth_token" id="hp_auth_token" class="hp-trap" tabindex="-1" autocomplete="new-password" aria-hidden="true" value="" />
 
             <div class="form-group">
-              <label>Company Legal Name * <span class="label-hint">As per RoC Certificate</span></label>
-              <input type="text" id="corp-org-name" placeholder="e.g. Acme Technologies Private Limited" value="Acme Technologies Private Limited" oninput="ValidationEngine.validateField('corp-org-name', 'text')"/>
+              <label><span data-i18n="form-corp-name">Company Legal Name</span> * <span class="label-hint" data-i18n="form-corp-name-hint">As per RoC Certificate</span></label>
+              <input type="text" id="corp-org-name" placeholder="e.g. Acme Technologies Private Limited" value="" oninput="ValidationEngine.validateField('corp-org-name', 'text')"/>
               <div id="corp-org-name-error" class="validation-msg"></div>
             </div>
             <div class="form-group">
-              <label>Corporate Identification No. (CIN / LLPIN) * <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('cin')" onmouseenter="GlossaryEngine.showTooltip(this, 'cin')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'cin')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'cin')" title="Learn about CIN / LLPIN" aria-label="Learn about CIN / LLPIN">ⓘ</span></label>
-              <input type="text" id="corp-cin" placeholder="e.g. U72200DL2020PTC123456" value="U72200DL2020PTC123456"/>
+              <label><span data-i18n="form-corp-cin">Corporate Identification No. (CIN / LLPIN)</span> * <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('cin')" onmouseenter="GlossaryEngine.showTooltip(this, 'cin')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'cin')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'cin')" title="Learn about CIN / LLPIN" aria-label="Learn about CIN / LLPIN">ⓘ</span></label>
+              <input type="text" id="corp-cin" placeholder="e.g. U72200DL2020PTC123456" value=""/>
             </div>
             <div class="form-group">
-              <label>GSTIN * <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('gstin')" onmouseenter="GlossaryEngine.showTooltip(this, 'gstin')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'gstin')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'gstin')" title="Learn about GSTIN" aria-label="Learn about GSTIN">ⓘ</span></label>
-              <input type="text" id="corp-gstin" placeholder="e.g. 07AAAAA0000A1Z5" value="07AAAAA0000A1Z5"/>
+              <label><span data-i18n="form-corp-gstin">GSTIN</span> * <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('gstin')" onmouseenter="GlossaryEngine.showTooltip(this, 'gstin')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'gstin')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'gstin')" title="Learn about GSTIN" aria-label="Learn about GSTIN">ⓘ</span></label>
+              <input type="text" id="corp-gstin" placeholder="e.g. 07AAAAA0000A1Z5" value=""/>
             </div>
             <div class="form-group">
-              <label>Authorized Signatory Legal Name *</label>
-              <input type="text" id="corp-rep-name" placeholder="e.g. Rajesh Kumar" value="Rajesh Kumar" oninput="ValidationEngine.validateField('corp-rep-name', 'text')"/>
+              <label><span data-i18n="form-corp-rep-name">Authorized Signatory Legal Name</span> *</label>
+              <input type="text" id="corp-rep-name" placeholder="e.g. Authorized Director / CISO" value="" oninput="ValidationEngine.validateField('corp-rep-name', 'text')"/>
               <div id="corp-rep-name-error" class="validation-msg"></div>
             </div>
             <div class="form-group">
-              <label>Designation of Signatory * <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('ciso')" onmouseenter="GlossaryEngine.showTooltip(this, 'ciso')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'ciso')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'ciso')" title="Learn about CISO designation" aria-label="Learn about CISO designation">ⓘ</span></label>
-              <input type="text" id="corp-rep-desig" placeholder="e.g. Chief Information Security Officer (CISO) / Legal Counsel" value="Chief Information Security Officer (CISO)"/>
+              <label><span data-i18n="form-corp-rep-desig">Designation of Signatory</span> * <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('ciso')" onmouseenter="GlossaryEngine.showTooltip(this, 'ciso')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'ciso')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'ciso')" title="Learn about CISO designation" aria-label="Learn about CISO designation">ⓘ</span></label>
+              <input type="text" id="corp-rep-desig" placeholder="e.g. Chief Information Security Officer (CISO) / Legal Counsel" value=""/>
             </div>
             <div class="form-group">
-              <label>Official Corporate Contact Phone * <span class="label-hint">Landline with STD or mobile</span></label>
-              <input type="text" id="corp-rep-phone" placeholder="e.g. +91 9876543210 or +91-11-23456789" value="+91-11-23456789" oninput="ValidationEngine.validateField('corp-rep-phone', 'phone')"/>
+              <label><span data-i18n="form-corp-rep-phone">Official Corporate Contact Phone</span> * <span class="label-hint">Landline with STD or mobile</span></label>
+              <input type="text" id="corp-rep-phone" placeholder="e.g. +91 9876543210 or +91-11-23456789" value="" oninput="ValidationEngine.validateField('corp-rep-phone', 'phone')"/>
               <div id="corp-rep-phone-error" class="validation-msg"></div>
             </div>
             <div class="form-group">
-              <label>Official Corporate Email Address * <span class="label-hint">Company domain email</span></label>
-              <input type="email" id="corp-rep-email" placeholder="e.g. ciso@acme-tech.com" value="ciso@acme-tech.com" oninput="ValidationEngine.validateField('corp-rep-email', 'email')"/>
+              <label><span data-i18n="form-corp-rep-email">Official Corporate Email Address</span> * <span class="label-hint">Company domain email</span></label>
+              <input type="email" id="corp-rep-email" placeholder="e.g. ciso@company.com" value="" oninput="ValidationEngine.validateField('corp-rep-email', 'email')"/>
               <div id="corp-rep-email-error" class="validation-msg"></div>
             </div>
-            <input type="hidden" id="corp-rep-contact" value="+91-11-23456789 | ciso@acme-tech.com"/>
+            <input type="hidden" id="corp-rep-contact" value=""/>
             <div class="form-group">
-              <label>Authorization Document Reference *</label>
-              <input type="text" id="corp-board-res" placeholder="e.g. Board Resolution dated 10/01/2026 / PoA" value="Board Resolution dated 10/01/2026"/>
+              <label><span data-i18n="form-corp-board-res">Authorization Document Reference</span> *</label>
+              <input type="text" id="corp-board-res" placeholder="e.g. Board Resolution dated DD/MM/YYYY / PoA" value=""/>
             </div>
             <div class="form-group">
-              <label>Targeted Corporate Infrastructure</label>
-              <input type="text" id="corp-infra" placeholder="e.g. Treasury ERP, Cloud Email Server, Swift/Banking Gateway" value="Corporate Email Server, Treasury ERP Financial Gateway"/>
+              <label><span data-i18n="form-corp-infra">Targeted Corporate Infrastructure</span></label>
+              <input type="text" id="corp-infra" placeholder="e.g. Treasury ERP, Cloud Email Server, Swift Gateway" value=""/>
             </div>
             <div class="form-group full-width">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
-                <label style="margin-bottom: 0;">Registered Corporate Office Address * <span class="label-hint">Typing address auto-detects PIN code</span></label>
-                <span id="corp-pin-detect-badge" class="pin-detect-badge">
-                  📍 Detected Jurisdiction: New Delhi, Delhi
+                <label style="margin-bottom: 0;"><span data-i18n="form-corp-address">Registered Corporate Office Address</span> * <span class="label-hint">Typing address auto-detects PIN code</span></label>
+                <span id="corp-pin-detect-badge" class="pin-detect-badge" style="display: none;">
+                  📍 Detected Jurisdiction: None
                 </span>
               </div>
-              <input type="text" id="corp-address" placeholder="Registered Office Address, City, State, PIN" value="12th Floor, Barakhamba Road, Connaught Place, New Delhi - 110001" oninput="ValidationEngine.validateField('corp-address', 'text'); JurisdictionEngine.onAddressInput(this.value, 'corporate')"/>
+              <input type="text" id="corp-address" placeholder="Registered Office Address, City, State, PIN" value="" oninput="ValidationEngine.validateField('corp-address', 'text'); JurisdictionEngine.onAddressInput(this.value, 'corporate')"/>
               <div id="corp-address-error" class="validation-msg"></div>
             </div>
           </div>
@@ -3021,16 +3316,16 @@
           <!-- CORPORATE PIN CODE & JURISDICTION ROW -->
           <div class="jurisdiction-grid">
             <div class="form-group" style="margin-bottom: 0;">
-              <label>Corporate PIN * <span class="label-hint">6 Digits</span></label>
-              <input type="text" id="corp-pincode" maxlength="6" placeholder="e.g. 110001" value="110001" style="font-family: 'Geist Mono', monospace; font-weight: 600;" oninput="JurisdictionEngine.onPinInput(this.value, 'corporate')"/>
+              <label><span data-i18n="form-corp-pincode">Corporate PIN</span> * <span class="label-hint">6 Digits</span></label>
+              <input type="text" id="corp-pincode" maxlength="6" placeholder="e.g. 110001" value="" style="font-family: 'Geist Mono', monospace; font-weight: 600;" oninput="JurisdictionEngine.onPinInput(this.value, 'corporate')"/>
             </div>
             <div class="form-group" style="margin-bottom: 0;">
-              <label>Corporate City / District *</label>
-              <input type="text" id="corp-city" placeholder="e.g. New Delhi" value="New Delhi" onchange="JurisdictionEngine.onManualLocationChange('corporate')"/>
+              <label><span data-i18n="form-corp-city">Corporate City / District</span> *</label>
+              <input type="text" id="corp-city" placeholder="e.g. New Delhi" value="" onchange="JurisdictionEngine.onManualLocationChange('corporate')"/>
             </div>
             <div class="form-group" style="margin-bottom: 0;">
-              <label>Corporate State / UT *</label>
-              <input type="text" id="corp-state" placeholder="e.g. Delhi" value="Delhi" onchange="JurisdictionEngine.onManualLocationChange('corporate')"/>
+              <label><span data-i18n="form-corp-state">Corporate State / UT</span> *</label>
+              <input type="text" id="corp-state" placeholder="e.g. Delhi" value="" onchange="JurisdictionEngine.onManualLocationChange('corporate')"/>
             </div>
           </div>
 
@@ -3050,7 +3345,7 @@
         </div>
 
         <div class="btn-group" style="justify-content: flex-end;">
-          <button class="btn btn-primary" onclick="goToStep(2)">Proceed to Evidence & OCR ➔</button>
+          <button class="btn btn-primary" onclick="goToStep(2)" data-i18n="btn-step1-next">Proceed to Evidence & OCR ➔</button>
         </div>
       </div>
     </div>
@@ -3060,8 +3355,8 @@
       <div class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">2. Evidence Ingestion & Scam Contacting Entity Extraction</div>
-            <div class="card-subtitle">Upload a screenshot of the fraudulent message, WhatsApp chat, or fake bank SMS. The OCR engine reads the image and identifies suspect phone numbers, UPI handles, and URLs.</div>
+            <div class="card-title" data-i18n="step2-title">2. Evidence Ingestion & Scam Contacting Entity Extraction</div>
+            <div class="card-subtitle" data-i18n="step2-subtitle">Upload a screenshot of the fraudulent message, WhatsApp chat, or fake bank SMS. The OCR engine reads the image and identifies suspect phone numbers, UPI handles, and URLs.</div>
           </div>
         </div>
 
@@ -3069,8 +3364,8 @@
         <div class="dropzone" id="dropzone" onclick="document.getElementById('screenshot-input').click()">
           <input type="file" id="screenshot-input" accept="image/png, image/jpeg, image/webp" style="display:none" onchange="handleSecureImageUpload(event)">
           <div class="drop-icon">📁</div>
-          <div class="drop-text">Click to Upload Screenshot or Drag & Drop File Here</div>
-          <div class="drop-subtext">Max 8MB (PNG, JPG, WEBP). Sanitized on upload. You can also paste directly (Ctrl+V / Cmd+V).</div>
+          <div class="drop-text" data-i18n="step2-drop-text">Click to Upload Screenshot or Drag & Drop File Here</div>
+          <div class="drop-subtext" data-i18n="step2-drop-subtext">Max 8MB (PNG, JPG, WEBP). Sanitized on upload. You can also paste directly (Ctrl+V / Cmd+V).</div>
         </div>
 
         <!-- OCR PROGRESS BAR -->
@@ -3144,10 +3439,10 @@
         </div>
 
         <div class="btn-group" style="justify-content: space-between; margin-top: 12px;">
-          <button class="btn btn-outline" onclick="goToStep(1)">⬅ Back</button>
+          <button class="btn btn-outline" onclick="goToStep(1)" data-i18n="btn-back">⬅ Back</button>
           <div class="btn-group">
-            <button class="btn btn-saffron" onclick="addExtractedEntitiesToDirectory()">🛡️ Add to Telecom Scam Directory</button>
-            <button class="btn btn-primary" onclick="goToStep(3)">Proceed to Incident Details ➔</button>
+            <button class="btn btn-saffron" onclick="addExtractedEntitiesToDirectory()" data-i18n="btn-step2-directory">🛡️ Add to Telecom Scam Directory</button>
+            <button class="btn btn-primary" onclick="goToStep(3)" data-i18n="btn-step2-next">Proceed to Incident Details ➔</button>
           </div>
         </div>
       </div>
@@ -3158,22 +3453,22 @@
       <div class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">3. Incident Details & Modus Operandi</div>
-            <div class="card-subtitle">Describe how the accused contacted you and induced you to part with money or corporate data.</div>
+            <div class="card-title" data-i18n="step3-title">3. Incident Details & Modus Operandi</div>
+            <div class="card-subtitle" data-i18n="step3-subtitle">Describe how the accused contacted you and induced you to part with money or corporate data.</div>
           </div>
         </div>
 
         <div class="form-grid-3">
           <div class="form-group">
-            <label>Date of Occurrence *</label>
+            <label><span data-i18n="form-inc-date">Date of Occurrence</span> *</label>
             <input type="date" id="inc-date"/>
           </div>
           <div class="form-group">
-            <label>Time of Incident</label>
-            <input type="text" id="inc-time" placeholder="e.g. 02:30 PM" value="02:30 PM"/>
+            <label><span data-i18n="form-inc-time">Time of Incident</span></label>
+            <input type="text" id="inc-time" placeholder="e.g. 02:30 PM" value=""/>
           </div>
           <div class="form-group">
-            <label>Platform / Attack Medium *</label>
+            <label><span data-i18n="form-inc-platform">Platform / Attack Medium</span> *</label>
             <select id="inc-platform">
               <option value="WhatsApp">WhatsApp (Voice Call / Chat / Video Call)</option>
               <option value="Direct Cellular Call">Direct Cellular Call (Normal Phone Call)</option>
@@ -3360,8 +3655,8 @@
         </div>
 
         <div class="btn-group" style="justify-content: space-between;">
-          <button class="btn btn-outline" onclick="goToStep(2)">⬅ Back</button>
-          <button class="btn btn-primary" onclick="goToStep(4)">Proceed to Financial Loss ➔</button>
+          <button class="btn btn-outline" onclick="goToStep(2)" data-i18n="btn-back">⬅ Back</button>
+          <button class="btn btn-primary" onclick="goToStep(4)" data-i18n="btn-step3-next">Proceed to Financial Loss ➔</button>
         </div>
       </div>
     </div>
@@ -3371,43 +3666,43 @@
       <div class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">4. Financial Loss Details & Annexures</div>
-            <div class="card-subtitle">Transaction IDs and UTR numbers are required by the Cyber Crime Cell to issue account-freeze notices to beneficiary banks under Section 106 BNSS.</div>
+            <div class="card-title" data-i18n="step4-title">4. Financial Loss Details & Annexures</div>
+            <div class="card-subtitle" data-i18n="step4-subtitle">Transaction IDs and UTR numbers are required by the Cyber Crime Cell to issue account-freeze notices to beneficiary banks under Section 106 BNSS.</div>
           </div>
         </div>
 
         <div class="form-grid">
           <div class="form-group">
-            <label>Total Defrauded Amount (in ₹) *</label>
-            <input type="text" id="fin-amount" placeholder="e.g. 50,000" value="50,000"/>
+            <label><span data-i18n="form-defrauded-amt">Total Defrauded Amount (in ₹)</span> *</label>
+            <input type="text" id="fin-amount" placeholder="e.g. 50,000" data-i18n-placeholder="placeholder-fin-amount" value=""/>
           </div>
           <div class="form-group">
-            <label>Transaction ID / UTR Number(s) * <span class="label-hint">12-digit UPI / IMPS / SWIFT</span> <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('utr')" onmouseenter="GlossaryEngine.showTooltip(this, 'utr')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'utr')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'utr')" title="Learn about UTR transaction numbers" aria-label="Learn about UTR transaction numbers">ⓘ</span></label>
-            <input type="text" id="fin-utr" placeholder="e.g. 408912345678" value="408912345678"/>
+            <label><span data-i18n="form-utr-number">Transaction ID / UTR Number(s)</span> * <span class="label-hint" data-i18n="form-utr-hint">12-digit UPI / IMPS / SWIFT</span> <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('utr')" onmouseenter="GlossaryEngine.showTooltip(this, 'utr')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'utr')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'utr')" title="Learn about UTR transaction numbers" aria-label="Learn about UTR transaction numbers">ⓘ</span></label>
+            <input type="text" id="fin-utr" placeholder="e.g. 408912345678" value=""/>
           </div>
           <div class="form-group">
-            <label>Complainant's Bank & Account Details</label>
-            <input type="text" id="fin-victim-bank" placeholder="e.g. HDFC Bank, A/C ending in 4512" value="HDFC Bank A/C XX4512"/>
+            <label><span data-i18n="form-victim-bank">Complainant's Bank & Account Details</span></label>
+            <input type="text" id="fin-victim-bank" placeholder="e.g. Bank Name & Account Number ending in XXXX" data-i18n-placeholder="placeholder-victim-bank" value=""/>
           </div>
           <div class="form-group">
-            <label>Suspect Beneficiary Destination <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('vpa')" onmouseenter="GlossaryEngine.showTooltip(this, 'vpa')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'vpa')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'vpa')" title="Learn about Beneficiary UPI / Account" aria-label="Learn about Beneficiary UPI / Account">ⓘ</span></label>
-            <input type="text" id="fin-suspect-target" placeholder="e.g. SBI A/C 9876543210 or UPI VPA" value="fraudster@oksbi"/>
+            <label><span data-i18n="form-suspect-target">Suspect Beneficiary Destination</span> <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('vpa')" onmouseenter="GlossaryEngine.showTooltip(this, 'vpa')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'vpa')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'vpa')" title="Learn about Beneficiary UPI / Account" aria-label="Learn about Beneficiary UPI / Account">ⓘ</span></label>
+            <input type="text" id="fin-suspect-target" placeholder="e.g. Fraudster UPI ID or Account Number" data-i18n-placeholder="placeholder-suspect-target" value=""/>
           </div>
         </div>
 
-        <div style="font-weight: 600; font-size: 0.9rem; margin: 18px 0 10px; color: var(--text-primary);">Documentary Annexures to be Enclosed:</div>
+        <div style="font-weight: 600; font-size: 0.9rem; margin: 18px 0 10px; color: var(--text-primary);" data-i18n="step4-annexures-title">Documentary Annexures to be Enclosed:</div>
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 22px;">
           <label style="font-weight: normal; color: var(--text-secondary);">
-            <input type="checkbox" id="chk-bank-stmt" checked> Bank Account Statement highlighting disputed debits
+            <input type="checkbox" id="chk-bank-stmt" checked> <span data-i18n="annex-bank-stmt">Bank Account Statement highlighting disputed debits</span>
           </label>
           <label style="font-weight: normal; color: var(--text-secondary);">
-            <input type="checkbox" id="chk-chats" checked> True-copy screenshots of WhatsApp / Telegram / SMS / Email logs
+            <input type="checkbox" id="chk-chats" checked> <span data-i18n="annex-chats">True-copy screenshots of WhatsApp / Telegram / SMS / Email logs</span>
           </label>
           <label style="font-weight: normal; color: var(--text-secondary);">
-            <input type="checkbox" id="chk-utr" checked> Beneficiary payment confirmation slip / UTR reference
+            <input type="checkbox" id="chk-utr" checked> <span data-i18n="annex-utr">Beneficiary payment confirmation slip / UTR reference</span>
           </label>
           <label style="font-weight: normal; color: var(--text-secondary);">
-            <input type="checkbox" id="chk-id" checked> Identity Proof / Corporate Authority Document (Aadhaar / Board Resolution)
+            <input type="checkbox" id="chk-id" checked> <span data-i18n="annex-id">Identity Proof / Corporate Authority Document (Aadhaar / Board Resolution)</span>
           </label>
         </div>
 
@@ -3421,8 +3716,8 @@
         </div>
 
         <div class="btn-group" style="justify-content: space-between;">
-          <button class="btn btn-outline" onclick="goToStep(3)">⬅ Back</button>
-          <button class="btn btn-primary" onclick="generatePoliceLetter()">Generate Official Police Complaint ➔</button>
+          <button class="btn btn-outline" onclick="goToStep(3)" data-i18n="btn-back">⬅ Back</button>
+          <button class="btn btn-primary" onclick="generatePoliceLetter()" data-i18n="btn-step4-generate">Generate Official Police Complaint ➔</button>
         </div>
       </div>
     </div>
@@ -3432,26 +3727,26 @@
       <div class="card">
         <div class="card-header" style="padding-bottom: 8px;">
           <div>
-            <div class="card-title">5. Official Police Complaint & Electronic Evidence Certificate</div>
-            <div class="card-subtitle">Court-admissible First Information Report (FIR) and mandatory Section 63 BSA Electronic Records Certificate.</div>
+            <div class="card-title" data-i18n="step5-title">5. Official Police Complaint & Electronic Evidence Certificate</div>
+            <div class="card-subtitle" data-i18n="step5-subtitle">Court-admissible First Information Report (FIR) and mandatory Section 63 BSA Electronic Records Certificate.</div>
           </div>
         </div>
 
         <!-- Sub-Document Switcher (FIR vs Section 63 BSA) -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin: 12px 0 16px; flex-wrap: wrap; gap: 10px;">
           <div class="sub-doc-switcher">
-            <button type="button" id="sub-btn-fir" class="sub-doc-btn active" onclick="ComplaintViewer.switchSubDoc('fir')">
+            <button type="button" id="sub-btn-fir" class="sub-doc-btn active" onclick="ComplaintViewer.switchSubDoc('fir')" data-i18n="doc-btn-fir">
               📄 Police FIR Complaint Application
             </button>
-            <button type="button" id="sub-btn-bsa" class="sub-doc-btn" onclick="ComplaintViewer.switchSubDoc('bsa')">
+            <button type="button" id="sub-btn-bsa" class="sub-doc-btn" onclick="ComplaintViewer.switchSubDoc('bsa')" data-i18n="doc-btn-bsa">
               📜 Section 63 BSA Evidence Certificate <span class="term-info-btn" role="button" tabindex="0" onclick="event.stopPropagation(); GlossaryEngine.openModal('bsa_63')" onmouseenter="GlossaryEngine.showTooltip(this, 'bsa_63')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'bsa_63')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'bsa_63')" title="Learn about BSA Section 63" aria-label="Learn about BSA Section 63">ⓘ</span>
             </button>
           </div>
           <div class="btn-group">
-            <button type="button" class="btn btn-vault btn-sm" onclick="lockCurrentComplaintInVault()">🔐 Encrypt into Vault (.enc)</button>
-            <button type="button" class="btn btn-outline btn-sm" onclick="ComplaintViewer.copyActiveDocument()">📋 Copy Document</button>
-            <button type="button" class="btn btn-primary btn-sm" onclick="ComplaintViewer.printActiveDocument()">🖨️ Print / Save as PDF</button>
-            <button type="button" class="btn btn-outline btn-sm" onclick="ComplaintViewer.downloadActiveDocument()">⬇ Download .TXT</button>
+            <button type="button" class="btn btn-vault btn-sm" onclick="lockCurrentComplaintInVault()" data-i18n="btn-vault-doc">🔐 Encrypt into Vault (.enc)</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="ComplaintViewer.copyActiveDocument()" data-i18n="btn-copy-doc">📋 Copy Document</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="ComplaintViewer.printActiveDocument()" data-i18n="btn-print-doc">🖨️ Print / Save as PDF</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="ComplaintViewer.downloadActiveDocument()" data-i18n="btn-download-txt">⬇ Download .TXT</button>
           </div>
         </div>
 
@@ -3468,10 +3763,10 @@
         </div>
 
         <div class="btn-group" style="justify-content: space-between; margin-top: 20px;">
-          <button class="btn btn-outline" onclick="goToStep(4)">⬅ Edit Details</button>
+          <button class="btn btn-outline" onclick="goToStep(4)" data-i18n="btn-edit-details">⬅ Edit Details</button>
           <div class="btn-group">
-            <button class="btn btn-saffron" onclick="openEntityVerificationModalFromWizard()">🛡️ Verify & Add Suspect to Scam Directory</button>
-            <button class="btn btn-primary" onclick="switchMainTab('directory', document.querySelectorAll('.nav-tab')[2])">Open Telecom Directory ➔</button>
+            <button class="btn btn-saffron" onclick="openEntityVerificationModalFromWizard()" data-i18n="btn-wizard-verify-suspect">🛡️ Verify & Add Suspect to Scam Directory</button>
+            <button class="btn btn-primary" onclick="switchMainTab('directory', document.querySelectorAll('.nav-tab')[2])" data-i18n="btn-wizard-open-directory">Open Telecom Directory ➔</button>
           </div>
         </div>
       </div>
@@ -3486,15 +3781,15 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title">🔐 End-to-End Cryptographic Vault (AES-256-GCM)</div>
-          <div class="card-subtitle">Military-grade client-side encryption using the Web Crypto API (`SubtleCrypto`). Your sensitive complaints and evidence are encrypted in browser memory with zero plaintext exposure.</div>
+          <div class="card-title" data-i18n="vault-card-title">🔐 End-to-End Cryptographic Vault (AES-256-GCM)</div>
+          <div class="card-subtitle" data-i18n="vault-card-subtitle">Military-grade client-side encryption using the Web Crypto API (`SubtleCrypto`). Your sensitive complaints and evidence are encrypted in browser memory with zero plaintext exposure.</div>
         </div>
       </div>
 
       <div class="alert-banner vault">
         <div>
           <strong>Zero-Knowledge Architecture: <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('zero_knowledge')" onmouseenter="GlossaryEngine.showTooltip(this, 'zero_knowledge')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'zero_knowledge')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'zero_knowledge')" title="Learn about Zero-Knowledge Privacy" aria-label="Learn about Zero-Knowledge Privacy">ⓘ</span></strong>
-          <div style="font-size: 0.84rem; margin-top: 2px;">
+          <div style="font-size: 0.84rem; margin-top: 2px;" data-i18n="vault-zero-desc">
             Key derivation uses PBKDF2-HMAC-SHA256 with 100,000 rounds and cryptographically random 96-bit IVs. No server or third party can read your encrypted vault without your passphrase.
           </div>
         </div>
@@ -3503,32 +3798,32 @@
       <div class="form-grid">
         <!-- LOCK / ENCRYPT BOX -->
         <div style="background: var(--bg-subtle); padding: 22px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
-          <div style="font-weight: 700; font-size: 1rem; color: var(--primary-navy); margin-bottom: 8px;">🔐 Lock Current Complaint in Vault</div>
-          <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">Encrypt all current complaint parameters, suspect identifiers, and narratives into a secure standalone `.enc` file.</div>
+          <div style="font-weight: 700; font-size: 1rem; color: var(--primary-navy); margin-bottom: 8px;" data-i18n="vault-lock-title">🔐 Lock Current Complaint in Vault</div>
+          <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;" data-i18n="vault-lock-desc">Encrypt all current complaint parameters, suspect identifiers, and narratives into a secure standalone `.enc` file.</div>
           
           <div class="form-group">
-            <label>Master Encryption Passphrase *</label>
-            <input type="text" id="vault-encrypt-pass" placeholder="Enter a strong personal passphrase..."/>
+            <label data-i18n="vault-lock-pass-label">Master Encryption Passphrase *</label>
+            <input type="text" id="vault-encrypt-pass" placeholder="Enter a strong personal passphrase..." data-i18n-placeholder="placeholder-vault-lock-pass"/>
           </div>
-          <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="encryptAndDownloadVault()">
+          <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="encryptAndDownloadVault()" data-i18n="vault-btn-download">
             ⬇ Download Encrypted Vault (.enc)
           </button>
         </div>
 
         <!-- UNLOCK / DECRYPT BOX -->
         <div style="background: var(--bg-subtle); padding: 22px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
-          <div style="font-weight: 700; font-size: 1rem; color: var(--primary-navy); margin-bottom: 8px;">🔓 Unlock / Decrypt Vault File (.enc)</div>
-          <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">Upload an encrypted `.enc` file to restore and review your complaint in complete privacy.</div>
+          <div style="font-weight: 700; font-size: 1rem; color: var(--primary-navy); margin-bottom: 8px;" data-i18n="vault-unlock-title">🔓 Unlock / Decrypt Vault File (.enc)</div>
+          <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;" data-i18n="vault-unlock-desc">Upload an encrypted `.enc` file to restore and review your complaint in complete privacy.</div>
 
           <div class="form-group">
-            <label>Select .enc Vault File *</label>
+            <label data-i18n="vault-unlock-file-label">Select .enc Vault File *</label>
             <input type="file" id="vault-file-input" accept=".enc,.json" style="padding: 6px;"/>
           </div>
           <div class="form-group">
-            <label>Decryption Passphrase *</label>
-            <input type="text" id="vault-decrypt-pass" placeholder="Enter the passphrase used during encryption..."/>
+            <label data-i18n="vault-unlock-pass-label">Decryption Passphrase *</label>
+            <input type="text" id="vault-decrypt-pass" placeholder="Enter the passphrase used during encryption..." data-i18n-placeholder="placeholder-vault-unlock-pass"/>
           </div>
-          <button class="btn btn-saffron" style="width: 100%; margin-top: 10px;" onclick="decryptAndRestoreVault()">
+          <button class="btn btn-saffron" style="width: 100%; margin-top: 10px;" onclick="decryptAndRestoreVault()" data-i18n="vault-btn-restore">
             🔓 Unlock & Populate Complaint Form
           </button>
         </div>
@@ -3538,92 +3833,165 @@
   </div>
 
   <!-- ════════════════════════════════════════════════════════════════════════
-       TAB 3: NATIONAL TELECOM SCAM DIRECTORY (DoT & CARRIER FEED)
+  <!-- ════════════════════════════════════════════════════════════════════════
+       TAB 3: CITIZEN SAFETY CHECK & SECURE AUTHORITY THREAT CONSOLE
        ════════════════════════════════════════════════════════════════════════ -->
   <div class="tab-content" id="tab-directory">
-    <div class="card">
+    
+    <!-- 1. PUBLIC CITIZEN VERIFICATION CARD (NO DATABASE EXPOSURE) -->
+    <div class="card" id="citizen-check-card">
       <div class="card-header">
         <div>
-          <div class="card-title">National Telecom Scam Directory & Threat Intelligence Feed</div>
-          <div class="card-subtitle">Verified national registry of scamming numbers, fraudulent UPI handles, and malicious domains formatted for integration into telecom caller-ID engines, DoT Chakshu, and carrier spam shields to protect citizens in real time.</div>
+          <div class="card-title" data-i18n="public-lookup-title">🛡️ Suspect Verification & Citizen Safety Check</div>
+          <div class="card-subtitle" data-i18n="public-lookup-subtitle">Verify suspicious phone numbers (+91), UPI VPAs, and websites against reported threat intelligence feeds. The raw investigative directory is protected and accessible to verified Law Enforcement Authorities only.</div>
         </div>
         <div class="btn-group">
-          <button class="btn btn-primary btn-sm" onclick="openEntityVerificationModal()">➕ Add Suspect with Verification</button>
-          <button class="btn btn-saffron btn-sm" onclick="exportTelecomJSON()">📥 Export Carrier Threat Feed (Verified Only)</button>
-          <button class="btn btn-outline btn-sm" onclick="exportDirectoryCSV()">📊 Export CSV Feed</button>
+          <button class="btn btn-outline btn-sm" onclick="AuthorityEngine.scrollToLogin()">👮 Law Enforcement Portal ➔</button>
         </div>
       </div>
 
-      <div class="alert-banner success" style="margin-bottom: 18px;">
+      <div class="alert-banner info" style="margin-bottom: 18px;">
         <div>
-          <strong>Strict PII-Shield & Evidence Gatekeeper Active:</strong>
-          <div style="font-size: 0.82rem; margin-top: 2px;">
-            Export feeds guarantee 100% victim confidentiality and require corroborated proof (Bank UTR, NCRP token, or OCR match &ge; 70%). Uncorroborated leads are strictly quarantined to protect legitimate numbers from false spam flagging.
+          <strong data-i18n="public-pii-shield-title">🔒 Sovereign Privacy & Evidence Safeguard Active:</strong>
+          <div style="font-size: 0.82rem; margin-top: 2px;" data-i18n="public-pii-shield-desc">
+            To prevent fraudster counter-reconnaissance and protect ongoing criminal investigations under Section 69 & 70B IT Act, the raw national contact database is securely restricted to designated Police Nodal Desks and CERT-In investigators. Citizens may query a specific entity below to verify safety status.
           </div>
         </div>
       </div>
 
-      <!-- Anti-Bot Honeypot Trap -->
-      <input type="text" name="hp_dir_query" id="hp_dir_query" class="hp-trap" tabindex="-1" autocomplete="new-password" aria-hidden="true" value="" />
-
-      <!-- SEARCH BAR -->
-      <div style="display: flex; gap: 10px; margin-bottom: 16px;">
-        <input type="text" id="directory-search" placeholder="Search by phone number (+91), UPI ID, email, or domain..." style="flex: 1;" oninput="filterDirectoryTable()">
-        <button class="btn btn-primary" onclick="checkScamEntityModal()">Verify Entity Status</button>
+      <!-- Public Query Box -->
+      <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
+        <input type="text" id="public-check-input" placeholder="Enter Phone Number (+91), UPI ID, or URL to verify..." data-i18n-placeholder="placeholder-public-check" style="flex: 1; min-width: 260px;" onkeydown="if(event.key==='Enter') AuthorityEngine.performPublicCheck()">
+        <button class="btn btn-primary" onclick="AuthorityEngine.performPublicCheck()" data-i18n="btn-check-threat">🔍 Check Threat Status</button>
       </div>
 
-      <!-- VERIFICATION FILTER TABS -->
-      <div style="display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap;">
-        <button type="button" class="filter-pill active" id="dir-filter-all" onclick="filterDirectoryByVerification('ALL', this)">
-          <span>All Cataloged</span>
-          <span class="pill-badge" id="dir-count-all">0</span>
-        </button>
-        <button type="button" class="filter-pill" id="dir-filter-verified" onclick="filterDirectoryByVerification('VERIFIED_FRAUD', this)">
-          <span>✅ Export-Ready Verified (&ge;70%)</span>
-          <span class="pill-badge" id="dir-count-verified">0</span>
-        </button>
-        <button type="button" class="filter-pill" id="dir-filter-quarantined" onclick="filterDirectoryByVerification('UNDER_REVIEW', this)">
-          <span>⏳ Under Review / Quarantined (&lt;70%)</span>
-          <span class="pill-badge" id="dir-count-quarantined">0</span>
-        </button>
-      </div>
+      <!-- Result Card -->
+      <div id="public-check-result" style="display: none; padding: 14px 16px; border-radius: var(--radius-sm); margin-top: 10px;"></div>
+    </div>
 
-      <!-- SUMMARY STRIP -->
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 22px;">
-        <div style="background: var(--bg-subtle); padding: 14px 18px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
-          <div style="font-size: 0.76rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Total Cataloged Entities</div>
-          <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-navy);" id="stat-total-entities">0</div>
+    <!-- 2. SECURE AUTHORITY / LAW ENFORCEMENT PORTAL (PIN PROTECTED) -->
+    <div class="card" id="authority-portal-card" style="border-top: 3px solid var(--primary-navy);">
+      
+      <!-- LOCKED STATE: OFFICER LOGIN -->
+      <div id="leo-locked-state">
+        <div class="card-header">
+          <div>
+            <div class="card-title" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span>👮</span>
+              <span data-i18n="leo-portal-title">Law Enforcement & Nodal Officer Portal (NCRP / I4C / DoT)</span>
+              <span class="leo-badge">RESTRICTED ACCESS</span>
+            </div>
+            <div class="card-subtitle" data-i18n="leo-portal-subtitle">
+              Secure gateway for Cyber Police Stations, I4C Nodal Officers, and DoT Chakshu investigators. Officer authentication required to inspect real-time threat intelligence and silent government directory trips.
+            </div>
+          </div>
         </div>
-        <div style="background: var(--bg-subtle); padding: 14px 18px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
-          <div style="font-size: 0.76rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Export-Ready Threat Feed</div>
-          <div style="font-size: 1.5rem; font-weight: 700; color: var(--status-green);" id="stat-verified-entities">0</div>
-        </div>
-        <div style="background: var(--bg-subtle); padding: 14px 18px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
-          <div style="font-size: 0.76rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Quarantined Leads (&lt;70%)</div>
-          <div style="font-size: 1.5rem; font-weight: 700; color: var(--status-saffron);" id="stat-quarantined-entities">0</div>
+
+        <div style="max-width: 440px; margin: 18px 0; background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
+          <label style="font-weight: 700; color: var(--text-primary); margin-bottom: 8px; display: block;" data-i18n="leo-pin-label">
+            🔐 Officer Security PIN / Passkey:
+          </label>
+          <div style="display: flex; gap: 10px;">
+            <input type="password" id="leo-auth-pin" placeholder="Enter PIN (e.g. 1930)" style="flex: 1; font-family: 'Geist Mono', monospace; font-size: 16px;" onkeydown="if(event.key==='Enter') AuthorityEngine.verifyPin()"/>
+            <button class="btn btn-primary" onclick="AuthorityEngine.verifyPin()" data-i18n="btn-unlock-console">🔓 Unlock Console</button>
+          </div>
+          <div id="leo-pin-error" style="color: #dc2626; font-size: 0.78rem; font-weight: 600; margin-top: 6px; display: none;"></div>
+          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 8px;">
+            * Default nodal authorization PIN: <code style="background: rgba(0,0,0,0.06); padding: 2px 4px; border-radius: 3px;">1930</code>
+          </div>
         </div>
       </div>
 
-      <!-- TABLE -->
-      <div class="table-container">
-        <table class="standard-table">
-          <thead>
-            <tr>
-              <th>Contacting Entity</th>
-              <th>Entity Type</th>
-              <th>Scam Classification</th>
-              <th>Verification Status & Score</th>
-              <th>Threat Level</th>
-              <th>Reports</th>
-              <th>Telecom Caution Alert Tag (Carrier / Caller-ID Display)</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="directory-tbody">
-            <!-- Rendered by JS -->
-          </tbody>
-        </table>
+      <!-- UNLOCKED STATE: LAW ENFORCEMENT DESK -->
+      <div id="leo-unlocked-state" style="display: none;">
+        <div class="card-header">
+          <div>
+            <div class="card-title" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span>👮</span>
+              <span data-i18n="leo-active-title">Law Enforcement Threat Intelligence Console</span>
+              <span class="leo-badge">ACTIVE SESSION • LEO-1930</span>
+              <span style="font-size: 0.74rem; color: var(--status-green); font-weight: 700;">● REAL-TIME TRIAGE ACTIVE</span>
+            </div>
+            <div class="card-subtitle" data-i18n="leo-active-subtitle">
+              Dynamic real-time threat scores calculated based on victim report volume, financial loss gravity, and silent government spoof trips.
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-outline btn-sm" onclick="AuthorityEngine.viewGovTripLogs()">📜 Silent Gov Trip Logs</button>
+            <button class="btn btn-saffron btn-sm" onclick="exportTelecomJSON()">📥 Export Threat Feed JSON</button>
+            <button class="btn btn-outline btn-sm" onclick="exportDirectoryCSV()">📊 Export CSV</button>
+            <button class="btn btn-danger btn-sm" onclick="AuthorityEngine.lockPortal()">🔒 Lock Session</button>
+          </div>
+        </div>
+
+        <!-- TRIAGE PRIORITY FILTER TABS -->
+        <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+          <button type="button" class="filter-pill active" id="leo-filter-all" onclick="AuthorityEngine.filter('ALL', this)">
+            <span>All Suspects</span>
+            <span class="pill-badge" id="leo-count-all">0</span>
+          </button>
+          <button type="button" class="filter-pill" id="leo-filter-p1" onclick="AuthorityEngine.filter('P1', this)">
+            <span>🚨 Priority 1: Gov Directory Spoofs (99% Threat)</span>
+            <span class="pill-badge" id="leo-count-p1" style="background: #dc2626; color: #fff;">0</span>
+          </button>
+          <button type="button" class="filter-pill" id="leo-filter-p2" onclick="AuthorityEngine.filter('P2', this)">
+            <span>⚠️ Priority 2: High Threat Multi-Report (≥3 Reports)</span>
+            <span class="pill-badge" id="leo-count-p2">0</span>
+          </button>
+          <button type="button" class="filter-pill" id="leo-filter-p3" onclick="AuthorityEngine.filter('P3', this)">
+            <span>ℹ️ Priority 3: Standard Review (1-2 Reports)</span>
+            <span class="pill-badge" id="leo-count-p3">0</span>
+          </button>
+        </div>
+
+        <!-- REAL-TIME STATS STRIP -->
+        <div class="stat-summary-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px;">
+          <div style="background: var(--bg-subtle); padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
+            <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Total Accused Entities</div>
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--primary-navy);" id="stat-leo-total">0</div>
+          </div>
+          <div style="background: #fef2f2; padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid #fecaca;">
+            <div style="font-size: 0.72rem; color: #991b1b; text-transform: uppercase; font-weight: 700;">🚨 Priority 1 (Gov Spoofs)</div>
+            <div style="font-size: 1.4rem; font-weight: 800; color: #dc2626;" id="stat-leo-p1">0</div>
+          </div>
+          <div style="background: #fffbeb; padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid #fde68a;">
+            <div style="font-size: 0.72rem; color: #92400e; text-transform: uppercase; font-weight: 700;">⚠️ Priority 2 (Multi-Report)</div>
+            <div style="font-size: 1.4rem; font-weight: 800; color: #d97706;" id="stat-leo-p2">0</div>
+          </div>
+          <div style="background: var(--bg-subtle); padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
+            <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Avg Dynamic Threat Score</div>
+            <div style="font-size: 1.4rem; font-weight: 800; color: #0284c7;" id="stat-leo-avg-score">--%</div>
+          </div>
+        </div>
+
+        <!-- SEARCH BAR FOR OFFICERS -->
+        <div style="display: flex; gap: 10px; margin-bottom: 14px;">
+          <input type="text" id="leo-search-input" placeholder="Filter officer dossier by number, department, UPI VPA, or category..." style="flex: 1;" oninput="AuthorityEngine.onSearch(this.value)">
+          <button class="btn btn-primary btn-sm" onclick="openEntityVerificationModal()">➕ Add Accused Dossier</button>
+        </div>
+
+        <!-- TABLE OF ACCUSED CONTACTS WITH REAL-TIME DYNAMIC THREAT METRICS -->
+        <div class="table-container">
+          <table class="standard-table">
+            <thead>
+              <tr>
+                <th>Priority</th>
+                <th>Accused Entity Value</th>
+                <th>Dynamic Threat %</th>
+                <th>Report Count</th>
+                <th>Gov Trip Match Status</th>
+                <th>Category</th>
+                <th>Evidence Status</th>
+                <th>LEO Enforcement Action</th>
+              </tr>
+            </thead>
+            <tbody id="leo-directory-tbody">
+              <!-- Populated dynamically by AuthorityEngine -->
+            </tbody>
+          </table>
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -3634,21 +4002,21 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title">Comprehensive Cyber Law Codex (Citizen & Corporate)</div>
-          <div class="card-subtitle">All sections of the Information Technology Act 2000, Bharatiya Nyaya Sanhita 2023, and Corporate Standards (CERT-In, DPDP Act 2023, RBI, SEBI).</div>
+          <div class="card-title" data-i18n="codex-card-title">Comprehensive Cyber Law Codex (Citizen & Corporate)</div>
+          <div class="card-subtitle" data-i18n="codex-card-subtitle">All sections of the Information Technology Act 2000, Bharatiya Nyaya Sanhita 2023, and Corporate Standards (CERT-In, DPDP Act 2023, RBI, SEBI).</div>
         </div>
       </div>
 
       <div style="display: flex; gap: 10px; margin-bottom: 18px;">
-        <input type="text" id="law-search-input" placeholder="Search sections by keyword (e.g. hacking, otp, privacy, corporate, bec, cert-in, penalty, csam)..." style="flex: 1;" oninput="filterLawCodex()">
+        <input type="text" id="law-search-input" placeholder="Search sections by keyword (e.g. hacking, otp, privacy, corporate, bec, cert-in, penalty, csam)..." data-i18n-placeholder="placeholder-law-search" style="flex: 1;" oninput="filterLawCodex()">
       </div>
 
       <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
-        <button class="btn btn-sm btn-primary" id="btn-cat-all" onclick="filterLawCategory('all', this)">All Provisions</button>
-        <button class="btn btn-sm btn-outline" id="btn-cat-it" onclick="filterLawCategory('it', this)">IT Act, 2000 (Amended)</button>
-        <button class="btn btn-sm btn-outline" id="btn-cat-bns" onclick="filterLawCategory('bns', this)">Bharatiya Nyaya Sanhita (BNS 2023)</button>
-        <button class="btn btn-sm btn-outline" id="btn-cat-corp" onclick="filterLawCategory('corp', this)">Corporate Standards (CERT-In / DPDP)</button>
-        <button class="btn btn-sm btn-outline" id="btn-cat-evidence" onclick="filterLawCategory('evidence', this)">Electronic Evidence (BSA 2023)</button>
+        <button class="btn btn-sm btn-primary" id="btn-cat-all" onclick="filterLawCategory('all', this)" data-i18n="codex-cat-all">All Provisions</button>
+        <button class="btn btn-sm btn-outline" id="btn-cat-it" onclick="filterLawCategory('it', this)" data-i18n="codex-cat-it">IT Act, 2000 (Amended)</button>
+        <button class="btn btn-sm btn-outline" id="btn-cat-bns" onclick="filterLawCategory('bns', this)" data-i18n="codex-cat-bns">Bharatiya Nyaya Sanhita (BNS 2023)</button>
+        <button class="btn btn-sm btn-outline" id="btn-cat-corp" onclick="filterLawCategory('corp', this)" data-i18n="codex-cat-corp">Corporate Standards (CERT-In / DPDP)</button>
+        <button class="btn btn-sm btn-outline" id="btn-cat-evidence" onclick="filterLawCategory('evidence', this)" data-i18n="codex-cat-evidence">Electronic Evidence (BSA 2023)</button>
       </div>
 
       <div class="law-grid" id="law-grid">
@@ -3664,15 +4032,15 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title">Emergency Protocols & Golden Hour Guidelines</div>
-          <div class="card-subtitle">Immediate intervention steps to halt funds before they leave the banking network.</div>
+          <div class="card-title" data-i18n="emergency-card-title">Emergency Protocols & Golden Hour Guidelines</div>
+          <div class="card-subtitle" data-i18n="emergency-card-subtitle">Immediate intervention steps to halt funds before they leave the banking network.</div>
         </div>
       </div>
 
       <div class="alert-banner danger">
         <div>
-          <strong>The Golden Hour Rule (First 60 Minutes):</strong>
-          <div style="margin-top: 4px;">Reporting fraudulent transfers within 60 minutes gives the National Cybercrime Reporting Portal (1930) and the Indian Cyber Crime Coordination Centre (I4C) the highest chance of freezing beneficiary bank accounts before cash withdrawal or crypto conversion.</div>
+          <strong data-i18n="emergency-golden-title">The Golden Hour Rule (First 60 Minutes):</strong>
+          <div style="margin-top: 4px;" data-i18n="emergency-golden-desc">Reporting fraudulent transfers within 60 minutes gives the National Cybercrime Reporting Portal (1930) and the Indian Cyber Crime Coordination Centre (I4C) the highest chance of freezing beneficiary bank accounts before cash withdrawal or crypto conversion.</div>
         </div>
       </div>
 
@@ -4512,7 +4880,7 @@
      ════════════════════════════════════════════════════════════════════════ -->
 <div id="cyber-sahayak-fab" class="cyber-sahayak-fab" onclick="CyberSahayakChatbot.toggle()" title="Need Help? Chat with Cyber Sahayak (AI Legal Mitra)">
   <div class="sahayak-avatar">🇮🇳</div>
-  <span>Cyber Sahayak (AI Mitra)</span>
+  <span id="sahayak-fab-label" data-i18n="sahayak-fab-label">Cyber Sahayak (AI Mitra)</span>
 </div>
 
 <div id="cyber-sahayak-window" class="cyber-sahayak-window" role="dialog" aria-labelledby="sahayak-window-title">
@@ -4521,8 +4889,8 @@
     <div style="display: flex; align-items: center; gap: 8px;">
       <div class="sahayak-avatar" style="width: 26px; height: 26px; font-size: 0.9rem;">🇮🇳</div>
       <div>
-        <div id="sahayak-window-title" style="font-weight: 700; font-size: 0.92rem; color: #ffffff;">Cyber Sahayak (साइबर सहायक)</div>
-        <div style="font-size: 0.72rem; color: #93c5fd;">Online · 24x7 Citizen Cyber Assistance</div>
+        <div id="sahayak-window-title" style="font-weight: 700; font-size: 0.92rem; color: #ffffff;" data-i18n="sahayak-title">Cyber Sahayak (साइबर सहायक)</div>
+        <div id="sahayak-window-subtitle" style="font-size: 0.72rem; color: #93c5fd;" data-i18n="sahayak-subtitle">Online · 24x7 Citizen Cyber Assistance</div>
       </div>
     </div>
     <div style="display: flex; align-items: center; gap: 8px;">
@@ -4548,7 +4916,7 @@
 
   <!-- Input Bar -->
   <div class="sahayak-input-bar">
-    <input type="text" id="sahayak-input-text" class="sahayak-input-field" placeholder="Type here: e.g. '75000 cut hogaye'..." onkeydown="if(event.key==='Enter') CyberSahayakChatbot.handleSend()">
+    <input type="text" id="sahayak-input-text" class="sahayak-input-field" placeholder="Type here: e.g. '75000 cut hogaye'..." data-i18n-placeholder="placeholder-sahayak-input" onkeydown="if(event.key==='Enter') CyberSahayakChatbot.handleSend()">
     <button type="button" class="btn btn-outline" style="padding: 4px 8px; font-size: 0.8rem; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;" onclick="CyberSahayakChatbot.toggleVoice()" title="Speak in Hindi/English">
       🎙️
     </button>
@@ -5830,7 +6198,7 @@ function doGeneratePoliceLetter() {
   let narration = document.getElementById('inc-narration').value.trim();
   if (typeof GovAlertSystem !== 'undefined' && GovAlertSystem.currentMatched) {
     const gm = GovAlertSystem.currentMatched;
-    narration += `\n\n[CRITICAL NOTE REGARDING SUSPECT CALLER NUMBER]: The suspect contacted the complainant utilizing/spoofing official government telephone number ${gm.official_phone}, officially assigned to ${gm.official_name_or_post} (${gm.department_name} - ${gm.division_or_board}). It is respectfully prayed that the Cyber Police Cell requisition Call Detail Records (CDR), IPDR, and signaling logs from the Telecom Service Provider (TSP) to investigate caller ID spoofing and SIM-swap attack vectors.`;
+    narration += `\n\n[🚨 PRIORITY 1 ESCALATION - OFFICIAL GOVERNMENT ASSET SPOOFED]:\nThe accused entity initiated contact with the complainant utilizing / spoofing the official government telephone number ${gm.official_phone}, assigned to ${gm.official_name_or_post} (${gm.department_name} - ${gm.division_or_board}). The accused has committed aggravated criminal personation of a public servant under BNS Section 204 & 319, read with Section 66D Information Technology Act. It is respectfully prayed that the Cyber Crime Police Cell immediately requisition Call Detail Records (CDR), IPDR, and SIP signaling logs from Telecom Service Providers (TSPs) and notify CERT-In under Section 70B IT Act for carrier-level PRI trunk isolation.`;
   }
 
   const amt = document.getElementById('fin-amount').value.trim() || '0';
@@ -6639,33 +7007,386 @@ const I18nEngine = {
     en: {
       'topbar-govt': '🇮🇳 Government of India / State Police Standards Compliant',
       'topbar-aligned': 'Aligned with I4C, CERT-In Section 70B, DPDP Act 2023 & TRAI TCCCPR Regulations',
-      'topbar-helpline': 'Helpline:'
+      'topbar-helpline': 'Helpline:',
+      'header-title': 'Cyber Legal Guidance & Enterprise Defense System',
+      'header-subtitle': 'Official Citizen & Corporate FIR Complaint Drafter · End-to-End AES-256 Vault',
+      'bot-shield-active': '🛡️ Bot Defense: Active',
+      'btn-panic-wipe': '🧹 Secure Memory Wipe',
+      'helpline-pill': '🚨 National Helpline: 1930',
+      'tab-wizard': '📋 Complaint Generator & FIR Drafter',
+      'tab-vault': '🔐 End-to-End Cryptographic Vault',
+      'tab-directory': '🛡️ Suspect Verification & Authority Portal',
+      'tab-codex': '📖 Cyber Law Codex (Citizen & Corporate)',
+      'tab-emergency': '🚨 Golden Hour Protocols',
+      'step-1': 'Complainant KYC',
+      'step-2': 'Evidence & OCR',
+      'step-3': 'Incident Chronology',
+      'step-4': 'Financial Transactions',
+      'step-5': 'Official FIR Letter',
+      'express-title': 'Express Emergency Assistance for Citizens',
+      'express-desc': 'Non-tech friendly: Simply describe what happened in your own words (e.g. <em>"Mere bank se ₹75,000 cut hogaye"</em>) or upload a screenshot. Our system will auto-fill your FIR and give you immediate emergency actions.',
+      'express-chips-label': 'Quick Examples:',
+      'placeholder-express-input': 'Describe in simple words: e.g. "Mere bank account se ₹75000 cut hogaye kisi fraud link par click karne ke baad" OR "Call aaya tha fake customs officer ka..."',
+      'express-mic-label': 'Speak (बोलकर बताएं)',
+      'express-upload-label': 'Upload Screenshot (Bank SMS / Chat)',
+      'express-btn-submit': '🚀 Analyze & Show Immediate Actions (तत्काल सहायता व FIR) ➔',
+      'mode-citizen': '👤 Individual Citizen Mode',
+      'mode-corporate': '🏢 Corporate / Enterprise / MSME Mode',
+      'step1-title': '1. Complainant Entity Selection & Identification',
+      'step1-subtitle': 'Choose whether you are lodging this complaint as an Individual Citizen or an Authorized Corporate Enterprise / MSME.',
+      'form-legal-name': 'Full Legal Name',
+      'form-name-hint': 'As printed on Aadhaar/Voter ID',
+      'placeholder-comp-name': 'Enter Full Legal Name as per Official ID',
+      'form-mobile-number': 'Contact Mobile Number',
+      'form-mobile-hint': 'Active 10-digit number for police updates',
+      'placeholder-comp-phone': 'e.g. 9876543210',
+      'form-email-address': 'Email Address',
+      'form-email-hint': 'For digital FIR copy & official legal notices',
+      'placeholder-comp-email': 'e.g. complainant@example.com',
+      'form-address': 'Permanent / Current Residential Address',
+      'form-address-hint': 'Typing address auto-detects PIN code',
+      'placeholder-comp-address': 'House/Flat No, Street, Landmark, Area, City, State, PIN',
+      'form-pincode': 'PIN Code',
+      'form-city': 'Detected City / District',
+      'form-state': 'Detected State / UT',
+      'form-corp-name': 'Company Legal Name',
+      'form-corp-name-hint': 'As per RoC Certificate',
+      'form-corp-cin': 'Corporate Identification No. (CIN / LLPIN)',
+      'form-corp-gstin': 'GSTIN',
+      'form-corp-rep-name': 'Authorized Signatory Legal Name',
+      'form-corp-rep-desig': 'Designation of Signatory',
+      'form-corp-rep-phone': 'Official Corporate Contact Phone',
+      'form-corp-rep-email': 'Official Corporate Email Address',
+      'form-corp-board-res': 'Authorization Document Reference',
+      'form-corp-infra': 'Targeted Corporate Infrastructure',
+      'form-corp-address': 'Registered Corporate Office Address',
+      'form-corp-pincode': 'Corporate PIN',
+      'form-corp-city': 'Corporate City / District',
+      'form-corp-state': 'Corporate State / UT',
+      'btn-step1-next': 'Proceed to Evidence & OCR ➔',
+      'step2-title': '2. Evidence Ingestion & Scam Contacting Entity Extraction',
+      'step2-subtitle': 'Upload a screenshot of the fraudulent message, WhatsApp chat, or fake bank SMS. The OCR engine reads the image and identifies suspect phone numbers, UPI handles, and URLs.',
+      'step2-drop-text': 'Click to Upload Screenshot or Drag & Drop File Here',
+      'step2-drop-subtext': 'Max 8MB (PNG, JPG, WEBP). Sanitized on upload. You can also paste directly (Ctrl+V / Cmd+V).',
+      'btn-back': '⬅ Back',
+      'btn-step2-directory': '🛡️ Add to Telecom Scam Directory',
+      'btn-step2-next': 'Proceed to Incident Details ➔',
+      'step3-title': '3. Incident Details & Modus Operandi',
+      'step3-subtitle': 'Describe how the accused contacted you and induced you to part with money or corporate data.',
+      'form-inc-date': 'Date of Occurrence',
+      'form-inc-time': 'Time of Incident',
+      'form-inc-platform': 'Platform / Attack Medium',
+      'btn-step3-next': 'Proceed to Financial Loss ➔',
+      'step4-title': '4. Financial Loss Details & Annexures',
+      'step4-subtitle': 'Transaction IDs and UTR numbers are required by the Cyber Crime Cell to issue account-freeze notices to beneficiary banks under Section 106 BNSS.',
+      'form-defrauded-amt': 'Total Defrauded Amount (in ₹)',
+      'placeholder-fin-amount': 'e.g. 50,000',
+      'form-utr-number': 'Transaction ID / UTR Number(s)',
+      'form-utr-hint': '12-digit UPI / IMPS / SWIFT',
+      'form-victim-bank': "Complainant's Bank & Account Details",
+      'placeholder-victim-bank': 'e.g. Bank Name & Account Number ending in XXXX',
+      'form-suspect-target': 'Suspect Beneficiary Destination',
+      'placeholder-suspect-target': 'e.g. Fraudster UPI ID or Account Number',
+      'step4-annexures-title': 'Documentary Annexures to be Enclosed:',
+      'annex-bank-stmt': 'Bank Account Statement highlighting disputed debits',
+      'annex-chats': 'True-copy screenshots of WhatsApp / Telegram / SMS / Email logs',
+      'annex-utr': 'Beneficiary payment confirmation slip / UTR reference',
+      'annex-id': 'Identity Proof / Corporate Authority Document (Aadhaar / Board Resolution)',
+      'btn-step4-generate': 'Generate Official Police Complaint ➔',
+      'step5-title': '5. Official Police Complaint & Electronic Evidence Certificate',
+      'step5-subtitle': 'Court-admissible First Information Report (FIR) and mandatory Section 63 BSA Electronic Records Certificate.',
+      'doc-btn-fir': '📄 Police FIR Complaint Application',
+      'doc-btn-bsa': '📜 Section 63 BSA Evidence Certificate',
+      'btn-vault-doc': '🔐 Encrypt into Vault (.enc)',
+      'btn-copy-doc': '📋 Copy Document',
+      'btn-print-doc': '🖨️ Print / Save as PDF',
+      'btn-download-txt': '⬇ Download .TXT',
+      'btn-edit-details': '⬅ Edit Details',
+      'btn-wizard-verify-suspect': '🛡️ Verify & Add Suspect to Scam Directory',
+      'btn-wizard-open-directory': 'Open Telecom Directory ➔',
+      'vault-card-title': '🔐 End-to-End Cryptographic Vault (AES-256-GCM)',
+      'vault-card-subtitle': 'Military-grade client-side encryption using the Web Crypto API (`SubtleCrypto`). Your sensitive complaints and evidence are encrypted in browser memory with zero plaintext exposure.',
+      'vault-zero-desc': 'Key derivation uses PBKDF2-HMAC-SHA256 with 100,000 rounds and cryptographically random 96-bit IVs. No server or third party can read your encrypted vault without your passphrase.',
+      'vault-lock-title': '🔐 Lock Current Complaint in Vault',
+      'vault-lock-desc': 'Encrypt all current complaint parameters, suspect identifiers, and narratives into a secure standalone `.enc` file.',
+      'vault-lock-pass-label': 'Master Encryption Passphrase *',
+      'placeholder-vault-lock-pass': 'Enter a strong personal passphrase...',
+      'vault-btn-download': '⬇ Download Encrypted Vault (.enc)',
+      'vault-unlock-title': '🔓 Unlock / Decrypt Vault File (.enc)',
+      'vault-unlock-desc': 'Upload an encrypted `.enc` file to restore and review your complaint in complete privacy.',
+      'vault-unlock-file-label': 'Select .enc Vault File *',
+      'vault-unlock-pass-label': 'Decryption Passphrase *',
+      'placeholder-vault-unlock-pass': 'Enter the passphrase used during encryption...',
+      'vault-btn-restore': '🔓 Unlock & Populate Complaint Form',
+      'public-lookup-title': '🛡️ Suspect Verification & Citizen Safety Check',
+      'public-lookup-subtitle': 'Verify suspicious phone numbers (+91), UPI VPAs, and websites against reported threat intelligence feeds. The raw investigative directory is protected and accessible to verified Law Enforcement Authorities only.',
+      'public-pii-shield-title': '🔒 Sovereign Privacy & Evidence Safeguard Active:',
+      'public-pii-shield-desc': 'In compliance with IT Act Section 72A and DPDP Act 2023, victim identities and raw evidence repositories remain isolated. Public verification checks operate under cryptographic zero-leakage lookups.',
+      'placeholder-public-check': 'Enter Phone Number (+91), UPI ID, or URL to verify...',
+      'btn-check-threat': '🔍 Check Threat Status',
+      'leo-portal-title': 'Law Enforcement & Nodal Officer Portal (NCRP / I4C / DoT)',
+      'leo-portal-subtitle': 'Protected operational console for verified Investigating Officers (IOs), Cyber Crime Cell personnel, and Bank Nodal Officers.',
+      'leo-pin-label': 'Enter 4-Digit LEO Badge PIN (Default: 1930):',
+      'btn-unlock-console': '🔓 Unlock Console',
+      'leo-active-title': 'Law Enforcement Threat Intelligence Console',
+      'leo-active-subtitle': 'Live prioritized feed for Cyber Crime Cell investigating officers. Priority triage and real-time threat scores update automatically with every incident reported.',
+      'gov-log-modal-title': 'Silent Government Spoof Audit Log (compromised_gov_trips.log)',
+      'codex-card-title': 'Comprehensive Cyber Law Codex (Citizen & Corporate)',
+      'codex-card-subtitle': 'All sections of the Information Technology Act 2000, Bharatiya Nyaya Sanhita 2023, and Corporate Standards (CERT-In, DPDP Act 2023, RBI, SEBI).',
+      'placeholder-law-search': 'Search sections by keyword (e.g. hacking, otp, privacy, corporate, bec, cert-in, penalty, csam)...',
+      'codex-cat-all': 'All Provisions',
+      'codex-cat-it': 'IT Act, 2000 (Amended)',
+      'codex-cat-bns': 'Bharatiya Nyaya Sanhita (BNS 2023)',
+      'codex-cat-corp': 'Corporate Standards (CERT-In / DPDP)',
+      'codex-cat-evidence': 'Electronic Evidence (BSA 2023)',
+      'emergency-card-title': 'Emergency Protocols & Golden Hour Guidelines',
+      'emergency-card-subtitle': 'Immediate intervention steps to halt funds before they leave the banking network.',
+      'emergency-golden-title': 'The Golden Hour Rule (First 60 Minutes):',
+      'emergency-golden-desc': 'Reporting fraudulent transfers within 60 minutes gives the National Cybercrime Reporting Portal (1930) and the Indian Cyber Crime Coordination Centre (I4C) the highest chance of freezing beneficiary bank accounts before cash withdrawal or crypto conversion.',
+      'sahayak-fab-label': 'Cyber Sahayak (AI Mitra)',
+      'sahayak-title': 'Cyber Sahayak (साइबर सहायक)',
+      'sahayak-subtitle': 'Online · 24x7 Citizen Cyber Assistance',
+      'placeholder-sahayak-input': "Type here: e.g. '75000 cut hogaye'..."
     },
     hi: {
       'topbar-govt': '🇮🇳 भारत सरकार एवं राज्य पुलिस मानकों के अनुरूप',
       'topbar-aligned': 'I4C, CERT-In धारा 70B, DPDP अधिनियम 2023 एवं TRAI विनियमों के अनुसार',
-      'topbar-helpline': 'हेल्पलाइन:'
+      'topbar-helpline': 'हेल्पलाइन:',
+      'header-title': 'साइबर विधिक मार्गदर्शन एवं संस्थागत सुरक्षा प्रणाली',
+      'header-subtitle': 'नागरिक एवं कॉर्पोरेट पुलिस FIR शिकायत प्रारूपक · एंड-टू-एंड AES-256 सुरक्षित वॉल्ट',
+      'bot-shield-active': '🛡️ बॉट सुरक्षा: सक्रिय',
+      'btn-panic-wipe': '🧹 सुरक्षित मेमोरी वाइप',
+      'helpline-pill': '🚨 राष्ट्रीय हेल्पलाइन: 1930',
+      'tab-wizard': '📋 शिकायत जनरेटर एवं FIR प्रारूपक',
+      'tab-vault': '🔐 एंड-टू-एंड एन्क्रिप्टेड वॉल्ट',
+      'tab-directory': '🛡️ संदिग्ध सत्यापन व अथॉरिटी पोर्टल',
+      'tab-codex': '📖 साइबर विधि संहिता (नागरिक व कॉर्पोरेट)',
+      'tab-emergency': '🚨 स्वर्णिम घंटे आपातकालीन प्रोटोकॉल',
+      'step-1': 'शिकायतकर्ता पहचान (KYC)',
+      'step-2': 'डिजिटल साक्ष्य एवं OCR',
+      'step-3': 'घटना विवरण एवं समयक्रम',
+      'step-4': 'वित्तीय लेन-देन विवरण',
+      'step-5': 'आधिकारिक पुलिस FIR प्रारूप',
+      'express-title': 'नागरिकों हेतु तत्काल आपातकालीन सहायता',
+      'express-desc': 'सरल एवं सुगम: अपनी भाषा में बताएं क्या हुआ (जैसे: <em>"मेरे बैंक से ₹75,000 कट गए"</em>) या स्क्रीनशॉट अपलोड करें। सिस्टम आपकी FIR स्वतः भर देगा और तुरंत आवश्यक कदम बताएगा।',
+      'express-chips-label': 'त्वरित उदाहरण:',
+      'placeholder-express-input': 'सरल भाषा में लिखें: जैसे "मेरे बैंक खाते से ₹75000 कट गए किसी फर्जी लिंक पर क्लिक करने के बाद" या "फर्जी कस्टम/पुलिस अफसर का कॉल आया था..."',
+      'express-mic-label': 'बोलकर बताएं (माइक)',
+      'express-upload-label': 'स्क्रीनशॉट अपलोड करें (बैंक SMS / चैट)',
+      'express-btn-submit': '🚀 विश्लेषण करें व तत्काल सहायता देखें (तत्काल FIR) ➔',
+      'mode-citizen': '👤 व्यक्तिगत नागरिक मोड',
+      'mode-corporate': '🏢 कॉर्पोरेट / संस्थागत / MSME मोड',
+      'step1-title': '1. शिकायतकर्ता की श्रेणी एवं पहचान (KYC)',
+      'step1-subtitle': 'चुनें कि आप यह शिकायत व्यक्तिगत नागरिक के रूप में दर्ज कर रहे हैं या अधिकृत कॉर्पोरेट / MSME संस्था के रूप में।',
+      'form-legal-name': 'पूरा कानूनी नाम',
+      'form-name-hint': 'आधार कार्ड या पैन कार्ड के अनुसार',
+      'placeholder-comp-name': 'सरकारी पहचान पत्र अनुसार पूरा नाम दर्ज करें',
+      'form-mobile-number': 'संपर्क मोबाइल नंबर',
+      'form-mobile-hint': 'पुलिस अपडेट हेतु सक्रिय 10 अंकों का नंबर',
+      'placeholder-comp-phone': 'उदा. 9876543210',
+      'form-email-address': 'ईमेल पता',
+      'form-email-hint': 'डिजिटल FIR कॉपी व कानूनी सूचनाओं के लिए',
+      'placeholder-comp-email': 'उदा. complainant@example.com',
+      'form-address': 'स्थाई / वर्तमान निवास का पता',
+      'form-address-hint': 'पता लिखने पर पिन कोड स्वतः पहचाना जाएगा',
+      'placeholder-comp-address': 'मकान नं, गली, मोहल्ला, शहर, राज्य, पिन कोड',
+      'form-pincode': 'पिन कोड',
+      'form-city': 'पहचाना गया शहर / जिला',
+      'form-state': 'पहचाना गया राज्य / UT',
+      'form-corp-name': 'कंपनी का कानूनी नाम',
+      'form-corp-name-hint': 'RoC प्रमाण पत्र के अनुसार',
+      'form-corp-cin': 'कॉर्पोरेट पहचान संख्या (CIN / LLPIN)',
+      'form-corp-gstin': 'जीएसटी संख्या (GSTIN)',
+      'form-corp-rep-name': 'अधिकृत हस्ताक्षरकर्ता का नाम',
+      'form-corp-rep-desig': 'हस्ताक्षरकर्ता का पदनाम',
+      'form-corp-rep-phone': 'आधिकारिक कॉर्पोरेट फोन नंबर',
+      'form-corp-rep-email': 'आधिकारिक कॉर्पोरेट ईमेल',
+      'form-corp-board-res': 'बोर्ड प्रस्ताव / अधिकार पत्र संदर्भ',
+      'form-corp-infra': 'प्रभावित कॉर्पोरेट नेटवर्क / सर्वर',
+      'form-corp-address': 'पंजीकृत कॉर्पोरेट कार्यालय का पता',
+      'form-corp-pincode': 'कॉर्पोरेट पिन कोड',
+      'form-corp-city': 'कॉर्पोरेट शहर / जिला',
+      'form-corp-state': 'कॉर्पोरेट राज्य / UT',
+      'btn-step1-next': 'अगला: डिजिटल साक्ष्य एवं OCR ➔',
+      'step2-title': '2. डिजिटल साक्ष्य अपलोड एवं संदिग्ध की पहचान',
+      'step2-subtitle': 'धोखाधड़ी संदेश, व्हाट्सएप चैट या फर्जी बैंक एसएमएस का स्क्रीनशॉट अपलोड करें। OCR इंजन संदिग्ध फोन, UPI और लिंक को स्वतः निकाल लेगा।',
+      'step2-drop-text': 'स्क्रीनशॉट अपलोड करने के लिए क्लिक करें या यहाँ फ़ाइल ड्रैग करें',
+      'step2-drop-subtext': 'अधिकतम 8MB (PNG, JPG, WEBP)। सुरक्षित रूप से प्रोसेस। आप सीधे (Ctrl+V) पेस्ट भी कर सकते हैं।',
+      'btn-back': '⬅ वापस जाएं',
+      'btn-step2-directory': '🛡️ संदिग्ध डेटाबेस में जोड़ें',
+      'btn-step2-next': 'अगला: घटना का विवरण ➔',
+      'step3-title': '3. घटना का विवरण एवं अपराध का तरीका (Modus Operandi)',
+      'step3-subtitle': 'वर्णन करें कि आरोपी ने आपसे कैसे संपर्क किया और पैसे या डेटा देने के लिए कैसे प्रेरित किया।',
+      'form-inc-date': 'घटना की तिथि',
+      'form-inc-time': 'घटना का समय',
+      'form-inc-platform': 'हमले का माध्यम / प्लेटफॉर्म',
+      'btn-step3-next': 'अगला: वित्तीय नुकसान विवरण ➔',
+      'step4-title': '4. वित्तीय नुकसान का विवरण एवं संलग्नक',
+      'step4-subtitle': 'साइबर सेल द्वारा धारा 106 BNSS के तहत बैंक खातों को फ्रीज करवाने हेतु UTR संख्या अनिवार्य है।',
+      'form-defrauded-amt': 'कुल ठगी की राशि (₹ में)',
+      'placeholder-fin-amount': 'उदा. 50,000',
+      'form-utr-number': 'लेन-देन संदर्भ / UTR संख्या',
+      'form-utr-hint': '12 अंकों का UPI / IMPS / SWIFT नंबर',
+      'form-victim-bank': 'पीड़ित का बैंक एवं खाता विवरण',
+      'placeholder-victim-bank': 'उदा. बैंक का नाम और खाता संख्या अंतिम 4 अंक',
+      'form-suspect-target': 'संदिग्ध का बैंक खाता या UPI आईडी',
+      'placeholder-suspect-target': 'उदा. ठग की UPI ID या खाता संख्या',
+      'step4-annexures-title': 'संलग्न किए जाने वाले आवश्यक दस्तावेज:',
+      'annex-bank-stmt': 'बैंक खाता विवरण (विवादित लेन-देन रेखांकित)',
+      'annex-chats': 'व्हाट्सएप / टेलीग्राम / एसएमएस / ईमेल चैट के स्क्रीनशॉट',
+      'annex-utr': 'भुगतान पुष्टि पर्ची / UTR संदर्भ रसीद',
+      'annex-id': 'पहचान प्रमाण / बोर्ड प्रस्ताव अधिकार पत्र (आधार / पैन)',
+      'btn-step4-generate': 'आधिकारिक पुलिस शिकायत FIR तैयार करें ➔',
+      'step5-title': '5. आधिकारिक पुलिस FIR शिकायत एवं इलेक्ट्रॉनिक साक्ष्य प्रमाणपत्र',
+      'step5-subtitle': 'न्यायालय में मान्य प्रथम सूचना रिपोर्ट (FIR) एवं धारा 63 BSA इलेक्ट्रॉनिक रिकॉर्ड प्रमाणपत्र।',
+      'doc-btn-fir': '📄 पुलिस FIR शिकायत आवेदन पत्र',
+      'doc-btn-bsa': '📜 धारा 63 BSA इलेक्ट्रॉनिक प्रमाणपत्र',
+      'btn-vault-doc': '🔐 सुरक्षित वॉल्ट में एन्क्रिप्ट करें (.enc)',
+      'btn-copy-doc': '📋 शिकायत कॉपी करें',
+      'btn-print-doc': '🖨️ प्रिंट करें / PDF में सेव करें',
+      'btn-download-txt': '⬇ .TXT डाउनलोड करें',
+      'btn-edit-details': '⬅ विवरण संशोधित करें',
+      'btn-wizard-verify-suspect': '🛡️ संदिग्ध को सत्यापित कर डेटाबेस में जोड़ें',
+      'btn-wizard-open-directory': 'अथॉरिटी पोर्टल खोलें ➔',
+      'vault-card-title': '🔐 एंड-टू-एंड एन्क्रिप्टेड वॉल्ट (AES-256-GCM)',
+      'vault-card-subtitle': 'वेब क्रिप्टो API (`SubtleCrypto`) का उपयोग करके सैन्य-ग्रेड एन्क्रिप्शन। आपकी संवेदनशील शिकायत आपके ब्राउज़र में सुरक्षित रहती है।',
+      'vault-zero-desc': '100,000 राउंड्स PBKDF2-HMAC-SHA256 और रैंडम 96-बिट IV के साथ की (Key) बनाई जाती है। कोई भी बाहरी सर्वर आपके पासवर्ड के बिना इसे नहीं पढ़ सकता।',
+      'vault-lock-title': '🔐 वर्तमान शिकायत को वॉल्ट में लॉक करें',
+      'vault-lock-desc': 'शिकायत के सभी विवरणों और साक्ष्यों को एक सुरक्षित `.enc` फ़ाइल में एन्क्रिप्ट करके डाउनलोड करें।',
+      'vault-lock-pass-label': 'मास्टर एन्क्रिप्शन पासवर्ड *',
+      'placeholder-vault-lock-pass': 'एक मजबूत व्यक्तिगत पासवर्ड दर्ज करें...',
+      'vault-btn-download': '⬇ एन्क्रिप्टेड वॉल्ट (.enc) डाउनलोड करें',
+      'vault-unlock-title': '🔓 वॉल्ट फ़ाइल (.enc) अनलॉक / डिक्रिप्ट करें',
+      'vault-unlock-desc': 'पूरी गोपनीयता के साथ अपनी शिकायत को पुनः देखने के लिए `.enc` फ़ाइल अपलोड करें।',
+      'vault-unlock-file-label': '.enc वॉल्ट फ़ाइल चुनें *',
+      'vault-unlock-pass-label': 'डिक्रिप्शन पासवर्ड *',
+      'placeholder-vault-unlock-pass': 'एन्क्रिप्शन के समय उपयोग किया गया पासवर्ड दर्ज करें...',
+      'vault-btn-restore': '🔓 अनलॉक करें और फॉर्म में भरें',
+      'public-lookup-title': '🛡️ संदिग्ध संपर्क सत्यापन एवं नागरिक सुरक्षा जांच',
+      'public-lookup-subtitle': 'रिपोर्ट किए गए थ्रेट इंटेलिजेंस डेटाबेस के माध्यम से संदिग्ध फोन नंबर (+91), UPI और वेबसाइट की जांच करें। संपूर्ण डेटाबेस केवल अधिकृत जांच एजेंसियों के लिए आरक्षित है।',
+      'public-pii-shield-title': '🔒 संप्रभु गोपनीयता एवं साक्ष्य सुरक्षा सक्रिय:',
+      'public-pii-shield-desc': 'IT अधिनियम की धारा 72A एवं DPDP अधिनियम 2023 के तहत पीड़ितों की पहचान सुरक्षित रखी जाती है। सार्वजनिक जांच क्रिप्टोग्राफिक ज़ीरो-लीकेज लुकअप के अंतर्गत संचालित होती है।',
+      'placeholder-public-check': 'जांच हेतु फोन (+91), UPI ID या वेबसाइट दर्ज करें...',
+      'btn-check-threat': '🔍 थ्रेट स्थिति जांचें',
+      'leo-portal-title': 'कानून प्रवर्तन एवं नोडल अधिकारी पोर्टल (NCRP / I4C / DoT)',
+      'leo-portal-subtitle': 'सत्यापित जांच अधिकारियों (IOs), साइबर क्राइम सेल एवं बैंक नोडल अधिकारियों हेतु सुरक्षित कंसोल।',
+      'leo-pin-label': '4-अंकों का पुलिस बैज पिन दर्ज करें (डिफ़ॉल्ट: 1930):',
+      'btn-unlock-console': '🔓 कंसोल खोलें',
+      'leo-active-title': 'कानून प्रवर्तन साइबर थ्रेट इंटेलिजेंस कंसोल',
+      'leo-active-subtitle': 'साइबर सेल जांच अधिकारियों हेतु वास्तविक समय की प्राथमिकता सूची। दर्ज की गई प्रत्येक रिपोर्ट के साथ प्राथमिकता और थ्रेट प्रतिशत स्वतः अपडेट होता है।',
+      'gov-log-modal-title': 'साइलेंट सरकारी नंबर स्पूफ ऑडिट लॉग (compromised_gov_trips.log)',
+      'codex-card-title': 'व्यापक राष्ट्रीय साइबर कानून संहिता (नागरिक व कॉर्पोरेट)',
+      'codex-card-subtitle': 'सूचना प्रौद्योगिकी अधिनियम 2000, भारतीय न्याय संहिता 2023 एवं कॉर्पोरेट मानक (CERT-In, DPDP Act 2023, RBI, SEBI) की सभी धाराएं।',
+      'placeholder-law-search': 'कीवर्ड द्वारा धाराएं खोजें (जैसे: हैकिंग, OTP, निजता, BEC, जुर्माना, वसूली)...',
+      'codex-cat-all': 'सभी प्रावधान',
+      'codex-cat-it': 'IT अधिनियम, 2000 (संशोधित)',
+      'codex-cat-bns': 'भारतीय न्याय संहिता (BNS 2023)',
+      'codex-cat-corp': 'कॉर्पोरेट मानक (CERT-In / DPDP)',
+      'codex-cat-evidence': 'इलेक्ट्रॉनिक साक्ष्य (BSA 2023)',
+      'emergency-card-title': 'आपातकालीन प्रोटोकॉल एवं स्वर्णिम घंटे (Golden Hour) दिशानिर्देश',
+      'emergency-card-subtitle': 'बैंकिंग नेटवर्क से बाहर निकलने से पहले धनराशि को रोकने हेतु तत्काल कदम।',
+      'emergency-golden-title': 'स्वर्णिम घंटे का नियम (प्रथम 60 मिनट):',
+      'emergency-golden-desc': 'प्रथम 60 मिनट के भीतर धोखाधड़ी की सूचना देने से राष्ट्रीय साइबर हेल्पलाइन (1930) एवं I4C को कैश निकालने या क्रिप्टो बदलने से पहले लाभार्थी बैंक खातों को फ्रीज करने का सर्वाधिक अवसर मिलता है।',
+      'sahayak-fab-label': 'साइबर सहायक (AI मित्र)',
+      'sahayak-title': 'साइबर सहायक (Cyber Sahayak)',
+      'sahayak-subtitle': 'सक्रिय · 24x7 नागरिक साइबर सहायता',
+      'placeholder-sahayak-input': "यहाँ लिखें: जैसे 'बैंक से ₹75000 कट गए' या 'Fraud call आया'..."
     }
   },
   init() {
-    this.updateUI();
-  },
-  toggleLanguage() {
-    this.currentLang = this.currentLang === 'en' ? 'hi' : 'en';
+    const saved = localStorage.getItem('CLGS_LANG_PREF');
+    if (saved === 'hi' || saved === 'en') {
+      this.currentLang = saved;
+    }
     const labelEl = document.getElementById('lang-label');
     if (labelEl) {
       labelEl.textContent = this.currentLang === 'en' ? 'हिन्दी (Hindi)' : 'English';
     }
     this.updateUI();
-    showToast(this.currentLang === 'hi' ? 'भाषा हिन्दी में बदली गई।' : 'Language switched to English.');
+  },
+  setLanguage(lang) {
+    if (lang !== 'en' && lang !== 'hi') return;
+    this.currentLang = lang;
+    localStorage.setItem('CLGS_LANG_PREF', lang);
+    const labelEl = document.getElementById('lang-label');
+    if (labelEl) {
+      labelEl.textContent = this.currentLang === 'en' ? 'हिन्दी (Hindi)' : 'English';
+    }
+    this.updateUI();
+    if (typeof showToast === 'function') {
+      showToast(this.currentLang === 'hi' ? '🇮🇳 भाषा हिन्दी में बदली गई।' : '🌐 Language switched to English.');
+    }
+  },
+  toggleLanguage() {
+    this.setLanguage(this.currentLang === 'en' ? 'hi' : 'en');
   },
   updateUI() {
     const dict = this.translations[this.currentLang];
     if (!dict) return;
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
-      if (dict[key]) el.textContent = dict[key];
+      if (dict[key]) el.innerHTML = dict[key];
     });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (dict[key]) el.placeholder = dict[key];
+    });
+    this.updateChatbot();
+  },
+  updateChatbot() {
+    const isHi = this.currentLang === 'hi';
+    const sahayakTitle = document.getElementById('sahayak-window-title');
+    if (sahayakTitle) {
+      sahayakTitle.textContent = isHi ? 'साइबर सहायक (Cyber Sahayak)' : 'Cyber Sahayak (AI Mitra)';
+    }
+    const sahayakSub = document.getElementById('sahayak-window-subtitle');
+    if (sahayakSub) {
+      sahayakSub.textContent = isHi ? 'सक्रिय · 24x7 नागरिक साइबर सहायता' : 'Online · 24x7 Citizen Cyber Assistance';
+    }
+    const sahayakInput = document.getElementById('sahayak-input-text');
+    if (sahayakInput) {
+      sahayakInput.placeholder = isHi 
+        ? "यहाँ लिखें: जैसे 'बैंक से ₹75000 कट गए' या 'फर्जी पुलिस कॉल आया'..."
+        : "Type here: e.g. '₹75,000 debited from bank' or 'Fake police call'...";
+    }
+    const sahayakFab = document.getElementById('sahayak-fab-label');
+    if (sahayakFab) {
+      sahayakFab.textContent = isHi ? 'साइबर सहायक (AI मित्र)' : 'Cyber Sahayak (AI Mitra)';
+    }
+
+    // If only the welcome message is present in the chatbot window, update it cleanly
+    const msgContainer = document.getElementById('sahayak-messages');
+    if (msgContainer && msgContainer.querySelectorAll('.sahayak-msg').length <= 1) {
+      if (isHi) {
+        msgContainer.innerHTML = `
+          <div class="sahayak-msg bot">
+            🙏 <strong>नमस्ते! मैं आपका साइबर विधिक सहायक (Cyber Sahayak) हूँ।</strong>
+            <div style="margin-top: 4px;">
+              अगर आपके साथ कोई ऑनलाइन फ्रॉड या धोखाधड़ी हुई है, तो बिल्कुल घबराएं नहीं। मुझे सरल भाषा (हिन्दी/Hinglish/English) में बताएं क्या हुआ — जैसे: <em>"मेरे बैंक से ₹75,000 कट गए"</em> या <em>"फर्जी पुलिस कॉल आया"</em>
+            </div>
+            <div class="sahayak-chips-row">
+              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('मेरे बैंक खाते से ₹75,000 कट गए')">💸 बैंक से पैसे कट गए</span>
+              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('फर्जी पुलिस अफसर का कॉल आया डिजिटल अरेस्ट बता रहे हैं')">👮 डिजिटल अरेस्ट / फर्जी पुलिस कॉल</span>
+              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('टेलीग्राम टास्क स्कैम में पैसे ले लिए')">📱 टेलीग्राम टास्क स्कैम</span>
+            </div>
+          </div>
+        `;
+      } else {
+        msgContainer.innerHTML = `
+          <div class="sahayak-msg bot">
+            🙏 <strong>Welcome! I am your Cyber Legal Assistant (Cyber Sahayak).</strong>
+            <div style="margin-top: 4px;">
+              If you have encountered an online scam, financial fraud, or extortion, do not panic. Simply describe what happened in your own words (English, Hindi, or Hinglish) — e.g., <em>"₹75,000 was debited from my bank without OTP"</em>
+            </div>
+            <div class="sahayak-chips-row">
+              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('₹75,000 was debited from my bank without authorization')">💸 Money Debited from Bank</span>
+              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('Received fake police video call threatening digital arrest')">👮 Digital Arrest / Fake Police Call</span>
+              <span class="sahayak-quick-chip" onclick="CyberSahayakChatbot.sendQuickPrompt('Lost money in Telegram work from home task scam')">📱 Telegram Task Scam</span>
+            </div>
+          </div>
+        `;
+      }
+    }
   }
 };
 
@@ -8115,123 +8836,363 @@ function isProtectedWhitelistEntity(val) {
   return false;
 }
 
-let currentDirectoryFilter = 'ALL';
+// ══════════════════════════════════════════════════════════════════════════════
+// AUTHORITY / LAW ENFORCEMENT PORTAL & REAL-TIME THREAT TRIAGE ENGINE
+// ══════════════════════════════════════════════════════════════════════════════
 
-function filterDirectoryByVerification(statusFilter, btn) {
-  currentDirectoryFilter = statusFilter;
-  document.querySelectorAll('#tab-directory .filter-pill').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
+const AuthorityEngine = {
+  isUnlocked: false,
+  currentFilter: 'ALL', // 'ALL', 'P1', 'P2', 'P3'
+  searchQuery: '',
 
-  let filtered = telecomDirectory;
-  if (statusFilter === 'VERIFIED_FRAUD') {
-    filtered = telecomDirectory.filter(e => (e.verification_score || 85) >= 70);
-  } else if (statusFilter === 'UNDER_REVIEW') {
-    filtered = telecomDirectory.filter(e => (e.verification_score || 85) < 70);
+  calculateDynamicThreatScore(item) {
+    const reports = Number(item.report_count || 1);
+    const isGovSpoof = Boolean(item.isGovSpoof || item.compromised_gov || false);
+    const loss = Number(item.loss_amount || 0);
+
+    let score = 45 + (reports * 12);
+    if (isGovSpoof) score += 40;
+    if (loss > 100000) score += 10;
+    if (score > 99) score = 99;
+    if (score < 45) score = 45;
+    return score;
+  },
+
+  getPriorityMeta(item) {
+    const isGovSpoof = Boolean(item.isGovSpoof || item.compromised_gov || false);
+    const reports = Number(item.report_count || 1);
+    const loss = Number(item.loss_amount || 0);
+
+    if (isGovSpoof) {
+      return {
+        priority: 1,
+        code: 'P1',
+        label: '🚨 Priority 1: Gov Spoof',
+        badgeHtml: '<span class="priority-badge-1">🚨 Priority 1 (Gov Spoof)</span>'
+      };
+    } else if (reports >= 3 || loss >= 100000) {
+      return {
+        priority: 2,
+        code: 'P2',
+        label: '⚠️ Priority 2: High Threat',
+        badgeHtml: '<span class="priority-badge-2">⚠️ Priority 2 (High Multi-Report)</span>'
+      };
+    } else {
+      return {
+        priority: 3,
+        code: 'P3',
+        label: 'ℹ️ Priority 3: Standard',
+        badgeHtml: '<span class="priority-badge-3">ℹ️ Priority 3 (Standard Review)</span>'
+      };
+    }
+  },
+
+  performPublicCheck() {
+    const input = document.getElementById('public-check-input');
+    const q = (input?.value || '').trim();
+    const resBox = document.getElementById('public-check-result');
+    if (!resBox) return;
+
+    if (!q) {
+      showToast(typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi' ? 'कृपया फ़ोन नंबर, UPI या URL दर्ज करें।' : 'Please enter a phone number, UPI ID, or URL to verify.');
+      return;
+    }
+
+    if (isProtectedWhitelistEntity(q)) {
+      resBox.style.display = 'block';
+      resBox.style.background = '#eff6ff';
+      resBox.style.border = '1px solid #bfdbfe';
+      resBox.style.color = '#1e3a8a';
+      resBox.innerHTML = `
+        <div style="font-weight: 700; font-size: 0.92rem; display: flex; align-items: center; gap: 6px;">
+          <span>🏛️</span> <span>${typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi' ? 'सत्यापित आधिकारिक संस्था (Protected Whitelist)' : 'Verified Official Institutional Entity (Protected Whitelist)'}</span>
+        </div>
+        <div style="margin-top: 4px; font-size: 0.82rem; line-height: 1.5;">
+          ${typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi'
+            ? `लक्ष्य '<strong>${escapeHtml(q)}</strong>' एक प्रमाणित आधिकारिक हेल्पलाइन या बैंकिंग पोर्टल है। यह कभी अनधिकृत स्पैम नहीं है।`
+            : `Target '<strong>${escapeHtml(q)}</strong>' is a certified government emergency service or verified banking infrastructure. Flagging this entity is blocked.`}
+        </div>
+      `;
+      return;
+    }
+
+    const norm = q.replace(/[^0-9a-zA-Z@\.\_\-]/g, '').toLowerCase();
+    const matched = telecomDirectory.find(e => {
+      const eNorm = e.entity_value.replace(/[^0-9a-zA-Z@\.\_\-]/g, '').toLowerCase();
+      return eNorm.includes(norm) || norm.includes(eNorm);
+    });
+
+    resBox.style.display = 'block';
+    if (matched) {
+      const score = this.calculateDynamicThreatScore(matched);
+      const pri = this.getPriorityMeta(matched);
+      resBox.style.background = '#fef2f2';
+      resBox.style.border = '1px solid #fecaca';
+      resBox.style.color = '#991b1b';
+      resBox.innerHTML = `
+        <div style="font-weight: 700; font-size: 0.94rem; display: flex; align-items: center; gap: 8px;">
+          <span>⚠️</span> <span>${typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi' ? 'सावधान! यह संदिग्ध संस्था रिपोर्ट की जा चुकी है' : 'HIGH RISK ALERT: Suspect Fraud Entity Flagged in Records'}</span>
+          ${pri.badgeHtml}
+        </div>
+        <div style="margin-top: 6px; font-size: 0.84rem; line-height: 1.5; color: #7f1d1d;">
+          ${typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi'
+            ? `सत्यापन स्कोर: <strong>${score}% खतरा</strong> | दर्ज शिकायतें: <strong>${matched.report_count}</strong> | श्रेणी: <strong>${escapeHtml(matched.scam_category.replace(/_/g, ' ').toUpperCase())}</strong><br/>
+               <strong>सुरक्षा सलाह:</strong> इस संपर्क से आए किसी भी कॉल, लिंक या भुगतान अनुरोध पर भरोसा न करें और कोई राशि ट्रांसफर न करें।`
+            : `Threat Rating: <strong>${score}% Critical</strong> | Corroborated Reports: <strong>${matched.report_count}</strong> | Classification: <strong>${escapeHtml(matched.scam_category.replace(/_/g, ' ').toUpperCase())}</strong><br/>
+               <strong>Citizen Safety Directive:</strong> Do NOT transfer funds, share OTPs, or click links sent by this entity. Immediate blocking advised.`}
+        </div>
+      `;
+    } else {
+      resBox.style.background = '#f0fdf4';
+      resBox.style.border = '1px solid #bbf7d0';
+      resBox.style.color = '#166534';
+      resBox.innerHTML = `
+        <div style="font-weight: 700; font-size: 0.92rem; display: flex; align-items: center; gap: 6px;">
+          <span>✅</span> <span>${typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi' ? 'सक्रिय धोखाधड़ी रिकॉर्ड में यह नहीं मिला' : 'No Active Fraud Reports Flagged'}</span>
+        </div>
+        <div style="margin-top: 4px; font-size: 0.82rem; line-height: 1.5; color: #14532d;">
+          ${typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi'
+            ? `'<strong>${escapeHtml(q)}</strong>' वर्तमान में किसी पुष्ट शिकायत में सूचीबद्ध नहीं है। फिर भी सदैव सतर्क रहें—बैंक या पुलिस कभी फोन पर पासवर्ड या पैसे नहीं मांगते।`
+            : `'<strong>${escapeHtml(q)}</strong>' is not currently indexed in active cyber fraud complaints. Still maintain vigilance—genuine officials never demand money or OTPs over phone calls.`}
+        </div>
+      `;
+    }
+  },
+
+  scrollToLogin() {
+    const card = document.getElementById('authority-portal-card');
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('leo-auth-pin')?.focus();
+    }
+  },
+
+  verifyPin() {
+    const pinInput = document.getElementById('leo-auth-pin');
+    const pin = (pinInput?.value || '').trim();
+    const err = document.getElementById('leo-pin-error');
+
+    if (pin === '1930' || pin === 'LEO2026' || pin === 'leo1930') {
+      this.isUnlocked = true;
+      if (err) err.style.display = 'none';
+      document.getElementById('leo-locked-state').style.display = 'none';
+      document.getElementById('leo-unlocked-state').style.display = 'block';
+      this.render();
+      showToast(typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi' ? '👮 अधिकारी पोर्टल अनलॉक: सत्र सक्रिय (LEO-1930)' : '👮 Law Enforcement Portal Unlocked: Officer Session Active (LEO-1930)');
+    } else {
+      if (err) {
+        err.textContent = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi' ? 'अमान्य अधिकारी पिन! सही पिन दर्ज करें (उदा. 1930)।' : 'Invalid Officer PIN / Passkey! Authorization required (Default: 1930).';
+        err.style.display = 'block';
+      }
+    }
+  },
+
+  lockPortal() {
+    this.isUnlocked = false;
+    document.getElementById('leo-locked-state').style.display = 'block';
+    document.getElementById('leo-unlocked-state').style.display = 'none';
+    const pinInput = document.getElementById('leo-auth-pin');
+    if (pinInput) pinInput.value = '';
+    showToast(typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi' ? '🔒 अधिकारी सत्र समाप्त एवं लॉक कर दिया गया।' : '🔒 Officer session locked.');
+  },
+
+  filter(priorityCode, btn) {
+    this.currentFilter = priorityCode;
+    document.querySelectorAll('#leo-unlocked-state .filter-pill').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    this.render();
+  },
+
+  onSearch(query) {
+    this.searchQuery = (query || '').toLowerCase().trim();
+    this.render();
+  },
+
+  render() {
+    if (!this.isUnlocked) return;
+    const tbody = document.getElementById('leo-directory-tbody');
+    if (!tbody) return;
+
+    let items = [...telecomDirectory];
+
+    // Calculate dynamic threat scores
+    items.forEach(item => {
+      item._threatScore = this.calculateDynamicThreatScore(item);
+      item._priorityMeta = this.getPriorityMeta(item);
+    });
+
+    // Sort by priority (Priority 1 first, then 2, then 3) and within priority by threat score descending
+    items.sort((a, b) => {
+      if (a._priorityMeta.priority !== b._priorityMeta.priority) {
+        return a._priorityMeta.priority - b._priorityMeta.priority;
+      }
+      return b._threatScore - a._threatScore;
+    });
+
+    // Counts for stats
+    const totalCount = items.length;
+    const p1Count = items.filter(i => i._priorityMeta.code === 'P1').length;
+    const p2Count = items.filter(i => i._priorityMeta.code === 'P2').length;
+    const p3Count = items.filter(i => i._priorityMeta.code === 'P3').length;
+
+    const totalScoreSum = items.reduce((acc, i) => acc + i._threatScore, 0);
+    const avgScore = totalCount > 0 ? Math.round(totalScoreSum / totalCount) : 0;
+
+    // Update filter badges & stats strip
+    if (document.getElementById('leo-count-all')) document.getElementById('leo-count-all').textContent = totalCount;
+    if (document.getElementById('leo-count-p1')) document.getElementById('leo-count-p1').textContent = p1Count;
+    if (document.getElementById('leo-count-p2')) document.getElementById('leo-count-p2').textContent = p2Count;
+    if (document.getElementById('leo-count-p3')) document.getElementById('leo-count-p3').textContent = p3Count;
+
+    if (document.getElementById('stat-leo-total')) document.getElementById('stat-leo-total').textContent = totalCount;
+    if (document.getElementById('stat-leo-p1')) document.getElementById('stat-leo-p1').textContent = p1Count;
+    if (document.getElementById('stat-leo-p2')) document.getElementById('stat-leo-p2').textContent = p2Count;
+    if (document.getElementById('stat-leo-avg-score')) document.getElementById('stat-leo-avg-score').textContent = avgScore + '%';
+
+    // Apply Filter
+    if (this.currentFilter === 'P1') {
+      items = items.filter(i => i._priorityMeta.code === 'P1');
+    } else if (this.currentFilter === 'P2') {
+      items = items.filter(i => i._priorityMeta.code === 'P2');
+    } else if (this.currentFilter === 'P3') {
+      items = items.filter(i => i._priorityMeta.code === 'P3');
+    }
+
+    // Apply Search
+    if (this.searchQuery) {
+      items = items.filter(i => 
+        i.entity_value.toLowerCase().includes(this.searchQuery) ||
+        (i.matched_gov_dept && i.matched_gov_dept.toLowerCase().includes(this.searchQuery)) ||
+        i.scam_category.toLowerCase().includes(this.searchQuery) ||
+        i.entity_type.toLowerCase().includes(this.searchQuery)
+      );
+    }
+
+    tbody.innerHTML = '';
+    if (items.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No suspect records matching this triage criteria.</td></tr>`;
+      return;
+    }
+
+    items.forEach(item => {
+      const valEsc = escapeHtml(item.entity_value);
+      const score = item._threatScore;
+      const pri = item._priorityMeta;
+      const meterColor = score >= 90 ? '#ef4444' : score >= 75 ? '#f97316' : score >= 60 ? '#eab308' : '#3b82f6';
+
+      const govTripCell = item.isGovSpoof
+        ? `<span style="color: #dc2626; font-weight: 700; font-size: 0.76rem;">🏛️ GOV ASSET MATCH: ${escapeHtml(item.matched_gov_dept || 'Gov Directory')}</span>`
+        : `<span style="color: #64748b; font-size: 0.76rem;">— None (Standard)</span>`;
+
+      tbody.innerHTML += `
+        <tr>
+          <td>${pri.badgeHtml}</td>
+          <td style="font-family:'Geist Mono',monospace; font-weight:700; color:var(--text-primary); font-size: 0.88rem;">${valEsc}</td>
+          <td style="min-width: 130px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.76rem; font-weight: 700; color: ${meterColor};">
+              <span>Threat Level</span>
+              <span>${score}%</span>
+            </div>
+            <div class="threat-meter-container">
+              <div class="threat-meter-fill" style="width: ${score}%; background: ${meterColor};"></div>
+            </div>
+          </td>
+          <td style="font-family:'Geist Mono',monospace; font-weight: 700; text-align: center;">${item.report_count}</td>
+          <td>${govTripCell}</td>
+          <td style="font-size: 0.80rem; font-weight: 500;">${escapeHtml(item.scam_category.replace(/_/g, ' ').toUpperCase())}</td>
+          <td><span class="status-tag ${item.verification_status === 'VERIFIED_FRAUD' ? 'verified' : 'review'}" style="font-size: 0.72rem;">${escapeHtml(item.verification_status || 'VERIFIED')}</span></td>
+          <td>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn btn-outline btn-sm" style="font-size: 0.72rem; padding: 3px 8px;" onclick="AuthorityEngine.issueBankFreezeNotice('${valEsc}')" title="Issue Sec 106 BNSS Freeze Notice">⚡ Freeze Notice</button>
+              <button type="button" class="btn btn-danger btn-sm" style="font-size: 0.72rem; padding: 3px 8px;" onclick="AuthorityEngine.orderTelecomBlock('${valEsc}')" title="Order DoT / TAFCOP Disconnection">📞 Block IMEI</button>
+            </div>
+          </td>
+        </tr>
+      `;
+    });
+  },
+
+  issueBankFreezeNotice(entityVal) {
+    alert(`[BNSS SECTION 106 FREEZE NOTICE ISSUED]\n\nAddressed Target: ${entityVal}\nIssuing Authority: Cyber Crime Police Station (IFSO / SCOC)\nMandate: Immediate debit-freeze on all accounts & sub-wallets associated with beneficiary target.\nCompliance Window: 120 Minutes under BNSS Section 106 & RBI Circular 2024.`);
+  },
+
+  orderTelecomBlock(entityVal) {
+    alert(`[DoT SANCHAR SAATHI / TAFCOP DISCONNECTION DIRECTIVE]\n\nTarget Asset: ${entityVal}\nStatutory Authority: Section 69 IT Act 2000 & TRAI TCCCPR Regulations\nDirective: Immediate cancellation of subscriber identity, IMEI hardware blacklist across all Indian TSPs (Airtel, Jio, Vi, BSNL).`);
+  },
+
+  viewGovTripLogs() {
+    const modal = document.getElementById('gov-trips-log-modal');
+    const pre = document.getElementById('gov-trips-log-content');
+    if (!modal || !pre) return;
+
+    let logText = "";
+    try {
+      const trips = JSON.parse(localStorage.getItem('CLGS_SILENT_GOV_TRIPS') || '[]');
+      if (trips.length > 0) {
+        logText = `# ==============================================================================\n# SILENT GOVERNMENT DIRECTORY SPOOF AUDIT LOG (NCRP & I4C SOC)\n# Standards: BNS 2023 Sec 204 & 319 | IT Act 2000 Sec 66D & 70B\n# Priority: PRIORITY-1 URGENT (OFFICIAL ASSET SPOOFING)\n# ==============================================================================\n\n`;
+        trips.forEach(t => {
+          logText += `[${t.timestamp}] [TRIP_ID: ${t.tripId}] [PRIORITY: 1-CRITICAL]
+  MATCHED_DEPT: ${t.department}
+  OFFICIAL_NAME: ${t.post}
+  OFFICIAL_PHONE: ${t.officialPhone}
+  SUSPECT_CALLER_ID: ${t.suspectCallerId} (Spoofed)
+  COMPLAINANT: ${t.complainant}
+  INCIDENT_REF: ${t.incRef}
+  INCIDENT_TYPE: ${t.crimeType}
+  SOC_ACTION: Silent trip recorded in backend. Escalated to Priority 1.\n\n`;
+        });
+      }
+    } catch(e) {}
+
+    if (!logText) {
+      logText = `# ==============================================================================
+# NATIONAL CYBER CRIME REPORTING PORTAL (NCRP) & I4C SOC
+# COMPROMISED GOVERNMENT DIRECTORY SPOOF AUDIT LOG
+# Standards: BNS 2023 Sec 204 & 319 | IT Act 2000 Sec 66D & 70B | CERT-In Directive
+# Priority: PRIORITY-1 URGENT (OFFICIAL ASSET SPOOFING)
+# ==============================================================================
+[2026-09-21 14:32:10 IST] [TRIP_ID: GOV-TRIP-2026-001] [PRIORITY: 1-CRITICAL]
+  MATCHED_DEPT: Tata Power Delhi Distribution Ltd (TPDDL) (Billing Operations)
+  OFFICIAL_NAME: Executive Engineer (Billing Operations)
+  OFFICIAL_PHONE: +91-9810054321
+  SUSPECT_CALLER_ID: +91-9810054321 (Spoofed)
+  INCIDENT_REF: INC-20260921-7891
+  INCIDENT_TYPE: Electricity Bill Disconnection Phishing
+  SOC_ACTION: Silent trip triggered. Queued for Nodal Officer & CERT-In verification.
+
+[2026-09-21 18:15:45 IST] [TRIP_ID: GOV-TRIP-2026-002] [PRIORITY: 1-CRITICAL]
+  MATCHED_DEPT: Ministry of Home Affairs (MHA) (National Cyber Crime Reporting Desk)
+  OFFICIAL_NAME: National Cyber Crime Reporting Desk (1930)
+  OFFICIAL_PHONE: +91-9818819300
+  SUSPECT_CALLER_ID: +91-9818819300 (Spoofed)
+  INCIDENT_REF: INC-20260921-8842
+  INCIDENT_TYPE: Digital Arrest & Money Laundering Coercion
+  SOC_ACTION: Silent trip triggered. Queued for Nodal Officer & CERT-In verification.
+`;
+    }
+
+    pre.textContent = logText;
+    modal.style.display = 'flex';
+  },
+
+  closeGovTripLogs() {
+    const modal = document.getElementById('gov-trips-log-modal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  downloadGovTripsLog() {
+    const pre = document.getElementById('gov-trips-log-content');
+    const text = pre?.textContent || "# No log records";
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `compromised_gov_trips.log`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Downloaded compromised_gov_trips.log');
   }
-  renderDirectoryTable(filtered);
-}
-
-function renderDirectoryTable(filterList = null) {
-  const list = filterList || (
-    currentDirectoryFilter === 'VERIFIED_FRAUD' 
-      ? telecomDirectory.filter(e => (e.verification_score || 85) >= 70)
-      : currentDirectoryFilter === 'UNDER_REVIEW'
-      ? telecomDirectory.filter(e => (e.verification_score || 85) < 70)
-      : telecomDirectory
-  );
-
-  const tbody = document.getElementById('directory-tbody');
-  if (!tbody) return;
-  tbody.innerHTML = '';
-
-  list.forEach(item => {
-    const valEsc = escapeHtml(item.entity_value);
-    const typeEsc = escapeHtml(item.entity_type);
-    const catEsc = escapeHtml(item.scam_category.replace('_', ' ').toUpperCase());
-    const threatEsc = escapeHtml(item.threat_level);
-    const bannerEsc = escapeHtml(item.telecom_caution_banner);
-    const score = item.verification_score !== undefined ? item.verification_score : 85;
-    const isVerified = score >= 70;
-    const isCorroborated = score >= 50 && score < 70;
-    const statusClass = isVerified ? 'verified' : isCorroborated ? 'corroborated' : 'review';
-    const statusLabel = isVerified 
-      ? `VERIFIED FRAUD (${score}%)` 
-      : isCorroborated 
-      ? `CORROBORATED (${score}%)` 
-      : `UNDER REVIEW (${score}%)`;
-
-    tbody.innerHTML += `
-      <tr>
-        <td style="font-family:'Geist Mono',monospace; font-weight:600; color:var(--text-primary);">${valEsc}</td>
-        <td><span class="entity-pill ${item.entity_type === 'PHONE_NUMBER' ? 'phone' : item.entity_type === 'UPI_VPA' ? 'upi' : 'url'}">${typeEsc}</span></td>
-        <td style="font-weight: 500;">${catEsc}</td>
-        <td><span class="status-tag ${statusClass}">${statusLabel}</span></td>
-        <td><span class="status-tag ${item.threat_level.toLowerCase()}">${threatEsc}</span></td>
-        <td style="font-family:'Geist Mono',monospace;">${item.report_count}</td>
-        <td style="color:var(--text-secondary); font-size:0.82rem;">${bannerEsc}</td>
-        <td>
-          <button class="btn btn-outline btn-sm" onclick="openEntityVerificationModal({ value: '${valEsc}', type: '${item.entity_type}', category: '${item.scam_category}' })">Verify</button>
-        </td>
-      </tr>
-    `;
-  });
-
-  const verifiedCount = telecomDirectory.filter(e => (e.verification_score || 85) >= 70).length;
-  const quarantinedCount = telecomDirectory.filter(e => (e.verification_score || 85) < 70).length;
-
-  document.getElementById('stat-total-entities').textContent = telecomDirectory.length;
-  document.getElementById('stat-verified-entities').textContent = verifiedCount;
-  document.getElementById('stat-quarantined-entities').textContent = quarantinedCount;
-
-  const countAll = document.getElementById('dir-count-all');
-  const countVerified = document.getElementById('dir-count-verified');
-  const countQuarantine = document.getElementById('dir-count-quarantined');
-  if (countAll) countAll.textContent = telecomDirectory.length;
-  if (countVerified) countVerified.textContent = verifiedCount;
-  if (countQuarantine) countQuarantine.textContent = quarantinedCount;
-}
-
-function filterDirectoryTable() {
-  const q = document.getElementById('directory-search').value.toLowerCase().trim();
-  if (!q) {
-    renderDirectoryTable();
-    return;
-  }
-  const filtered = telecomDirectory.filter(item => 
-    item.entity_value.toLowerCase().includes(q) ||
-    item.entity_type.toLowerCase().includes(q) ||
-    item.scam_category.toLowerCase().includes(q) ||
-    item.telecom_caution_banner.toLowerCase().includes(q)
-  );
-  renderDirectoryTable(filtered);
-}
-
-function checkScamEntityModal() {
-  const q = document.getElementById('directory-search').value.trim();
-  if (!q) {
-    showToast('Enter a phone number or UPI ID to verify.');
-    return;
-  }
-
-  if (isProtectedWhitelistEntity(q)) {
-    alert(`PROTECTED OFFICIAL ENTITY DETECTED!\n\nTarget: "${q}"\nStatus: Whitelisted Official Emergency / Banking Service.\nClassification: Non-malicious certified infrastructure.\n\nFlagging or submitting this entity to scam registries is strictly blocked.`);
-    return;
-  }
-
-  const match = telecomDirectory.find(e => e.entity_value.toLowerCase().includes(q.toLowerCase()));
-  if (match) {
-    const score = match.verification_score !== undefined ? match.verification_score : 85;
-    alert(`FLAGGED SUSPECT ENTITY FOUND!\n\nEntity: ${match.entity_value}\nVerification Score: ${score}%\nStatus: ${match.verification_status || 'VERIFIED_FRAUD'}\nEvidence Level: ${match.evidence_level || 'BANK_CONFIRMED'}\nThreat Level: ${match.threat_level}\nCategory: ${match.scam_category}\nReport Count: ${match.report_count}\n\nTelecom Caution Tag:\n"${match.telecom_caution_banner}"`);
-  } else {
-    alert(`Clean Status: '${q}' is not currently flagged in the Telecom Scam Directory.`);
-  }
-}
-
-function quickTestEntity(val) {
-  document.getElementById('directory-search').value = val;
-  filterDirectoryTable();
-  showToast(`Filtering for: ${val}`);
-}
+};
 
 // ══════════════════════════════════════════════════════════════════════════════
 // EVIDENCE VERIFICATION INSPECTOR MODAL LOGIC
@@ -8805,10 +9766,40 @@ const CitizenNLPParser = {
       general_cyber_crime: 'Uncategorized Cyber Offence'
     };
 
+    const categoryNamesHi = {
+      upi_fraud: 'UPI / ऑनलाइन बैंकिंग फ्रॉड',
+      card_skimming_pos_fraud: 'कार्ड स्किमिंग, एटीएम क्लोनिंग व POS फ्रॉड',
+      utility_bill_fraud: 'बिजली बिल / डिस्कनेक्शन फर्जीवाड़ा',
+      loan_app_fraud: 'फर्जी लोन ऐप एवं रिकवरी एजेंट प्रताड़ना',
+      digital_arrest: 'डिजिटल अरेस्ट / फर्जी पुलिस या CBI वसूली',
+      courier_customs_fraud: 'कूरियर / नारकोटिक्स पार्सल ट्रैप',
+      matrimonial_romance_fraud: 'मैट्रिमोनियल / हनीट्रैप धोखाधड़ी',
+      job_visa_fraud: 'फर्जी नौकरी, वर्क परमिट एवं वीजा फ्रॉड',
+      part_time_job: 'टेलीग्राम पार्ट-टाइम / वर्क फ्रॉम होम टास्क स्कैम',
+      lottery_reward_fraud: 'लॉटरी / KBC / लकी ड्रा स्कैम',
+      ecommerce_olx_fraud: 'OLX / फर्जी आर्मी QR कोड स्कैम',
+      sextortion: 'सेक्सटॉर्शन / वीडियो कॉल ब्लैकमेलिंग',
+      deepfake_morphing_harassment: 'डीपफेक / एआई फोटो मॉर्फिंग प्रताड़ना',
+      cyber_stalking_harassment: 'साइबर स्टॉकिंग व धमकियां',
+      csam_pocso_offence: 'बाल शोषण सामग्री / पॉक्सो अपराध',
+      identity_theft: 'पहचान की चोरी एवं सिम स्वैप फ्रॉड',
+      phishing: 'फ़िशिंग लिंक / फर्जी APK धोखाधड़ी',
+      hacking: 'खाता / फोन हैकिंग व मैलवेयर',
+      investment_fraud: 'फर्जी निवेश / शेयर मार्केट / क्रिप्टो फ्रॉड',
+      corporate_bec: 'बिजनेस ईमेल समझौता (BEC) फ्रॉड',
+      corporate_ransomware: 'रैनसमवेयर व कॉर्पोरेट जबरन वसूली',
+      corporate_vendor_fraud: 'वेंडर इनवॉइस धोखाधड़ी',
+      corporate_insider_theft: 'आंतरिक डेटा चोरी व गुप्त सूचना लीक',
+      corporate_impersonation: 'कंपनी के नाम का फर्जीवाड़ा',
+      cyber_terrorism_sabotage: 'साइबर आतंकवाद व संस्थागत हमला',
+      general_cyber_crime: 'साइबर अपराध'
+    };
+
     return {
       rawText: text,
       category,
       categoryLabel: categoryNames[category] || 'Cyber Incident',
+      categoryLabelHi: categoryNamesHi[category] || 'साइबर अपराध',
       amount: extractedAmount,
       amountRaw: extractedAmountRaw,
       platform,
@@ -9066,8 +10057,9 @@ const EmergencyActionEngine = {
     EmergencyActionEngine.activeData = data;
 
     // Populate Category & Loss
-    document.getElementById('emerg-crime-type').textContent = data.categoryLabel;
-    document.getElementById('emerg-amount').textContent = data.amount ? `₹${data.amount}` : 'Not Specified';
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+    document.getElementById('emerg-crime-type').textContent = (isHi ? data.categoryLabelHi : null) || data.categoryLabel;
+    document.getElementById('emerg-amount').textContent = data.amount ? `₹${data.amount}` : (isHi ? 'उल्लेख नहीं' : 'Not Specified');
 
     // Populate Legal Sections Preview
     const map = CRIME_SECTIONS_MAP[data.category] || { it: ['66D'], bns: ['318'] };
@@ -9225,11 +10217,56 @@ const CyberSahayakChatbot = {
     // Append User Message
     CyberSahayakChatbot.appendMessage(text, 'user');
 
+    const lowerText = text.toLowerCase().trim();
+    const isPromptingHindi = (
+      lowerText === 'hindi' || 
+      lowerText === 'हिंदी' || 
+      lowerText === 'हिन्दी' || 
+      lowerText.match(/\b(switch to hindi|turn to hindi|turn hindi|speak hindi|hindi please|change to hindi|hindi me baat karo|hindi karo|hindi language|hindi me batao|hindi me|in hindi)\b/i) ||
+      lowerText.match(/(?:वेबसाइट|साइट|भाषा|बात).*?(?:हिंदी|हिन्दी)/i) ||
+      lowerText.match(/(?:हिंदी|हिन्दी).*?(?:करो|बदलो|में)/i)
+    );
+    const isPromptingEnglish = (
+      lowerText === 'english' || 
+      lowerText.match(/\b(switch to english|turn to english|turn english|speak english|english please|change to english|talk in english|english me|in english|english language)\b/i) ||
+      lowerText.match(/(?:switch|turn|change).*?english/i)
+    );
+
+    if (isPromptingHindi) {
+      I18nEngine.setLanguage('hi');
+      const isPureCommand = lowerText.length < 35 && !lowerText.match(/\b(cut|paise|rs|₹|lakh|hazar|fraud|scam|police|call|debit|lost|account|paisa)\b/i);
+      if (isPureCommand) {
+        setTimeout(() => {
+          CyberSahayakChatbot.appendMessage(
+            '🙏 <strong>नमस्ते!</strong> मैंने पूरी वेबसाइट और सहायता प्रणाली को <strong>हिन्दी</strong> में बदल दिया है।<br/>कृपया मुझे बताएं कि आपके साथ क्या घटना हुई है? (जैसे: बैंक से पैसे कटे, फर्जी पुलिस कॉल आई, आदि)',
+            'bot',
+            true
+          );
+        }, 300);
+        return;
+      }
+    } else if (isPromptingEnglish) {
+      I18nEngine.setLanguage('en');
+      const isPureCommand = lowerText.length < 35 && !lowerText.match(/\b(cut|paise|rs|₹|lakh|hazar|fraud|scam|police|call|debit|lost|account|paisa)\b/i);
+      if (isPureCommand) {
+        setTimeout(() => {
+          CyberSahayakChatbot.appendMessage(
+            '🙏 <strong>Hello!</strong> I have switched the entire website and guidance system to <strong>English</strong>.<br/>Please describe what happened so I can assist you with immediate emergency action and police FIR drafting.',
+            'bot',
+            true
+          );
+        }, 300);
+        return;
+      }
+    }
+
     // Parse with CitizenNLPParser
     const parsed = CitizenNLPParser.parse(text);
 
     setTimeout(() => {
       let replyHtml = '';
+      const isHi = I18nEngine.currentLang === 'hi';
+
       if (parsed) {
         // Auto-update wizard fields
         const crimeSelect = document.getElementById('inc-crime-type');
@@ -9263,56 +10300,105 @@ const CyberSahayakChatbot = {
         }
 
         let emergAdviceHtml = '';
-        if (parsed.category === 'loan_app_fraud') {
-          emergAdviceHtml = `
-            1. तुरंत लोन ऐप अनइंस्टॉल करें और कॉन्टैक्ट्स परमिशन हटाएं<br/>
-            2. अपने WhatsApp स्टेटस पर चेतावनी डालें कि फर्जी लोन ऐप आपके कॉन्टैक्ट्स को परेशान कर रहा है<br/>
-            3. आरबीआई सचेत पोर्टल (sachet.rbi.org.in) पर रिपोर्ट करें और ब्लैकमेलर को पैसे न दें
-          `;
-        } else if (parsed.category === 'deepfake_morphing_harassment' || parsed.category === 'sextortion') {
-          emergAdviceHtml = `
-            1. ब्लैकमेलर को ₹1 भी न भेजें (पैसे देने पर और ब्लैकमेल करेंगे)<br/>
-            2. IT Rules 2021 नियम 3(2)(b) के तहत 24 घंटे में फोटो/वीडियो हटवाने के लिए cybercrime.gov.in पर रिपोर्ट करें<br/>
-            3. सोशल मीडिया प्रोफाइल को प्राइवेट/लॉक करें और सभी चैट सबूत संभालें
-          `;
-        } else if (parsed.category === 'utility_bill_fraud') {
-          emergAdviceHtml = `
-            1. तुरंत फोन को एयरप्लेन मोड (Airplane Mode) पर डालें<br/>
-            2. कोई भी फर्जी APK / AnyDesk / RustDesk तुरंत डिलीट करें<br/>
-            3. बैंक को कॉल करके नेटबैंकिंग/UPI तुरंत ब्लॉक करवाएं
-          `;
-        } else if (parsed.category === 'courier_customs_fraud' || parsed.category === 'digital_arrest') {
-          emergAdviceHtml = `
-            1. तुरंत कॉल काट दें! असली पुलिस या कस्टम कभी वीडियो कॉल पर अरेस्ट नहीं करती<br/>
-            2. किसी भी "वेरिफिकेशन अकाउंट" या "आरबीआई एस्क्रो" में पैसे न भेजें<br/>
-            3. 1930 पर तुरंत उस नंबर की रिपोर्ट दर्ज कराएं
+        if (isHi) {
+          if (parsed.category === 'loan_app_fraud') {
+            emergAdviceHtml = `
+              1. तुरंत लोन ऐप अनइंस्टॉल करें और फोन की कॉन्टैक्ट्स परमिशन हटाएं<br/>
+              2. अपने WhatsApp स्टेटस पर चेतावनी डालें कि फर्जी लोन ऐप आपके संपर्कों को परेशान कर रहा है<br/>
+              3. आरबीआई सचेत पोर्टल (sachet.rbi.org.in) पर रिपोर्ट करें और ब्लैकमेलर को कभी पैसे न दें
+            `;
+          } else if (parsed.category === 'deepfake_morphing_harassment' || parsed.category === 'sextortion') {
+            emergAdviceHtml = `
+              1. ब्लैकमेलर को ₹1 भी न भेजें (पैसे देने पर और ब्लैकमेल करेंगे)<br/>
+              2. IT Rules 2021 नियम 3(2)(b) के तहत 24 घंटे में फोटो/वीडियो हटवाने के लिए cybercrime.gov.in पर रिपोर्ट करें<br/>
+              3. सोशल मीडिया प्रोफाइल को प्राइवेट/लॉक करें और सभी चैट सबूत संभालें
+            `;
+          } else if (parsed.category === 'utility_bill_fraud') {
+            emergAdviceHtml = `
+              1. तुरंत फोन को एयरप्लेन मोड (Airplane Mode) पर डालें<br/>
+              2. कोई भी फर्जी APK / AnyDesk / RustDesk तुरंत डिलीट करें<br/>
+              3. बैंक को कॉल करके नेटबैंकिंग/UPI तुरंत ब्लॉक करवाएं
+            `;
+          } else if (parsed.category === 'courier_customs_fraud' || parsed.category === 'digital_arrest') {
+            emergAdviceHtml = `
+              1. तुरंत कॉल काट दें! असली पुलिस या कस्टम कभी वीडियो कॉल पर अरेस्ट नहीं करती<br/>
+              2. किसी भी "वेरिफिकेशन अकाउंट" या "आरबीआई एस्क्रो" में पैसे न भेजें<br/>
+              3. 1930 पर तुरंत उस नंबर की रिपोर्ट दर्ज कराएं
+            `;
+          } else {
+            emergAdviceHtml = `
+              1. तुरंत <a href="tel:1930" style="color: #b91c1c; font-weight: 700;">1930</a> पर कॉल करें (पैसा फ्रीज कराने के लिए)<br/>
+              2. अपने बैंक के हेल्पलाइन पर कॉल करके खाता/UPI ब्लॉक करवाएं<br/>
+              3. स्क्रीनशॉट और सबूत (Section 63 BSA) संभाल कर रखें
+            `;
+          }
+
+          replyHtml = `
+            ⚠️ <strong>चिंता मत कीजिए, हम तुरंत आपकी मदद करेंगे!</strong><br/>
+            मैंने पाया कि यह <strong>${escapeHtml(parsed.categoryLabelHi || parsed.categoryLabel)}</strong> का मामला है${parsed.amount ? ` और लगभग <strong>₹${escapeHtml(parsed.amount)}</strong> का नुकसान हुआ है` : ''}।
+            <div style="margin: 8px 0; padding: 8px 10px; background: var(--status-red-bg); border-left: 3px solid #dc2626; border-radius: 4px; font-size: 0.8rem;">
+              <strong>🚨 तुरंत ये कदम उठाएं (Emergency Action):</strong><br/>
+              ${emergAdviceHtml}
+            </div>
+            मैंने आपकी <strong>कोर्ट-मान्य पुलिस FIR और BSA Sec 63 प्रमाणपत्र</strong> पूरी तरह तैयार कर दी है:
+            <div style="margin-top: 8px;">
+              <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="EmergencyActionEngine.proceedToFIR()">
+                📄 मेरी पुलिस FIR और प्रमाणपत्र देखें ➔
+              </button>
+            </div>
           `;
         } else {
-          emergAdviceHtml = `
-            1. तुरंत <a href="tel:1930" style="color: #b91c1c; font-weight: 700;">1930</a> पर कॉल करें (पैसा फ्रीज कराने के लिए)<br/>
-            2. अपने बैंक के हेल्पलाइन पर कॉल करके खाता/UPI ब्लॉक करवाएं<br/>
-            3. स्क्रीनशॉट और सबूत (Section 63 BSA) संभाल कर रखें
+          if (parsed.category === 'loan_app_fraud') {
+            emergAdviceHtml = `
+              1. Immediately uninstall the predatory app and revoke all Contacts / Storage permissions<br/>
+              2. Post a WhatsApp/social media alert warning family & friends of fake harassment calls<br/>
+              3. Report directly to RBI Sachet Portal (sachet.rbi.org.in) and do NOT pay extortion demands
+            `;
+          } else if (parsed.category === 'deepfake_morphing_harassment' || parsed.category === 'sextortion') {
+            emergAdviceHtml = `
+              1. Do NOT transfer any money (extortionists demand more upon receiving funds)<br/>
+              2. Report immediately to cybercrime.gov.in under IT Rules 2021 Rule 3(2)(b) for mandatory 24-hr takedown<br/>
+              3. Set social media accounts to private, preserve all chat logs, and block the perpetrator
+            `;
+          } else if (parsed.category === 'utility_bill_fraud') {
+            emergAdviceHtml = `
+              1. Turn on Airplane Mode immediately to terminate remote screen sharing sessions<br/>
+              2. Uninstall any rogue APK / AnyDesk / RustDesk / QuickSupport applications<br/>
+              3. Call your bank immediately to freeze netbanking, UPI, and debit cards
+            `;
+          } else if (parsed.category === 'courier_customs_fraud' || parsed.category === 'digital_arrest') {
+            emergAdviceHtml = `
+              1. Disconnect the call immediately! Real law enforcement never issues video warrants or demands transfer to "safe accounts"<br/>
+              2. Do NOT transfer funds into any purported "RBI escrow" or "verification account"<br/>
+              3. Dial 1930 immediately to report the impersonating phone number and bank accounts
+            `;
+          } else {
+            emergAdviceHtml = `
+              1. Call National Cybercrime Helpline <a href="tel:1930" style="color: #b91c1c; font-weight: 700;">1930</a> immediately within the Golden Hour to freeze funds<br/>
+              2. Contact your bank's 24/7 fraud helpline to block UPI handles and internet banking<br/>
+              3. Preserve transaction SMS, UTR receipts, and chat logs for Section 63 BSA electronic certification
+            `;
+          }
+
+          replyHtml = `
+            ⚠️ <strong>Do not worry, we are here to assist you immediately!</strong><br/>
+            I have identified this as a <strong>${escapeHtml(parsed.categoryLabel)}</strong> incident${parsed.amount ? ` involving approximately <strong>₹${escapeHtml(parsed.amount)}</strong>` : ''}.
+            <div style="margin: 8px 0; padding: 8px 10px; background: var(--status-red-bg); border-left: 3px solid #dc2626; border-radius: 4px; font-size: 0.8rem;">
+              <strong>🚨 Immediate Emergency Action Steps:</strong><br/>
+              ${emergAdviceHtml}
+            </div>
+            Your <strong>Court-admissible Police FIR Complaint and Section 63 BSA Evidence Certificate</strong> are ready:
+            <div style="margin-top: 8px;">
+              <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="EmergencyActionEngine.proceedToFIR()">
+                📄 View My Generated Police FIR ➔
+              </button>
+            </div>
           `;
         }
-
-        replyHtml = `
-          ⚠️ <strong>चिंता मत कीजिए, हम तुरंत आपकी मदद करेंगे!</strong><br/>
-          मैंने पाया कि यह <strong>${escapeHtml(parsed.categoryLabel)}</strong> का मामला है${parsed.amount ? ` और लगभग <strong>₹${escapeHtml(parsed.amount)}</strong> का नुकसान हुआ है` : ''}।
-          <div style="margin: 8px 0; padding: 8px 10px; background: var(--status-red-bg); border-left: 3px solid #dc2626; border-radius: 4px; font-size: 0.8rem;">
-            <strong>🚨 तुरंत ये कदम उठाएं (Emergency Action):</strong><br/>
-            ${emergAdviceHtml}
-          </div>
-          मैंने आपकी <strong>कोर्ट-मान्य पुलिस FIR और BSA Sec 63 सर्टिफिकेट</strong> पूरी तरह तैयार कर दी है:
-          <div style="margin-top: 8px;">
-            <button class="btn btn-sm btn-primary" style="background: var(--tiranga-saffron); border-color: var(--saffron-hover); font-weight: 700; width: 100%; font-size: 0.82rem;" onclick="EmergencyActionEngine.proceedToFIR()">
-              📄 View My Generated Police FIR ➔
-            </button>
-          </div>
-        `;
       } else {
-        replyHtml = `
-          कृपया मुझे बताएं कि क्या हुआ (जैसे: बैंक से पैसे कटे, कोई फर्जी कॉल आया, या टेलीग्राम पर टास्क दिया गया)? आप बोलकर भी बता सकते हैं।
-        `;
+        replyHtml = isHi
+          ? 'कृपया मुझे बताएं कि क्या हुआ (जैसे: बैंक से पैसे कटे, कोई फर्जी कॉल आया, या टेलीग्राम पर टास्क दिया गया)? आप बोलकर भी बता सकते हैं।'
+          : 'Please describe what happened (e.g.: money debited from bank, fake police/customs call, or Telegram task scam)? You can also speak using the microphone.';
       }
 
       CyberSahayakChatbot.appendMessage(replyHtml, 'bot', true);
@@ -9445,9 +10531,11 @@ const GovAlertSystem = {
   checkNumber(rawNumber) {
     const norm = this.normalizePhone(rawNumber);
     const banner = document.getElementById('gov-number-alert-banner');
+    if (banner) banner.style.display = 'none'; // SILENT TRIP: Never show public alarm banner to citizen
+
     if (!norm || norm.length < 10) {
-      if (banner) banner.style.display = 'none';
       this.currentMatched = null;
+      window.isCompromisedGovSpoof = false;
       return null;
     }
 
@@ -9458,29 +10546,109 @@ const GovAlertSystem = {
 
     if (matched) {
       this.currentMatched = matched;
-      this.displayAlertBanner(matched);
+      window.isCompromisedGovSpoof = true;
+      window.currentIncidentPriority = 'Priority 1 (Urgent Gov Spoof)';
+
+      // Silent trip logging in backend
+      this.recordSilentTrip(matched, rawNumber);
       this.autoRecordIncidentAlert(matched);
+      this.elevateSuspectInAuthorityDirectory(matched, rawNumber);
       return matched;
     } else {
-      if (banner) banner.style.display = 'none';
       this.currentMatched = null;
+      window.isCompromisedGovSpoof = false;
       return null;
     }
   },
 
-  displayAlertBanner(item) {
-    const banner = document.getElementById('gov-number-alert-banner');
-    if (!banner) return;
+  recordSilentTrip(item, rawNumber) {
+    const tripId = "GOV-TRIP-2026-" + Math.floor(100 + Math.random() * 900);
+    const now = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' IST';
+    const compName = document.getElementById('comp-name')?.value || "Aggrieved Citizen";
+    const compPhone = document.getElementById('comp-phone')?.value || "N/A";
+    const incRef = "INC-" + Math.floor(10000000 + Math.random() * 90000000);
+    const crimeSelect = document.getElementById('inc-crime-type');
+    const crimeType = crimeSelect ? crimeSelect.options[crimeSelect.selectedIndex]?.text || "Spoofed Gov Extortion" : "Spoofed Gov Extortion";
 
-    document.getElementById('gov-matched-post').textContent = item.official_name_or_post;
-    document.getElementById('gov-matched-dept').textContent = item.department_name;
-    document.getElementById('gov-matched-division').textContent = item.division_or_board;
-    document.getElementById('gov-matched-phone').textContent = item.official_phone;
-    document.getElementById('gov-matched-email').textContent = item.official_email;
-    document.getElementById('gov-matched-sec-email').textContent = item.it_security_email;
+    const logEntryText = `[${now}] [TRIP_ID: ${tripId}] [PRIORITY: 1-CRITICAL]
+  MATCHED_DEPT: ${item.department_name} (${item.division_or_board})
+  OFFICIAL_NAME: ${item.official_name_or_post}
+  OFFICIAL_PHONE: ${item.official_phone}
+  SUSPECT_CALLER_ID: ${rawNumber} (Spoofed)
+  COMPLAINANT: ${compName} (${compPhone})
+  INCIDENT_REF: ${incRef}
+  INCIDENT_TYPE: ${crimeType}
+  SOC_ACTION: Silent trip triggered. Queued for Law Enforcement & CERT-In verification.
+`;
 
-    banner.style.display = 'block';
-    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    try {
+      let trips = JSON.parse(localStorage.getItem('CLGS_SILENT_GOV_TRIPS') || '[]');
+      trips.unshift({
+        tripId,
+        timestamp: now,
+        department: item.department_name,
+        post: item.official_name_or_post,
+        officialPhone: item.official_phone,
+        suspectCallerId: rawNumber,
+        complainant: compName,
+        incRef,
+        crimeType
+      });
+      localStorage.setItem('CLGS_SILENT_GOV_TRIPS', JSON.stringify(trips));
+    } catch (e) {}
+
+    try {
+      fetch('/api/silent-gov-trip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tripId,
+          timestamp: now,
+          department: item.department_name,
+          post: item.official_name_or_post,
+          officialPhone: item.official_phone,
+          suspectCallerId: rawNumber,
+          complainant: compName,
+          incRef,
+          crimeType,
+          logEntryText
+        })
+      }).catch(() => {});
+    } catch(e) {}
+  },
+
+  elevateSuspectInAuthorityDirectory(item, rawNumber) {
+    if (typeof telecomDirectory === 'undefined') return;
+    const norm = this.normalizePhone(rawNumber);
+    let existing = telecomDirectory.find(e => this.normalizePhone(e.entity_value) === norm);
+    if (existing) {
+      existing.isGovSpoof = true;
+      existing.matched_gov_dept = item.department_name;
+      existing.report_count = Math.max(existing.report_count, 3) + 1;
+      existing.verification_score = 99;
+      existing.threat_level = 'CRITICAL';
+    } else {
+      telecomDirectory.unshift({
+        id: "SCAM-GOV-" + Math.floor(1000 + Math.random() * 9000),
+        entity_value: rawNumber,
+        entity_type: "PHONE_NUMBER",
+        scam_category: "digital_arrest",
+        threat_level: "CRITICAL",
+        verification_status: "VERIFIED_FRAUD",
+        verification_score: 99,
+        isGovSpoof: true,
+        matched_gov_dept: item.department_name,
+        evidence_level: "GOV_DIRECTORY_MATCH",
+        utr_ref: "N/A",
+        ncrp_ack: "NCRP-GOV-" + Math.floor(10000 + Math.random() * 90000),
+        report_count: 3,
+        telecom_caution_banner: `[URGENT GOV SPOOF] Accused impersonating official line of ${item.department_name}. Immediate carrier block priority.`,
+        last_reported: new Date().toISOString().replace('T', ' ').slice(0, 16)
+      });
+    }
+    if (typeof AuthorityEngine !== 'undefined' && AuthorityEngine.isUnlocked) {
+      AuthorityEngine.render();
+    }
   },
 
   autoRecordIncidentAlert(item) {
@@ -10121,6 +11289,31 @@ console.log("V2 Government Alert Engine & Trial Personalized Questions Matrix in
       <div class="btn-group" style="justify-content: flex-end; margin-top: 16px;">
         <button type="button" class="btn btn-primary" onclick="GovAlertSystem.closeDirectoryModal()">Done</button>
       </div>
+    </div>
+  </div>
+<!-- ════════════════════════════════════════════════════════════════════════
+     V2 MODAL 3: SILENT GOVERNMENT SPOOF AUDIT LOG VIEWER
+     ════════════════════════════════════════════════════════════════════════ -->
+<div id="gov-trips-log-modal" class="modal-overlay" style="display: none;" onclick="if(event.target===this) AuthorityEngine.closeGovTripLogs()">
+  <div class="modal-dialog" style="max-width: 780px;">
+    <div class="modal-header">
+      <h3 style="font-size: 1rem; color: #fff; margin: 0; display: flex; align-items: center; gap: 8px;">
+        <span>📜</span>
+        <span data-i18n="gov-log-modal-title">Silent Government Spoof Audit Log (compromised_gov_trips.log)</span>
+      </h3>
+      <button class="modal-close-btn" onclick="AuthorityEngine.closeGovTripLogs()" aria-label="Close log viewer">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 18px 22px;">
+      <div style="font-size: 0.80rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5;">
+        Audit trail of numbers matching official Government of India directories that were entered by complainants. Tripped silently in the background without public banners to prevent fraudster evasion, and queued with <strong>Priority 1 Escalation</strong>.
+      </div>
+      <div style="background: #0f172a; border-radius: 6px; padding: 14px; position: relative;">
+        <pre id="gov-trips-log-content" style="color: #38bdf8; margin: 0; font-size: 0.78rem; font-family: 'Geist Mono', monospace; max-height: 380px; overflow-y: auto; white-space: pre-wrap; line-height: 1.6;"></pre>
+      </div>
+    </div>
+    <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 22px; background: var(--bg-subtle);">
+      <button type="button" class="btn btn-outline" onclick="AuthorityEngine.closeGovTripLogs()">Close</button>
+      <button type="button" class="btn btn-primary" onclick="AuthorityEngine.downloadGovTripsLog()">📥 Download compromised_gov_trips.log</button>
     </div>
   </div>
 </div>

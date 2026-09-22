@@ -1725,6 +1725,19 @@ class SecureAntiBotHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(status_data, indent=2).encode("utf-8"))
             return
 
+        if self.path == "/api/silent-gov-trips-log":
+            log_path = os.path.join(os.path.dirname(__file__), "compromised_gov_trips.log")
+            if os.path.exists(log_path):
+                with open(log_path, "r", encoding="utf-8") as f:
+                    content = f.read()
+            else:
+                content = "# No compromised gov trips logged yet.\n"
+            self.send_response(200)
+            self.send_header("Content-Type", "text/plain; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(content.encode("utf-8"))
+            return
+
         # Serve static web app files (index.html, cyber_legal_guidance_system.html)
         try:
             super().do_GET()
@@ -1774,6 +1787,26 @@ class SecureAntiBotHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 return
             except Exception as e:
                 self.send_response(400)
+                self.end_headers()
+                return
+
+        if self.path == "/api/silent-gov-trip":
+            length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(length).decode("utf-8") if length > 0 else "{}"
+            try:
+                data = json.loads(body)
+                log_text = data.get("logEntryText", "")
+                if log_text:
+                    log_path = os.path.join(os.path.dirname(__file__), "compromised_gov_trips.log")
+                    with open(log_path, "a", encoding="utf-8") as f:
+                        f.write("\n" + log_text)
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(b'{"status": "TRIP_LOGGED", "priority": "PRIORITY_1"}')
+                return
+            except Exception as e:
+                self.send_response(500)
                 self.end_headers()
                 return
 

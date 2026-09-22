@@ -1,0 +1,24 @@
+# ==============================================================================
+# NATIONAL CYBER CRIME REPORTING PORTAL (NCRP) & I4C SOC
+# COMPROMISED GOVERNMENT DIRECTORY SPOOF AUDIT LOG
+# Standards: BNS 2023 Sec 204 & 319 | IT Act 2000 Sec 66D & 70B | CERT-In Directive
+# Priority: PRIORITY-1 URGENT (OFFICIAL ASSET SPOOFING)
+# Note: Logged silently in backend to prevent scammer evasion.
+# ==============================================================================
+[2026-09-21 14:32:10 IST] [TRIP_ID: GOV-TRIP-2026-001] [PRIORITY: 1-CRITICAL]
+  MATCHED_DEPT: Tata Power Delhi Distribution Ltd (TPDDL) (Billing Operations)
+  OFFICIAL_NAME: Executive Engineer (Billing Operations)
+  OFFICIAL_PHONE: +91-9810054321
+  SUSPECT_CALLER_ID: +91-9810054321 (Spoofed)
+  INCIDENT_REF: INC-20260921-7891
+  INCIDENT_TYPE: Electricity Bill Disconnection Phishing
+  SOC_ACTION: Silent trip triggered. Alert queued for Nodal Officer & CERT-In.
+
+[2026-09-21 18:15:45 IST] [TRIP_ID: GOV-TRIP-2026-002] [PRIORITY: 1-CRITICAL]
+  MATCHED_DEPT: Ministry of Home Affairs (MHA) (National Cyber Crime Reporting Desk)
+  OFFICIAL_NAME: National Cyber Crime Reporting Desk (1930)
+  OFFICIAL_PHONE: +91-9818819300
+  SUSPECT_CALLER_ID: +91-9818819300 (Spoofed)
+  INCIDENT_REF: INC-20260921-8842
+  INCIDENT_TYPE: Digital Arrest & Money Laundering Coercion
+  SOC_ACTION: Silent trip triggered. Alert queued for Nodal Officer & CERT-In.
