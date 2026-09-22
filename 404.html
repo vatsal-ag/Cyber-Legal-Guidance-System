@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com data: blob:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' data:; object-src 'none'; base-uri 'self';"/>
+
+<title>404 — Sovereign Route Not Found | Cyber Legal Guidance System</title>
+<meta name="description" content="The requested sovereign incident record or guidance route is unavailable. Return to the National Cyber Legal Guidance Cockpit."/>
+<meta name="robots" content="noindex, follow"/>
+<link rel="canonical" href="https://cybercrime.gov.in/404"/>
+
+<!-- Crisp Sovereign SVG Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%230e2442' d='M16 2L4 7v9c0 8.84 5.16 17.16 12 19 6.84-1.84 12-10.16 12-19V7L16 2z'/%3E%3Cpath fill='%23c26100' d='M16 7l8 3.5v5.5c0 5.89-3.44 11.44-8 12.67-4.56-1.23-8-6.78-8-12.67V10.5L16 7z'/%3E%3Cpath fill='%23ffffff' d='M15 11h2v5h-2zm0 7h2v2h-2z'/%3E%3C/svg%3E"/>
+
+<!-- Geist & Geist Mono Typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --primary-navy: #0e2442;
+    --navy-surface: #f4f7fb;
+    --saffron-gold: #c26100;
+    --saffron-hover: #a35200;
+    --bg-page: #f8fafc;
+    --bg-card: #ffffff;
+    --border-card: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --tiranga-saffron: #FF671F;
+    --tiranga-white: #FFFFFF;
+    --tiranga-green: #046A38;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --primary-navy: #60a5fa;
+      --navy-surface: #1e293b;
+      --saffron-gold: #fb923c;
+      --saffron-hover: #f97316;
+      --bg-page: #090e17;
+      --bg-card: #111827;
+      --border-card: #283548;
+      --text-primary: #f9fafb;
+      --text-secondary: #e5e7eb;
+      --text-muted: #9ca3af;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    line-height: 1.6;
+    letter-spacing: -0.011em;
+  }
+
+  .tiranga-stripe {
+    height: 4px;
+    background: linear-gradient(90deg, var(--tiranga-saffron) 33.3%, var(--tiranga-white) 33.3%, var(--tiranga-white) 66.6%, var(--tiranga-green) 66.6%);
+    width: 100%;
+  }
+
+  .header-bar {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border-card);
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .main-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .error-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 12px;
+    padding: 40px 32px;
+    max-width: 580px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 10px 25px -5px rgba(14, 36, 66, 0.08);
+  }
+
+  .badge-code {
+    display: inline-block;
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--saffron-gold);
+    background: var(--navy-surface);
+    padding: 4px 14px;
+    border-radius: 9999px;
+    border: 1px solid var(--border-card);
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.025em;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    max-width: 52ch;
+    margin: 0 auto 28px;
+    line-height: 1.65;
+  }
+
+  .action-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: background-color 0.18s cubic-bezier(0.23, 1, 0.32, 1), transform 0.18s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .action-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn-primary {
+    background: #0e2442;
+    color: #ffffff;
+    border: 1px solid #0e2442;
+  }
+  .btn-primary:hover {
+    background: #163660;
+  }
+
+  .btn-secondary {
+    background: var(--navy-surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border-card);
+  }
+  .btn-secondary:hover {
+    background: var(--border-card);
+  }
+
+  .helpline-box {
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 8px;
+    background: var(--navy-surface);
+    border: 1px dashed var(--border-card);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .helpline-box strong {
+    color: var(--saffron-gold);
+  }
+
+  .footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border-card);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  @media (max-width: 540px) {
+    .action-grid { grid-template-columns: 1fr; }
+    .error-card { padding: 28px 20px; }
+    h1 { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="tiranga-stripe"></div>
+
+<header class="header-bar">
+  <svg width="24" height="24" viewBox="0 0 32 32" aria-hidden="true">
+    <path fill="#0e2442" d="M16 2L4 7v9c0 8.84 5.16 17.16 12 19 6.84-1.84 12-10.16 12-19V7L16 2z"/>
+    <path fill="#c26100" d="M16 7l8 3.5v5.5c0 5.89-3.44 11.44-8 12.67-4.56-1.23-8-6.78-8-12.67V10.5L16 7z"/>
+    <path fill="#ffffff" d="M15 11h2v5h-2zm0 7h2v2h-2z"/>
+  </svg>
+  <div class="header-title">National Cyber Legal Guidance System</div>
+</header>
+
+<main class="main-container">
+  <div class="error-card">
+    <div class="badge-code">HTTP 404 — AIR-GAPPED OR UNRESOLVED ROUTE</div>
+    <h1>Sovereign Route Not Found</h1>
+    <p>The incident case file, evidence hash, or guidance endpoint you requested does not exist or has been archived under sovereign zero-knowledge airgap policies.</p>
+    
+    <div class="action-grid">
+      <a href="/" class="action-btn btn-primary">
+        <span>🛡️</span> Incident Intake Cockpit
+      </a>
+      <a href="/#directory" class="action-btn btn-secondary">
+        <span>📋</span> Scam Intelligence Directory
+      </a>
+      <a href="/#codex" class="action-btn btn-secondary">
+        <span>⚖️</span> Statutory Law Codex
+      </a>
+      <a href="/#emergency" class="action-btn btn-secondary">
+        <span>🚨</span> Golden Hour Emergency 1930
+      </a>
+    </div>
+
+    <div class="helpline-box">
+      Immediate financial freeze or digital arrest crisis? Call <strong>National Cyber Crime Helpline 1930</strong> or notify your bank nodal officer immediately.
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  Cyber Defense & Legal Informatics Architecture Division &bull; Sovereign Infrastructure Compliance
+</footer>
+
+</body>
+</html>
