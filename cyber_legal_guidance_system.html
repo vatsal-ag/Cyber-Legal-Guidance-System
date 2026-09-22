@@ -3299,43 +3299,53 @@
             </div>
             <div class="form-group full-width">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
-                <label style="margin-bottom: 0;"><span data-i18n="form-address">Permanent / Current Residential Address</span> * <span class="label-hint" data-i18n="form-address-hint">Typing address auto-detects PIN code</span></label>
-                <span id="pin-detect-badge" class="pin-detect-badge" style="display: none;">
+                <label style="margin-bottom: 0;"><span data-i18n="form-address-1">Address Line 1 (Flat / House / Door / Premises No. & Building Name)</span> * <span class="label-hint" data-i18n="form-address-hint">Typing address auto-detects PIN code</span></label>
+                <span id="pin-detect-badge" class="pin-detect-badge" style="display: none;" data-i18n="badge-jurisdiction-none">
                   📍 Detected Jurisdiction: None
                 </span>
               </div>
-              <input type="text" id="comp-address" placeholder="House/Flat No, Street, Landmark, Area, City, State, PIN" data-i18n-placeholder="placeholder-comp-address" value="" oninput="ValidationEngine.validateField('comp-address', 'text'); JurisdictionEngine.onAddressInput(this.value, 'citizen')"/>
-              <div id="comp-address-error" class="validation-msg"></div>
+              <input type="text" id="comp-address-1" placeholder="Flat / House / Door / Block No., Apartment / Building Name" data-i18n-placeholder="placeholder-comp-address-1" value="" oninput="onAddressFieldInput('citizen')"/>
+              <div id="comp-address-1-error" class="validation-msg"></div>
             </div>
+            <div class="form-group">
+              <label><span data-i18n="form-address-2">Address Line 2 (Road / Street / Lane / Sector / Locality)</span> *</label>
+              <input type="text" id="comp-address-2" placeholder="Road, Street, Lane, Sector, Locality / Mohalla" data-i18n-placeholder="placeholder-comp-address-2" value="" oninput="onAddressFieldInput('citizen')"/>
+              <div id="comp-address-2-error" class="validation-msg"></div>
+            </div>
+            <div class="form-group">
+              <label><span data-i18n="form-address-3">Address Line 3 (Landmark / Area / Sub-locality)</span> <span class="label-hint" data-i18n="form-optional-hint">(Optional)</span></label>
+              <input type="text" id="comp-address-3" placeholder="Nearby Landmark, Police Chowki, Sub-locality (Optional)" data-i18n-placeholder="placeholder-comp-address-3" value="" oninput="onAddressFieldInput('citizen')"/>
+            </div>
+            <input type="hidden" id="comp-address" value=""/>
           </div>
 
           <!-- PIN CODE AUTO-DETECTION & JURISDICTION ROW -->
           <div class="jurisdiction-grid">
             <div class="form-group" style="margin-bottom: 0;">
-              <label><span data-i18n="form-pincode">PIN Code</span> * <span class="label-hint">6 Digits</span></label>
+              <label><span data-i18n="form-pincode">PIN Code</span> * <span class="label-hint" data-i18n="label-hint-6digits">6 Digits</span></label>
               <input type="text" id="comp-pincode" maxlength="6" placeholder="e.g. 110001" value="" style="font-family: 'Geist Mono', monospace; font-weight: 600;" oninput="JurisdictionEngine.onPinInput(this.value, 'citizen')"/>
             </div>
             <div class="form-group" style="margin-bottom: 0;">
               <label><span data-i18n="form-city">Detected City / District</span> *</label>
-              <input type="text" id="comp-city" placeholder="City / District" value="" onchange="JurisdictionEngine.onManualLocationChange('citizen')"/>
+              <input type="text" id="comp-city" placeholder="City / District" data-i18n-placeholder="placeholder-comp-city" value="" onchange="JurisdictionEngine.onManualLocationChange('citizen')"/>
             </div>
             <div class="form-group" style="margin-bottom: 0;">
               <label><span data-i18n="form-state">Detected State / UT</span> *</label>
-              <input type="text" id="comp-state" placeholder="State / UT" value="" onchange="JurisdictionEngine.onManualLocationChange('citizen')"/>
+              <input type="text" id="comp-state" placeholder="State / UT" data-i18n-placeholder="placeholder-comp-state" value="" onchange="JurisdictionEngine.onManualLocationChange('citizen')"/>
             </div>
           </div>
 
           <!-- ADDRESSED CYBER POLICE OFFICER HIERARCHY -->
           <div class="form-group" style="margin-top: 14px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
-              <label style="margin-bottom: 0;">Addressed Authority / Designated Cyber Police Station * <span class="label-hint">Auto-routed for this City & State</span></label>
+              <label style="margin-bottom: 0;"><span data-i18n="form-addressed-authority">Addressed Authority / Designated Cyber Police Station</span> * <span class="label-hint" data-i18n="form-authority-hint">Auto-routed for this City & State</span></label>
               <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">IT Act Sec 78 & BNSS Sec 173 Compliant <span class="term-info-btn" role="button" tabindex="0" onclick="GlossaryEngine.openModal('it_sec_78')" onmouseenter="GlossaryEngine.showTooltip(this, 'it_sec_78')" onmouseleave="GlossaryEngine.hideTooltip()" onfocus="GlossaryEngine.showTooltip(this, 'it_sec_78')" onblur="GlossaryEngine.hideTooltip()" onkeydown="GlossaryEngine.onKey(event, 'it_sec_78')" title="Learn about IT Act Sec 78 & BNSS 173" aria-label="Learn about IT Act Sec 78 & BNSS 173">ⓘ</span></span>
             </div>
             <select id="comp-police-station" onchange="JurisdictionEngine.onAuthoritySelectChange(this.value, 'citizen')">
               <!-- Populated dynamically by JurisdictionEngine -->
             </select>
             <div id="comp-custom-police-wrapper" style="display: none; margin-top: 8px;">
-              <input type="text" id="comp-custom-police-station" placeholder="Enter exact Local Police Station / Thana name (e.g. Prem Nagar Police Station, Dehradun)" style="font-size: 0.84rem;" oninput="JurisdictionEngine.onCustomStationInput(this.value, 'citizen')"/>
+              <input type="text" id="comp-custom-police-station" placeholder="Enter exact Local Police Station / Thana name (e.g. Prem Nagar Police Station, Dehradun)" data-i18n-placeholder="placeholder-comp-custom-police" style="font-size: 0.84rem;" oninput="JurisdictionEngine.onCustomStationInput(this.value, 'citizen')"/>
             </div>
           </div>
         </div>
@@ -3398,43 +3408,53 @@
             </div>
             <div class="form-group full-width">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
-                <label style="margin-bottom: 0;"><span data-i18n="form-corp-address">Registered Corporate Office Address</span> * <span class="label-hint">Typing address auto-detects PIN code</span></label>
-                <span id="corp-pin-detect-badge" class="pin-detect-badge" style="display: none;">
+                <label style="margin-bottom: 0;"><span data-i18n="form-corp-address-1">Corporate Address Line 1 (Office / Suite / Floor / Building Name)</span> * <span class="label-hint" data-i18n="corp-address-hint">Typing address auto-detects PIN code</span></label>
+                <span id="corp-pin-detect-badge" class="pin-detect-badge" style="display: none;" data-i18n="badge-jurisdiction-none">
                   📍 Detected Jurisdiction: None
                 </span>
               </div>
-              <input type="text" id="corp-address" placeholder="Registered Office Address, City, State, PIN" value="" oninput="ValidationEngine.validateField('corp-address', 'text'); JurisdictionEngine.onAddressInput(this.value, 'corporate')"/>
-              <div id="corp-address-error" class="validation-msg"></div>
+              <input type="text" id="corp-address-1" placeholder="Office / Suite / Floor No., Tech Park / Commercial Complex" data-i18n-placeholder="placeholder-corp-address-1" value="" oninput="onAddressFieldInput('corporate')"/>
+              <div id="corp-address-1-error" class="validation-msg"></div>
             </div>
+            <div class="form-group">
+              <label><span data-i18n="form-corp-address-2">Corporate Address Line 2 (Road / Street / Industrial Area / Sector)</span> *</label>
+              <input type="text" id="corp-address-2" placeholder="Road, Street, Industrial Area, Sector / Tech Zone" data-i18n-placeholder="placeholder-corp-address-2" value="" oninput="onAddressFieldInput('corporate')"/>
+              <div id="corp-address-2-error" class="validation-msg"></div>
+            </div>
+            <div class="form-group">
+              <label><span data-i18n="form-corp-address-3">Corporate Address Line 3 (Landmark / Area / Sub-locality)</span> <span class="label-hint" data-i18n="form-optional-hint">(Optional)</span></label>
+              <input type="text" id="corp-address-3" placeholder="Prominent Landmark, Metro Pillar, Tech Hub (Optional)" data-i18n-placeholder="placeholder-corp-address-3" value="" oninput="onAddressFieldInput('corporate')"/>
+            </div>
+            <input type="hidden" id="corp-address" value=""/>
           </div>
 
           <!-- CORPORATE PIN CODE & JURISDICTION ROW -->
           <div class="jurisdiction-grid">
             <div class="form-group" style="margin-bottom: 0;">
-              <label><span data-i18n="form-corp-pincode">Corporate PIN</span> * <span class="label-hint">6 Digits</span></label>
+              <label><span data-i18n="form-corp-pincode">Corporate PIN</span> * <span class="label-hint" data-i18n="label-hint-6digits">6 Digits</span></label>
               <input type="text" id="corp-pincode" maxlength="6" placeholder="e.g. 110001" value="" style="font-family: 'Geist Mono', monospace; font-weight: 600;" oninput="JurisdictionEngine.onPinInput(this.value, 'corporate')"/>
             </div>
             <div class="form-group" style="margin-bottom: 0;">
               <label><span data-i18n="form-corp-city">Corporate City / District</span> *</label>
-              <input type="text" id="corp-city" placeholder="e.g. New Delhi" value="" onchange="JurisdictionEngine.onManualLocationChange('corporate')"/>
+              <input type="text" id="corp-city" placeholder="e.g. New Delhi" data-i18n-placeholder="placeholder-corp-city" value="" onchange="JurisdictionEngine.onManualLocationChange('corporate')"/>
             </div>
             <div class="form-group" style="margin-bottom: 0;">
               <label><span data-i18n="form-corp-state">Corporate State / UT</span> *</label>
-              <input type="text" id="corp-state" placeholder="e.g. Delhi" value="" onchange="JurisdictionEngine.onManualLocationChange('corporate')"/>
+              <input type="text" id="corp-state" placeholder="e.g. Delhi" data-i18n-placeholder="placeholder-corp-state" value="" onchange="JurisdictionEngine.onManualLocationChange('corporate')"/>
             </div>
           </div>
 
           <!-- CORPORATE ADDRESSED AUTHORITY -->
           <div class="form-group" style="margin-top: 14px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
-              <label style="margin-bottom: 0;">Addressed Corporate Cyber Authority / Police Station *</label>
-              <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">CERT-In & Special Cell Integrated</span>
+              <label style="margin-bottom: 0;"><span data-i18n="form-corp-addressed-authority">Addressed Corporate Cyber Authority / Police Station</span> *</label>
+              <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;" data-i18n="corp-certin-tag">CERT-In & Special Cell Integrated</span>
             </div>
             <select id="corp-police-station" onchange="JurisdictionEngine.onAuthoritySelectChange(this.value, 'corporate')">
               <!-- Populated dynamically by JurisdictionEngine -->
             </select>
             <div id="corp-custom-police-wrapper" style="display: none; margin-top: 8px;">
-              <input type="text" id="corp-custom-police-station" placeholder="Enter exact Corporate Cyber Crime Cell / Police Station name" style="font-size: 0.84rem;" oninput="JurisdictionEngine.onCustomStationInput(this.value, 'corporate')"/>
+              <input type="text" id="corp-custom-police-station" placeholder="Enter exact Corporate Cyber Crime Cell / Police Station name" data-i18n-placeholder="placeholder-corp-custom-police" style="font-size: 0.84rem;" oninput="JurisdictionEngine.onCustomStationInput(this.value, 'corporate')"/>
             </div>
           </div>
         </div>
@@ -6290,6 +6310,35 @@ function generatePoliceLetter() {
   BotShield.verifyHumanAndExecute(() => doGeneratePoliceLetter(), 'FIR Complaint Generation');
 }
 
+function getComplainantFullAddress(mode = (typeof currentComplainantMode !== 'undefined' ? currentComplainantMode : 'citizen')) {
+  const isCorp = mode === 'corporate';
+  const prefix = isCorp ? 'corp-address-' : 'comp-address-';
+  const l1 = (document.getElementById(prefix + '1')?.value || '').trim();
+  const l2 = (document.getElementById(prefix + '2')?.value || '').trim();
+  const l3 = (document.getElementById(prefix + '3')?.value || '').trim();
+  const parts = [l1, l2, l3].filter(Boolean);
+  if (parts.length > 0) return parts.join(', ');
+  // Fallback to legacy single address field if present
+  const legacy = (document.getElementById(isCorp ? 'corp-address' : 'comp-address')?.value || '').trim();
+  return legacy;
+}
+
+function onAddressFieldInput(mode = 'citizen') {
+  const isCorp = mode === 'corporate';
+  const prefix = isCorp ? 'corp-address-' : 'comp-address-';
+  const full = getComplainantFullAddress(mode);
+  const hiddenInput = document.getElementById(isCorp ? 'corp-address' : 'comp-address');
+  if (hiddenInput) hiddenInput.value = full;
+
+  if (typeof ValidationEngine !== 'undefined') {
+    ValidationEngine.validateField(prefix + '1', 'text');
+    ValidationEngine.validateField(prefix + '2', 'text');
+  }
+  if (typeof JurisdictionEngine !== 'undefined') {
+    JurisdictionEngine.onAddressInput(full, mode);
+  }
+}
+
 function doGeneratePoliceLetter() {
   const isCorp = currentComplainantMode === 'corporate';
   const mode = isCorp ? 'corporate' : 'citizen';
@@ -6343,7 +6392,7 @@ function doGeneratePoliceLetter() {
     const orgName = document.getElementById('corp-org-name').value.trim() || 'Corporate Complainant';
     const orgCin = document.getElementById('corp-cin').value.trim() || 'N/A';
     const orgGstin = document.getElementById('corp-gstin').value.trim() || 'N/A';
-    const orgAddress = document.getElementById('corp-address').value.trim() || 'N/A';
+    const orgAddress = getComplainantFullAddress('corporate') || 'N/A';
     const repName = document.getElementById('corp-rep-name').value.trim() || 'Authorized Representative';
     const repDesig = document.getElementById('corp-rep-desig').value.trim() || 'CISO / Legal Counsel';
     const repContact = document.getElementById('corp-rep-contact').value.trim() || 'N/A';
@@ -6444,7 +6493,7 @@ Location / Date     : ${detectedCity}, ${detectedState} | ${currentDate}
     const cName = document.getElementById('comp-name').value.trim() || 'Concerned Citizen';
     const cPhone = document.getElementById('comp-phone').value.trim() || 'Not Provided';
     const cEmail = document.getElementById('comp-email').value.trim() || 'Not Provided';
-    const cAddr = document.getElementById('comp-address').value.trim() || 'Not Provided';
+    const cAddr = getComplainantFullAddress('citizen') || 'Not Provided';
 
     const hasFinancialLoss = amt && amt !== '0' && amt !== '0/-';
     const isDigitalHarassmentCrime = ['deepfake_morphing_harassment', 'sextortion', 'cyber_stalking_harassment', 'loan_app_fraud', 'csam_pocso_offence'].includes(crimeKey);
@@ -6646,7 +6695,7 @@ const BsaCertificateEngine = {
     const cName = isCorp ? (document.getElementById('corp-rep-name')?.value.trim() || 'Authorized Officer') : (document.getElementById('comp-name')?.value.trim() || 'Complainant Citizen');
     const orgName = isCorp ? (document.getElementById('corp-org-name')?.value.trim() || 'Corporate Complainant Entity') : 'Individual Private Citizen';
     const cPhone = isCorp ? (document.getElementById('corp-rep-contact')?.value.trim() || 'Corporate Direct Line') : (document.getElementById('comp-phone')?.value.trim() || 'Mobile Device');
-    const cAddr = isCorp ? (document.getElementById('corp-address')?.value.trim() || 'Corporate Headquarters') : (document.getElementById('comp-address')?.value.trim() || 'Complainant Residence');
+    const cAddr = (typeof getComplainantFullAddress === 'function' ? getComplainantFullAddress(isCorp ? 'corporate' : 'citizen') : (isCorp ? document.getElementById('corp-address')?.value : document.getElementById('comp-address')?.value) || '').trim() || (isCorp ? 'Corporate Headquarters' : 'Complainant Residence');
     const detectedCity = isCorp ? (document.getElementById('corp-city')?.value.trim() || 'New Delhi') : (document.getElementById('comp-city')?.value.trim() || 'Dehradun');
     const detectedState = isCorp ? (document.getElementById('corp-state')?.value.trim() || 'Delhi') : (document.getElementById('comp-state')?.value.trim() || 'Uttarakhand');
     const verificationPlace = (detectedCity && detectedState) ? `${detectedCity}, ${detectedState}` : (cAddr.split(',')[0] || 'Jurisdiction');
@@ -7280,10 +7329,24 @@ const I18nEngine = {
       'placeholder-comp-email': 'e.g. complainant@example.com',
       'form-address': 'Permanent / Current Residential Address',
       'form-address-hint': 'Typing address auto-detects PIN code',
+      'form-address-1': 'Address Line 1 (Flat / House / Door / Premises No. & Building Name)',
+      'placeholder-comp-address-1': 'Flat / House / Door / Block No., Apartment / Building Name',
+      'form-address-2': 'Address Line 2 (Road / Street / Lane / Sector / Locality)',
+      'placeholder-comp-address-2': 'Road, Street, Lane, Sector, Locality / Mohalla',
+      'form-address-3': 'Address Line 3 (Landmark / Area / Sub-locality)',
+      'placeholder-comp-address-3': 'Nearby Landmark, Police Chowki, Sub-locality (Optional)',
+      'form-optional-hint': '(Optional)',
       'placeholder-comp-address': 'House/Flat No, Street, Landmark, Area, City, State, PIN',
       'form-pincode': 'PIN Code',
+      'label-hint-6digits': '6 Digits',
       'form-city': 'Detected City / District',
+      'placeholder-comp-city': 'City / District',
       'form-state': 'Detected State / UT',
+      'placeholder-comp-state': 'State / UT',
+      'form-addressed-authority': 'Addressed Authority / Designated Cyber Police Station',
+      'form-authority-hint': 'Auto-routed for this City & State',
+      'placeholder-comp-custom-police': 'Enter exact Local Police Station / Thana name (e.g. Prem Nagar Police Station, Dehradun)',
+      'badge-jurisdiction-none': '📍 Detected Jurisdiction: None',
       'form-corp-name': 'Company Legal Name',
       'form-corp-name-hint': 'As per RoC Certificate',
       'form-corp-cin': 'Corporate Identification No. (CIN / LLPIN)',
@@ -7293,11 +7356,25 @@ const I18nEngine = {
       'form-corp-rep-phone': 'Official Corporate Contact Phone',
       'form-corp-rep-email': 'Official Corporate Email Address',
       'form-corp-board-res': 'Authorization Document Reference',
+      'placeholder-corp-board-res': 'e.g. Board Resolution dated DD/MM/YYYY / PoA',
       'form-corp-infra': 'Targeted Corporate Infrastructure',
+      'placeholder-corp-infra': 'e.g. Treasury ERP, Cloud Email Server, Swift Gateway',
       'form-corp-address': 'Registered Corporate Office Address',
+      'corp-address-hint': 'Typing address auto-detects PIN code',
+      'form-corp-address-1': 'Corporate Address Line 1 (Office / Suite / Floor / Building Name)',
+      'placeholder-corp-address-1': 'Office / Suite / Floor No., Tech Park / Commercial Complex',
+      'form-corp-address-2': 'Corporate Address Line 2 (Road / Street / Industrial Area / Sector)',
+      'placeholder-corp-address-2': 'Road, Street, Industrial Area, Sector / Tech Zone',
+      'form-corp-address-3': 'Corporate Address Line 3 (Landmark / Area / Sub-locality)',
+      'placeholder-corp-address-3': 'Prominent Landmark, Metro Pillar, Tech Hub (Optional)',
       'form-corp-pincode': 'Corporate PIN',
       'form-corp-city': 'Corporate City / District',
+      'placeholder-corp-city': 'e.g. New Delhi',
       'form-corp-state': 'Corporate State / UT',
+      'placeholder-corp-state': 'e.g. Delhi',
+      'form-corp-addressed-authority': 'Addressed Corporate Cyber Authority / Police Station',
+      'corp-certin-tag': 'CERT-In & Special Cell Integrated',
+      'placeholder-corp-custom-police': 'Enter exact Corporate Cyber Crime Cell / Police Station name',
       'btn-step1-next': 'Proceed to Evidence & OCR ➔',
       'step2-title': '2. Evidence Ingestion & Scam Contacting Entity Extraction',
       'step2-subtitle': 'Upload a screenshot of the fraudulent message, WhatsApp chat, or fake bank SMS. The OCR engine reads the image and identifies suspect phone numbers, UPI handles, and URLs.',
@@ -7436,10 +7513,24 @@ const I18nEngine = {
       'placeholder-comp-email': 'उदा. complainant@example.com',
       'form-address': 'स्थाई / वर्तमान निवास का पता',
       'form-address-hint': 'पता लिखने पर पिन कोड स्वतः पहचाना जाएगा',
+      'form-address-1': 'पता पंक्ति 1 (मकान / फ्लैट / भवन सं. व नाम)',
+      'placeholder-comp-address-1': 'मकान नं, फ्लैट / ब्लॉक सं., सोसाइटी / भवन का नाम',
+      'form-address-2': 'पता पंक्ति 2 (सड़क / गली / मोहल्ला / सेक्टर)',
+      'placeholder-comp-address-2': 'सड़क, मार्ग, गली, सेक्टर, मोहल्ला / कॉलोनी',
+      'form-address-3': 'पता पंक्ति 3 (लैंडमार्क / क्षेत्र / उप-इलाका)',
+      'placeholder-comp-address-3': 'निकटतम लैंडमार्क, पुलिस चौकी, क्षेत्र (वैकल्पिक)',
+      'form-optional-hint': '(वैकल्पिक)',
       'placeholder-comp-address': 'मकान नं, गली, मोहल्ला, शहर, राज्य, पिन कोड',
       'form-pincode': 'पिन कोड',
+      'label-hint-6digits': '6 अंक',
       'form-city': 'पहचाना गया शहर / जिला',
+      'placeholder-comp-city': 'शहर / जिला',
       'form-state': 'पहचाना गया राज्य / UT',
+      'placeholder-comp-state': 'राज्य / केंद्र शासित प्रदेश',
+      'form-addressed-authority': 'संबोधित साइबर पुलिस स्टेशन / अधिकारी',
+      'form-authority-hint': 'इस शहर एवं राज्य के अनुसार स्वतः निर्धारित',
+      'placeholder-comp-custom-police': 'स्थानीय थाने का सही नाम दर्ज करें (उदा. प्रेम नगर थाना, देहरादून)',
+      'badge-jurisdiction-none': '📍 पहचाना गया क्षेत्राधिकार: कोई नहीं',
       'form-corp-name': 'कंपनी का कानूनी नाम',
       'form-corp-name-hint': 'RoC प्रमाण पत्र के अनुसार',
       'form-corp-cin': 'कॉर्पोरेट पहचान संख्या (CIN / LLPIN)',
@@ -7449,11 +7540,25 @@ const I18nEngine = {
       'form-corp-rep-phone': 'आधिकारिक कॉर्पोरेट फोन नंबर',
       'form-corp-rep-email': 'आधिकारिक कॉर्पोरेट ईमेल',
       'form-corp-board-res': 'बोर्ड प्रस्ताव / अधिकार पत्र संदर्भ',
+      'placeholder-corp-board-res': 'उदा. बोर्ड प्रस्ताव दिनांक DD/MM/YYYY / PoA',
       'form-corp-infra': 'प्रभावित कॉर्पोरेट नेटवर्क / सर्वर',
+      'placeholder-corp-infra': 'उदा. ट्रेजरी ईआरपी, क्लाउड ईमेल सर्वर, स्विफ्ट गेटवे',
       'form-corp-address': 'पंजीकृत कॉर्पोरेट कार्यालय का पता',
+      'corp-address-hint': 'पता लिखने पर पिन कोड स्वतः पहचाना जाएगा',
+      'form-corp-address-1': 'कॉर्पोरेट पता पंक्ति 1 (कार्यालय / सुइट / तल सं. व भवन का नाम)',
+      'placeholder-corp-address-1': 'कार्यालय / सुइट / तल संख्या, टेक पार्क / वाणिज्यिक परिसर',
+      'form-corp-address-2': 'कॉर्पोरेट पता पंक्ति 2 (सड़क / मार्ग / औद्योगिक क्षेत्र / सेक्टर)',
+      'placeholder-corp-address-2': 'सड़क, मार्ग, औद्योगिक क्षेत्र, सेक्टर / इंडस्ट्रियल एरिया',
+      'form-corp-address-3': 'कॉर्पोरेट पता पंक्ति 3 (लैंडमार्क / व्यापारिक क्षेत्र)',
+      'placeholder-corp-address-3': 'प्रमुख लैंडमार्क, मेट्रो पिलर, टेक हब (वैकल्पिक)',
       'form-corp-pincode': 'कॉर्पोरेट पिन कोड',
       'form-corp-city': 'कॉर्पोरेट शहर / जिला',
+      'placeholder-corp-city': 'उदा. नई दिल्ली',
       'form-corp-state': 'कॉर्पोरेट राज्य / UT',
+      'placeholder-corp-state': 'उदा. दिल्ली',
+      'form-corp-addressed-authority': 'संबोधित कॉर्पोरेट साइबर पुलिस प्राधिकरण / थाना',
+      'corp-certin-tag': 'CERT-In एवं स्पेशल सेल से एकीकृत',
+      'placeholder-corp-custom-police': 'कॉर्पोरेट साइबर सेल / पुलिस स्टेशन का नाम दर्ज करें',
       'btn-step1-next': 'अगला: डिजिटल साक्ष्य एवं OCR ➔',
       'step2-title': '2. डिजिटल साक्ष्य अपलोड एवं संदिग्ध की पहचान',
       'step2-subtitle': 'धोखाधड़ी संदेश, व्हाट्सएप चैट या फर्जी बैंक एसएमएस का स्क्रीनशॉट अपलोड करें। OCR इंजन संदिग्ध फोन, UPI और लिंक को स्वतः निकाल लेगा।',
@@ -8196,12 +8301,13 @@ const ValidationEngine = {
     } else if (type === 'email') {
       res = this.validateEmail(val, true);
     } else if (type === 'text') {
+      const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
       if (!val || !val.trim()) {
-        res = { valid: false, error: 'This field is required.' };
+        res = { valid: false, error: isHi ? 'यह जानकारी आवश्यक है।' : 'This field is required.' };
       } else if (val.trim().length < 2) {
-        res = { valid: false, error: 'Please enter at least 2 characters.' };
+        res = { valid: false, error: isHi ? 'कृपया कम से कम 2 अक्षर दर्ज करें।' : 'Please enter at least 2 characters.' };
       } else {
-        res = { valid: true, error: null, badge: '✓ Valid entry' };
+        res = { valid: true, error: null, badge: isHi ? '✓ मान्य प्रविष्टि' : '✓ Valid entry' };
       }
     }
 
@@ -8278,14 +8384,16 @@ const ValidationEngine = {
   validateStep1(mode) {
     let isValid = true;
     let firstInvalidEl = null;
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
 
     if (mode === 'corporate') {
       const fields = [
-        { id: 'corp-org-name', type: 'text', name: 'Organization Name' },
-        { id: 'corp-rep-name', type: 'text', name: 'Representative Name' },
-        { id: 'corp-rep-phone', type: 'phone', name: 'Representative Phone' },
-        { id: 'corp-rep-email', type: 'email', name: 'Representative Email' },
-        { id: 'corp-address', type: 'text', name: 'Office Address' }
+        { id: 'corp-org-name', type: 'text', name: isHi ? 'कंपनी का कानूनी नाम' : 'Organization Name' },
+        { id: 'corp-rep-name', type: 'text', name: isHi ? 'अधिकृत प्रतिनिधि का नाम' : 'Representative Name' },
+        { id: 'corp-rep-phone', type: 'phone', name: isHi ? 'आधिकारिक फोन नंबर' : 'Representative Phone' },
+        { id: 'corp-rep-email', type: 'email', name: isHi ? 'आधिकारिक ईमेल पता' : 'Representative Email' },
+        { id: 'corp-address-1', type: 'text', name: isHi ? 'कार्यालय पता पंक्ति 1' : 'Office Address Line 1' },
+        { id: 'corp-address-2', type: 'text', name: isHi ? 'कार्यालय पता पंक्ति 2' : 'Office Address Line 2' }
       ];
 
       fields.forEach(f => {
@@ -8297,10 +8405,11 @@ const ValidationEngine = {
       });
     } else {
       const fields = [
-        { id: 'comp-name', type: 'text', name: 'Full Legal Name' },
-        { id: 'comp-phone', type: 'phone', name: 'Contact Phone Number' },
-        { id: 'comp-email', type: 'email', name: 'Email Address' },
-        { id: 'comp-address', type: 'text', name: 'Residential Address' }
+        { id: 'comp-name', type: 'text', name: isHi ? 'पूरा कानूनी नाम' : 'Full Legal Name' },
+        { id: 'comp-phone', type: 'phone', name: isHi ? 'संपर्क फोन नंबर' : 'Contact Phone Number' },
+        { id: 'comp-email', type: 'email', name: isHi ? 'ईमेल पता' : 'Email Address' },
+        { id: 'comp-address-1', type: 'text', name: isHi ? 'पता पंक्ति 1' : 'Address Line 1' },
+        { id: 'comp-address-2', type: 'text', name: isHi ? 'पता पंक्ति 2' : 'Address Line 2' }
       ];
 
       fields.forEach(f => {
@@ -8314,7 +8423,7 @@ const ValidationEngine = {
 
     if (!isValid) {
       if (typeof showToast === 'function') {
-        showToast('⚠️ Please correct the invalid Phone Number or Email before proceeding.', 4000);
+        showToast(isHi ? '⚠️ कृपया आगे बढ़ने से पहले अमान्य विवरण ठीक करें।' : '⚠️ Please correct the invalid fields before proceeding.', 4000);
       }
       if (firstInvalidEl) {
         firstInvalidEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -8329,12 +8438,14 @@ const ValidationEngine = {
     this.validateField('comp-phone', 'phone', showFeedback);
     this.validateField('comp-email', 'email', showFeedback);
     this.validateField('comp-name', 'text', showFeedback);
-    this.validateField('comp-address', 'text', showFeedback);
+    this.validateField('comp-address-1', 'text', showFeedback);
+    this.validateField('comp-address-2', 'text', showFeedback);
     this.validateField('corp-rep-phone', 'phone', showFeedback);
     this.validateField('corp-rep-email', 'email', showFeedback);
     this.validateField('corp-org-name', 'text', showFeedback);
     this.validateField('corp-rep-name', 'text', showFeedback);
-    this.validateField('corp-address', 'text', showFeedback);
+    this.validateField('corp-address-1', 'text', showFeedback);
+    this.validateField('corp-address-2', 'text', showFeedback);
   }
 };
 
@@ -8599,10 +8710,11 @@ const JurisdictionEngine = {
       pinInput.value = cleanPin;
     }
 
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
     if (cleanPin.length === 6) {
       this.detectFromPin(cleanPin, mode, true);
     } else {
-      this.updateBadge(mode, 'partial', `⏳ Enter 6-digit PIN (${cleanPin.length}/6)`);
+      this.updateBadge(mode, 'partial', isHi ? `⏳ 6-अंकीय पिन कोड दर्ज करें (${cleanPin.length}/6)` : `⏳ Enter 6-digit PIN (${cleanPin.length}/6)`);
     }
   },
 
@@ -8628,7 +8740,8 @@ const JurisdictionEngine = {
     if (cityInput) cityInput.value = city;
     if (stateInput) stateInput.value = state;
 
-    this.updateBadge(mode, 'success', `📍 Detected: ${city}, ${state}`);
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+    this.updateBadge(mode, 'success', isHi ? `📍 पहचाना गया: ${city}, ${state}` : `📍 Detected: ${city}, ${state}`);
     this.updateAuthorityDropdown(city, state, pin, mode);
 
     if (fetchApi && /^[1-9][0-9]{5}$/.test(pin)) {
@@ -8652,7 +8765,8 @@ const JurisdictionEngine = {
             if (cityInput) cityInput.value = detectedDistrict;
             if (stateInput) stateInput.value = detectedState;
 
-            this.updateBadge(mode, 'success', `📍 Verified Postal Office: ${officeName}, ${detectedDistrict} (${detectedState})`);
+            const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+            this.updateBadge(mode, 'success', isHi ? `📍 सत्यापित डाकघर: ${officeName}, ${detectedDistrict} (${detectedState})` : `📍 Verified Postal Office: ${officeName}, ${detectedDistrict} (${detectedState})`);
             this.updateAuthorityDropdown(detectedDistrict, detectedState, pin, mode);
           }
         }
@@ -8666,7 +8780,8 @@ const JurisdictionEngine = {
     const city = document.getElementById(mode === 'corporate' ? 'corp-city' : 'comp-city')?.value.trim() || 'City';
     const state = document.getElementById(mode === 'corporate' ? 'corp-state' : 'comp-state')?.value.trim() || 'State';
     const pin = document.getElementById(mode === 'corporate' ? 'corp-pincode' : 'comp-pincode')?.value.trim() || '';
-    this.updateBadge(mode, 'success', `📍 Manual Override: ${city}, ${state}`);
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+    this.updateBadge(mode, 'success', isHi ? `📍 संशोधित स्थान: ${city}, ${state}` : `📍 Manual Override: ${city}, ${state}`);
     this.updateAuthorityDropdown(city, state, pin, mode);
   },
 
@@ -8932,7 +9047,10 @@ function collectFormDataObject() {
       name: document.getElementById('comp-name').value,
       phone: document.getElementById('comp-phone').value,
       email: document.getElementById('comp-email').value,
-      address: document.getElementById('comp-address').value,
+      address_line1: document.getElementById('comp-address-1')?.value || '',
+      address_line2: document.getElementById('comp-address-2')?.value || '',
+      address_line3: document.getElementById('comp-address-3')?.value || '',
+      address: getComplainantFullAddress('citizen'),
       pincode: document.getElementById('comp-pincode')?.value || '',
       city: document.getElementById('comp-city')?.value || '',
       state: document.getElementById('comp-state')?.value || '',
@@ -8950,7 +9068,10 @@ function collectFormDataObject() {
       repContact: document.getElementById('corp-rep-contact').value,
       boardRes: document.getElementById('corp-board-res').value,
       infra: document.getElementById('corp-infra').value,
-      address: document.getElementById('corp-address').value,
+      address_line1: document.getElementById('corp-address-1')?.value || '',
+      address_line2: document.getElementById('corp-address-2')?.value || '',
+      address_line3: document.getElementById('corp-address-3')?.value || '',
+      address: getComplainantFullAddress('corporate'),
       pincode: document.getElementById('corp-pincode')?.value || '',
       city: document.getElementById('corp-city')?.value || '',
       state: document.getElementById('corp-state')?.value || '',
@@ -8987,7 +9108,15 @@ function populateFormFromDecrypted(obj) {
     document.getElementById('comp-name').value = obj.citizen.name || '';
     document.getElementById('comp-phone').value = obj.citizen.phone || '';
     document.getElementById('comp-email').value = obj.citizen.email || '';
-    document.getElementById('comp-address').value = obj.citizen.address || '';
+    if (obj.citizen.address_line1 !== undefined) {
+      if (document.getElementById('comp-address-1')) document.getElementById('comp-address-1').value = obj.citizen.address_line1 || '';
+      if (document.getElementById('comp-address-2')) document.getElementById('comp-address-2').value = obj.citizen.address_line2 || '';
+      if (document.getElementById('comp-address-3')) document.getElementById('comp-address-3').value = obj.citizen.address_line3 || '';
+    } else if (obj.citizen.address) {
+      if (document.getElementById('comp-address-1')) document.getElementById('comp-address-1').value = obj.citizen.address;
+    }
+    const fullCitizen = getComplainantFullAddress('citizen');
+    if (document.getElementById('comp-address')) document.getElementById('comp-address').value = fullCitizen;
     if (obj.citizen.pincode) {
       document.getElementById('comp-pincode').value = obj.citizen.pincode;
       if (typeof JurisdictionEngine !== 'undefined') JurisdictionEngine.detectFromPin(obj.citizen.pincode, 'citizen', false);
@@ -9023,7 +9152,15 @@ function populateFormFromDecrypted(obj) {
     document.getElementById('corp-rep-contact').value = obj.corporate.repContact || '';
     document.getElementById('corp-board-res').value = obj.corporate.boardRes || '';
     document.getElementById('corp-infra').value = obj.corporate.infra || '';
-    document.getElementById('corp-address').value = obj.corporate.address || '';
+    if (obj.corporate.address_line1 !== undefined) {
+      if (document.getElementById('corp-address-1')) document.getElementById('corp-address-1').value = obj.corporate.address_line1 || '';
+      if (document.getElementById('corp-address-2')) document.getElementById('corp-address-2').value = obj.corporate.address_line2 || '';
+      if (document.getElementById('corp-address-3')) document.getElementById('corp-address-3').value = obj.corporate.address_line3 || '';
+    } else if (obj.corporate.address) {
+      if (document.getElementById('corp-address-1')) document.getElementById('corp-address-1').value = obj.corporate.address;
+    }
+    const fullCorp = getComplainantFullAddress('corporate');
+    if (document.getElementById('corp-address')) document.getElementById('corp-address').value = fullCorp;
     if (obj.corporate.pincode) {
       document.getElementById('corp-pincode').value = obj.corporate.pincode;
       if (typeof JurisdictionEngine !== 'undefined') JurisdictionEngine.detectFromPin(obj.corporate.pincode, 'corporate', false);
@@ -10575,7 +10712,8 @@ const CyberSahayakChatbot = {
       const repName = (document.getElementById('corp-rep-name')?.value || '').trim();
       const repPhone = (document.getElementById('corp-rep-phone')?.value || '').trim();
       const repEmail = (document.getElementById('corp-rep-email')?.value || '').trim();
-      const address = (document.getElementById('corp-address')?.value || '').trim();
+      const addr1 = (document.getElementById('corp-address-1')?.value || '').trim();
+      const addr2 = (document.getElementById('corp-address-2')?.value || '').trim();
 
       const phoneOk = repPhone && typeof ValidationEngine !== 'undefined' ? ValidationEngine.validatePhone(repPhone, false).valid : false;
       const emailOk = repEmail && typeof ValidationEngine !== 'undefined' ? ValidationEngine.validateEmail(repEmail, false).valid : false;
@@ -10584,14 +10722,16 @@ const CyberSahayakChatbot = {
       if (!repName) { missingStep1.push('Representative Legal Name'); missingStep1Hi.push('अधिकृत प्रतिनिधि का नाम'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'corp-rep-name'; }
       if (!repPhone || !phoneOk) { missingStep1.push('Valid Contact Mobile Number'); missingStep1Hi.push('वैध संपर्क मोबाइल नंबर'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'corp-rep-phone'; }
       if (!repEmail || !emailOk) { missingStep1.push('Official Email Address'); missingStep1Hi.push('आधिकारिक ईमेल पता'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'corp-rep-email'; }
-      if (!address) { missingStep1.push('Registered Office Address'); missingStep1Hi.push('पंजीकृत कार्यालय का पता'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'corp-address'; }
+      if (!addr1) { missingStep1.push('Corporate Address Line 1'); missingStep1Hi.push('कॉर्पोरेट पता (पंक्ति 1)'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'corp-address-1'; }
+      if (!addr2) { missingStep1.push('Corporate Address Line 2'); missingStep1Hi.push('कॉर्पोरेट पता (पंक्ति 2)'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'corp-address-2'; }
 
       step1Valid = !missingStep1.length;
     } else {
       const name = (document.getElementById('comp-name')?.value || '').trim();
       const phone = (document.getElementById('comp-phone')?.value || '').trim();
       const email = (document.getElementById('comp-email')?.value || '').trim();
-      const address = (document.getElementById('comp-address')?.value || '').trim();
+      const addr1 = (document.getElementById('comp-address-1')?.value || '').trim();
+      const addr2 = (document.getElementById('comp-address-2')?.value || '').trim();
 
       const phoneOk = phone && typeof ValidationEngine !== 'undefined' ? ValidationEngine.validatePhone(phone, false).valid : false;
       const emailOk = email && typeof ValidationEngine !== 'undefined' ? ValidationEngine.validateEmail(email, false).valid : false;
@@ -10599,7 +10739,8 @@ const CyberSahayakChatbot = {
       if (!name || name.length < 2) { missingStep1.push('Full Legal Name'); missingStep1Hi.push('पूरा कानूनी नाम'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'comp-name'; }
       if (!phone || !phoneOk) { missingStep1.push('Valid 10-Digit Mobile Number'); missingStep1Hi.push('10-अंकों का मोबाइल नंबर'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'comp-phone'; }
       if (!email || !emailOk) { missingStep1.push('Email Address'); missingStep1Hi.push('ईमेल पता'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'comp-email'; }
-      if (!address || address.length < 5) { missingStep1.push('Residential Address'); missingStep1Hi.push('निवास का पता'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'comp-address'; }
+      if (!addr1) { missingStep1.push('Residential Address Line 1'); missingStep1Hi.push('निवास का पता (पंक्ति 1)'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'comp-address-1'; }
+      if (!addr2) { missingStep1.push('Residential Address Line 2'); missingStep1Hi.push('निवास का पता (पंक्ति 2)'); if (!firstMissingStep1FieldId) firstMissingStep1FieldId = 'comp-address-2'; }
 
       step1Valid = !missingStep1.length;
     }
@@ -10717,11 +10858,12 @@ const CyberSahayakChatbot = {
     // 5. Address extraction (e.g., "my address is 12 Main St, Delhi" or "mera pata hai ...")
     const addrMatch = text.match(/(?:my\s*address\s*is|address\s*is|mera\s*pata\s*hai|pata\s*hai|address\s*:)[\s:]*([^,.\n]{5,100})/i);
     if (addrMatch) {
-      const addrField = document.getElementById(isCorp ? 'corp-address' : 'comp-address');
-      if (addrField && (!addrField.value || !addrField.value.trim())) {
-        addrField.value = addrMatch[1].trim();
-        if (typeof ValidationEngine !== 'undefined') ValidationEngine.validateField(addrField.id, 'text', false);
+      const addr1Field = document.getElementById(isCorp ? 'corp-address-1' : 'comp-address-1');
+      if (addr1Field && (!addr1Field.value || !addr1Field.value.trim())) {
+        addr1Field.value = addrMatch[1].trim();
+        if (typeof ValidationEngine !== 'undefined') ValidationEngine.validateField(addr1Field.id, 'text', false);
       }
+      onAddressFieldInput(isCorp ? 'corporate' : 'citizen');
     }
   },
 
