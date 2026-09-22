@@ -42,7 +42,7 @@ While standard fields remain valid for all crimes, V2 introduces a specialized, 
 ### 4. 🎥 Launch & Site Experience Video Productions
 Rendered at 1080p landscape (60+ seconds each) using the `brag` engine:
 - **`Launch Video.mp4`** (62.0s): High-impact product trailer showcasing the statutory transition, Golden Hour response, 26+ crime coverage, and court-admissible FIR generation.
-- **`Site Experience.mp4`** (68.0s): Hands-on, feature-by-feature interactive walkthrough demonstrating all 8 components of the system in action.
+- **`Site Experience.mp4`** (71.0s): Hands-on, feature-by-feature interactive walkthrough demonstrating all 8 components of the system in action with zero URLs and Vatsal Agarwal complainant identity.
 - Companion baked poster thumbnails: `Launch Video.jpg` and `Site Experience.jpg`.
 
 ---
@@ -51,14 +51,17 @@ Rendered at 1080p landscape (60+ seconds each) using the `brag` engine:
 
 ```
 Cyber Legal Guidance System V2/
-├── index.html -> cyber_legal_guidance_system.html
-├── cyber_legal_guidance_system.html      # Comprehensive V2 web platform
+├── index.html                            # Root production web entrypoint
+├── cyber_legal_guidance_system.html      # Comprehensive V2 web platform (505 KB)
+├── vercel.json                           # Vercel production headers, rewrites & caching
+├── .vercelignore                         # Exclude dev caches & raw video comps from deployment
+├── package.json                          # Project manifest & npm scripts
 ├── cyber_legal_guidance.py               # Comprehensive V2 Python CLI & server
 ├── government_directory_numbers.csv      # Mock database of official government numbers
 ├── government_it_security_alerts.csv     # Dispatched IT security incident log
 ├── Launch Video.mp4                      # Product launch video (62.0s)
 ├── Launch Video.jpg                      # Baked frame-0 poster thumbnail
-├── Site Experience.mp4                   # Feature walkthrough video (68.0s)
+├── Site Experience.mp4                   # Feature walkthrough video (71.0s)
 ├── Site Experience.jpg                   # Baked frame-0 poster thumbnail
 ├── scam_directory.json                   # Verified suspect scam entity database
 ├── airtel_spam_feed.json                 # PII-scrubbed telecom carrier threat feed
@@ -70,28 +73,36 @@ Cyber Legal Guidance System V2/
 
 ---
 
-## Quick Start
+## Deploy to Vercel
 
-### 1. Running the Web Platform
-Simply open `cyber_legal_guidance_system.html` (or `index.html`) in any modern web browser:
+The repository is pre-configured with `vercel.json` for 1-click zero-configuration deployment on Vercel:
+
+### Option A: Via Vercel CLI (Fastest)
+From this directory, simply run:
 ```bash
-open "cyber_legal_guidance_system.html"
+npx vercel
 ```
-Or launch via Python's built-in server:
+- When prompted, authenticate in your browser.
+- Select your scope/account and accept defaults (`Y`).
+- For production deployment:
 ```bash
-python3 -m http.server 8080
+npx vercel --prod
 ```
 
-### 2. Running the Python CLI Engine
-Execute the enhanced Python controller:
-```bash
-python3 cyber_legal_guidance.py
-```
-Menu options include:
-- `1`: Guided Crime Identification & FIR Handout
-- `7`: Telecom Scam Directory & Airtel Feed Export
-- `12`: 🏛️ Government Number Verification & IT Security Alert Desk
-- `11`: Launch Hardened Anti-Bot Web Server
+### Option B: Via GitHub + Vercel Dashboard (Continuous Deployment)
+1. Push this folder to a new GitHub repository:
+   ```bash
+   git remote add origin https://github.com/<your-username>/cyber-legal-guidance-system-v2.git
+   git branch -M main
+   git push -u origin main
+   ```
+2. Navigate to [vercel.com/new](https://vercel.com/new).
+3. Import the repository and click **Deploy**. Vercel will automatically detect `index.html` and `vercel.json`.
+
+### Pre-Configured Vercel Optimizations:
+- **Clean URLs**: Enables extensionless routing (`/cockpit`, `/fir`, `/directory`).
+- **Security Headers**: Injects `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, and strict `Referrer-Policy`.
+- **Global Edge Caching**: 1-year immutable caching for videos and images (`public, max-age=31536000`), with stale-while-revalidate for threat data feeds.
 
 ---
 
