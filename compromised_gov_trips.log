@@ -22,3 +22,12 @@
   INCIDENT_REF: INC-20260921-8842
   INCIDENT_TYPE: Digital Arrest & Money Laundering Coercion
   SOC_ACTION: Silent trip triggered. Alert queued for Nodal Officer & CERT-In.
+
+[2026-09-22 23:25:00 IST] [TRIP_ID: GOV-TRIP-TEST-999] [PRIORITY: 1-CRITICAL]
+  MATCHED_DEPT: Test Dept
+  OFFICIAL_NAME: Test Officer
+  OFFICIAL_PHONE: +91-9810011111
+  SUSPECT_CALLER_ID: +91-9810011111 (Spoofed)
+  INCIDENT_REF: INC-TEST-999
+  INCIDENT_TYPE: Test Spoof
+  SOC_ACTION: Silent trip triggered.
