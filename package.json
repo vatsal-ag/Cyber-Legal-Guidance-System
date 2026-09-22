@@ -1,0 +1,20 @@
+{
+  "name": "cyber-legal-guidance-system-v2",
+  "version": "2.0.0",
+  "description": "National Cyber Legal Guidance System V2 - Sovereign Indian Cyber Legal Defense Platform",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "deploy": "npx vercel --prod"
+  },
+  "keywords": [
+    "cyber-defense",
+    "legal-tech",
+    "india",
+    "bns-2023",
+    "it-act-2000",
+    "fir-generator"
+  ],
+  "author": "Vatsal Agarwal",
+  "license": "MIT"
+}

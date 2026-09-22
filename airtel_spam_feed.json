@@ -1,0 +1,70 @@
+{
+  "feed_metadata": {
+    "provider": "National Cyber Legal Guidance Threat Intelligence Network",
+    "export_timestamp": "2026-09-17T19:54:29.535523",
+    "feed_version": "3.2.0",
+    "regulation_compliance": "TRAI TCCCPR 2018 & IT Act 2000",
+    "data_privacy_shield": "PII-Scrubbed: Zero victim data included",
+    "verification_guarantee": "100% Corroborated with Banking UTR, NCRP Police Token, or Multi-Citizen Quorum (Score >= 70%)",
+    "target_telecom_partners": [
+      "Bharti Airtel Ltd",
+      "Reliance Jio Infocomm",
+      "Vodafone Idea"
+    ],
+    "total_verified_records_exported": 3,
+    "quarantined_leads_withheld": 0
+  },
+  "spam_entities": [
+    {
+      "identifier": "+91-9821098765",
+      "category": "PHONE_NUMBER",
+      "fraud_type": "digital_arrest",
+      "threat_score": 95,
+      "verification_status": "VERIFIED_FRAUD",
+      "verification_score": 90,
+      "evidence_level": "FINANCIALLY_VERIFIED",
+      "incident_frequency": 14,
+      "caller_id_tag": "[AIRTEL FRAUD ALERT] Suspicious caller posing as CBI / Mumbai Police Cyber Cell. Do NOT transfer funds!",
+      "legal_infractions": [
+        "IT Act Sec 66D",
+        "BNS Sec 318(4)",
+        "BNS Sec 319"
+      ],
+      "action_recommended": "DISPLAY_WARNING_BANNER_AND_RESTRICT_SMS"
+    },
+    {
+      "identifier": "sbikyc.update@paytm",
+      "category": "UPI_VPA",
+      "fraud_type": "phishing",
+      "threat_score": 95,
+      "verification_status": "VERIFIED_FRAUD",
+      "verification_score": 90,
+      "evidence_level": "FINANCIALLY_VERIFIED",
+      "incident_frequency": 28,
+      "caller_id_tag": "[SPAM WARNING] Flagged fraudulent VPA used in fake SBI NetBanking KYC renewal scams.",
+      "legal_infractions": [
+        "IT Act Sec 66C",
+        "IT Act Sec 66D",
+        "BNS Sec 318"
+      ],
+      "action_recommended": "DISPLAY_WARNING_BANNER_AND_RESTRICT_SMS"
+    },
+    {
+      "identifier": "https://sbi-kyc-verify-apk.top",
+      "category": "PHISHING_URL",
+      "fraud_type": "phishing",
+      "threat_score": 75,
+      "verification_status": "VERIFIED_FRAUD",
+      "verification_score": 90,
+      "evidence_level": "FINANCIALLY_VERIFIED",
+      "incident_frequency": 9,
+      "caller_id_tag": "[AIRTEL MALICIOUS DOMAIN] Hostile credential harvester distributing banking trojans.",
+      "legal_infractions": [
+        "IT Act Sec 43",
+        "IT Act Sec 66D",
+        "IT Act Sec 69A"
+      ],
+      "action_recommended": "DISPLAY_WARNING_BANNER_AND_RESTRICT_SMS"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "b8b79e7c",
+    "entity_value": "+91-9821098765",
+    "entity_type": "PHONE_NUMBER",
+    "scam_category": "digital_arrest",
+    "threat_level": "CRITICAL",
+    "report_count": 14,
+    "first_reported": "2026-02-10 11:20:00",
+    "last_reported": "2026-03-12 14:15:00",
+    "telecom_caution_banner": "[AIRTEL FRAUD ALERT] Suspicious caller posing as CBI / Mumbai Police Cyber Cell. Do NOT transfer funds!",
+    "associated_laws": [
+      "IT Act Sec 66D",
+      "BNS Sec 318(4)",
+      "BNS Sec 319"
+    ]
+  },
+  {
+    "id": "6958aba3",
+    "entity_value": "sbikyc.update@paytm",
+    "entity_type": "UPI_VPA",
+    "scam_category": "phishing",
+    "threat_level": "CRITICAL",
+    "report_count": 28,
+    "first_reported": "2026-01-15 09:40:00",
+    "last_reported": "2026-03-16 17:00:00",
+    "telecom_caution_banner": "[SPAM WARNING] Flagged fraudulent VPA used in fake SBI NetBanking KYC renewal scams.",
+    "associated_laws": [
+      "IT Act Sec 66C",
+      "IT Act Sec 66D",
+      "BNS Sec 318"
+    ]
+  },
+  {
+    "id": "e62b5e93",
+    "entity_value": "https://sbi-kyc-verify-apk.top",
+    "entity_type": "PHISHING_URL",
+    "scam_category": "phishing",
+    "threat_level": "HIGH",
+    "report_count": 9,
+    "first_reported": "2026-03-01 10:00:00",
+    "last_reported": "2026-03-15 12:30:00",
+    "telecom_caution_banner": "[AIRTEL MALICIOUS DOMAIN] Hostile credential harvester distributing banking trojans.",
+    "associated_laws": [
+      "IT Act Sec 43",
+      "IT Act Sec 66D",
+      "IT Act Sec 69A"
+    ]
+  }
+]

@@ -1,0 +1,4 @@
+alert_id,timestamp,department,officer_designation,compromised_number,attack_type,it_security_email,status,recommended_action
+ALT-SEC-2026-0001,2026-09-21 14:32:10,Tata Power Delhi Distribution Ltd (TPDDL),Executive Engineer (Billing Operations),+91-9810054321,Electricity Bill Disconnection Phishing,ciso-alerts@tatapower-ddl.com,DISPATCHED,Immediate SIM isolation with TSP; broadcast SMS consumer warning
+ALT-SEC-2026-0002,2026-09-21 18:15:45,Ministry of Home Affairs (MHA),National Cyber Crime Reporting Desk (1930),+91-9818819300,Digital Arrest & Money Laundering Coercion,cert@mha.gov.in,DISPATCHED,Issue emergency public advisory; audit SIP trunk routing on PRI line
+ALT-SEC-2026-7868,2026-09-22 17:24:14,Tata Power Delhi Distribution Ltd (TPDDL),Executive Engineer (Billing Operations),+91-9810054321,Electricity Disconnection Phishing,ciso-alerts@tatapower-ddl.com,DISPATCHED,Immediate SIM isolation with TSP; audit SIP trunk routing; broadcast consumer alert
