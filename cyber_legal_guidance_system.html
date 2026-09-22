@@ -132,6 +132,13 @@
     --shadow-sm: 0 1px 2px 0 rgba(14, 36, 66, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(14, 36, 66, 0.07), 0 2px 4px -1px rgba(14, 36, 66, 0.04);
     --shadow-lg: 0 10px 15px -3px rgba(14, 36, 66, 0.09), 0 4px 6px -2px rgba(14, 36, 66, 0.04);
+
+    --emblem-bg: linear-gradient(145deg, #0e2442 0%, #173860 100%);
+    --emblem-border: rgba(14, 36, 66, 0.25);
+    --emblem-fg: #ffffff;
+    --emblem-accent: #f59e0b;
+    --emblem-muted: #cbd5e1;
+    --emblem-shadow: 0 4px 12px rgba(14, 36, 66, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 
   /* ── PERSISTENT INSTITUTIONAL DARK THEME ── */
@@ -174,6 +181,13 @@
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+
+    --emblem-bg: linear-gradient(145deg, #132238 0%, #0c1624 100%);
+    --emblem-border: rgba(96, 165, 250, 0.35);
+    --emblem-fg: #f1f5f9;
+    --emblem-accent: #fbbf24;
+    --emblem-muted: #64748b;
+    --emblem-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -237,14 +251,19 @@
   .brand-emblem {
     width: 44px;
     height: 44px;
-    background: var(--primary-navy);
-    color: #ffffff;
-    border-radius: var(--radius-md);
+    background: var(--emblem-bg);
+    border: 1px solid var(--emblem-border);
+    border-radius: var(--radius-md, 10px);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
-    font-weight: 700;
+    box-shadow: var(--emblem-shadow);
+    flex-shrink: 0;
+    transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .brand-emblem:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
   }
   .brand-text h1 {
     font-size: 1.22rem;
@@ -3067,7 +3086,24 @@
 <!-- HEADER -->
 <header>
   <div class="brand-group">
-    <div class="brand-emblem">⚖️</div>
+    <div class="brand-emblem" aria-label="National Cyber Legal Guidance Emblem">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Sovereign Defense Shield Contour -->
+        <path d="M16 2.5L5 6.5V14.5C5 21.8 9.7 28.3 16 29.8C22.3 28.3 27 21.8 27 14.5V6.5L16 2.5Z" fill="rgba(251, 146, 60, 0.08)" stroke="var(--emblem-accent, #fb923c)" stroke-width="1.4" stroke-linejoin="round"/>
+        <!-- Central Pillar & Balanced Pedestal -->
+        <path d="M16 7.5V23.5" stroke="var(--emblem-fg, #f8fafc)" stroke-width="1.75" stroke-linecap="round"/>
+        <path d="M12.5 24H19.5" stroke="var(--emblem-fg, #f8fafc)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="16" cy="7" r="1.5" fill="var(--emblem-accent, #fb923c)"/>
+        <!-- Precision Balance Beam -->
+        <path d="M8 10.5H24" stroke="var(--emblem-fg, #f8fafc)" stroke-width="1.75" stroke-linecap="round"/>
+        <!-- Left Scale Pan & Suspension Cords -->
+        <path d="M8 10.5L4.5 17.5M8 10.5L11.5 17.5" stroke="var(--emblem-muted, #94a3b8)" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M4 17.5C4 19.5 5.8 20.5 8 20.5C10.2 20.5 12 19.5 12 17.5H4Z" fill="var(--emblem-accent, #fb923c)" stroke="var(--emblem-accent, #fb923c)" stroke-width="0.8"/>
+        <!-- Right Scale Pan & Suspension Cords -->
+        <path d="M24 10.5L20.5 17.5M24 10.5L27.5 17.5" stroke="var(--emblem-muted, #94a3b8)" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M20 17.5C20 19.5 21.8 20.5 24 20.5C26.2 20.5 28 19.5 28 17.5H20Z" fill="var(--emblem-accent, #fb923c)" stroke="var(--emblem-accent, #fb923c)" stroke-width="0.8"/>
+      </svg>
+    </div>
     <div class="brand-text">
       <h1 data-i18n="header-title">Cyber Legal Guidance & Enterprise Defense System</h1>
       <p data-i18n="header-subtitle">Official Citizen & Corporate FIR Complaint Drafter · End-to-End AES-256 Vault</p>
