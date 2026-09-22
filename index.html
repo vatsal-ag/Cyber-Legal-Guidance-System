@@ -132,6 +132,7 @@
     --shadow-sm: 0 1px 2px 0 rgba(14, 36, 66, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(14, 36, 66, 0.07), 0 2px 4px -1px rgba(14, 36, 66, 0.04);
     --shadow-lg: 0 10px 15px -3px rgba(14, 36, 66, 0.09), 0 4px 6px -2px rgba(14, 36, 66, 0.04);
+    --cmp-banner-height: 0px;
   }
 
   /* ── PERSISTENT INSTITUTIONAL DARK THEME ── */
@@ -2322,7 +2323,7 @@
   /* ── FLOATING CYBER SAHAYAK CHATBOT WIDGET ── */
   .cyber-sahayak-fab {
     position: fixed;
-    bottom: 24px;
+    bottom: calc(24px + var(--cmp-banner-height, 0px));
     right: 28px;
     z-index: 9998;
     background: var(--primary-navy);
@@ -2335,7 +2336,7 @@
     cursor: pointer;
     box-shadow: 0 4px 18px rgba(14, 36, 66, 0.35);
     border: 2px solid var(--tiranga-saffron);
-    transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.2s cubic-bezier(0.23, 1, 0.32, 1), bottom 0.25s cubic-bezier(0.23, 1, 0.32, 1);
     font-family: inherit;
     font-weight: 700;
     font-size: 0.86rem;
@@ -2343,6 +2344,9 @@
   .cyber-sahayak-fab:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(14, 36, 66, 0.45);
+  }
+  body.has-cmp-banner .cyber-sahayak-fab {
+    bottom: calc(24px + var(--cmp-banner-height, 160px));
   }
   .sahayak-avatar {
     width: 28px;
@@ -2357,7 +2361,7 @@
   }
   .cyber-sahayak-window {
     position: fixed;
-    bottom: 84px;
+    bottom: calc(84px + var(--cmp-banner-height, 0px));
     right: 28px;
     width: 380px;
     max-width: calc(100vw - 40px);
@@ -2367,7 +2371,7 @@
     border: 1px solid var(--border-card);
     border-radius: var(--radius-lg);
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
-    z-index: 9998;
+    z-index: 10002;
     display: none;
     flex-direction: column;
     overflow: hidden;
@@ -2937,10 +2941,13 @@
 
     /* Mobile Chatbot Bottom Drawer */
     .cyber-sahayak-fab {
-      bottom: 16px;
+      bottom: calc(14px + var(--cmp-banner-height, 0px));
       right: 14px;
       padding: 8px 14px;
       font-size: 0.80rem;
+    }
+    body.has-cmp-banner .cyber-sahayak-fab {
+      bottom: calc(14px + var(--cmp-banner-height, 170px));
     }
     .cyber-sahayak-window {
       bottom: 0 !important;
@@ -2951,6 +2958,55 @@
       height: 86dvh !important;
       max-height: 86dvh !important;
       border-radius: 18px 18px 0 0 !important;
+      z-index: 10005 !important;
+    }
+
+    /* CMP Consent Banner Mobile Polish & Button Separation */
+    .cmp-banner {
+      padding: 12px 14px;
+      border-top: 2px solid var(--tiranga-saffron);
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.45);
+      z-index: 9996;
+    }
+    .cmp-container {
+      gap: 10px;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .cmp-content {
+      min-width: 100%;
+    }
+    .cmp-title {
+      font-size: 0.82rem;
+      margin-bottom: 2px;
+    }
+    .cmp-text {
+      font-size: 0.74rem;
+      line-height: 1.4;
+      max-width: 100%;
+      color: #cbd5e1;
+    }
+    .cmp-actions {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .cmp-actions .btn-cmp-outline {
+      padding: 8px 10px;
+      font-size: 0.78rem;
+      justify-content: center;
+      text-align: center;
+    }
+    .cmp-actions .btn-cmp-primary {
+      grid-column: 1 / -1;
+      padding: 11px 14px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(194, 97, 0, 0.4);
     }
 
     /* Table horizontal scroll container */
@@ -5625,11 +5681,32 @@ const CMPManager = {
       if (!consent) {
         setTimeout(() => {
           const banner = document.getElementById('cmp-consent-banner');
-          if (banner) banner.style.display = 'block';
+          if (banner) {
+            banner.style.display = 'block';
+            document.body.classList.add('has-cmp-banner');
+            requestAnimationFrame(() => {
+              CMPManager.updateBannerOffset();
+            });
+          }
         }, 800);
       }
     } catch (e) {
       console.warn('Storage unavailable for CMP', e);
+    }
+
+    window.addEventListener('resize', () => {
+      CMPManager.updateBannerOffset();
+    });
+  },
+
+  updateBannerOffset() {
+    const banner = document.getElementById('cmp-consent-banner');
+    if (banner && banner.style.display !== 'none' && banner.offsetHeight > 0) {
+      document.documentElement.style.setProperty('--cmp-banner-height', (banner.offsetHeight + 10) + 'px');
+      document.body.classList.add('has-cmp-banner');
+    } else {
+      document.documentElement.style.setProperty('--cmp-banner-height', '0px');
+      document.body.classList.remove('has-cmp-banner');
     }
   },
 
@@ -5644,6 +5721,8 @@ const CMPManager = {
       localStorage.setItem(this.storageKey, JSON.stringify(payload));
       const banner = document.getElementById('cmp-consent-banner');
       if (banner) banner.style.display = 'none';
+      document.documentElement.style.setProperty('--cmp-banner-height', '0px');
+      document.body.classList.remove('has-cmp-banner');
       showToast(type === 'all' ? '✅ Privacy settings saved. Full session protection active.' : '🛡️ Essential cryptographic storage active.');
     } catch (e) {
       console.warn('Storage write failed', e);
@@ -5673,6 +5752,8 @@ const CMPManager = {
       this.closePreferences();
       const banner = document.getElementById('cmp-consent-banner');
       if (banner) banner.style.display = 'none';
+      document.documentElement.style.setProperty('--cmp-banner-height', '0px');
+      document.body.classList.remove('has-cmp-banner');
       showToast('✅ Custom storage preferences saved.');
     } catch (e) {
       console.warn('Storage write failed', e);
