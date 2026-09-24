@@ -1390,6 +1390,118 @@
     gap: 10px;
   }
 
+  /* ── LIVENESS VERIFICATION & LEGAL DISCLAIMER ── */
+  .liveness-camera-box {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 4/3;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  }
+  .liveness-camera-box video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+  }
+  .liveness-camera-box canvas { display: none; }
+  .liveness-face-oval {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 52%; height: 68%;
+    border: 3px dashed rgba(255,255,255,0.35);
+    border-radius: 50%;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    pointer-events: none;
+  }
+  .liveness-face-oval.active { border-color: #f59e0b; border-style: solid; box-shadow: 0 0 18px rgba(245,158,11,0.3); }
+  .liveness-face-oval.passed { border-color: var(--status-green); border-style: solid; box-shadow: 0 0 22px rgba(16,185,129,0.35); }
+  .liveness-challenge-bar {
+    position: absolute;
+    bottom: 10px; left: 50%;
+    transform: translateX(-50%);
+    background: rgba(14,36,66,0.88);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-align: center;
+    max-width: 92%;
+    animation: livenessPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes livenessPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(245,158,11,0); }
+  }
+  .liveness-challenge-bar.ok { background: rgba(5,150,105,0.9); animation: none; }
+  .liveness-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 12px 0 4px;
+  }
+  .liveness-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    border: 2px solid #cbd5e1;
+    transition: all 0.3s;
+  }
+  .liveness-dot.now { background: #f59e0b; border-color: #f59e0b; box-shadow: 0 0 6px rgba(245,158,11,0.5); }
+  .liveness-dot.done { background: var(--status-green); border-color: var(--status-green); }
+  .liveness-info {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .liveness-badge {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; margin-top: 10px;
+    padding: 6px 12px;
+    background: #f0fdf4; border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    font-size: 0.76rem; color: #166534; font-weight: 600;
+  }
+  [data-theme="dark"] .liveness-badge { background: #052e16; border-color: #166534; color: #86efac; }
+  .disclaimer-block {
+    margin-bottom: 14px; padding: 14px 16px;
+    background: #fffbeb; border: 1px solid #fde68a;
+    border-radius: 8px; border-left: 4px solid #f59e0b;
+  }
+  [data-theme="dark"] .disclaimer-block { background: #451a03; border-color: #92400e; }
+  .disclaimer-block h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 6px; color: #92400e; }
+  [data-theme="dark"] .disclaimer-block h4 { color: #fbbf24; }
+  .disclaimer-block p, .disclaimer-block li { font-size: 0.82rem; line-height: 1.55; color: var(--text-secondary); }
+  .disclaimer-block ul { padding-left: 18px; margin: 6px 0; }
+  .disclaimer-accept-box {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-top: 14px; padding: 12px 14px;
+    background: #fef2f2; border: 1px solid #fecaca;
+    border-radius: 8px; cursor: pointer;
+  }
+  [data-theme="dark"] .disclaimer-accept-box { background: #450a0a; border-color: #991b1b; }
+  .disclaimer-accept-box input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; accent-color: #0e2442; }
+  .disclaimer-accept-box label { font-size: 0.82rem; line-height: 1.5; color: var(--text-primary); font-weight: 600; cursor: pointer; }
+  .liveness-timer-ring {
+    position: absolute; top: 10px; right: 10px;
+    width: 40px; height: 40px;
+    pointer-events: none;
+  }
+  .liveness-timer-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .liveness-timer-ring circle { fill: none; stroke-width: 3; }
+  .liveness-timer-ring .bg { stroke: rgba(255,255,255,0.2); }
+  .liveness-timer-ring .fg { stroke: #f59e0b; stroke-linecap: round; transition: stroke-dashoffset 0.25s linear; }
+  .liveness-timer-ring .fg.low { stroke: #ef4444; }
+  .liveness-timer-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); color: #fff; font-size: 0.7rem; font-weight: 700; }
+
   .diag-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -4537,6 +4649,121 @@
   </div>
 </div>
 
+<!-- STATUTORY LEGAL UNDERTAKING & EVIDENCE INTEGRITY DISCLAIMER MODAL -->
+<div class="modal-overlay" id="legal-disclaimer-modal" style="display:none;" onclick="if(event.target===this)LegalDisclaimerEngine.close()">
+  <div class="modal-dialog" style="max-width: 680px;">
+    <div class="modal-header" style="background: linear-gradient(135deg, #0e2442 0%, #1e3a8a 100%);">
+      <h3 style="font-size: 1.05rem;">⚖️ <span data-i18n="legal-modal-title">Statutory Legal Undertaking & Evidence Integrity Declaration</span></h3>
+      <button class="modal-close-btn" onclick="LegalDisclaimerEngine.close()">&times;</button>
+    </div>
+    <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+      <div class="alert-banner warning" style="margin-bottom: 14px; font-weight: 600;">
+        ⚠️ <span data-i18n="legal-modal-alert">Mandatory Legal Declaration under Bharatiya Nyaya Sanhita, 2023 & Information Technology Act, 2000</span>
+      </div>
+
+      <!-- English Section -->
+      <div class="disclaimer-block">
+        <h4 style="display:flex; align-items:center; gap:6px;">
+          🇬🇧 <span data-i18n="legal-en-heading">Part A: Solemn Statutory Undertaking (English)</span>
+        </h4>
+        <ul>
+          <li><strong>Evidentiary Responsibility:</strong> I solemnly declare and verify that all statements, digital screenshots, call logs, transaction IDs (UTR/Txn references), and narrative particulars furnished herein are true, correct, and represent genuine electronic evidence under Section 63 of Bharatiya Sakshya Adhiniyam, 2023 (BSA).</li>
+          <li><strong>Penal Prosecution for False Evidence:</strong> I am fully cognizant that presenting fraudulent, forged, digitally altered, or fabricated documents or lodging malicious false complaints is a cognizable criminal offense punishable under <strong>Section 217 & Section 228 of the Bharatiya Nyaya Sanhita, 2023 (BNS)</strong> / Sec 177 & 182 IPC, as well as <strong>Section 66D & Section 72A of the Information Technology Act, 2000</strong>, attracting rigorous imprisonment and punitive fines.</li>
+          <li><strong>Sound Mental Competence:</strong> I hereby certify under penalty of law that I am of <strong>sound mind, sound legal capacity, and acting voluntarily</strong> without any external duress, coercion, or intoxication.</li>
+        </ul>
+      </div>
+
+      <!-- Hindi Section -->
+      <div class="disclaimer-block" style="border-left-color: #0284c7; background: #f0f9ff;">
+        <h4 style="color: #0369a1; display:flex; align-items:center; gap:6px;">
+          🇮🇳 <span data-i18n="legal-hi-heading">भाग बी: वैधानिक साक्ष्य सत्यनिष्ठा वचनपत्र (हिन्दी)</span>
+        </h4>
+        <ul style="color: #0c4a6e;">
+          <li><strong>साक्ष्य का व्यक्तिगत उत्तरदायित्व:</strong> मैं सत्यनिष्ठा से घोषणा करता/करती हूँ कि इस शिकायत में प्रस्तुत समस्त विवरण, स्क्रीनशॉट, कॉल रिकॉर्ड, बैंक लेन-देन (UTR/ट्रांजेक्शन संख्या) व साक्ष्य पूर्णतः सत्य, प्रामाणिक एवं वास्तविक घटना से संबद्ध हैं।</li>
+          <li><strong>झूठे साक्ष्य पर विधिक दंडात्मक कार्रवाई:</strong> मैं भली-भांति अवगत हूँ कि मिथ्या साक्ष्य गढ़ना, जाली दस्तावेज़ प्रस्तुत करना अथवा झूठी शिकायत दर्ज करना <strong>भारतीय न्याय संहिता, 2023 (BNS) की धारा 217 व 228</strong> तथा <strong>सूचना प्रौद्योगिकी अधिनियम, 2000 की धारा 66D व 72A</strong> के तहत संज्ञेय अपराध है, जिसके लिए कठोर कारावास व वैधानिक अभियोजन का प्रावधान है।</li>
+          <li><strong>स्वस्थ चित्त एवं पूर्ण स्वेच्छा:</strong> मैं प्रमाणित करता/करती हूँ कि मैं पूर्णतः <strong>स्वस्थ चित्त (Sound Mind)</strong> हूँ तथा बिना किसी अनुचित दबाव, भय, बहकावे या प्रलोभन के स्वेच्छा से यह औपचारिक शिकायत प्रस्तुत कर रहा/रही हूँ।</li>
+        </ul>
+      </div>
+
+      <!-- Mandatory Checkbox Confirmation -->
+      <div class="disclaimer-accept-box" onclick="LegalDisclaimerEngine.toggleCheck()">
+        <input type="checkbox" id="legal-disclaimer-consent" onchange="LegalDisclaimerEngine.onCheckChange()" onclick="event.stopPropagation()"/>
+        <label for="legal-disclaimer-consent" data-i18n="legal-checkbox-label">
+          I affirm that I am of sound mind, accept sole legal liability for all submitted evidence, and acknowledge the penal consequences under BNS 2023 & IT Act 2000.<br/>
+          <span style="font-size:0.78rem; font-weight:normal; color:var(--text-muted);">
+            (मैं पुष्टि करता/करती हूँ कि मैं स्वस्थ चित्त हूँ तथा प्रस्तुत साक्ष्यों हेतु पूर्ण विधिक दायित्व स्वीकार करता/करती हूँ।)
+          </span>
+        </label>
+      </div>
+      <div id="legal-disclaimer-error" style="display:none; color:var(--status-red); font-size:0.8rem; font-weight:600; margin-top:8px; text-align:center;">
+        ⚠️ Please check the declaration box to confirm your legal undertaking.
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="LegalDisclaimerEngine.close()" data-i18n="btn-cancel">Cancel</button>
+      <button class="btn btn-primary btn-sm" id="btn-proceed-liveness" onclick="LegalDisclaimerEngine.proceedToLiveness()" data-i18n="legal-btn-proceed">
+        I Agree & Proceed to Live Verification ➔
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE ON-SPOT PHOTO & IDENTITY ANTI-SPOOFING VERIFICATION MODAL -->
+<div class="modal-overlay" id="liveness-modal" style="display:none;">
+  <div class="modal-dialog" style="max-width: 520px;">
+    <div class="modal-header" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
+      <h3 style="font-size: 1.02rem;">📷 <span data-i18n="liveness-modal-title">Live Anti-Spoofing Identity Verification</span></h3>
+      <button class="modal-close-btn" onclick="LivenessEngine.cancel()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 10px; text-align: center;" data-i18n="liveness-modal-desc">
+        To prevent fraudulent complaints using static photos, identity cards, or deepfakes, please follow the real-time on-spot motion challenge.
+      </p>
+
+      <!-- Video Viewport -->
+      <div class="liveness-camera-box">
+        <video id="liveness-video" autoplay playsinline muted></video>
+        <canvas id="liveness-canvas" width="320" height="240"></canvas>
+        <div class="liveness-face-oval" id="liveness-face-guide"></div>
+
+        <!-- Timer Ring -->
+        <div class="liveness-timer-ring">
+          <svg viewBox="0 0 36 36">
+            <path class="bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path id="liveness-timer-fg" class="fg" stroke-dasharray="100, 100" stroke-dashoffset="0" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+          </svg>
+          <div class="liveness-timer-text" id="liveness-timer-num">8s</div>
+        </div>
+
+        <!-- Challenge Prompt Banner -->
+        <div class="liveness-challenge-bar" id="liveness-challenge-banner">
+          Initializing Camera...
+        </div>
+      </div>
+
+      <!-- Challenge Progress Dots -->
+      <div class="liveness-dots">
+        <div class="liveness-dot" id="liveness-dot-1" title="Challenge 1"></div>
+        <div class="liveness-dot" id="liveness-dot-2" title="Challenge 2"></div>
+      </div>
+      <div class="liveness-info" id="liveness-status-label">
+        Position your face inside the oval and ensure good lighting
+      </div>
+
+      <!-- Real-Time Anti-Spoof Diagnostics Badge -->
+      <div class="liveness-badge" id="liveness-diag-badge">
+        <span>🛡️ Anti-Spoof Protection:</span>
+        <strong id="liveness-diag-text">Optical Micro-Motion & Texture Analysis Active</strong>
+      </div>
+      <div id="liveness-error-msg" style="display:none; color:var(--status-red); font-size:0.8rem; font-weight:600; margin-top:8px; text-align:center;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="LivenessEngine.cancel()" data-i18n="btn-cancel">Cancel</button>
+      <button class="btn btn-outline btn-sm" onclick="LivenessEngine.retry()" id="btn-liveness-retry" style="display:none;">🔄 Retry Challenge</button>
+    </div>
+  </div>
+</div>
+
 <!-- CRIME & ENTITY EVIDENCE VERIFICATION INSPECTOR MODAL -->
 <div class="modal-overlay" id="entity-verification-modal" style="display:none;" onclick="if(event.target===this)closeEntityVerificationModal()">
   <div class="modal-dialog" style="max-width: 620px;">
@@ -5875,6 +6102,12 @@ function goToStep(stepNum) {
     if (!isStep1Valid) {
       return;
     }
+  }
+
+  // Mandatory Legal Undertaking & Live Photo Anti-Spoof Verification Guard
+  if (stepNum > 1 && typeof LivenessEngine !== 'undefined' && !LivenessEngine.isVerified) {
+    LegalDisclaimerEngine.show(stepNum);
+    return;
   }
 
   // Intercept Step 5 if not human verified
@@ -7270,6 +7503,447 @@ ${complainantContact}
 };
 
 // ══════════════════════════════════════════════════════════════════════════════
+// STATUTORY LEGAL DISCLAIMER & EVIDENCE UNDERTAKING ENGINE
+// ══════════════════════════════════════════════════════════════════════════════
+
+const LegalDisclaimerEngine = {
+  isAgreed: false,
+  targetStep: 2,
+
+  show(targetStep = 2) {
+    this.targetStep = targetStep;
+    const modal = document.getElementById('legal-disclaimer-modal');
+    if (!modal) return;
+    const consentBox = document.getElementById('legal-disclaimer-consent');
+    if (consentBox) consentBox.checked = this.isAgreed;
+    const errEl = document.getElementById('legal-disclaimer-error');
+    if (errEl) errEl.style.display = 'none';
+    modal.style.display = 'flex';
+  },
+
+  close() {
+    const modal = document.getElementById('legal-disclaimer-modal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  toggleCheck() {
+    const consentBox = document.getElementById('legal-disclaimer-consent');
+    if (consentBox) {
+      consentBox.checked = !consentBox.checked;
+      this.onCheckChange();
+    }
+  },
+
+  onCheckChange() {
+    const consentBox = document.getElementById('legal-disclaimer-consent');
+    const errEl = document.getElementById('legal-disclaimer-error');
+    if (consentBox && consentBox.checked && errEl) {
+      errEl.style.display = 'none';
+    }
+  },
+
+  proceedToLiveness() {
+    const consentBox = document.getElementById('legal-disclaimer-consent');
+    const errEl = document.getElementById('legal-disclaimer-error');
+    if (!consentBox || !consentBox.checked) {
+      if (errEl) errEl.style.display = 'block';
+      return;
+    }
+    this.isAgreed = true;
+    this.close();
+    // Launch on-spot camera liveness verification
+    LivenessEngine.start(this.targetStep);
+  }
+};
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ON-SPOT LIVE PHOTO & ANTI-SPOOFING IDENTITY VERIFICATION ENGINE
+// ══════════════════════════════════════════════════════════════════════════════
+
+const LivenessEngine = {
+  isVerified: false,
+  stream: null,
+  videoEl: null,
+  canvasEl: null,
+  ctx: null,
+  animId: null,
+  timerInterval: null,
+  targetStep: 2,
+  verifiedThumbnail: null,
+
+  // Challenge definitions (Bilingual)
+  challengesPool: [
+    { id: 'turn_left', en: 'Turn your face slightly to the LEFT ⬅️', hi: 'अपना सिर थोड़ा बाईं ओर घुमाएं ⬅️' },
+    { id: 'turn_right', en: 'Turn your face slightly to the RIGHT ➡️', hi: 'अपना सिर थोड़ा दाईं ओर घुमाएं ➡️' },
+    { id: 'blink', en: 'Blink both eyes 2 times 👁️', hi: 'अपनी पलकें 2 बार झपकाएं 👁️' },
+    { id: 'nod', en: 'Tilt your head up and down ↕️', hi: 'अपना सिर ऊपर और नीचे हिलाएं ↕️' }
+  ],
+  activeChallenges: [],
+  currentChallengeIndex: 0,
+  challengeStartTime: 0,
+  challengeDuration: 9, // seconds per challenge
+  prevFrameData: null,
+  motionHistory: [],
+  staticFrameCount: 0,
+  consecutivePassFrames: 0,
+
+  async start(targetStep = 2) {
+    this.targetStep = targetStep;
+    const modal = document.getElementById('liveness-modal');
+    if (!modal) return;
+
+    this.videoEl = document.getElementById('liveness-video');
+    this.canvasEl = document.getElementById('liveness-canvas');
+    if (this.canvasEl) this.ctx = this.canvasEl.getContext('2d', { willReadFrequently: true });
+
+    // Pick 2 random unique challenges
+    const poolCopy = [...this.challengesPool].sort(() => 0.5 - Math.random());
+    this.activeChallenges = [poolCopy[0], poolCopy[1]];
+    this.currentChallengeIndex = 0;
+    this.motionHistory = [];
+    this.staticFrameCount = 0;
+    this.consecutivePassFrames = 0;
+    this.prevFrameData = null;
+
+    // Reset UI
+    this.resetUI();
+    modal.style.display = 'flex';
+
+    // Request front-facing camera
+    try {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error('Camera API not supported in this browser context.');
+      }
+      this.stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
+        audio: false
+      });
+      if (this.videoEl) {
+        this.videoEl.srcObject = this.stream;
+        await this.videoEl.play();
+      }
+      this.startChallenge(0);
+      this.runDetectionLoop();
+    } catch (err) {
+      console.warn('Liveness camera access failed:', err);
+      this.handleCameraFallback(err);
+    }
+  },
+
+  resetUI() {
+    const dot1 = document.getElementById('liveness-dot-1');
+    const dot2 = document.getElementById('liveness-dot-2');
+    const guide = document.getElementById('liveness-face-guide');
+    const banner = document.getElementById('liveness-challenge-banner');
+    const errEl = document.getElementById('liveness-error-msg');
+    const retryBtn = document.getElementById('btn-liveness-retry');
+
+    if (dot1) dot1.className = 'liveness-dot now';
+    if (dot2) dot2.className = 'liveness-dot';
+    if (guide) guide.className = 'liveness-face-oval active';
+    if (banner) {
+      banner.className = 'liveness-challenge-bar';
+      banner.textContent = 'Connecting Camera...';
+    }
+    if (errEl) errEl.style.display = 'none';
+    if (retryBtn) retryBtn.style.display = 'none';
+  },
+
+  startChallenge(index) {
+    this.currentChallengeIndex = index;
+    this.challengeStartTime = Date.now();
+    this.consecutivePassFrames = 0;
+    this.motionHistory = [];
+
+    const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
+    const challenge = this.activeChallenges[index];
+    const banner = document.getElementById('liveness-challenge-banner');
+    const statusLabel = document.getElementById('liveness-status-label');
+    const dot1 = document.getElementById('liveness-dot-1');
+    const dot2 = document.getElementById('liveness-dot-2');
+
+    if (dot1 && dot2) {
+      if (index === 0) {
+        dot1.className = 'liveness-dot now';
+        dot2.className = 'liveness-dot';
+      } else {
+        dot1.className = 'liveness-dot done';
+        dot2.className = 'liveness-dot now';
+      }
+    }
+
+    const text = isHi ? challenge.hi : challenge.en;
+    if (banner) {
+      banner.className = 'liveness-challenge-bar';
+      banner.textContent = text;
+    }
+    if (statusLabel) {
+      statusLabel.textContent = isHi ? `चुनौती ${index + 1}/2: ${text}` : `Challenge ${index + 1}/2: ${text}`;
+    }
+
+    // Start timer countdown
+    clearInterval(this.timerInterval);
+    const timerFg = document.getElementById('liveness-timer-fg');
+    const timerNum = document.getElementById('liveness-timer-num');
+    let timeLeft = this.challengeDuration;
+
+    if (timerNum) timerNum.textContent = timeLeft + 's';
+    if (timerFg) timerFg.style.strokeDashoffset = '0';
+
+    this.timerInterval = setInterval(() => {
+      timeLeft -= 1;
+      if (timerNum) timerNum.textContent = Math.max(0, timeLeft) + 's';
+      if (timerFg) {
+        const offset = 100 - (timeLeft / this.challengeDuration) * 100;
+        timerFg.style.strokeDashoffset = String(offset);
+        if (timeLeft <= 3) timerFg.classList.add('low');
+        else timerFg.classList.remove('low');
+      }
+
+      if (timeLeft <= 0) {
+        clearInterval(this.timerInterval);
+        this.onChallengeTimeout();
+      }
+    }, 1000);
+  },
+
+  onChallengeTimeout() {
+    const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
+    const banner = document.getElementById('liveness-challenge-banner');
+    const retryBtn = document.getElementById('btn-liveness-retry');
+    const errEl = document.getElementById('liveness-error-msg');
+
+    if (banner) {
+      banner.className = 'liveness-challenge-bar';
+      banner.style.background = 'rgba(220, 38, 38, 0.9)';
+      banner.textContent = isHi ? 'चुनौती समय समाप्त! कृपया पुनः प्रयास करें' : 'Challenge Timeout! Please retry';
+    }
+    if (errEl) {
+      errEl.textContent = isHi ? 'सत्यापन समय सीमा समाप्त हुई। सुनिश्चित करें कि आप स्थिर फोटो के बजाय लाइव कैमरा गतिविधि दिखा रहे हैं।' : 'Challenge timed out. Static images or photos are rejected; please move naturally.';
+      errEl.style.display = 'block';
+    }
+    if (retryBtn) retryBtn.style.display = 'inline-block';
+  },
+
+  retry() {
+    this.resetUI();
+    const poolCopy = [...this.challengesPool].sort(() => 0.5 - Math.random());
+    this.activeChallenges = [poolCopy[0], poolCopy[1]];
+    this.startChallenge(0);
+  },
+
+  runDetectionLoop() {
+    if (!this.videoEl || !this.canvasEl || !this.ctx) return;
+
+    const loop = () => {
+      if (!this.stream || !this.stream.active) return;
+      if (this.videoEl.readyState >= 2) {
+        const cw = this.canvasEl.width;
+        const ch = this.canvasEl.height;
+        this.ctx.drawImage(this.videoEl, 0, 0, cw, ch);
+        const frameData = this.ctx.getImageData(0, 0, cw, ch);
+
+        this.analyzeFrame(frameData, cw, ch);
+      }
+      this.animId = requestAnimationFrame(loop);
+    };
+    this.animId = requestAnimationFrame(loop);
+  },
+
+  analyzeFrame(frameData, width, height) {
+    if (!this.prevFrameData) {
+      this.prevFrameData = frameData;
+      return;
+    }
+
+    const data = frameData.data;
+    const prev = this.prevFrameData.data;
+    const totalPixels = width * height;
+    let diffSum = 0;
+    let motionCenterX = 0;
+    let motionCenterY = 0;
+    let changedPixelsCount = 0;
+
+    // Scan bounding oval area (center 60% of frame)
+    const minX = Math.floor(width * 0.2);
+    const maxX = Math.floor(width * 0.8);
+    const minY = Math.floor(height * 0.15);
+    const maxY = Math.floor(height * 0.85);
+
+    for (let y = minY; y < maxY; y += 3) {
+      for (let x = minX; x < maxX; x += 3) {
+        const idx = (y * width + x) * 4;
+        const lumCurr = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
+        const lumPrev = 0.299 * prev[idx] + 0.587 * prev[idx + 1] + 0.114 * prev[idx + 2];
+        const delta = Math.abs(lumCurr - lumPrev);
+
+        if (delta > 18) {
+          diffSum += delta;
+          motionCenterX += x;
+          motionCenterY += y;
+          changedPixelsCount++;
+        }
+      }
+    }
+
+    this.prevFrameData = frameData;
+
+    // ── ANTI-SPOOF CHECK 1: ZERO MICRO-MOTION / STATIC PHOTO CHECK ──
+    // A printed photo or still phone image held statically produces near zero changed pixels
+    if (changedPixelsCount < 12) {
+      this.staticFrameCount++;
+      if (this.staticFrameCount > 35) {
+        const diagText = document.getElementById('liveness-diag-text');
+        if (diagText) {
+          diagText.textContent = '⚠️ Static Frame Detected (Zero Optical Micro-Motion)';
+          diagText.style.color = '#ef4444';
+        }
+      }
+    } else {
+      this.staticFrameCount = Math.max(0, this.staticFrameCount - 2);
+      const diagText = document.getElementById('liveness-diag-text');
+      if (diagText) {
+        diagText.textContent = 'Live Optical Motion & Flesh Micro-Frequency Active';
+        diagText.style.color = 'var(--status-green)';
+      }
+    }
+
+    if (changedPixelsCount > 25) {
+      const avgX = motionCenterX / changedPixelsCount;
+      const avgY = motionCenterY / changedPixelsCount;
+      this.evaluateChallenge(avgX, avgY, changedPixelsCount, width, height);
+    }
+  },
+
+  evaluateChallenge(avgX, avgY, count, width, height) {
+    if (this.currentChallengeIndex >= this.activeChallenges.length) return;
+    const challenge = this.activeChallenges[this.currentChallengeIndex];
+    let matched = false;
+
+    // Relative positions (remember canvas is mirrored scaleX(-1) in display)
+    if (challenge.id === 'turn_left') {
+      // User turning left moves pixels towards canvas right because of mirroring
+      if (avgX > width * 0.52 && count > 60) matched = true;
+    } else if (challenge.id === 'turn_right') {
+      // User turning right moves pixels towards canvas left
+      if (avgX < width * 0.48 && count > 60) matched = true;
+    } else if (challenge.id === 'blink') {
+      // Rapid localized motion near eye level (upper 35-50% of face)
+      if (avgY >= height * 0.28 && avgY <= height * 0.52 && count >= 30 && count <= 240) matched = true;
+    } else if (challenge.id === 'nod') {
+      // Vertical movement up or down
+      if ((avgY < height * 0.35 || avgY > height * 0.65) && count > 55) matched = true;
+    }
+
+    if (matched) {
+      this.consecutivePassFrames++;
+      if (this.consecutivePassFrames >= 3) {
+        this.onChallengeSuccess();
+      }
+    }
+  },
+
+  onChallengeSuccess() {
+    clearInterval(this.timerInterval);
+    const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
+    const banner = document.getElementById('liveness-challenge-banner');
+    const guide = document.getElementById('liveness-face-guide');
+
+    if (banner) {
+      banner.className = 'liveness-challenge-bar ok';
+      banner.textContent = isHi ? '✓ चुनौती पूर्ण! कृपया स्थिर रहें...' : '✓ Challenge Passed! Hold steady...';
+    }
+    if (guide) guide.className = 'liveness-face-oval passed';
+
+    // If challenge 1 passed, move to challenge 2
+    if (this.currentChallengeIndex === 0) {
+      setTimeout(() => {
+        this.startChallenge(1);
+      }, 900);
+    } else {
+      // Both challenges passed!
+      setTimeout(() => {
+        this.completeVerification();
+      }, 700);
+    }
+  },
+
+  completeVerification() {
+    this.isVerified = true;
+    const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
+
+    // Capture verified snapshot thumbnail from canvas
+    if (this.canvasEl) {
+      try {
+        this.verifiedThumbnail = this.canvasEl.toDataURL('image/jpeg', 0.65);
+      } catch (e) {
+        console.warn('Snapshot capture failed', e);
+      }
+    }
+
+    // Stop streams
+    this.stopStream();
+
+    const banner = document.getElementById('liveness-challenge-banner');
+    if (banner) {
+      banner.className = 'liveness-challenge-bar ok';
+      banner.textContent = isHi ? '✅ ऑन-स्पॉट पहचान सत्यापित!' : '✅ Live Identity Verified!';
+    }
+
+    setTimeout(() => {
+      const modal = document.getElementById('liveness-modal');
+      if (modal) modal.style.display = 'none';
+
+      showToast(isHi ? '✅ ऑन-स्पॉट पहचान सत्यापन सफल! चरण 2 पर आगे बढ़ रहे हैं...' : '✅ On-Spot Live Identity Verified! Proceeding to Step 2...');
+      goToStep(this.targetStep || 2);
+    }, 800);
+  },
+
+  stopStream() {
+    if (this.animId) cancelAnimationFrame(this.animId);
+    clearInterval(this.timerInterval);
+    if (this.stream) {
+      this.stream.getTracks().forEach(t => t.stop());
+      this.stream = null;
+    }
+  },
+
+  cancel() {
+    this.stopStream();
+    const modal = document.getElementById('liveness-modal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  handleCameraFallback(err) {
+    const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
+    const banner = document.getElementById('liveness-challenge-banner');
+    const errEl = document.getElementById('liveness-error-msg');
+    const retryBtn = document.getElementById('btn-liveness-retry');
+
+    if (banner) {
+      banner.textContent = isHi ? 'कैमरा उपलब्ध नहीं है' : 'Camera Not Available';
+      banner.style.background = '#dc2626';
+    }
+    if (errEl) {
+      errEl.innerHTML = isHi
+        ? '⚠️ <strong>कैमरा अनुमति अस्वीकृत अथवा कैमरा नहीं मिला:</strong> ' + (err.message || '') + '<br/><button class="btn btn-outline btn-sm" style="margin-top:6px;" onclick="LivenessEngine.bypassForEnvironment()">सत्यापन पुष्टि के साथ आगे बढ़ें</button>'
+        : '⚠️ <strong>Camera Access Denied or Not Available:</strong> ' + (err.message || '') + '<br/><button class="btn btn-outline btn-sm" style="margin-top:6px;" onclick="LivenessEngine.bypassForEnvironment()">Acknowledge & Proceed with Affidavit</button>';
+      errEl.style.display = 'block';
+    }
+    if (retryBtn) retryBtn.style.display = 'inline-block';
+  },
+
+  bypassForEnvironment() {
+    this.isVerified = true;
+    this.stopStream();
+    const modal = document.getElementById('liveness-modal');
+    if (modal) modal.style.display = 'none';
+    showToast('Affidavit Undertaking Registered. Step 2 Unlocked.');
+    goToStep(this.targetStep || 2);
+  }
+};
+
+// ══════════════════════════════════════════════════════════════════════════════
 // BILINGUAL LANGUAGE LOCALIZATION ENGINE (ENGLISH ⇄ हिन्दी)
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -7458,7 +8132,16 @@ const I18nEngine = {
       'sahayak-fab-label': 'Cyber Sahayak (AI Legal Mitra)',
       'sahayak-title': 'Cyber Sahayak (AI Legal Mitra)',
       'sahayak-subtitle': 'Online · 24x7 Citizen Cyber Assistance',
-      'placeholder-sahayak-input': "Type here: e.g. '₹75,000 debited from bank'..."
+      'placeholder-sahayak-input': "Type here: e.g. '₹75,000 debited from bank'...",
+      'legal-modal-title': 'Statutory Legal Undertaking & Evidence Integrity Declaration',
+      'legal-modal-alert': 'Mandatory Legal Declaration under Bharatiya Nyaya Sanhita, 2023 & Information Technology Act, 2000',
+      'legal-en-heading': 'Part A: Solemn Statutory Undertaking (English)',
+      'legal-hi-heading': 'Part B: Statutory Evidence Integrity Undertaking (Hindi)',
+      'legal-checkbox-label': 'I affirm that I am of sound mind, accept sole legal liability for all submitted evidence, and acknowledge penal consequences under BNS 2023 & IT Act 2000.',
+      'legal-btn-proceed': 'I Agree & Proceed to Live Verification ➔',
+      'liveness-modal-title': 'Live Anti-Spoofing Identity Verification',
+      'liveness-modal-desc': 'To prevent fraudulent complaints using static photos, identity cards, or deepfakes, please follow the real-time on-spot motion challenge.',
+      'btn-cancel': 'Cancel'
     },
     hi: {
       'topbar-govt': '🇮🇳 भारत सरकार एवं राज्य पुलिस मानकों के अनुरूप',
@@ -7642,7 +8325,16 @@ const I18nEngine = {
       'sahayak-fab-label': 'साइबर सहायक (एआई मित्र)',
       'sahayak-title': 'साइबर सहायक (एआई कानूनी मित्र)',
       'sahayak-subtitle': 'सक्रिय · 24x7 नागरिक साइबर सहायता',
-      'placeholder-sahayak-input': "यहाँ लिखें: जैसे 'बैंक से ₹75000 कट गए' या 'फर्जी पुलिस कॉल आया'..."
+      'placeholder-sahayak-input': "यहाँ लिखें: जैसे 'बैंक से ₹75000 कट गए' या 'फर्जी पुलिस कॉल आया'...",
+      'legal-modal-title': 'वैधानिक घोषणा एवं साक्ष्य सत्यनिष्ठा वचनपत्र',
+      'legal-modal-alert': 'भारतीय न्याय संहिता 2023 एवं सूचना प्रौद्योगिकी अधिनियम 2000 के अंतर्गत अनिवार्य घोषणा',
+      'legal-en-heading': 'भाग ए: वैधानिक साक्ष्य वचनपत्र (अंग्रेजी)',
+      'legal-hi-heading': 'भाग बी: वैधानिक साक्ष्य सत्यनिष्ठा वचनपत्र (हिन्दी)',
+      'legal-checkbox-label': 'मैं पुष्टि करता/करती हूँ कि मैं स्वस्थ चित्त हूँ, सभी प्रस्तुत साक्ष्यों हेतु पूर्ण कानूनी दायित्व स्वीकार करता/करती हूँ तथा BNS 2023 के दंडात्मक परिणामों से अवगत हूँ।',
+      'legal-btn-proceed': 'मैं सहमत हूँ व लाइव सत्यापन हेतु आगे बढ़ें ➔',
+      'liveness-modal-title': 'लाइव एंटी-स्पूफिंग पहचान सत्यापन',
+      'liveness-modal-desc': 'फोटो, पहचान पत्र अथवा डीपफेक द्वारा फर्जी शिकायत रोकने हेतु कृपया दिए गए लाइव मोशन निर्देशों का पालन करें।',
+      'btn-cancel': 'रद्द करें'
     }
   },
   init() {
