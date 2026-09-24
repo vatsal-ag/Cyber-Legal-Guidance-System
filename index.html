@@ -1502,6 +1502,80 @@
   .liveness-timer-ring .fg.low { stroke: #ef4444; }
   .liveness-timer-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); color: #fff; font-size: 0.7rem; font-weight: 700; }
 
+  /* ── UNIVERSAL VOICE & WAVEFORM STUDIO ── */
+  .voice-waveform-box {
+    position: relative;
+    width: 100%;
+    height: 110px;
+    background: linear-gradient(180deg, #0b1528 0%, #030712 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #1e293b;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .voice-waveform-box canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .voice-status-indicator {
+    position: absolute;
+    top: 8px; left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #94a3b8;
+  }
+  .voice-pulse-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #64748b;
+  }
+  .voice-pulse-dot.active {
+    background: #ef4444;
+    animation: voiceMicPulse 1.2s infinite;
+  }
+  @keyframes voiceMicPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.6); }
+    50% { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+  }
+  .voice-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .voice-chip {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 16px;
+    padding: 4px 10px;
+    font-size: 0.74rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-primary);
+    font-family: inherit;
+  }
+  .voice-chip:hover {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+    transform: translateY(-1px);
+  }
+  [data-theme="dark"] .voice-chip {
+    background: #1e293b;
+    border-color: #334155;
+    color: #cbd5e1;
+  }
+  [data-theme="dark"] .voice-chip:hover {
+    background: #334155;
+    border-color: #475569;
+  }
+
   .diag-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -4808,6 +4882,78 @@
   </div>
 </div>
 
+<!-- UNIVERSAL VOICE INPUT & WAVEFORM STUDIO MODAL -->
+<div class="modal-overlay" id="universal-voice-modal" style="display:none;" onclick="if(event.target===this)SpeechEngine.closeVoiceModal()">
+  <div class="modal-dialog" style="max-width: 540px;">
+    <div class="modal-header" style="background: linear-gradient(135deg, #0e2442 0%, #1a365d 100%);">
+      <h3 style="font-size: 1.02rem;">🎙️ <span id="voice-modal-title">Voice Incident Studio · आवाज़ द्वारा विवरण</span></h3>
+      <button class="modal-close-btn" onclick="SpeechEngine.closeVoiceModal()">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 18px 20px;">
+      <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;" id="voice-modal-desc">
+        Speak clearly into your microphone or tap quick incident templates below. Works offline with live audio waveform.
+      </p>
+
+      <!-- Live Waveform Visualizer Screen -->
+      <div class="voice-waveform-box">
+        <canvas id="voice-waveform-canvas" width="500" height="110"></canvas>
+        <div class="voice-status-indicator">
+          <span class="voice-pulse-dot" id="voice-pulse-dot"></span>
+          <span id="voice-status-label">Standby / Click 'Start Speaking'</span>
+        </div>
+        <div id="voice-timer" style="position:absolute; bottom:8px; right:12px; font-size:0.75rem; font-family:monospace; color:#38bdf8; font-weight:600;">00:00</div>
+      </div>
+
+      <!-- Controls Row: Language & Record/Stop -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 12px; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <label style="font-size: 0.75rem; font-weight: 600; color: var(--text-secondary);">Language / भाषा:</label>
+          <select id="voice-modal-lang-select" style="padding: 4px 8px; font-size: 0.78rem; border-radius: 6px; border: 1px solid var(--border-input); background: var(--bg-card); color: var(--text-primary);" onchange="SpeechEngine.onLangChange()">
+            <option value="hi-IN">🇮🇳 हिन्दी (Hindi)</option>
+            <option value="en-IN" selected>🌐 English (Indian)</option>
+          </select>
+        </div>
+        <div style="display: flex; gap: 6px;">
+          <button type="button" class="btn btn-primary btn-sm" id="voice-modal-toggle-btn" onclick="SpeechEngine.toggleModalRecording()" style="display:inline-flex; align-items:center; gap:6px;">
+            <span id="voice-modal-btn-icon">🎙️</span>
+            <span id="voice-modal-btn-text">Start Speaking</span>
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="SpeechEngine.clearModalTranscript()" title="Clear Text">
+            🗑️ Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Transcript Textarea -->
+      <div style="margin-top: 12px;">
+        <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-primary); display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span>📝 Incident Narration / घटना का विवरण:</span>
+          <span id="voice-word-count" style="font-size: 0.72rem; color: var(--text-muted); font-weight: normal;">0 words</span>
+        </label>
+        <textarea id="voice-modal-transcript" rows="4" style="width: 100%; border: 1px solid var(--border-input); border-radius: 8px; padding: 10px; font-size: 0.85rem; line-height: 1.45; background: var(--bg-input); color: var(--text-primary); font-family: inherit; resize: vertical;" placeholder="Your words will appear here as you speak... You can also edit directly or click common incident chips below." oninput="SpeechEngine.updateWordCount()"></textarea>
+      </div>
+
+      <!-- Quick Incident Chips for 1-Touch Fill -->
+      <div style="margin-top: 10px;">
+        <span style="font-size: 0.74rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">⚡ Quick Incident Presets (1-Click Add):</span>
+        <div class="voice-chips-container" id="voice-chips-box">
+          <button type="button" class="voice-chip" onclick="SpeechEngine.applyPreset('₹75,000 debited from my bank account via unauthorized UPI transfer after clicking a suspicious APK link')">💳 ₹75k Bank UPI Fraud</button>
+          <button type="button" class="voice-chip" onclick="SpeechEngine.applyPreset('Received fake police/CBI digital arrest video call alleging illegal courier parcel and demanding money')">📞 Digital Arrest Call</button>
+          <button type="button" class="voice-chip" onclick="SpeechEngine.applyPreset('Trapped in Telegram part-time rating task scam, lost money in fake investment recharge portal')">💼 Telegram Task Scam</button>
+          <button type="button" class="voice-chip" onclick="SpeechEngine.applyPreset('Instagram and Facebook account hacked, scammer sending extortion messages to contacts')">🔒 Social Account Hacked</button>
+          <button type="button" class="voice-chip" onclick="SpeechEngine.applyPreset('OLX buyer sent fake QR code asking to scan and enter PIN to receive payment, money deducted')">🛒 QR Code Merchant Scam</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="padding: 12px 20px;">
+      <button class="btn btn-outline btn-sm" onclick="SpeechEngine.closeVoiceModal()">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="SpeechEngine.applyVoiceToTarget()" style="font-weight: 700;" id="voice-apply-btn">
+        ✅ Apply Incident Narration ➔
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- CRIME & ENTITY EVIDENCE VERIFICATION INSPECTOR MODAL -->
 <div class="modal-overlay" id="entity-verification-modal" style="display:none;" onclick="if(event.target===this)closeEntityVerificationModal()">
   <div class="modal-dialog" style="max-width: 620px;">
@@ -7178,61 +7324,61 @@ const TimelineBuilder = {
 };
 
 // ══════════════════════════════════════════════════════════════════════════════
-// UNIVERSAL WEB SPEECH & MICROPHONE PERMISSION ENGINE
+// UNIVERSAL WEB SPEECH, MICROPHONE & LIVE WAVEFORM ENGINE
 // ══════════════════════════════════════════════════════════════════════════════
 
 const SpeechEngine = {
   activeRecog: null,
-  activeTarget: null,
+  activeTarget: null,       // 'express' | 'sahayak' | 'dictation' | 'modal'
+  modalTarget: 'express',
+  audioContext: null,
+  mediaStream: null,
+  analyser: null,
+  animFrameId: null,
+  timerInterval: null,
+  secondsElapsed: 0,
+  isModalRecording: false,
+  presetListEn: [
+    { label: '💳 ₹75k Bank UPI Fraud', text: '₹75,000 was debited from my bank account via unauthorized UPI transfer without OTP after clicking a fraudulent link' },
+    { label: '📞 Digital Arrest Call', text: 'Received a threatening video call from fraudsters pretending to be Police and CBI officers placing me under fake digital arrest' },
+    { label: '💼 Telegram Task Scam', text: 'Trapped in a Telegram part-time rating task scam, lost money in a fraudulent cryptocurrency recharge portal' },
+    { label: '🔒 Social Account Hacked', text: 'My Instagram and Facebook accounts were hacked, and unauthorized messages asking for money are being sent to contacts' },
+    { label: '🛒 QR Code Merchant Scam', text: 'Fraudulent OLX buyer sent a QR code stating scanning it was required to receive credit, which deducted my money' }
+  ],
+  presetListHi: [
+    { label: '💳 ₹75,000 बैंक फ्रॉड', text: 'मेरे बैंक खाते से ₹75,000 अनाधिकृत UPI ट्रांजैक्शन द्वारा बिना OTP कट गए जब मैंने एक अनजान लिंक खोला था।' },
+    { label: '📞 डिजिटल अरेस्ट कॉल', text: 'मुझसे नकली पुलिस और CBI अधिकारी बनकर वीडियो कॉल पर डिजिटल अरेस्ट की धमकी दी गई और पैसे ट्रांसफर करने का दबाव बनाया गया।' },
+    { label: '💼 टेलीग्राम पार्ट-टाइम टास्क', text: 'टेलीग्राम पर यूट्यूब लाइक और होटल रिव्यू के पार्ट-टाइम जॉब के नाम पर मुझसे फर्जी पोर्टल में पैसे जमा करवाकर ठग लिया गया।' },
+    { label: '🔒 सोशल मीडिया खाता हैक', text: 'मेरा इंस्टाग्राम और फेसबुक अकाउंट हैक कर लिया गया है और मेरे परिचितों से पैसे मांगे जा रहे हैं।' },
+    { label: '🛒 QR कोड स्कैनिंग फ्रॉड', text: 'OLX खरीदार ने पैसे भेजने के बहाने QR कोड भेजा जिसे स्कैन करते ही मेरे खाते से पैसे कट गए।' }
+  ],
 
   isSupported() {
     return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
   },
 
-  async requestMicPermission() {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        stream.getTracks().forEach(t => t.stop());
-        return true;
-      } catch (err) {
-        console.warn('Microphone permission check rejected:', err);
-        return false;
-      }
-    }
-    return true; // fallback if getUserMedia is not directly exposed
-  },
-
-  async startListening({ target, lang, onStart, onResult, onEnd, onError }) {
+  // Direct Speech Recognition with zero disruptive stream kills
+  startListening({ target, lang, onStart, onResult, onEnd, onError }) {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
 
+    // If browser doesn't support Web Speech API natively, fall back to Universal Voice Modal directly
     if (!SpeechRecognition) {
-      showToast(isHi 
-        ? '⚠️ इस ब्राउज़र में वॉइस स्पीच रिकग्निशन समर्थित नहीं है। कृपया टाइप करें।' 
-        : '⚠️ Speech recognition is not supported in this browser. Please type directly.');
+      console.warn('SpeechRecognition not natively supported, opening Voice Studio fallback modal');
+      this.openVoiceModal(target);
       return false;
     }
 
     // Stop any existing session
     this.stopListening();
 
-    // Verify microphone permission
-    const hasPerm = await this.requestMicPermission();
-    if (!hasPerm) {
-      showToast(isHi 
-        ? '⚠️ माइक्रोफोन की अनुमति नहीं मिली। कृपया अपने ब्राउज़र में अनुमति दें।' 
-        : '⚠️ Microphone permission denied. Please allow microphone access in your browser address bar.');
-      if (onError) onError('not-allowed');
-      return false;
-    }
-
     try {
       const recog = new SpeechRecognition();
       const chosenLang = lang || (isHi ? 'hi-IN' : 'en-IN');
       recog.lang = chosenLang;
-      recog.continuous = target === 'dictation';
-      recog.interimResults = target === 'dictation';
+      recog.continuous = false; // reliable single-phrase trigger
+      recog.interimResults = false;
+      recog.maxAlternatives = 1;
 
       recog.onstart = () => {
         this.activeRecog = recog;
@@ -7241,30 +7387,26 @@ const SpeechEngine = {
       };
 
       recog.onresult = (evt) => {
-        if (onResult) onResult(evt);
+        let transcript = '';
+        for (let i = 0; i < evt.results.length; ++i) {
+          transcript += evt.results[i][0].transcript;
+        }
+        if (onResult) onResult({ transcript: transcript.trim(), results: evt.results, rawEvent: evt });
       };
 
       recog.onerror = (evt) => {
-        console.warn('SpeechRecognition event error:', evt.error);
+        console.warn('SpeechRecognition error:', evt.error);
         const errType = evt.error;
-        if (errType === 'not-allowed') {
+        if (errType === 'network' || errType === 'not-allowed' || errType === 'audio-capture' || errType === 'service-not-allowed') {
           showToast(isHi 
-            ? '⚠️ माइक्रोफोन की अनुमति नहीं मिली।' 
-            : '⚠️ Microphone permission denied.');
-        } else if (errType === 'network') {
-          if (window.location.protocol === 'file:') {
-            showToast(isHi 
-              ? '⚠️ स्थानीय फ़ाइल (file://) पर वॉइस सेवा सीमित है। कृपया टाइप करें या स्थानीय सर्वर का उपयोग करें।' 
-              : '⚠️ Web Speech API is blocked on local file:// URLs. Please run a local server or type directly.');
-          } else {
-            showToast(isHi 
-              ? '⚠️ वॉइस नेटवर्क त्रुटि। कृपया इंटरनेट कनेक्शन जांचें।' 
-              : '⚠️ Voice network error. Please check your internet connection.');
-          }
+            ? '🎙️ वॉइस स्टूडियो खोला जा रहा है (लाइव वेवफॉर्म + क्विक चिप्स)...' 
+            : '🎙️ Opening Voice Studio (Live Waveform + Quick Incident Chips)...');
+          setTimeout(() => this.openVoiceModal(target), 300);
         } else if (errType === 'no-speech') {
           showToast(isHi 
-            ? '⚠️ कोई आवाज़ नहीं सुनाई दी। कृपया दोबारा माइक दबाकर बोलें।' 
-            : '⚠️ No speech detected. Please click the mic and speak again.');
+            ? '⚠️ आवाज़ नहीं सुनाई दी। वॉइस स्टूडियो खोल रहे हैं...' 
+            : '⚠️ No speech detected. Opening Voice Studio...');
+          setTimeout(() => this.openVoiceModal(target), 400);
         }
         if (onError) onError(errType);
       };
@@ -7278,8 +7420,8 @@ const SpeechEngine = {
       recog.start();
       return true;
     } catch (e) {
-      console.error('Failed to start SpeechRecognition:', e);
-      showToast(isHi ? '⚠️ माइक्रोफोन शुरू नहीं हो सका।' : '⚠️ Could not start microphone.');
+      console.error('Failed to start SpeechRecognition directly:', e);
+      this.openVoiceModal(target);
       if (onError) onError(e);
       return false;
     }
@@ -7292,6 +7434,369 @@ const SpeechEngine = {
       } catch (e) {}
       this.activeRecog = null;
       this.activeTarget = null;
+    }
+  },
+
+  // ── UNIVERSAL VOICE MODAL & LIVE WAVEFORM STUDIO ──
+  openVoiceModal(target = 'express') {
+    this.modalTarget = target;
+    const modal = document.getElementById('universal-voice-modal');
+    if (!modal) return;
+
+    modal.style.display = 'flex';
+    const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+
+    // Populate existing text if target has it
+    let existingText = '';
+    if (target === 'express') {
+      const el = document.getElementById('express-intake-input');
+      if (el) existingText = el.value.trim();
+    } else if (target === 'sahayak') {
+      const el = document.getElementById('sahayak-input-text');
+      if (el) existingText = el.value.trim();
+    } else if (target === 'dictation') {
+      const el = document.getElementById('inc-narration');
+      if (el) existingText = el.value.trim();
+    }
+
+    const transcriptEl = document.getElementById('voice-modal-transcript');
+    if (transcriptEl) {
+      transcriptEl.value = existingText;
+      this.updateWordCount();
+    }
+
+    // Set modal language selector
+    const langSelect = document.getElementById('voice-modal-lang-select');
+    if (langSelect) {
+      langSelect.value = isHi ? 'hi-IN' : 'en-IN';
+    }
+
+    this.renderModalPresets();
+    this.startLiveWaveform();
+    this.startModalRecording();
+  },
+
+  closeVoiceModal() {
+    this.stopModalRecording();
+    this.stopLiveWaveform();
+    const modal = document.getElementById('universal-voice-modal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  onLangChange() {
+    this.renderModalPresets();
+    if (this.isModalRecording) {
+      this.stopModalRecording();
+      setTimeout(() => this.startModalRecording(), 200);
+    }
+  },
+
+  renderModalPresets() {
+    const langSelect = document.getElementById('voice-modal-lang-select');
+    const isHi = langSelect && langSelect.value.startsWith('hi');
+    const container = document.getElementById('voice-chips-box');
+    if (!container) return;
+
+    const list = isHi ? this.presetListHi : this.presetListEn;
+    container.innerHTML = list.map(item => `
+      <button type="button" class="voice-chip" onclick="SpeechEngine.applyPreset(${JSON.stringify(item.text)})">
+        ${escapeHtml(item.label)}
+      </button>
+    `).join('');
+  },
+
+  applyPreset(text) {
+    const transcriptEl = document.getElementById('voice-modal-transcript');
+    if (transcriptEl) {
+      if (transcriptEl.value && !transcriptEl.value.endsWith(' ')) {
+        transcriptEl.value += ' ' + text;
+      } else {
+        transcriptEl.value = text;
+      }
+      this.updateWordCount();
+      const statusLabel = document.getElementById('voice-status-label');
+      if (statusLabel) {
+        statusLabel.textContent = '✓ Incident preset added / प्रीसेट जोड़ा गया';
+      }
+    }
+  },
+
+  clearModalTranscript() {
+    const transcriptEl = document.getElementById('voice-modal-transcript');
+    if (transcriptEl) {
+      transcriptEl.value = '';
+      this.updateWordCount();
+    }
+  },
+
+  updateWordCount() {
+    const transcriptEl = document.getElementById('voice-modal-transcript');
+    const countEl = document.getElementById('voice-word-count');
+    if (!transcriptEl || !countEl) return;
+    const words = transcriptEl.value.trim() ? transcriptEl.value.trim().split(/\s+/).length : 0;
+    countEl.textContent = `${words} word${words === 1 ? '' : 's'}`;
+  },
+
+  toggleModalRecording() {
+    if (this.isModalRecording) {
+      this.stopModalRecording();
+    } else {
+      this.startModalRecording();
+    }
+  },
+
+  startModalRecording() {
+    const isHi = document.getElementById('voice-modal-lang-select')?.value.startsWith('hi');
+    const statusLabel = document.getElementById('voice-status-label');
+    const pulseDot = document.getElementById('voice-pulse-dot');
+    const toggleBtnIcon = document.getElementById('voice-modal-btn-icon');
+    const toggleBtnText = document.getElementById('voice-modal-btn-text');
+    const toggleBtn = document.getElementById('voice-modal-toggle-btn');
+
+    this.isModalRecording = true;
+    if (pulseDot) pulseDot.classList.add('active');
+    if (toggleBtn) {
+      toggleBtn.classList.remove('btn-primary');
+      toggleBtn.classList.add('btn-danger');
+    }
+    if (toggleBtnIcon) toggleBtnIcon.textContent = '⏹️';
+    if (toggleBtnText) toggleBtnText.textContent = isHi ? 'रोकें (Stop)' : 'Stop Listening';
+    if (statusLabel) statusLabel.textContent = isHi ? 'सुन रहे हैं... कृपया स्पष्ट बोलें' : 'Listening... Speak clearly into microphone';
+
+    // Start timer
+    this.secondsElapsed = 0;
+    clearInterval(this.timerInterval);
+    const timerEl = document.getElementById('voice-timer');
+    this.timerInterval = setInterval(() => {
+      this.secondsElapsed++;
+      const m = String(Math.floor(this.secondsElapsed / 60)).padStart(2, '0');
+      const s = String(this.secondsElapsed % 60).padStart(2, '0');
+      if (timerEl) timerEl.textContent = `${m}:${s}`;
+    }, 1000);
+
+    // Try starting WebSpeech recognition in continuous mode if supported
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      try {
+        const recog = new SpeechRecognition();
+        const langSelect = document.getElementById('voice-modal-lang-select');
+        recog.lang = langSelect ? langSelect.value : (isHi ? 'hi-IN' : 'en-IN');
+        recog.continuous = true;
+        recog.interimResults = true;
+
+        recog.onresult = (evt) => {
+          let chunk = '';
+          for (let i = evt.resultIndex; i < evt.results.length; ++i) {
+            if (evt.results[i].isFinal) {
+              chunk += evt.results[i][0].transcript + ' ';
+            }
+          }
+          if (chunk) {
+            const transcriptEl = document.getElementById('voice-modal-transcript');
+            if (transcriptEl) {
+              transcriptEl.value = (transcriptEl.value ? transcriptEl.value.trim() + ' ' : '') + chunk.trim();
+              SpeechEngine.updateWordCount();
+            }
+          }
+        };
+
+        recog.onerror = (e) => {
+          console.warn('Modal speech recog error:', e.error);
+          if (statusLabel) {
+            statusLabel.textContent = isHi 
+              ? 'वेवफॉर्म सक्रिय · आवाज़ रिकॉर्ड हो रही है (या नीचे प्रीसेट चुनें)' 
+              : 'Waveform Active · Voice input active (or select a preset below)';
+          }
+        };
+
+        recog.onend = () => {
+          if (this.isModalRecording) {
+            try { recog.start(); } catch (err) {}
+          }
+        };
+
+        recog.start();
+        this.activeRecog = recog;
+      } catch (err) {
+        console.warn('SpeechRecognition initialization error in modal:', err);
+      }
+    }
+  },
+
+  stopModalRecording() {
+    this.isModalRecording = false;
+    clearInterval(this.timerInterval);
+    if (this.activeRecog) {
+      try { this.activeRecog.stop(); } catch (e) {}
+      this.activeRecog = null;
+    }
+
+    const isHi = document.getElementById('voice-modal-lang-select')?.value.startsWith('hi');
+    const statusLabel = document.getElementById('voice-status-label');
+    const pulseDot = document.getElementById('voice-pulse-dot');
+    const toggleBtnIcon = document.getElementById('voice-modal-btn-icon');
+    const toggleBtnText = document.getElementById('voice-modal-btn-text');
+    const toggleBtn = document.getElementById('voice-modal-toggle-btn');
+
+    if (pulseDot) pulseDot.classList.remove('active');
+    if (toggleBtn) {
+      toggleBtn.classList.remove('btn-danger');
+      toggleBtn.classList.add('btn-primary');
+    }
+    if (toggleBtnIcon) toggleBtnIcon.textContent = '🎙️';
+    if (toggleBtnText) toggleBtnText.textContent = isHi ? 'बोलना शुरू करें' : 'Start Speaking';
+    if (statusLabel) statusLabel.textContent = isHi ? 'माइक स्टैंडबाय · तैयार' : 'Standby / Click Start to record more';
+  },
+
+  async startLiveWaveform() {
+    const canvas = document.getElementById('voice-waveform-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    try {
+      if (!this.mediaStream) {
+        this.mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      }
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!this.audioContext || this.audioContext.state === 'closed') {
+        this.audioContext = new AudioCtx();
+      }
+      if (this.audioContext.state === 'suspended') {
+        await this.audioContext.resume();
+      }
+
+      const source = this.audioContext.createMediaStreamSource(this.mediaStream);
+      this.analyser = this.audioContext.createAnalyser();
+      this.analyser.fftSize = 64;
+      source.connect(this.analyser);
+
+      const bufferLength = this.analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+
+      cancelAnimationFrame(this.animFrameId);
+      const draw = () => {
+        this.animFrameId = requestAnimationFrame(draw);
+        this.analyser.getByteFrequencyData(dataArray);
+
+        ctx.fillStyle = '#0b1528';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Center guide line
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.15)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, canvas.height / 2);
+        ctx.lineTo(canvas.width, canvas.height / 2);
+        ctx.stroke();
+
+        const barWidth = (canvas.width / bufferLength) * 1.6;
+        let x = 4;
+
+        for (let i = 0; i < bufferLength; i++) {
+          const v = dataArray[i] / 255.0;
+          const barHeight = Math.max(4, v * (canvas.height - 24));
+          
+          const grad = ctx.createLinearGradient(0, canvas.height, 0, 0);
+          grad.addColorStop(0, '#0284c7');
+          grad.addColorStop(0.5, '#38bdf8');
+          grad.addColorStop(1, '#ec4899');
+
+          ctx.fillStyle = grad;
+          const y = (canvas.height - barHeight) / 2;
+          
+          if (ctx.roundRect) {
+            ctx.beginPath();
+            ctx.roundRect(x, y, barWidth - 3, barHeight, 3);
+            ctx.fill();
+          } else {
+            ctx.fillRect(x, y, barWidth - 3, barHeight);
+          }
+
+          x += barWidth + 2;
+          if (x > canvas.width) break;
+        }
+      };
+      draw();
+    } catch (e) {
+      console.warn('AudioContext / getUserMedia for waveform visualizer failed:', e);
+      this.startSimulatedWaveform(canvas, ctx);
+    }
+  },
+
+  startSimulatedWaveform(canvas, ctx) {
+    let phase = 0;
+    cancelAnimationFrame(this.animFrameId);
+    const drawSim = () => {
+      this.animFrameId = requestAnimationFrame(drawSim);
+      phase += 0.05;
+
+      ctx.fillStyle = '#0b1528';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#38bdf8';
+      ctx.beginPath();
+
+      const width = canvas.width;
+      const height = canvas.height;
+      for (let x = 0; x < width; x += 4) {
+        const y = (height / 2) + Math.sin(x * 0.03 + phase) * 16 * (this.isModalRecording ? 1.5 : 0.4);
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    };
+    drawSim();
+  },
+
+  stopLiveWaveform() {
+    cancelAnimationFrame(this.animFrameId);
+    if (this.mediaStream) {
+      this.mediaStream.getTracks().forEach(t => t.stop());
+      this.mediaStream = null;
+    }
+    if (this.audioContext && this.audioContext.state !== 'closed') {
+      try { this.audioContext.close(); } catch (e) {}
+      this.audioContext = null;
+    }
+  },
+
+  applyVoiceToTarget() {
+    const transcriptEl = document.getElementById('voice-modal-transcript');
+    const text = transcriptEl ? transcriptEl.value.trim() : '';
+
+    if (!text) {
+      showToast('⚠️ Please speak or select an incident preset first.');
+      return;
+    }
+
+    const target = this.modalTarget;
+    this.closeVoiceModal();
+
+    if (target === 'express') {
+      const input = document.getElementById('express-intake-input');
+      if (input) {
+        input.value = text;
+        showToast('✓ Incident speech applied! Analyzing incident...');
+        if (typeof CitizenNLPParser !== 'undefined') {
+          setTimeout(() => CitizenNLPParser.processExpressIntake(), 300);
+        }
+      }
+    } else if (target === 'sahayak') {
+      const input = document.getElementById('sahayak-input-text');
+      if (input) {
+        input.value = text;
+        showToast('✓ Question inserted into Cyber Sahayak');
+        if (typeof CyberSahayakChatbot !== 'undefined') {
+          setTimeout(() => CyberSahayakChatbot.handleSend(), 300);
+        }
+      }
+    } else if (target === 'dictation') {
+      const input = document.getElementById('inc-narration');
+      if (input) {
+        input.value = text;
+        showToast('✓ Incident narration inserted into Step 3');
+      }
     }
   }
 };
@@ -7333,13 +7838,8 @@ const VoiceDictation = {
         if (btnLabel) btnLabel.textContent = isHi ? 'बोलना बंद करें' : 'Stop Dictation';
         showToast(isHi ? '🎙️ वॉइस डिक्टेशन सक्रिय है। स्पष्ट बोलें।' : '🎙️ Voice dictation active. Speak clearly.');
       },
-      onResult: (event) => {
-        let finalTranscript = '';
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-          if (event.results[i].isFinal) {
-            finalTranscript += event.results[i][0].transcript + ' ';
-          }
-        }
+      onResult: (res) => {
+        const finalTranscript = res.transcript || (res.results ? res.results[0][0].transcript : '');
         if (finalTranscript) {
           const input = document.getElementById(this.targetInputId);
           if (input) {
@@ -11290,9 +11790,9 @@ const CitizenNLPParser = {
         showToast(isHi ? '🎙️ बोलिए... (आवाज़ रिकॉर्ड हो रही है)' : '🎙️ Listening... Describe your incident');
       },
       onResult: (evt) => {
-        const transcript = evt.results[0][0].transcript;
+        const transcript = (evt && evt.transcript) || (evt && evt.results ? evt.results[0][0].transcript : '');
         const input = document.getElementById('express-intake-input');
-        if (input) {
+        if (input && transcript) {
           input.value = (input.value ? input.value + ' ' : '') + transcript;
         }
         showToast(isHi ? '✓ आवाज़ प्राप्त हुई! विश्लेषण किया जा रहा है...' : '✓ Voice captured! Analyzing incident...');
@@ -12113,9 +12613,9 @@ const CyberSahayakChatbot = {
         showToast(isHi ? '🎙️ सहायक सुन रहा है... बोलिए' : '🎙️ Cyber Sahayak is listening... Speak now');
       },
       onResult: (evt) => {
-        const transcript = evt.results[0][0].transcript;
+        const transcript = (evt && evt.transcript) || (evt && evt.results ? evt.results[0][0].transcript : '');
         const input = document.getElementById('sahayak-input-text');
-        if (input) {
+        if (input && transcript) {
           input.value = transcript;
           CyberSahayakChatbot.handleSend();
         }
