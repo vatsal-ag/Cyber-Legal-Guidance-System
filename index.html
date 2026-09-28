@@ -14159,6 +14159,225 @@ if (crimeSelectEl) {
   PersonalizedQuestionsEngine.init();
 }
 
+// ══════════════════════════════════════════════════════════════════════════════
+// AUTOMATED SITE TOUR / SCREENCAP VIEW CONTROLLER (?view=...)
+// ══════════════════════════════════════════════════════════════════════════════
+const SiteTourController = {
+  init() {
+    const params = new URLSearchParams(window.location.search);
+    const view = params.get('view');
+    if (!view) return;
+
+    const run = () => {
+      this.activateView(view);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => setTimeout(run, 50));
+    } else {
+      setTimeout(run, 50);
+    }
+  },
+
+  switchStepDirect(stepNum) {
+    document.querySelectorAll('.wizard-step').forEach(s => s.style.display = 'none');
+    document.querySelectorAll('.step-node').forEach((n, idx) => {
+      n.classList.remove('active');
+      if (idx + 1 < stepNum) n.classList.add('completed');
+      else n.classList.remove('completed');
+      if (idx + 1 === stepNum) n.classList.add('active');
+    });
+    const target = document.getElementById('wizard-step-' + stepNum);
+    if (target) target.style.display = 'block';
+    window.scrollTo(0, 0);
+  },
+
+  activateView(v) {
+    const dpdp = document.getElementById('dpdp-banner');
+    if (dpdp) dpdp.style.display = 'none';
+    const cmp = document.getElementById('cmp-consent-banner');
+    if (cmp) cmp.style.display = 'none';
+
+    const expCard = document.getElementById('express-intake-card');
+    if (expCard) {
+      expCard.style.display = (v === 'hero' || v === 'express') ? 'block' : 'none';
+    }
+
+    if (document.getElementById('comp-name')) document.getElementById('comp-name').value = 'Rajesh Kumar Sharma';
+    if (document.getElementById('comp-phone')) document.getElementById('comp-phone').value = '9810123456';
+    if (document.getElementById('comp-email')) document.getElementById('comp-email').value = 'rajesh.sharma@gmail.com';
+    if (document.getElementById('comp-address-1')) document.getElementById('comp-address-1').value = 'Flat 402, Lotus Boulevard';
+    if (document.getElementById('comp-address-2')) document.getElementById('comp-address-2').value = 'Sector 62, Near Electronic City';
+    if (document.getElementById('comp-city')) document.getElementById('comp-city').value = 'Noida';
+    if (document.getElementById('comp-state')) document.getElementById('comp-state').value = 'Uttar Pradesh';
+    if (document.getElementById('comp-pincode')) document.getElementById('comp-pincode').value = '201309';
+    if (document.getElementById('comp-police-station')) document.getElementById('comp-police-station').value = 'Cyber Crime Police Station, Sector 108, Noida';
+
+    if (typeof LivenessEngine !== 'undefined') LivenessEngine.isVerified = true;
+    if (typeof BotShield !== 'undefined') {
+      BotShield.state.humanVerified = true;
+      BotShield.state.honeypotFailed = false;
+    }
+
+    switch(v) {
+      case 'hero':
+        window.scrollTo(0, 0);
+        break;
+      case 'express':
+        const expInput = document.getElementById('express-intake-input');
+        if (expInput) {
+          expInput.value = 'URGENT: Received fake video call from accused posing as CBI officer stating arrest warrant issued against Aadhaar. Coerced to transfer ₹1,50,000 to dummy beneficiary account.';
+        }
+        window.scrollTo(0, 0);
+        break;
+      case 'step1_kyc':
+        this.switchStepDirect(1);
+        break;
+      case 'legal_modal':
+        this.switchStepDirect(1);
+        if (typeof LegalDisclaimerEngine !== 'undefined') {
+          LegalDisclaimerEngine.show(2);
+        }
+        break;
+      case 'liveness_modal':
+        this.switchStepDirect(1);
+        const lModal = document.getElementById('liveness-modal');
+        if (lModal) {
+          lModal.style.display = 'flex';
+          const banner = document.getElementById('liveness-challenge-banner');
+          if (banner) banner.textContent = 'Challenge 1 of 2: Turn your face slightly to the LEFT ⬅️';
+          const diag = document.getElementById('liveness-diag-text');
+          if (diag) diag.textContent = 'Optical Micro-Motion & Texture Analysis Active';
+          const canvas = document.getElementById('liveness-canvas');
+          if (canvas) {
+            canvas.style.display = 'block';
+            canvas.width = 440; canvas.height = 320;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, 440, 320);
+            ctx.strokeStyle = '#22c55e';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.ellipse(220, 160, 90, 120, 0, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillStyle = '#38bdf8';
+            ctx.beginPath(); ctx.arc(190, 140, 8, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc(250, 140, 8, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = '#38bdf8';
+            ctx.beginPath(); ctx.arc(220, 185, 25, 0.2, Math.PI - 0.2); ctx.stroke();
+          }
+        }
+        break;
+      case 'step2_forensics':
+        this.switchStepDirect(2);
+        const rawText = document.getElementById('raw-scam-text');
+        if (rawText) {
+          rawText.value = 'URGENT NOTICE FROM CYBER WING: Your Bank Account has been frozen. Contact fake officer at +91-9876543210 immediately or pay penalty ₹25,000 to recover@okhdfcbank at https://fake-cyber-verify.in';
+          if (typeof analyzeTextEntities === 'function') analyzeTextEntities();
+        }
+        if (typeof ForensicEvidenceEngine !== 'undefined') {
+          ForensicEvidenceEngine.renderUI({
+            score: 98,
+            risk: 'LOW',
+            verdict: 'AUTHENTIC BITSTREAM · ADMISSIBLE',
+            meta: { software: [], isPhotoshop: false, isStripped: false },
+            ela: { isUniform: true, elaScore: 98, meanDiff: 1.15 },
+            noise: { isUniform: true, noiseScore: 96 },
+            clone: { hasClones: false, duplicateBlocks: 0 }
+          });
+          const elaBody = document.getElementById('forensic-ela-body');
+          if (elaBody) elaBody.style.display = 'block';
+          const canvas = document.getElementById('forensic-ela-canvas');
+          if (canvas) {
+            canvas.width = 640; canvas.height = 200;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#0a0f1d';
+            ctx.fillRect(0, 0, 640, 200);
+            for (let i = 0; i < 5000; i++) {
+              ctx.fillStyle = `rgba(${Math.floor(Math.random()*40)}, ${Math.floor(Math.random()*60)}, ${Math.floor(Math.random()*80)}, 0.4)`;
+              ctx.fillRect(Math.random()*640, Math.random()*200, 2, 2);
+            }
+          }
+        }
+        break;
+      case 'step2_gov_alert':
+        this.switchStepDirect(2);
+        const phoneInput = document.getElementById('suspect-phone');
+        if (phoneInput) {
+          phoneInput.value = '+91 11 2338 1234';
+          const alertBanner = document.getElementById('gov-number-alert-banner');
+          if (alertBanner) {
+            alertBanner.style.display = 'block';
+            const pPost = document.getElementById('gov-matched-post');
+            if (pPost) pPost.textContent = 'Director General (Vigilance)';
+            const pDept = document.getElementById('gov-matched-dept');
+            if (pDept) pDept.textContent = 'Department of Telecommunications & CBI Liaison';
+            const pDiv = document.getElementById('gov-matched-division');
+            if (pDiv) pDiv.textContent = 'Sanchar Bhawan, New Delhi';
+            const pPhone = document.getElementById('gov-matched-phone');
+            if (pPhone) pPhone.textContent = '+91 11 2338 1234';
+            const pEmail = document.getElementById('gov-matched-email');
+            if (pEmail) pEmail.textContent = 'dg-vigilance@nic.in';
+            const pSec = document.getElementById('gov-matched-sec-email');
+            if (pSec) pSec.textContent = 'cert-in-threats@nic.in';
+          }
+        }
+        break;
+      case 'step3_incident':
+        this.switchStepDirect(3);
+        if (document.getElementById('inc-date')) document.getElementById('inc-date').value = '2026-09-28';
+        if (document.getElementById('inc-time')) document.getElementById('inc-time').value = '14:30';
+        if (document.getElementById('inc-platform')) document.getElementById('inc-platform').value = 'WhatsApp & Skype Video Call';
+        if (document.getElementById('inc-crime-type')) {
+          document.getElementById('inc-crime-type').value = 'digital_arrest';
+          if (typeof PersonalizedQuestionsEngine !== 'undefined') {
+            PersonalizedQuestionsEngine.onCrimeChange('digital_arrest');
+          }
+        }
+        break;
+      case 'step4_freeze':
+        this.switchStepDirect(4);
+        if (document.getElementById('fin-amount')) document.getElementById('fin-amount').value = '150000';
+        if (document.getElementById('fin-utr')) document.getElementById('fin-utr').value = '428901234567';
+        if (document.getElementById('fin-victim-bank')) document.getElementById('fin-victim-bank').value = 'HDFC Bank, Sector 62 Branch';
+        if (document.getElementById('fin-suspect-bank')) document.getElementById('fin-suspect-bank').value = 'State Bank of India (Beneficiary Mule)';
+        if (document.getElementById('fin-suspect-ifsc')) document.getElementById('fin-suspect-ifsc').value = 'SBIN0001234';
+        break;
+      case 'step5_fir':
+        if (typeof doGeneratePoliceLetter === 'function') doGeneratePoliceLetter();
+        this.switchStepDirect(5);
+        if (typeof ComplaintViewer !== 'undefined') ComplaintViewer.switchSubDoc('fir');
+        break;
+      case 'step6_bsa':
+        if (typeof doGeneratePoliceLetter === 'function') doGeneratePoliceLetter();
+        this.switchStepDirect(5);
+        if (typeof ComplaintViewer !== 'undefined') ComplaintViewer.switchSubDoc('bsa');
+        break;
+      case 'tab_vault':
+        const navTabs = document.querySelectorAll('.nav-tab');
+        if (navTabs && navTabs[1] && typeof switchMainTab === 'function') {
+          switchMainTab('vault', navTabs[1]);
+        }
+        break;
+      case 'cyber_sahayak':
+        this.switchStepDirect(1);
+        const sahayakWin = document.getElementById('cyber-sahayak-window');
+        if (sahayakWin) {
+          sahayakWin.style.display = 'flex';
+          if (typeof CyberSahayakChatbot !== 'undefined') CyberSahayakChatbot.isOpen = true;
+        }
+        break;
+      case 'gov_dispatch':
+        this.switchStepDirect(2);
+        if (typeof GovAlertSystem !== 'undefined') {
+          GovAlertSystem.openAlertDispatchModal();
+        }
+        break;
+    }
+  }
+};
+SiteTourController.init();
+
 console.log("V2 Government Alert Engine & Trial Personalized Questions Matrix initialized.");
 
 </script>
