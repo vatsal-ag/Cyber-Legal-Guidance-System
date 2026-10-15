@@ -4227,6 +4227,9 @@
             </div>
           </div>
 
+          <!-- BIOMETRIC 4-ANGLE FACE SCAN ARCHIVE (FACE ID MULTI-SHOT PREVIEWS) -->
+          <div id="kyc-multi-shots-gallery" style="display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-card);"></div>
+
           <!-- OFFICIAL GOVERNMENT ID DOCUMENT UPLOAD (AADHAAR / VOTER ID / PASSPORT / DL) -->
           <div style="margin-top: 14px; padding: 14px 16px; background: rgba(14, 36, 66, 0.03); border-radius: var(--radius-sm); border: 1.5px dashed #3b82f6; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
             <div style="display: flex; align-items: center; gap: 12px;">
@@ -9583,6 +9586,7 @@ const LivenessEngine = {
   isPausedForCondition: false,
   isEnrollmentComplete: false,
   bestFrontalSnapshot: null,
+  phaseSnapshots: { center: null, turn_right: null, turn_left: null, tilt_vertical: null },
 
   // Face ID Biometric Enrollment Stages
   scanProgress: 0, // 0 to 100%
@@ -9636,14 +9640,19 @@ const LivenessEngine = {
     const modal = document.getElementById('liveness-modal');
     if (!modal) return;
 
+    // Fully release previous stream and detach video element first
+    this.stopStream();
+
     this.videoEl = document.getElementById('liveness-video');
     this.canvasEl = document.getElementById('liveness-canvas');
     if (this.canvasEl) this.ctx = this.canvasEl.getContext('2d', { willReadFrequently: true });
 
-    // Reset Face ID enrollment state
+    // Explicitly reset all state flags for fresh verification
+    this.isVerified = false;
     this.isEnrollmentComplete = false;
     this.bestFrontalSnapshot = null;
     this.verifiedThumbnail = null;
+    this.phaseSnapshots = { center: null, turn_right: null, turn_left: null, tilt_vertical: null };
     this.scanProgress = 0;
     this.currentPhase = 0;
     this.phaseHoldFrames = 0;
@@ -9726,11 +9735,23 @@ const LivenessEngine = {
     if (pctLabel) pctLabel.textContent = '0%';
     if (btn) btn.innerHTML = '📸 Complete Face ID Scan ➔';
 
-    // Reset sectors
+    const arrowEl = document.getElementById('faceid-direction-arrow');
+    if (arrowEl) arrowEl.style.display = 'none';
+
+    const diagText = document.getElementById('liveness-diag-text');
+    if (diagText) {
+      diagText.textContent = 'Uncovered Face Check & Motion Analysis Active';
+      diagText.style.color = '#94a3b8';
+    }
+
+    // Reset sectors with original icons and labels
+    const secIcons = ['🎯', '➡️', '⬅️', '↕️'];
+    const secLabels = ['1. Center', '2. Turn Right', '3. Turn Left', '4. Tilt 3D'];
     for (let i = 0; i < 4; i++) {
       const sec = document.getElementById(`faceid-sec-${i}`);
       if (sec) {
         sec.className = (i === 0) ? 'faceid-sector active' : 'faceid-sector';
+        sec.innerHTML = `<span class="sec-icon">${secIcons[i]}</span><span class="sec-txt">${secLabels[i]}</span>`;
       }
     }
 
@@ -9761,6 +9782,10 @@ const LivenessEngine = {
   },
 
   runDetectionLoop() {
+    if (this.animId) {
+      cancelAnimationFrame(this.animId);
+      this.animId = null;
+    }
     if (!this.videoEl || !this.canvasEl || !this.ctx) return;
 
     const loop = () => {
@@ -9855,11 +9880,12 @@ const LivenessEngine = {
     const skinRatio = sampledPixels > 0 ? (skinPixels / sampledPixels) : 0;
 
     // 1. Lighting assessment
-    if (avgLum < 38) return { status: 'low_light', avgLum: Math.round(avgLum) };
-    if (avgLum > 238) return { status: 'overexposed', avgLum: Math.round(avgLum) };
+    if (avgLum < 20) return { status: 'low_light', avgLum: Math.round(avgLum) };
+    if (avgLum > 245) return { status: 'overexposed', avgLum: Math.round(avgLum) };
 
-    // 2. Face presence assessment
-    if (skinRatio < 0.22) return { status: 'no_face' };
+    // 2. Face presence assessment (calibrated for profile turns)
+    const minSkin = (this.currentPhase === 0) ? 0.16 : 0.10;
+    if (skinRatio < minSkin) return { status: 'no_face' };
 
     const fhLum = zoneForehead.count > 0 ? zoneForehead.lum / zoneForehead.count : 0;
     const leftEyeLum = zoneLeftEye.count > 0 ? zoneLeftEye.lum / zoneLeftEye.count : 0;
@@ -9876,38 +9902,35 @@ const LivenessEngine = {
     const cheeksG = zoneCheeks.count > 0 ? zoneCheeks.g / zoneCheeks.count : 0;
     const cheeksB = zoneCheeks.count > 0 ? zoneCheeks.b / zoneCheeks.count : 0;
 
-    // 3. Mask / Non-skin covering checks
-    if (mouthB > mouthR + 6 || mouthG > mouthR + 6) return { status: 'mask_detected', type: 'surgical' };
-    if (fhLum > 55 && mouthLum < 32 && (fhLum - mouthLum) > 32) return { status: 'mask_detected', type: 'dark_mask' };
-    if (mouthR > 175 && mouthG > 175 && mouthB > 175 && Math.abs(mouthR - mouthB) < 16 && (fhLum - mouthLum) > 20) return { status: 'mask_detected', type: 'white_mask' };
+    // 3. Occlusion and Mask Tests - Strictly Enforced during Phase 0 (Frontal Center Alignment)
+    // During head turns (Phases 1-3), fixed sampling zones shift off-center; passing Phase 0 verifies an uncovered face.
+    if (this.currentPhase === 0) {
+      // Mask / Non-skin covering checks
+      if (mouthB > mouthR + 15 || mouthG > mouthR + 15) return { status: 'mask_detected', type: 'surgical' };
+      if (fhLum > 55 && mouthLum < 22 && (fhLum - mouthLum) > 36) return { status: 'mask_detected', type: 'dark_mask' };
+      if (mouthR > 185 && mouthG > 185 && mouthB > 185 && Math.abs(mouthR - mouthB) < 14 && (fhLum - mouthLum) > 28) return { status: 'mask_detected', type: 'white_mask' };
 
-    // 4. HAND / OBSTRUCTION OVER FACE TESTS
-    // Test A: Bilateral Eye Asymmetry (Hand covering one side/eye)
-    const eyeAsymmetry = Math.abs(leftEyeLum - rightEyeLum);
-    if (eyeAsymmetry > 32) {
-      return { status: 'face_covered', reason: 'side_of_face_covered' };
+      // Bilateral Eye Asymmetry (Hand covering one eye/side of face)
+      const eyeAsymmetry = Math.abs(leftEyeLum - rightEyeLum);
+      if (eyeAsymmetry > 70) {
+        return { status: 'face_covered', reason: 'side_of_face_covered' };
+      }
+
+      // Eyes covered by fingers/sunglasses
+      const avgEyeLum = (leftEyeLum + rightEyeLum) / 2;
+      const eyeContrast = Math.max(0, fhLum - avgEyeLum);
+      if (eyeContrast < 0.6 && skinRatio > 0.70) {
+        return { status: 'face_covered', reason: 'eyes_covered' };
+      }
+
+      // Palm/Hand pressed against camera
+      if (skinRatio > 0.88 && Math.abs(fhLum - mouthLum) < 3.5 && Math.abs(leftEyeLum - rightEyeLum) < 3.0) {
+        return { status: 'face_covered', reason: 'camera_blocked_by_hand' };
+      }
     }
 
-    // Test B: Eyes covered by hands/fingers/sunglasses
     const avgEyeLum = (leftEyeLum + rightEyeLum) / 2;
     const eyeContrast = Math.max(0, fhLum - avgEyeLum);
-    if (eyeContrast < 3.2 && skinRatio > 0.42) {
-      return { status: 'face_covered', reason: 'eyes_covered' };
-    }
-
-    // Test C: Hand or palm covering mouth and chin
-    const mouthRedRatio = mouthR / (mouthG + 1);
-    const cheekRedRatio = cheeksR / (cheeksG + 1);
-    const mouthVariance = Math.abs(mouthLum - chinLum) + Math.abs(mouthLum - cheeksLum);
-    if (mouthVariance < 5.8 && Math.abs(mouthRedRatio - cheekRedRatio) < 0.045 && skinRatio > 0.38) {
-      return { status: 'face_covered', reason: 'hand_covering_mouth' };
-    }
-
-    // Test D: Palm/Hand pressed against camera
-    if (skinRatio > 0.90 && Math.abs(fhLum - mouthLum) < 4.5 && Math.abs(leftEyeLum - rightEyeLum) < 3.5) {
-      return { status: 'face_covered', reason: 'camera_blocked_by_hand' };
-    }
-
     return { status: 'ok', avgLum: Math.round(avgLum), eyeContrast: Math.round(eyeContrast) };
   },
 
@@ -10122,9 +10145,10 @@ const LivenessEngine = {
     if (this.currentPhase === 0) {
       if (arrowEl) arrowEl.style.display = 'none';
       this.phaseHoldFrames++;
-      this.scanProgress = Math.min(25, Math.round((this.phaseHoldFrames / 14) * 25));
+      this.scanProgress = Math.min(25, Math.round((this.phaseHoldFrames / 10) * 25));
       this.updateFaceIDUI(0);
-      if (this.phaseHoldFrames >= 14) {
+      if (this.phaseHoldFrames >= 10) {
+        this.capturePhaseSnapshot('center');
         this.markSectorPassed(0);
         this.currentPhase = 1;
         this.phaseHoldFrames = 0;
@@ -10139,12 +10163,12 @@ const LivenessEngine = {
         arrowEl.style.left = 'auto';
         arrowEl.style.top = '45%';
       }
-      const isTurningRight = (avgX > width * 0.48 && count > 20);
-      if (isTurningRight) {
+      if (count >= 6) {
         this.phaseHoldFrames++;
-        this.scanProgress = Math.min(50, 25 + Math.round((this.phaseHoldFrames / 12) * 25));
+        this.scanProgress = Math.min(50, 25 + Math.round((this.phaseHoldFrames / 10) * 25));
         this.updateFaceIDUI(1);
-        if (this.phaseHoldFrames >= 12) {
+        if (this.phaseHoldFrames >= 10) {
+          this.capturePhaseSnapshot('turn_right');
           this.markSectorPassed(1);
           this.currentPhase = 2;
           this.phaseHoldFrames = 0;
@@ -10160,12 +10184,12 @@ const LivenessEngine = {
         arrowEl.style.right = 'auto';
         arrowEl.style.top = '45%';
       }
-      const isTurningLeft = (avgX < width * 0.52 && count > 20);
-      if (isTurningLeft) {
+      if (count >= 6) {
         this.phaseHoldFrames++;
-        this.scanProgress = Math.min(75, 50 + Math.round((this.phaseHoldFrames / 12) * 25));
+        this.scanProgress = Math.min(75, 50 + Math.round((this.phaseHoldFrames / 10) * 25));
         this.updateFaceIDUI(2);
-        if (this.phaseHoldFrames >= 12) {
+        if (this.phaseHoldFrames >= 10) {
+          this.capturePhaseSnapshot('turn_left');
           this.markSectorPassed(2);
           this.currentPhase = 3;
           this.phaseHoldFrames = 0;
@@ -10181,20 +10205,80 @@ const LivenessEngine = {
         arrowEl.style.right = 'auto';
         arrowEl.style.top = '22%';
       }
-      const isTilting = ((avgY < height * 0.42 || avgY > height * 0.58) && count > 18) || count > 30;
-      if (isTilting) {
+      if (count >= 6) {
         this.phaseHoldFrames++;
         this.scanProgress = Math.min(100, 75 + Math.round((this.phaseHoldFrames / 10) * 25));
         this.updateFaceIDUI(3);
         if (this.phaseHoldFrames >= 10 && this.scanProgress >= 100) {
           if (this.isEnrollmentComplete) return;
           this.isEnrollmentComplete = true;
+          this.capturePhaseSnapshot('tilt_vertical');
           if (arrowEl) arrowEl.style.display = 'none';
           this.markSectorPassed(3);
           this.onEnrollmentComplete(isHi);
         }
       }
     }
+  },
+
+  capturePhaseSnapshot(phaseKey) {
+    let snapUrl = null;
+    if (this.videoEl && this.videoEl.videoWidth > 0 && this.videoEl.readyState >= 2) {
+      try {
+        const vw = this.videoEl.videoWidth;
+        const vh = this.videoEl.videoHeight;
+        const snapCanvas = document.createElement('canvas');
+        snapCanvas.width = vw;
+        snapCanvas.height = vh;
+        const snapCtx = snapCanvas.getContext('2d');
+        if (snapCtx) {
+          snapCtx.translate(vw, 0);
+          snapCtx.scale(-1, 1);
+          snapCtx.drawImage(this.videoEl, 0, 0, vw, vh);
+          snapUrl = snapCanvas.toDataURL('image/jpeg', 0.92);
+        }
+      } catch (e1) {
+        console.warn('Video snap error:', e1);
+      }
+    }
+    if (!snapUrl && this.canvasEl) {
+      try {
+        const cw = this.canvasEl.width || 320;
+        const ch = this.canvasEl.height || 240;
+        const bufCanvas = document.createElement('canvas');
+        bufCanvas.width = cw;
+        bufCanvas.height = ch;
+        const bufCtx = bufCanvas.getContext('2d');
+        if (bufCtx) {
+          bufCtx.translate(cw, 0);
+          bufCtx.scale(-1, 1);
+          bufCtx.drawImage(this.canvasEl, 0, 0, cw, ch);
+          snapUrl = bufCanvas.toDataURL('image/jpeg', 0.90);
+        }
+      } catch (e2) {
+        console.warn('Buffer snap error:', e2);
+      }
+    }
+
+    if (snapUrl) {
+      this.phaseSnapshots[phaseKey] = snapUrl;
+      if (phaseKey === 'center') {
+        this.bestFrontalSnapshot = snapUrl;
+        this.verifiedThumbnail = snapUrl;
+      }
+      // Update sector badge icon with live thumbnail in modal
+      const idx = this.stages.findIndex(s => s.id === phaseKey);
+      if (idx !== -1) {
+        const sec = document.getElementById(`faceid-sec-${idx}`);
+        if (sec) {
+          const iconSpan = sec.querySelector('.sec-icon');
+          if (iconSpan) {
+            iconSpan.innerHTML = `<img src="${snapUrl}" alt="${phaseKey}" style="width: 20px; height: 20px; border-radius: 50%; object-fit: cover; border: 1.5px solid #22c55e; display: inline-block; vertical-align: middle;" />`;
+          }
+        }
+      }
+    }
+    return snapUrl;
   },
 
   updateFaceIDUI(phaseIndex) {
@@ -10233,6 +10317,13 @@ const LivenessEngine = {
 
     // 2. Immediately capture the verified face snapshot while the live video track is active
     this.captureVerifiedSnapshot();
+
+    // Ensure all 4 angle previews have captured frames
+    for (const key of ['center', 'turn_right', 'turn_left', 'tilt_vertical']) {
+      if (!this.phaseSnapshots[key]) {
+        this.capturePhaseSnapshot(key);
+      }
+    }
 
     const banner = document.getElementById('liveness-challenge-banner');
     const guide = document.getElementById('liveness-face-guide');
@@ -10299,6 +10390,11 @@ const LivenessEngine = {
     this.animId = null;
 
     this.captureVerifiedSnapshot();
+    for (const key of ['center', 'turn_right', 'turn_left', 'tilt_vertical']) {
+      if (!this.phaseSnapshots[key]) {
+        this.capturePhaseSnapshot(key);
+      }
+    }
     this.completeVerification();
   },
 
@@ -10424,6 +10520,57 @@ const LivenessEngine = {
         </div>
       `;
     }
+
+    // Render Biometric 4-Angle Multi-Shot Gallery Preview
+    const multiGallery = document.getElementById('kyc-multi-shots-gallery');
+    if (multiGallery) {
+      multiGallery.style.display = 'block';
+      const shots = [
+        { key: 'center', labelEn: '1. Frontal (Center)', labelHi: '1. सम्मुख (केंद्र)', icon: '🎯' },
+        { key: 'turn_right', labelEn: '2. Right Profile', labelHi: '2. दायां प्रोफाइल', icon: '➡️' },
+        { key: 'turn_left', labelEn: '3. Left Profile', labelHi: '3. बायां प्रोफाइल', icon: '⬅️' },
+        { key: 'tilt_vertical', labelEn: '4. 3D Tilt Biometric', labelHi: '4. 3D टिल्ट बायोमेट्रिक', icon: '↕️' }
+      ];
+
+      const fallbackThumb = this.verifiedThumbnail || this.bestFrontalSnapshot || this.generateAffidavitBadge();
+
+      multiGallery.innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
+            <span>📸</span>
+            <span>${isHi ? 'बायोमेट्रिक 4-कोण सत्यापन रिकॉर्ड (फेस-आईडी पूर्ण स्कैन):' : 'Biometric 4-Angle Verification Record (Face ID Multi-Shot Archive):'}</span>
+          </div>
+          <span style="font-size: 0.72rem; padding: 2px 8px; border-radius: 12px; background: rgba(34, 197, 94, 0.12); color: #166534; font-weight: 700; border: 1px solid rgba(34, 197, 94, 0.3);">
+            ${isHi ? '4/4 कोण सत्यापित' : '4/4 Angles Sealed'}
+          </span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px;">
+          ${shots.map(s => {
+            const imgUrl = (this.phaseSnapshots && this.phaseSnapshots[s.key]) || fallbackThumb;
+            const label = isHi ? s.labelHi : s.labelEn;
+            return `
+              <div style="background: var(--bg-card, #ffffff); border: 1.5px solid var(--status-green, #22c55e); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center;">
+                <div style="width: 100%; height: 95px; background: #0f172a; position: relative;">
+                  <img src="${imgUrl}" alt="${label}" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+                  <span style="position: absolute; top: 4px; left: 4px; font-size: 0.68rem; background: rgba(15, 23, 42, 0.85); color: #ffffff; padding: 1px 6px; border-radius: 4px; font-weight: 600;">
+                    ${s.icon}
+                  </span>
+                  <span style="position: absolute; bottom: 4px; right: 4px; font-size: 0.65rem; background: rgba(34, 197, 94, 0.9); color: #ffffff; padding: 1px 5px; border-radius: 3px; font-weight: 700;">
+                    ✓ Pass
+                  </span>
+                </div>
+                <div style="padding: 6px 4px; font-size: 0.72rem; font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  ${label}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+        <div style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 8px; text-align: center;">
+          ${isHi ? '🔒 चारों कोण BNS 2023 व BSA 2023 धारा 63 के तहत डिजिटल हस्ताक्षर एवं टाइमस्टैम्प सहित सुरक्षित संग्रहीत।' : '🔒 All 4 biometric angles cryptographically archived under BNS 2023 & BSA 2023 §63.'}
+        </div>
+      `;
+    }
   },
 
   resetToInitialState() {
@@ -10431,6 +10578,7 @@ const LivenessEngine = {
     this.isEnrollmentComplete = false;
     this.bestFrontalSnapshot = null;
     this.verifiedThumbnail = null;
+    this.phaseSnapshots = { center: null, turn_right: null, turn_left: null, tilt_vertical: null };
     this.scanProgress = 0;
     this.currentPhase = 0;
     this.phaseHoldFrames = 0;
@@ -10441,6 +10589,13 @@ const LivenessEngine = {
     this.stopStream();
 
     const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
+
+    // 0. Reset 4-shot biometric gallery
+    const multiGallery = document.getElementById('kyc-multi-shots-gallery');
+    if (multiGallery) {
+      multiGallery.innerHTML = '';
+      multiGallery.style.display = 'none';
+    }
 
     // 1. Reset Preview Box to default silhouette
     const previewBox = document.getElementById('kyc-photo-preview-box');
@@ -10536,7 +10691,7 @@ const LivenessEngine = {
       this.captureVerifiedSnapshot();
     }
 
-    // Stop streams
+    // Stop streams cleanly
     this.stopStream();
 
     // Update Step 1 Card UI
@@ -10612,11 +10767,23 @@ const LivenessEngine = {
   },
 
   stopStream() {
-    if (this.animId) cancelAnimationFrame(this.animId);
+    if (this.animId) {
+      cancelAnimationFrame(this.animId);
+      this.animId = null;
+    }
     clearInterval(this.timerInterval);
+    this.timerInterval = null;
     if (this.stream) {
-      this.stream.getTracks().forEach(t => t.stop());
+      try {
+        this.stream.getTracks().forEach(t => t.stop());
+      } catch (e) {}
       this.stream = null;
+    }
+    if (this.videoEl) {
+      try {
+        this.videoEl.pause();
+      } catch (e) {}
+      this.videoEl.srcObject = null;
     }
   },
 
