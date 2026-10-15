@@ -6167,24 +6167,71 @@ function escapeHtml(str) {
 }
 
 function secureMemoryPanicWipe() {
-  if (!confirm('Are you sure you want to execute a Secure Memory Wipe? All unsaved inputs and session keys will be purged.')) return;
+  if (!confirm('Are you sure you want to execute a Secure Memory Wipe? All unsaved inputs, live photo biometric passes, and session keys will be purged.')) return;
 
-  // Clear inputs
+  // Clear inputs and textareas
   document.querySelectorAll('input, textarea').forEach(el => {
     if (el.type === 'button' || el.type === 'submit') return;
     el.value = '';
   });
 
-  // Reset arrays
+  // Clear file inputs
+  document.querySelectorAll('input[type="file"]').forEach(el => {
+    el.value = '';
+  });
+
+  // Reset arrays and extracted entities
   currentExtracted = { phones: [], upis: [], emails: [], urls: [], banks: [] };
   generatedComplaintText = '';
-  document.getElementById('police-letter-output').textContent = '';
-  document.getElementById('entity-pills-box').style.display = 'none';
+  const policeOut = document.getElementById('police-letter-output');
+  if (policeOut) policeOut.textContent = '';
+  const entityPills = document.getElementById('entity-pills-box');
+  if (entityPills) entityPills.style.display = 'none';
 
-  // Wipe sessionStorage
+  // Reset Evidence Tracker & forensic previews
+  if (typeof EvidenceTracker !== 'undefined') {
+    EvidenceTracker.records = [];
+  }
+  const forensicCard = document.getElementById('forensic-analysis-card');
+  if (forensicCard) forensicCard.style.display = 'none';
+  const ocrProgress = document.getElementById('ocr-progress-box');
+  if (ocrProgress) ocrProgress.style.display = 'none';
+  const imgPreview = document.getElementById('image-preview-box');
+  if (imgPreview) imgPreview.style.display = 'none';
+
+  // Strictly reset Biometric Liveness Verification and Complainant Photo
+  if (typeof LivenessEngine !== 'undefined') {
+    LivenessEngine.resetToInitialState();
+  }
+  if (typeof LegalDisclaimerEngine !== 'undefined') {
+    LegalDisclaimerEngine.isAgreed = false;
+    const consentBox = document.getElementById('legal-disclaimer-consent');
+    if (consentBox) consentBox.checked = false;
+    LegalDisclaimerEngine.close();
+  }
+
+  // Reset Step Wizard Navigation back to Step 1
+  if (typeof goToStep === 'function') {
+    goToStep(1);
+  } else {
+    document.querySelectorAll('.wizard-step').forEach(s => s.style.display = 'none');
+    const s1 = document.getElementById('wizard-step-1');
+    if (s1) s1.style.display = 'block';
+  }
+
+  // Switch to wizard tab if on another view
+  const navTabs = document.querySelectorAll('.nav-tab');
+  if (navTabs && navTabs[0] && typeof switchMainTab === 'function') {
+    switchMainTab('wizard', navTabs[0]);
+  }
+
+  // Wipe sessionStorage and sensitive cryptographic vault keys
   sessionStorage.clear();
+  if (window.cryptoVault) {
+    window.cryptoVault.key = null;
+  }
 
-  showToast('Secure Memory Wipe Executed: All data purged from browser.');
+  showToast('Secure Memory Wipe Executed: All inputs, biometric identity records, and local data purged.');
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -7094,6 +7141,11 @@ window.addEventListener('DOMContentLoaded', () => {
   if (typeof ThemeEngine !== 'undefined') ThemeEngine.init();
   if (typeof GlossaryEngine !== 'undefined') GlossaryEngine.init();
 
+  // Strictly reset Biometric Photo Verification on every page reload / refresh
+  if (typeof LivenessEngine !== 'undefined') {
+    LivenessEngine.resetToInitialState();
+  }
+
   // URL Hash Deep Linking Support
   if (window.location.hash) {
     const rawHash = window.location.hash.replace('#', '').toLowerCase();
@@ -7101,18 +7153,19 @@ window.addEventListener('DOMContentLoaded', () => {
     if (tabMap[rawHash]) {
       const idx = { 'wizard': 0, 'vault': 1, 'directory': 2, 'codex': 3, 'emergency': 4 }[tabMap[rawHash]];
       switchMainTab(tabMap[rawHash], document.querySelectorAll('.nav-tab')[idx]);
-    } else if (rawHash === 'step3') {
-      goToStep(3);
-    } else if (rawHash === 'step5') {
-      BotShield.state.humanVerified = true;
-      doGeneratePoliceLetter();
-    } else if (rawHash === 'bsa') {
-      BotShield.state.humanVerified = true;
-      doGeneratePoliceLetter();
-      ComplaintViewer.switchSubDoc('bsa');
+    } else if (rawHash === 'step2' || rawHash === 'step3' || rawHash === 'step4' || rawHash === 'step5') {
+      // Never bypass Step 1 without live face verification on fresh load
+      goToStep(1);
     } else if (rawHash === 'hi') {
       if (typeof I18nEngine !== 'undefined') I18nEngine.toggleLanguage();
     }
+  }
+});
+
+// Reset on Back-Forward Cache (bfcache) or soft reload
+window.addEventListener('pageshow', (event) => {
+  if (typeof LivenessEngine !== 'undefined') {
+    LivenessEngine.resetToInitialState();
   }
 });
 
@@ -7277,6 +7330,13 @@ function purgeVaultData() {
     sessionStorage.clear();
     if (window.cryptoVault) {
       window.cryptoVault.key = null;
+    }
+    if (typeof LivenessEngine !== 'undefined') {
+      LivenessEngine.resetToInitialState();
+    }
+    if (typeof LegalDisclaimerEngine !== 'undefined') {
+      LegalDisclaimerEngine.isAgreed = false;
+      LegalDisclaimerEngine.close();
     }
     showToast('🗑️ Evidence vault and local keys cryptographically purged.');
     setTimeout(() => {
@@ -10213,6 +10273,7 @@ const LivenessEngine = {
   },
 
   updateCardUI() {
+    const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
     const previewBox = document.getElementById('kyc-photo-preview-box');
     const badgeBox = document.getElementById('kyc-photo-status-badge');
     const btn = document.getElementById('btn-start-kyc-photo');
@@ -10231,29 +10292,127 @@ const LivenessEngine = {
     if (badgeBox) {
       badgeBox.innerHTML = `
         <span style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8rem; border-radius: 8px; background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; font-weight: 700;">
-          <span>✅</span> <span>Live Identity Verified (Anti-Spoof & Mask Checked)</span>
+          <span>✅</span> <span>${isHi ? 'ऑन-स्पॉट पहचान सत्यापित (एंटी-स्पूफ व मास्क मुक्त)' : 'Live Identity Verified (Anti-Spoof & Mask Checked)'}</span>
         </span>
       `;
     }
 
     if (btn) {
-      btn.innerHTML = '<span>🔄</span> <span>Re-Verify Live Photo</span>';
+      btn.innerHTML = `<span>🔄</span> <span>${isHi ? 'पुनः लाइव फोटो सत्यापित करें' : 'Re-Verify Live Photo'}</span>`;
       btn.className = 'btn btn-outline btn-sm';
+      btn.onclick = () => LegalDisclaimerEngine.show(2);
     }
 
     if (timestampEl) {
       const now = new Date();
-      timestampEl.textContent = `Verified: ${now.toLocaleTimeString()} (${now.toLocaleDateString()}) - Live Biometric Pass`;
+      timestampEl.textContent = `${isHi ? 'सत्यापित:' : 'Verified:'} ${now.toLocaleTimeString()} (${now.toLocaleDateString()}) - ${isHi ? 'लाइव बायोमेट्रिक पास' : 'Live Biometric Pass'}`;
       timestampEl.style.display = 'inline';
     }
 
     if (infoText) {
       infoText.innerHTML = `
-        <strong style="color: var(--status-green);">✅ Complainant Live Facial Identity Verification Complete.</strong>
+        <strong style="color: var(--status-green);">${isHi ? '✅ शिकायतकर्ता लाइव चेहरे की पहचान पूर्ण।' : '✅ Complainant Live Facial Identity Verification Complete.'}</strong>
         <div style="font-size: 0.77rem; color: var(--text-muted); margin-top: 2px;">
-          Authentic live human face recorded. Static photos and masks blocked under BNS 2023 §318. Step 2 Evidence Locker is unlocked.
+          ${isHi ? 'प्रामाणिक सजीव मानव चेहरा दर्ज। स्थिर फोटो व मास्क BNS 2023 §318 के तहत वर्जित। चरण 2 साक्ष्य लॉकर अनलॉक।' : 'Authentic live human face recorded. Static photos and masks blocked under BNS 2023 §318. Step 2 Evidence Locker is unlocked.'}
         </div>
       `;
+    }
+  },
+
+  resetToInitialState() {
+    this.isVerified = false;
+    this.verifiedThumbnail = null;
+    this.scanProgress = 0;
+    this.currentPhase = 0;
+    this.phaseHoldFrames = 0;
+    this.prevFrameData = null;
+    this.staticFrameCount = 0;
+    this.lowLightWarningCount = 0;
+    this.isPausedForCondition = false;
+    this.stopStream();
+
+    const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
+
+    // 1. Reset Preview Box to default silhouette
+    const previewBox = document.getElementById('kyc-photo-preview-box');
+    if (previewBox) {
+      previewBox.innerHTML = `
+        <span style="font-size: 1.8rem; margin-bottom: 2px;">👤</span>
+        <span data-i18n="kyc-photo-no-face">${isHi ? 'लाइव फोटो नहीं' : 'No Live Photo'}</span>
+      `;
+      previewBox.style.border = '2px dashed #475569';
+    }
+
+    // 2. Reset Status Badge to Pending
+    const badgeBox = document.getElementById('kyc-photo-status-badge');
+    if (badgeBox) {
+      badgeBox.innerHTML = `
+        <span class="badge" style="display: flex; align-items: center; gap: 6px; padding: 6px 14px; font-size: 0.82rem; border-radius: 8px; background: #fff7ed; border: 1.5px solid #fed7aa; color: #c2410c; font-weight: 700;">
+          <span>⚠️</span> <span data-i18n="kyc-photo-status-pending">${isHi ? 'सत्यापन आवश्यक' : 'Verification Required'}</span>
+        </span>
+      `;
+    }
+
+    // 3. Reset Button
+    const btn = document.getElementById('btn-start-kyc-photo');
+    if (btn) {
+      btn.className = 'btn btn-primary btn-sm';
+      btn.style.display = 'flex';
+      btn.style.alignItems = 'center';
+      btn.style.gap = '6px';
+      btn.style.fontWeight = '700';
+      btn.style.padding = '8px 16px';
+      btn.onclick = () => LegalDisclaimerEngine.show(2);
+      btn.innerHTML = `<span>📸</span> <span data-i18n="kyc-photo-btn-verify">${isHi ? 'लाइव फोटो सत्यापन प्रारंभ करें' : 'Start Live Photo Verification'}</span>`;
+    }
+
+    // 4. Reset Timestamp
+    const timestampEl = document.getElementById('kyc-photo-timestamp');
+    if (timestampEl) {
+      timestampEl.textContent = '';
+      timestampEl.style.display = 'none';
+    }
+
+    // 5. Reset Info Text
+    const infoText = document.getElementById('kyc-photo-info-text');
+    if (infoText) {
+      infoText.innerHTML = `
+        <strong data-i18n="kyc-photo-prompt">${isHi ? 'वैधानिक घोषणा देखने एवं रीयल-टाइम चेहरा गति सत्यापन हेतु नीचे क्लिक करें।' : 'Click below to review legal undertakings and perform real-time face motion verification.'}</strong>
+        <div style="font-size: 0.77rem; color: var(--text-muted); margin-top: 3px;" data-i18n="kyc-photo-subtext">
+          ${isHi ? 'BNS 2023 के तहत साक्ष्य सत्यनिष्ठा एवं स्वस्थ चित्त (Sound Mind) की अनिवार्य पुष्टि शामिल है।' : 'Includes mandatory affirmation of evidence authenticity under BNS 2023 and sound mental capacity.'}
+        </div>
+      `;
+    }
+
+    // 6. Reset Government ID document input & badge
+    const govInput = document.getElementById('gov-id-upload-input');
+    if (govInput) govInput.value = '';
+    const govBadge = document.getElementById('gov-id-status-badge');
+    if (govBadge) {
+      govBadge.textContent = '';
+      govBadge.style.display = 'none';
+    }
+    const govBtnLabel = document.getElementById('gov-id-btn-label');
+    if (govBtnLabel) {
+      govBtnLabel.textContent = isHi ? 'सरकारी आईडी दस्तावेज अपलोड करें' : 'Upload Government ID Document';
+    }
+
+    // 7. Reset Internal Face ID Modal UI
+    this.resetUI();
+
+    // 8. Close modals if open
+    const modal = document.getElementById('liveness-modal');
+    if (modal) modal.style.display = 'none';
+    const legalModal = document.getElementById('legal-disclaimer-modal');
+    if (legalModal) legalModal.style.display = 'none';
+
+    // 9. Reset Legal Disclaimer Agreement
+    if (typeof LegalDisclaimerEngine !== 'undefined') {
+      LegalDisclaimerEngine.isAgreed = false;
+      const consentBox = document.getElementById('legal-disclaimer-consent');
+      if (consentBox) consentBox.checked = false;
+      const errEl = document.getElementById('legal-disclaimer-error');
+      if (errEl) errEl.style.display = 'none';
     }
   },
 
@@ -10981,6 +11140,11 @@ const I18nEngine = {
     if (typeof ThemeEngine !== 'undefined' && typeof ThemeEngine.applyTheme === 'function') {
       const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
       ThemeEngine.applyTheme(currentTheme, false);
+    }
+
+    // Refresh KYC photo card if verified
+    if (typeof LivenessEngine !== 'undefined' && LivenessEngine.isVerified) {
+      LivenessEngine.updateCardUI();
     }
 
     this.updateChatbot();
