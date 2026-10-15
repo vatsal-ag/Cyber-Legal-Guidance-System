@@ -1676,56 +1676,205 @@
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 52%; height: 68%;
-    border: 3px dashed rgba(255,255,255,0.35);
+    width: 58%; height: 74%;
+    border: 2px dashed rgba(255,255,255,0.4);
     border-radius: 50%;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
+    z-index: 2;
   }
-  .liveness-face-oval.active { border-color: #f59e0b; border-style: solid; box-shadow: 0 0 18px rgba(245,158,11,0.3); }
-  .liveness-face-oval.passed { border-color: var(--status-green); border-style: solid; box-shadow: 0 0 22px rgba(16,185,129,0.35); }
-  .liveness-face-oval.warning { border-color: #f59e0b; border-style: dashed; box-shadow: 0 0 22px rgba(245,158,11,0.55); }
-  .liveness-face-oval.danger { border-color: #ef4444; border-style: solid; box-shadow: 0 0 26px rgba(239,68,68,0.65); }
+  .liveness-face-oval.active {
+    border-color: #3b82f6;
+    border-style: solid;
+    box-shadow: 0 0 20px rgba(59,130,246,0.35);
+  }
+  .liveness-face-oval.scanning {
+    border-color: #10b981;
+    border-style: solid;
+    box-shadow: 0 0 24px rgba(16,185,129,0.45);
+  }
+  .liveness-face-oval.passed {
+    border-color: #10b981;
+    border-width: 3.5px;
+    border-style: solid;
+    box-shadow: 0 0 35px rgba(16,185,129,0.7);
+  }
+  .liveness-face-oval.warning {
+    border-color: #f59e0b;
+    border-style: dashed;
+    box-shadow: 0 0 24px rgba(245,158,11,0.6);
+  }
+  .liveness-face-oval.danger {
+    border-color: #ef4444;
+    border-width: 3.5px;
+    border-style: solid;
+    box-shadow: 0 0 35px rgba(239,68,68,0.75);
+    animation: faceidShake 0.4s ease-in-out;
+  }
+
+  @keyframes faceidShake {
+    0%, 100% { transform: translate(-50%, -50%); }
+    20%, 60% { transform: translate(-53%, -50%); }
+    40%, 80% { transform: translate(-47%, -50%); }
+  }
+
+  /* Face ID HUD Radial Ring */
+  .faceid-hud-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .faceid-svg {
+    position: absolute;
+    width: 82%;
+    height: 82%;
+    transform: rotate(-90deg);
+  }
+  .faceid-track {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.12);
+    stroke-width: 3.5;
+  }
+  .faceid-ring {
+    fill: none;
+    stroke: #10b981;
+    stroke-width: 4.5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.25s ease-out, stroke 0.3s;
+    filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.6));
+  }
+  .faceid-ring.danger {
+    stroke: #ef4444;
+    filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.7));
+  }
+  .faceid-ring.warning {
+    stroke: #f59e0b;
+    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.7));
+  }
+
+  /* Scan Laser Sweep */
+  .faceid-scan-line {
+    position: absolute;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.85), transparent);
+    box-shadow: 0 0 12px #10b981;
+    top: 20%;
+    animation: faceidScanBeam 2.2s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 2;
+  }
+  @keyframes faceidScanBeam {
+    0% { top: 22%; opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { top: 78%; opacity: 0.3; }
+  }
+
+  /* Face ID Progress Pill */
+  .faceid-progress-pill {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    color: #f8fafc;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 4;
+    font-family: 'Geist Mono', monospace;
+  }
+  .faceid-progress-pill .pct-badge {
+    color: #10b981;
+  }
+
+  /* Directional Guidance Arrow */
+  .faceid-direction-arrow {
+    position: absolute;
+    font-size: 2.2rem;
+    pointer-events: none;
+    z-index: 4;
+    display: none;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+    animation: bounceDir 1s infinite alternate;
+  }
+  @keyframes bounceDir {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+  }
+
+  /* 4-Sector Stages Row below camera */
+  .faceid-sectors-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin: 10px 0 6px;
+  }
+  .faceid-sector {
+    background: var(--bg-subtle, #f8fafc);
+    border: 1px solid var(--border-card, #e2e8f0);
+    border-radius: 6px;
+    padding: 6px 4px;
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-secondary, #64748b);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    transition: all 0.3s;
+  }
+  .faceid-sector.active {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: #3b82f6;
+    color: #2563eb;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+  }
+  .faceid-sector.passed {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: #10b981;
+    color: #059669;
+    font-weight: 700;
+  }
+
   .liveness-challenge-bar {
     position: absolute;
     bottom: 10px; left: 50%;
     transform: translateX(-50%);
-    background: rgba(14,36,66,0.88);
-    backdrop-filter: blur(6px);
+    background: rgba(14,36,66,0.92);
+    backdrop-filter: blur(8px);
     color: #fff;
-    padding: 8px 20px;
+    padding: 8px 18px;
     border-radius: 20px;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-weight: 700;
     text-align: center;
     max-width: 92%;
-    animation: livenessPulse 1.5s ease-in-out infinite;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    z-index: 5;
+    transition: background 0.3s, transform 0.2s;
   }
-  @keyframes livenessPulse {
-    0%,100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.4); }
-    50% { box-shadow: 0 0 0 10px rgba(245,158,11,0); }
+  .liveness-challenge-bar.danger {
+    background: #dc2626;
+    animation: faceidShake 0.4s ease-in-out;
   }
-  .liveness-challenge-bar.ok { background: rgba(5,150,105,0.9); animation: none; }
-  .liveness-dots {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 12px 0 4px;
+  .liveness-challenge-bar.warning {
+    background: #d97706;
   }
-  .liveness-dot {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    background: #e2e8f0;
-    border: 2px solid #cbd5e1;
-    transition: all 0.3s;
-  }
-  .liveness-dot.now { background: #f59e0b; border-color: #f59e0b; box-shadow: 0 0 6px rgba(245,158,11,0.5); }
-  .liveness-dot.done { background: var(--status-green); border-color: var(--status-green); }
-  .liveness-info {
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 4px;
+  .liveness-challenge-bar.ok {
+    background: #059669;
   }
   .liveness-badge {
     display: flex; align-items: center; justify-content: center;
@@ -5338,14 +5487,14 @@
     <div class="modal-body">
       <!-- Anti-Spoof Protection Notice -->
       <div style="background: rgba(239, 68, 68, 0.08); border: 1.5px solid rgba(239, 68, 68, 0.35); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; font-size: 0.77rem; color: #b91c1c; text-align: center; font-weight: 700;">
-        🛡️ Anti-Spoof Security: Static photos, printed college/govt IDs, or screen replays are strictly blocked.
+        🛡️ Anti-Spoof Face ID Security: Hands covering face, masks, static photos, and screen replays are strictly blocked.
         <div style="font-size: 0.73rem; color: #991b1b; font-weight: normal; margin-top: 2px;">
-          (स्थिर फोटो, कॉलेज या सरकारी आईडी कार्ड मान्य नहीं हैं। कैमरे के समक्ष लाइव चेहरे का मोशन चैलेंज पूरा करें।)
+          (चेहरा हाथ या कपड़े से न ढंकें। फेस-आईडी की तरह चारों दिशाओं का संपूर्ण 3D बायोमेट्रिक स्कैन पूरा करें।)
         </div>
       </div>
 
       <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 10px; text-align: center;" data-i18n="liveness-modal-desc">
-        To prevent fraudulent complaints using static photos, identity cards, or deepfakes, please follow the real-time on-spot motion challenge.
+        Position your face inside the scanner. Complete all 4 angles (Center, Turn Right, Turn Left, Tilt) to seal your biometric identity.
       </p>
 
       <!-- Video Viewport -->
@@ -5364,43 +5513,64 @@
 
         <video id="liveness-video" autoplay playsinline muted></video>
         <canvas id="liveness-canvas" width="320" height="240"></canvas>
-        <div class="liveness-face-oval" id="liveness-face-guide"></div>
 
-        <!-- Timer Ring -->
-        <div class="liveness-timer-ring">
-          <svg viewBox="0 0 36 36">
-            <path class="bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-            <path id="liveness-timer-fg" class="fg" stroke-dasharray="100, 100" stroke-dashoffset="0" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+        <!-- Face ID Radial Progress Track & Laser HUD -->
+        <div class="faceid-hud-overlay">
+          <svg viewBox="0 0 100 100" class="faceid-svg">
+            <circle cx="50" cy="50" r="45" class="faceid-track" />
+            <circle cx="50" cy="50" r="45" id="faceid-progress-ring" class="faceid-ring" stroke-dasharray="283" stroke-dashoffset="283" />
           </svg>
-          <div class="liveness-timer-text" id="liveness-timer-num">8s</div>
-        </div>
+          <div class="faceid-scan-line" id="faceid-scan-line"></div>
+          <div class="liveness-face-oval active" id="liveness-face-guide"></div>
+          <div class="faceid-direction-arrow" id="faceid-direction-arrow"></div>
 
-        <!-- Challenge Prompt Banner -->
-        <div class="liveness-challenge-bar" id="liveness-challenge-banner">
-          Initializing Camera...
+          <!-- Progress Pill -->
+          <div class="faceid-progress-pill" id="faceid-progress-pill">
+            <span class="pct-badge" id="faceid-pct-label">0%</span>&nbsp;Complete
+          </div>
+
+          <!-- Challenge Prompt Banner -->
+          <div class="liveness-challenge-bar" id="liveness-challenge-banner">
+            Connecting Camera...
+          </div>
         </div>
       </div>
 
-      <!-- Challenge Progress Dots -->
-      <div class="liveness-dots">
-        <div class="liveness-dot" id="liveness-dot-1" title="Challenge 1"></div>
-        <div class="liveness-dot" id="liveness-dot-2" title="Challenge 2"></div>
+      <!-- 4 Face ID Biometric Angle Stages -->
+      <div class="faceid-sectors-row">
+        <div class="faceid-sector active" id="faceid-sec-0">
+          <span class="sec-icon">🎯</span>
+          <span class="sec-txt">1. Center</span>
+        </div>
+        <div class="faceid-sector" id="faceid-sec-1">
+          <span class="sec-icon">➡️</span>
+          <span class="sec-txt">2. Turn Right</span>
+        </div>
+        <div class="faceid-sector" id="faceid-sec-2">
+          <span class="sec-icon">⬅️</span>
+          <span class="sec-txt">3. Turn Left</span>
+        </div>
+        <div class="faceid-sector" id="faceid-sec-3">
+          <span class="sec-icon">↕️</span>
+          <span class="sec-txt">4. Tilt 3D</span>
+        </div>
       </div>
+
       <div class="liveness-info" id="liveness-status-label">
-        Position your face inside the oval and ensure good lighting
+        Position your face inside the circle and slowly complete the angles like Face ID
       </div>
 
       <!-- Real-Time Anti-Spoof Diagnostics Badge -->
       <div class="liveness-badge" id="liveness-diag-badge">
-        <span>🛡️ Anti-Spoof Protection:</span>
-        <strong id="liveness-diag-text">Optical Micro-Motion & Texture Analysis Active</strong>
+        <span>🛡️ Anti-Spoof Guard:</span>
+        <strong id="liveness-diag-text">Uncovered Face Check & Motion Analysis Active</strong>
       </div>
       <div id="liveness-error-msg" style="display:none; color:var(--status-red); font-size:0.8rem; font-weight:600; margin-top:8px; text-align:center;"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline btn-sm" onclick="LivenessEngine.cancel()" data-i18n="btn-cancel">Cancel</button>
-      <button class="btn btn-outline btn-sm" onclick="LivenessEngine.retry()" id="btn-liveness-retry" style="display:none;">🔄 Retry Challenge</button>
-      <button class="btn btn-primary btn-sm" id="btn-manual-verify-snap" onclick="LivenessEngine.captureAndVerifyManual()">📸 Verify Live Face Now ➔</button>
+      <button class="btn btn-outline btn-sm" onclick="LivenessEngine.retry()" id="btn-liveness-retry" style="display:none;">🔄 Retry Face ID Scan</button>
+      <button class="btn btn-primary btn-sm" id="btn-manual-verify-snap" onclick="LivenessEngine.captureAndVerifyManual()">📸 Complete Face ID Scan ➔</button>
     </div>
   </div>
 </div>
@@ -9348,27 +9518,24 @@ const LivenessEngine = {
   canvasEl: null,
   ctx: null,
   animId: null,
-  timerInterval: null,
   targetStep: 2,
   verifiedThumbnail: null,
   isPausedForCondition: false,
 
-  // Challenge definitions (Bilingual)
-  challengesPool: [
-    { id: 'turn_left', en: 'Turn your face slightly to the LEFT ⬅️', hi: 'अपना सिर थोड़ा बाईं ओर घुमाएं ⬅️' },
-    { id: 'turn_right', en: 'Turn your face slightly to the RIGHT ➡️', hi: 'अपना सिर थोड़ा दाईं ओर घुमाएं ➡️' },
-    { id: 'blink', en: 'Blink both eyes 2 times 👁️', hi: 'अपनी पलकें 2 बार झपकाएं 👁️' },
-    { id: 'nod', en: 'Tilt your head up and down ↕️', hi: 'अपना सिर ऊपर और नीचे हिलाएं ↕️' }
-  ],
-  activeChallenges: [],
-  currentChallengeIndex: 0,
-  challengeStartTime: 0,
-  challengeDuration: 9, // seconds per challenge
+  // Face ID Biometric Enrollment Stages
+  scanProgress: 0, // 0 to 100%
+  currentPhase: 0, // 0: Center, 1: Turn Right, 2: Turn Left, 3: Tilt Vertical
+  phaseHoldFrames: 0,
   prevFrameData: null,
-  motionHistory: [],
   staticFrameCount: 0,
-  consecutivePassFrames: 0,
   lowLightWarningCount: 0,
+
+  stages: [
+    { id: 'center', en: '🎯 Step 1/4: Center Face Inside Scanner', hi: '🎯 चरण 1/4: चेहरा सीधे केंद्र में रखें', descEn: 'Hold still looking directly at the camera', descHi: 'कैमरे के समक्ष स्थिर रहें' },
+    { id: 'turn_right', en: '➡️ Step 2/4: Slowly Turn Head to the RIGHT', hi: '➡️ चरण 2/4: सिर धीरे-धीरे दाईं ओर घुमाएं', descEn: 'Turn head rightward to scan side profile', descHi: 'दायां प्रोफ़ाइल स्कैन करने हेतु सिर घुमाएं' },
+    { id: 'turn_left', en: '⬅️ Step 3/4: Slowly Turn Head to the LEFT', hi: '⬅️ चरण 3/4: सिर धीरे-धीरे बाईं ओर घुमाएं', descEn: 'Turn head leftward to scan side profile', descHi: 'बायां प्रोफ़ाइल स्कैन करने हेतु सिर घुमाएं' },
+    { id: 'tilt_vertical', en: '↕️ Step 4/4: Tilt Head Slightly UP & DOWN', hi: '↕️ चरण 4/4: सिर थोड़ा ऊपर/नीचे हिलाएं', descEn: 'Complete 3D depth biometric envelope', descHi: '3D बायोमेट्रिक स्कैन पूरा करें' }
+  ],
 
   async getCameraStream() {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -9411,15 +9578,14 @@ const LivenessEngine = {
     this.canvasEl = document.getElementById('liveness-canvas');
     if (this.canvasEl) this.ctx = this.canvasEl.getContext('2d', { willReadFrequently: true });
 
-    // Pick 2 random unique challenges
-    const poolCopy = [...this.challengesPool].sort(() => 0.5 - Math.random());
-    this.activeChallenges = [poolCopy[0], poolCopy[1]];
-    this.currentChallengeIndex = 0;
-    this.motionHistory = [];
-    this.staticFrameCount = 0;
-    this.consecutivePassFrames = 0;
+    // Reset Face ID enrollment state
+    this.scanProgress = 0;
+    this.currentPhase = 0;
+    this.phaseHoldFrames = 0;
     this.prevFrameData = null;
+    this.staticFrameCount = 0;
     this.lowLightWarningCount = 0;
+    this.isPausedForCondition = false;
 
     // Reset UI
     this.resetUI();
@@ -9431,7 +9597,6 @@ const LivenessEngine = {
       await this.attachStreamAndStart();
     } catch (err) {
       console.warn('Initial camera access check:', err);
-      // Show user-activation overlay button so mobile Chrome/Safari gets a direct touch event
       const promptOverlay = document.getElementById('liveness-permission-prompt');
       if (promptOverlay) {
         promptOverlay.style.display = 'flex';
@@ -9474,111 +9639,45 @@ const LivenessEngine = {
     const promptOverlay = document.getElementById('liveness-permission-prompt');
     if (promptOverlay) promptOverlay.style.display = 'none';
 
-    this.startChallenge(0);
+    this.updateFaceIDUI(0);
     this.runDetectionLoop();
   },
 
   resetUI() {
-    const dot1 = document.getElementById('liveness-dot-1');
-    const dot2 = document.getElementById('liveness-dot-2');
     const guide = document.getElementById('liveness-face-guide');
     const banner = document.getElementById('liveness-challenge-banner');
     const errEl = document.getElementById('liveness-error-msg');
     const retryBtn = document.getElementById('btn-liveness-retry');
     const promptOverlay = document.getElementById('liveness-permission-prompt');
+    const progressRing = document.getElementById('faceid-progress-ring');
+    const pctLabel = document.getElementById('faceid-pct-label');
+    const btn = document.getElementById('btn-manual-verify-snap');
 
-    if (dot1) dot1.className = 'liveness-dot now';
-    if (dot2) dot2.className = 'liveness-dot';
     if (guide) guide.className = 'liveness-face-oval active';
+    if (progressRing) {
+      progressRing.className = 'faceid-ring';
+      progressRing.style.strokeDashoffset = '283';
+    }
+    if (pctLabel) pctLabel.textContent = '0%';
+    if (btn) btn.innerHTML = '📸 Complete Face ID Scan ➔';
+
+    // Reset sectors
+    for (let i = 0; i < 4; i++) {
+      const sec = document.getElementById(`faceid-sec-${i}`);
+      if (sec) {
+        sec.className = (i === 0) ? 'faceid-sector active' : 'faceid-sector';
+      }
+    }
+
     if (banner) {
       banner.className = 'liveness-challenge-bar';
-      banner.textContent = 'Connecting Camera...';
-      banner.style.background = 'rgba(14,36,66,0.88)';
+      const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
+      banner.textContent = isHi ? this.stages[0].hi : this.stages[0].en;
+      banner.style.background = 'rgba(14,36,66,0.92)';
     }
     if (errEl) errEl.style.display = 'none';
     if (retryBtn) retryBtn.style.display = 'none';
     if (promptOverlay) promptOverlay.style.display = 'none';
-  },
-
-  startChallenge(index) {
-    this.currentChallengeIndex = index;
-    this.challengeStartTime = Date.now();
-    this.consecutivePassFrames = 0;
-    this.motionHistory = [];
-    this.isPausedForCondition = false;
-
-    const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
-    const challenge = this.activeChallenges[index];
-    const banner = document.getElementById('liveness-challenge-banner');
-    const statusLabel = document.getElementById('liveness-status-label');
-    const dot1 = document.getElementById('liveness-dot-1');
-    const dot2 = document.getElementById('liveness-dot-2');
-
-    if (dot1 && dot2) {
-      if (index === 0) {
-        dot1.className = 'liveness-dot now';
-        dot2.className = 'liveness-dot';
-      } else {
-        dot1.className = 'liveness-dot done';
-        dot2.className = 'liveness-dot now';
-      }
-    }
-
-    const text = isHi ? challenge.hi : challenge.en;
-    if (banner) {
-      banner.className = 'liveness-challenge-bar';
-      banner.textContent = text;
-      banner.style.background = 'rgba(14,36,66,0.88)';
-    }
-    if (statusLabel) {
-      statusLabel.textContent = isHi ? `चुनौती ${index + 1}/2: ${text}` : `Challenge ${index + 1}/2: ${text}`;
-    }
-
-    // Start timer countdown
-    clearInterval(this.timerInterval);
-    const timerFg = document.getElementById('liveness-timer-fg');
-    const timerNum = document.getElementById('liveness-timer-num');
-    let timeLeft = this.challengeDuration;
-
-    if (timerNum) timerNum.textContent = timeLeft + 's';
-    if (timerFg) timerFg.style.strokeDashoffset = '0';
-
-    this.timerInterval = setInterval(() => {
-      // Pause countdown if lighting is bad or face is masked/absent
-      if (this.isPausedForCondition) return;
-
-      timeLeft -= 1;
-      if (timerNum) timerNum.textContent = Math.max(0, timeLeft) + 's';
-      if (timerFg) {
-        const offset = 100 - (timeLeft / this.challengeDuration) * 100;
-        timerFg.style.strokeDashoffset = String(offset);
-        if (timeLeft <= 3) timerFg.classList.add('low');
-        else timerFg.classList.remove('low');
-      }
-
-      if (timeLeft <= 0) {
-        clearInterval(this.timerInterval);
-        this.onChallengeTimeout();
-      }
-    }, 1000);
-  },
-
-  onChallengeTimeout() {
-    const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
-    const banner = document.getElementById('liveness-challenge-banner');
-    const retryBtn = document.getElementById('btn-liveness-retry');
-    const errEl = document.getElementById('liveness-error-msg');
-
-    if (banner) {
-      banner.className = 'liveness-challenge-bar';
-      banner.style.background = 'rgba(220, 38, 38, 0.9)';
-      banner.textContent = isHi ? 'चुनौती समय समाप्त! कृपया पुनः प्रयास करें' : 'Challenge Timeout! Please retry';
-    }
-    if (errEl) {
-      errEl.textContent = isHi ? 'सत्यापन समय सीमा समाप्त हुई। सुनिश्चित करें कि आप स्थिर फोटो के बजाय लाइव कैमरा गतिविधि दिखा रहे हैं।' : 'Challenge timed out. Static images or photos are rejected; please move naturally.';
-      errEl.style.display = 'block';
-    }
-    if (retryBtn) retryBtn.style.display = 'inline-block';
   },
 
   async retry() {
@@ -9587,7 +9686,7 @@ const LivenessEngine = {
     const verifyBtn = document.getElementById('btn-manual-verify-snap');
     if (verifyBtn) {
       const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
-      verifyBtn.innerHTML = '📸 ' + (isHi ? 'लाइव चेहरा सत्यापित करें ➔' : 'Verify Live Face Now ➔');
+      verifyBtn.innerHTML = '📸 ' + (isHi ? 'फेस-आईडी स्कैन करें ➔' : 'Complete Face ID Scan ➔');
       verifyBtn.className = 'btn btn-primary btn-sm';
       verifyBtn.style.background = '';
       verifyBtn.style.borderColor = '';
@@ -9614,51 +9713,66 @@ const LivenessEngine = {
     this.animId = requestAnimationFrame(loop);
   },
 
-  detectFaceAndMask(frameData, width, height) {
+  detectFaceAndOcclusion(frameData, width, height) {
     const data = frameData.data;
 
-    const minX = Math.floor(width * 0.28);
-    const maxX = Math.floor(width * 0.72);
-    const minY = Math.floor(height * 0.22);
-    const maxY = Math.floor(height * 0.78);
+    const minX = Math.floor(width * 0.22);
+    const maxX = Math.floor(width * 0.78);
+    const minY = Math.floor(height * 0.16);
+    const maxY = Math.floor(height * 0.84);
 
     let totalLum = 0;
     let sampledPixels = 0;
     let skinPixels = 0;
 
-    // Upper Face zone (forehead, brows, eyes: 25% to 50% of height)
-    const upperY1 = Math.floor(height * 0.25);
-    const upperY2 = Math.floor(height * 0.50);
-    let upperR = 0, upperG = 0, upperB = 0, upperCount = 0;
+    const zoneForehead = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
+    const zoneLeftEye = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
+    const zoneRightEye = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
+    const zoneCheeks = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
+    const zoneMouth = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
+    const zoneChin = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
 
-    // Lower Face zone (nose bridge down to lips and chin: 56% to 80% of height)
-    const lowerY1 = Math.floor(height * 0.56);
-    const lowerY2 = Math.floor(height * 0.80);
-    let lowerR = 0, lowerG = 0, lowerB = 0, lowerCount = 0;
+    const fhY1 = Math.floor(height * 0.18), fhY2 = Math.floor(height * 0.30);
+    const eyeY1 = Math.floor(height * 0.32), eyeY2 = Math.floor(height * 0.46);
+    const eyeLeftX1 = Math.floor(width * 0.26), eyeLeftX2 = Math.floor(width * 0.46);
+    const eyeRightX1 = Math.floor(width * 0.54), eyeRightX2 = Math.floor(width * 0.74);
+    const chkY1 = Math.floor(height * 0.48), chkY2 = Math.floor(height * 0.64);
+    const mthY1 = Math.floor(height * 0.65), mthY2 = Math.floor(height * 0.80);
+    const mthX1 = Math.floor(width * 0.34), mthX2 = Math.floor(width * 0.66);
+    const chinY1 = Math.floor(height * 0.81), chinY2 = Math.floor(height * 0.90);
 
-    for (let y = minY; y < maxY; y += 3) {
-      for (let x = minX; x < maxX; x += 3) {
+    for (let y = minY; y < maxY; y += 2) {
+      for (let x = minX; x < maxX; x += 2) {
         const idx = (y * width + x) * 4;
         const r = data[idx];
         const g = data[idx + 1];
         const b = data[idx + 2];
         const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+
         totalLum += lum;
         sampledPixels++;
 
         // Melanin skin chroma filter
-        if (r > 45 && g > 35 && b > 20 && r > g && (r - b) > 10 && (r - g) > 4) {
-          skinPixels++;
-        }
+        const isSkin = (r > 45 && g > 35 && b > 20 && r > g && (r - b) > 10 && (r - g) > 4);
+        if (isSkin) skinPixels++;
 
-        if (y >= upperY1 && y <= upperY2) {
-          upperR += r; upperG += g; upperB += b;
-          upperCount++;
+        if (y >= fhY1 && y <= fhY2 && x >= minX && x <= maxX) {
+          zoneForehead.r += r; zoneForehead.g += g; zoneForehead.b += b; zoneForehead.lum += lum; zoneForehead.count++;
         }
-
-        if (y >= lowerY1 && y <= lowerY2) {
-          lowerR += r; lowerG += g; lowerB += b;
-          lowerCount++;
+        if (y >= eyeY1 && y <= eyeY2 && x >= eyeLeftX1 && x <= eyeLeftX2) {
+          zoneLeftEye.r += r; zoneLeftEye.g += g; zoneLeftEye.b += b; zoneLeftEye.lum += lum; zoneLeftEye.count++;
+        }
+        if (y >= eyeY1 && y <= eyeY2 && x >= eyeRightX1 && x <= eyeRightX2) {
+          zoneRightEye.r += r; zoneRightEye.g += g; zoneRightEye.b += b; zoneRightEye.lum += lum; zoneRightEye.count++;
+        }
+        if (y >= chkY1 && y <= chkY2 && (x < mthX1 || x > mthX2)) {
+          zoneCheeks.r += r; zoneCheeks.g += g; zoneCheeks.b += b; zoneCheeks.lum += lum; zoneCheeks.count++;
+        }
+        if (y >= mthY1 && y <= mthY2 && x >= mthX1 && x <= mthX2) {
+          zoneMouth.r += r; zoneMouth.g += g; zoneMouth.b += b; zoneMouth.lum += lum; zoneMouth.count++;
+        }
+        if (y >= chinY1 && y <= chinY2 && x >= mthX1 && x <= mthX2) {
+          zoneChin.r += r; zoneChin.g += g; zoneChin.b += b; zoneChin.lum += lum; zoneChin.count++;
         }
       }
     }
@@ -9667,52 +9781,60 @@ const LivenessEngine = {
     const skinRatio = sampledPixels > 0 ? (skinPixels / sampledPixels) : 0;
 
     // 1. Lighting assessment
-    if (avgLum < 38) {
-      return { status: 'low_light', avgLum: Math.round(avgLum) };
-    }
-    if (avgLum > 238) {
-      return { status: 'overexposed', avgLum: Math.round(avgLum) };
-    }
+    if (avgLum < 38) return { status: 'low_light', avgLum: Math.round(avgLum) };
+    if (avgLum > 238) return { status: 'overexposed', avgLum: Math.round(avgLum) };
 
     // 2. Face presence assessment
-    if (skinRatio < 0.20) {
-      return { status: 'no_face' };
+    if (skinRatio < 0.22) return { status: 'no_face' };
+
+    const fhLum = zoneForehead.count > 0 ? zoneForehead.lum / zoneForehead.count : 0;
+    const leftEyeLum = zoneLeftEye.count > 0 ? zoneLeftEye.lum / zoneLeftEye.count : 0;
+    const rightEyeLum = zoneRightEye.count > 0 ? zoneRightEye.lum / zoneRightEye.count : 0;
+    const cheeksLum = zoneCheeks.count > 0 ? zoneCheeks.lum / zoneCheeks.count : 0;
+    const mouthLum = zoneMouth.count > 0 ? zoneMouth.lum / zoneMouth.count : 0;
+    const chinLum = zoneChin.count > 0 ? zoneChin.lum / zoneChin.count : 0;
+
+    const mouthR = zoneMouth.count > 0 ? zoneMouth.r / zoneMouth.count : 0;
+    const mouthG = zoneMouth.count > 0 ? zoneMouth.g / zoneMouth.count : 0;
+    const mouthB = zoneMouth.count > 0 ? zoneMouth.b / zoneMouth.count : 0;
+
+    const cheeksR = zoneCheeks.count > 0 ? zoneCheeks.r / zoneCheeks.count : 0;
+    const cheeksG = zoneCheeks.count > 0 ? zoneCheeks.g / zoneCheeks.count : 0;
+    const cheeksB = zoneCheeks.count > 0 ? zoneCheeks.b / zoneCheeks.count : 0;
+
+    // 3. Mask / Non-skin covering checks
+    if (mouthB > mouthR + 6 || mouthG > mouthR + 6) return { status: 'mask_detected', type: 'surgical' };
+    if (fhLum > 55 && mouthLum < 32 && (fhLum - mouthLum) > 32) return { status: 'mask_detected', type: 'dark_mask' };
+    if (mouthR > 175 && mouthG > 175 && mouthB > 175 && Math.abs(mouthR - mouthB) < 16 && (fhLum - mouthLum) > 20) return { status: 'mask_detected', type: 'white_mask' };
+
+    // 4. HAND / OBSTRUCTION OVER FACE TESTS
+    // Test A: Bilateral Eye Asymmetry (Hand covering one side/eye)
+    const eyeAsymmetry = Math.abs(leftEyeLum - rightEyeLum);
+    if (eyeAsymmetry > 32) {
+      return { status: 'face_covered', reason: 'side_of_face_covered' };
     }
 
-    // 3. Mask / Obstruction assessment
-    const avgUpR = upperCount > 0 ? (upperR / upperCount) : 0;
-    const avgUpG = upperCount > 0 ? (upperG / upperCount) : 0;
-    const avgUpB = upperCount > 0 ? (upperB / upperCount) : 0;
-    const avgUpLum = 0.299 * avgUpR + 0.587 * avgUpG + 0.114 * avgUpB;
-
-    const avgLowR = lowerCount > 0 ? (lowerR / lowerCount) : 0;
-    const avgLowG = lowerCount > 0 ? (lowerG / lowerCount) : 0;
-    const avgLowB = lowerCount > 0 ? (lowerB / lowerCount) : 0;
-    const avgLowLum = 0.299 * avgLowR + 0.587 * avgLowG + 0.114 * avgLowB;
-
-    // MASK TEST 1: Surgical Blue/Green Mask (Human skin NEVER has B or G higher than R)
-    if (avgLowB > avgLowR + 6 || avgLowG > avgLowR + 6) {
-      return { status: 'mask_detected', type: 'surgical' };
+    // Test B: Eyes covered by hands/fingers/sunglasses
+    const avgEyeLum = (leftEyeLum + rightEyeLum) / 2;
+    const eyeContrast = Math.max(0, fhLum - avgEyeLum);
+    if (eyeContrast < 3.2 && skinRatio > 0.42) {
+      return { status: 'face_covered', reason: 'eyes_covered' };
     }
 
-    // MASK TEST 2: Dark / Black Mask (drastic drop in lower face luminance)
-    if (avgUpLum > 55 && avgLowLum < 32 && (avgUpLum - avgLowLum) > 34) {
-      return { status: 'mask_detected', type: 'dark_mask' };
+    // Test C: Hand or palm covering mouth and chin
+    const mouthRedRatio = mouthR / (mouthG + 1);
+    const cheekRedRatio = cheeksR / (cheeksG + 1);
+    const mouthVariance = Math.abs(mouthLum - chinLum) + Math.abs(mouthLum - cheeksLum);
+    if (mouthVariance < 5.8 && Math.abs(mouthRedRatio - cheekRedRatio) < 0.045 && skinRatio > 0.38) {
+      return { status: 'face_covered', reason: 'hand_covering_mouth' };
     }
 
-    // MASK TEST 3: White / Medical N95 Mask (flat white/gray lower zone vs warm skin upper zone)
-    if (avgLowR > 175 && avgLowG > 175 && avgLowB > 175 && Math.abs(avgLowR - avgLowB) < 16 && (avgUpR - avgUpB) > 28) {
-      return { status: 'mask_detected', type: 'white_mask' };
+    // Test D: Palm/Hand pressed against camera
+    if (skinRatio > 0.90 && Math.abs(fhLum - mouthLum) < 4.5 && Math.abs(leftEyeLum - rightEyeLum) < 3.5) {
+      return { status: 'face_covered', reason: 'camera_blocked_by_hand' };
     }
 
-    // MASK TEST 4: Chromatic Disconnect
-    const upRedness = avgUpR / (avgUpB + 1);
-    const lowRedness = avgLowR / (avgLowB + 1);
-    if (Math.abs(upRedness - lowRedness) > 0.42 && skinRatio < 0.48) {
-      return { status: 'mask_detected', type: 'covering' };
-    }
-
-    return { status: 'ok', avgLum: Math.round(avgLum) };
+    return { status: 'ok', avgLum: Math.round(avgLum), eyeContrast: Math.round(eyeContrast) };
   },
 
   detectStaticOrIdCard(frameData, width, height) {
@@ -9748,25 +9870,26 @@ const LivenessEngine = {
     const banner = document.getElementById('liveness-challenge-banner');
     const guide = document.getElementById('liveness-face-guide');
     const diagText = document.getElementById('liveness-diag-text');
+    const progressRing = document.getElementById('faceid-progress-ring');
+    const statusLabel = document.getElementById('liveness-status-label');
 
-    // 1. Face & Mask & Lighting Multi-Factor Audit
-    const condition = this.detectFaceAndMask(frameData, width, height);
+    // 1. Run Multi-Factor Face & Occlusion Detection
+    const condition = this.detectFaceAndOcclusion(frameData, width, height);
 
     if (condition.status === 'low_light') {
       this.isPausedForCondition = true;
       if (banner) {
         banner.className = 'liveness-challenge-bar warning';
-        banner.style.background = '#d97706';
         banner.textContent = isHi 
-          ? `⚠️ रोशनी बहुत कम है (${condition.avgLum}/255)! कृपया लाइट जलाएं या रोशनी की ओर मुंह करें` 
-          : `⚠️ Lighting too low (${condition.avgLum}/255)! Please face a light source or turn on room lights`;
+          ? `⚠️ रोशनी कम है (${condition.avgLum}/255)! कृपया लाइट चालू करें` 
+          : `⚠️ Lighting too low (${condition.avgLum}/255)! Face a light source`;
       }
       if (guide) guide.className = 'liveness-face-oval warning';
+      if (progressRing) progressRing.className = 'faceid-ring warning';
       if (diagText) {
-        diagText.textContent = `⚠️ Low Lighting (${condition.avgLum}/255) - Increase Light`;
+        diagText.textContent = `⚠️ Low Light (${condition.avgLum}/255) - Increase Brightness`;
         diagText.style.color = '#f59e0b';
       }
-      this.consecutivePassFrames = 0;
       return;
     }
 
@@ -9774,13 +9897,12 @@ const LivenessEngine = {
       this.isPausedForCondition = true;
       if (banner) {
         banner.className = 'liveness-challenge-bar warning';
-        banner.style.background = '#d97706';
         banner.textContent = isHi 
           ? '⚠️ रोशनी अत्यधिक तेज है! सीधे बैकलाइट से बचें' 
-          : '⚠️ Lighting too harsh or overexposed! Avoid direct backlight behind your head';
+          : '⚠️ Overexposed! Avoid harsh direct backlight';
       }
       if (guide) guide.className = 'liveness-face-oval warning';
-      this.consecutivePassFrames = 0;
+      if (progressRing) progressRing.className = 'faceid-ring warning';
       return;
     }
 
@@ -9788,17 +9910,16 @@ const LivenessEngine = {
       this.isPausedForCondition = true;
       if (banner) {
         banner.className = 'liveness-challenge-bar warning';
-        banner.style.background = '#d97706';
         banner.textContent = isHi 
-          ? '⚠️ चेहरा नहीं दिख रहा! कृपया अपना चेहरा अंडाकार घेरे के अंदर रखें' 
-          : '⚠️ No face detected! Please position your face inside the oval';
+          ? '⚠️ चेहरा नहीं दिख रहा! कृपया अपना चेहरा घेरे में रखें' 
+          : '⚠️ No face detected! Please position face inside ring';
       }
       if (guide) guide.className = 'liveness-face-oval active';
+      if (progressRing) progressRing.className = 'faceid-ring';
       if (diagText) {
         diagText.textContent = 'Searching for Live Human Face...';
         diagText.style.color = '#94a3b8';
       }
-      this.consecutivePassFrames = 0;
       return;
     }
 
@@ -9806,40 +9927,56 @@ const LivenessEngine = {
       this.isPausedForCondition = true;
       if (banner) {
         banner.className = 'liveness-challenge-bar danger';
-        banner.style.background = '#dc2626';
         banner.textContent = isHi 
-          ? '🚫 मास्क / चेहरा ढंका पाया गया! कृपया मास्क या कपड़ा हटाएं' 
-          : '🚫 Face Mask / Obstruction Detected! Please remove your mask or cloth covering';
+          ? '🚫 मास्क पाया गया! कृपया मास्क या कपड़ा हटाएं' 
+          : '🚫 Mask Detected! Please remove face mask or cloth';
       }
       if (guide) guide.className = 'liveness-face-oval danger';
+      if (progressRing) progressRing.className = 'faceid-ring danger';
       if (diagText) {
-        diagText.textContent = '🚫 Face Obstruction: Mask Detected (Must be removed)';
+        diagText.textContent = '🚫 Obstruction: Mask Detected (Must be removed)';
         diagText.style.color = '#ef4444';
       }
-      this.consecutivePassFrames = 0;
       return;
     }
 
-    // Condition OK: Resume challenge
+    if (condition.status === 'face_covered') {
+      this.isPausedForCondition = true;
+      let coverMsgEn = '🚫 Face Obscured / Hands Detected! Please remove hands from face';
+      let coverMsgHi = '🚫 चेहरा हाथ से ढंका है! कृपया हाथ चेहरे से हटाएं';
+      if (condition.reason === 'eyes_covered') {
+        coverMsgEn = '🚫 Eyes / Upper Face Covered! Keep entire face visible';
+        coverMsgHi = '🚫 आंखें या माथा ढंका है! पूरा चेहरा साफ रखें';
+      } else if (condition.reason === 'hand_covering_mouth') {
+        coverMsgEn = '🚫 Mouth / Lower Face Covered! Remove hand from mouth';
+        coverMsgHi = '🚫 मुंह या दाढ़ी पर हाथ है! कृपया हाथ हटाएं';
+      }
+
+      if (banner) {
+        banner.className = 'liveness-challenge-bar danger';
+        banner.textContent = isHi ? coverMsgHi : coverMsgEn;
+      }
+      if (guide) guide.className = 'liveness-face-oval danger';
+      if (progressRing) progressRing.className = 'faceid-ring danger';
+      if (diagText) {
+        diagText.textContent = `🚫 Facial Covering: ${condition.reason} (Blocked)`;
+        diagText.style.color = '#ef4444';
+      }
+      return;
+    }
+
+    // Condition OK: Resume Face ID scan
     this.isPausedForCondition = false;
     if (guide && !guide.classList.contains('passed')) {
-      guide.className = 'liveness-face-oval active';
+      guide.className = 'liveness-face-oval scanning';
     }
+    if (progressRing) progressRing.className = 'faceid-ring';
     if (diagText) {
-      diagText.textContent = '🛡️ Face Verified (No Mask, Lighting OK) · Micro-Motion Active';
+      diagText.textContent = '🛡️ Face Clear (No Mask/Hands) · 3D Biometric Scan Active';
       diagText.style.color = 'var(--status-green)';
     }
 
-    // Restore challenge prompt text if not passed
-    if (banner && !banner.classList.contains('ok')) {
-      const challenge = this.activeChallenges[this.currentChallengeIndex];
-      if (challenge) {
-        banner.textContent = isHi ? challenge.hi : challenge.en;
-        banner.style.background = 'rgba(14,36,66,0.88)';
-      }
-    }
-
-    // 2. Optical Motion & Temporal Micro-Movement Analysis
+    // 2. Optical Motion & Motion Tracking
     if (!this.prevFrameData) {
       this.prevFrameData = frameData;
       return;
@@ -9873,8 +10010,8 @@ const LivenessEngine = {
 
     this.prevFrameData = frameData;
 
-    // Check for static photo (zero micro-motion)
-    if (changedPixelsCount < 12) {
+    // Check for static photo
+    if (changedPixelsCount < 10) {
       this.staticFrameCount++;
       if (this.staticFrameCount > 25 && diagText) {
         diagText.textContent = '⚠️ Static Photo / ID Card Detected (Zero Optical Micro-Motion)';
@@ -9884,64 +10021,152 @@ const LivenessEngine = {
       this.staticFrameCount = Math.max(0, this.staticFrameCount - 2);
     }
 
-    // Check for ID card rectangular boundaries
-    const spoofCheck = this.detectStaticOrIdCard(frameData, width, height);
-    if (spoofCheck.isSpoof && spoofCheck.reason === 'id_card_detected' && diagText) {
-      diagText.textContent = '🚫 Physical ID Card Boundary Detected (Rejected)';
-      diagText.style.color = '#ef4444';
-    }
+    const avgX = changedPixelsCount > 0 ? (motionCenterX / changedPixelsCount) : (width / 2);
+    const avgY = changedPixelsCount > 0 ? (motionCenterY / changedPixelsCount) : (height / 2);
 
-    if (changedPixelsCount > 25) {
-      const avgX = motionCenterX / changedPixelsCount;
-      const avgY = motionCenterY / changedPixelsCount;
-      this.evaluateChallenge(avgX, avgY, changedPixelsCount, width, height);
-    }
+    // 3. Advance Face ID Multi-Stage Enrollment
+    this.advanceFaceIDEnrollment(avgX, avgY, changedPixelsCount, width, height, isHi);
   },
 
-  evaluateChallenge(avgX, avgY, count, width, height) {
-    if (this.currentChallengeIndex >= this.activeChallenges.length) return;
-    const challenge = this.activeChallenges[this.currentChallengeIndex];
-    let matched = false;
+  advanceFaceIDEnrollment(avgX, avgY, count, width, height, isHi) {
+    if (this.isVerified) return;
 
-    if (challenge.id === 'turn_left') {
-      if (avgX > width * 0.48 && count > 32) matched = true;
-    } else if (challenge.id === 'turn_right') {
-      if (avgX < width * 0.52 && count > 32) matched = true;
-    } else if (challenge.id === 'blink') {
-      if (avgY >= height * 0.22 && avgY <= height * 0.58 && count >= 16 && count <= 280) matched = true;
-    } else if (challenge.id === 'nod') {
-      if ((avgY < height * 0.40 || avgY > height * 0.60) && count > 30) matched = true;
+    const stage = this.stages[this.currentPhase];
+    const banner = document.getElementById('liveness-challenge-banner');
+    const statusLabel = document.getElementById('liveness-status-label');
+    const arrowEl = document.getElementById('faceid-direction-arrow');
+
+    if (banner && !banner.classList.contains('ok')) {
+      banner.textContent = isHi ? stage.hi : stage.en;
+      banner.className = 'liveness-challenge-bar';
+    }
+    if (statusLabel) {
+      statusLabel.textContent = isHi ? stage.descHi : stage.descEn;
     }
 
-    if (matched) {
-      this.consecutivePassFrames++;
-      if (this.consecutivePassFrames >= 2) {
-        this.onChallengeSuccess();
+    // Phase 0: Center Face alignment (0% to 25%)
+    if (this.currentPhase === 0) {
+      if (arrowEl) arrowEl.style.display = 'none';
+      this.phaseHoldFrames++;
+      this.scanProgress = Math.min(25, Math.round((this.phaseHoldFrames / 14) * 25));
+      this.updateFaceIDUI(0);
+      if (this.phaseHoldFrames >= 14) {
+        this.markSectorPassed(0);
+        this.currentPhase = 1;
+        this.phaseHoldFrames = 0;
+      }
+    }
+    // Phase 1: Turn Head Right (25% to 50%)
+    else if (this.currentPhase === 1) {
+      if (arrowEl) {
+        arrowEl.textContent = '➡️';
+        arrowEl.style.display = 'block';
+        arrowEl.style.right = '24px';
+        arrowEl.style.left = 'auto';
+        arrowEl.style.top = '45%';
+      }
+      const isTurningRight = (avgX > width * 0.48 && count > 20);
+      if (isTurningRight) {
+        this.phaseHoldFrames++;
+        this.scanProgress = Math.min(50, 25 + Math.round((this.phaseHoldFrames / 12) * 25));
+        this.updateFaceIDUI(1);
+        if (this.phaseHoldFrames >= 12) {
+          this.markSectorPassed(1);
+          this.currentPhase = 2;
+          this.phaseHoldFrames = 0;
+        }
+      }
+    }
+    // Phase 2: Turn Head Left (50% to 75%)
+    else if (this.currentPhase === 2) {
+      if (arrowEl) {
+        arrowEl.textContent = '⬅️';
+        arrowEl.style.display = 'block';
+        arrowEl.style.left = '24px';
+        arrowEl.style.right = 'auto';
+        arrowEl.style.top = '45%';
+      }
+      const isTurningLeft = (avgX < width * 0.52 && count > 20);
+      if (isTurningLeft) {
+        this.phaseHoldFrames++;
+        this.scanProgress = Math.min(75, 50 + Math.round((this.phaseHoldFrames / 12) * 25));
+        this.updateFaceIDUI(2);
+        if (this.phaseHoldFrames >= 12) {
+          this.markSectorPassed(2);
+          this.currentPhase = 3;
+          this.phaseHoldFrames = 0;
+        }
+      }
+    }
+    // Phase 3: Tilt Head Up/Down 3D Envelope (75% to 100%)
+    else if (this.currentPhase === 3) {
+      if (arrowEl) {
+        arrowEl.textContent = '↕️';
+        arrowEl.style.display = 'block';
+        arrowEl.style.left = 'auto';
+        arrowEl.style.right = 'auto';
+        arrowEl.style.top = '22%';
+      }
+      const isTilting = ((avgY < height * 0.42 || avgY > height * 0.58) && count > 18) || count > 30;
+      if (isTilting) {
+        this.phaseHoldFrames++;
+        this.scanProgress = Math.min(100, 75 + Math.round((this.phaseHoldFrames / 10) * 25));
+        this.updateFaceIDUI(3);
+        if (this.phaseHoldFrames >= 10 && this.scanProgress >= 100) {
+          if (arrowEl) arrowEl.style.display = 'none';
+          this.markSectorPassed(3);
+          this.onEnrollmentComplete(isHi);
+        }
       }
     }
   },
 
-  onChallengeSuccess() {
-    clearInterval(this.timerInterval);
-    const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
+  updateFaceIDUI(phaseIndex) {
+    const progressRing = document.getElementById('faceid-progress-ring');
+    const pctLabel = document.getElementById('faceid-pct-label');
+    const btn = document.getElementById('btn-manual-verify-snap');
+
+    if (progressRing) {
+      const offset = 283 - (this.scanProgress / 100) * 283;
+      progressRing.style.strokeDashoffset = String(Math.round(offset));
+    }
+    if (pctLabel) {
+      pctLabel.textContent = `${this.scanProgress}%`;
+    }
+    if (btn) {
+      btn.innerHTML = `📸 Face ID: ${this.scanProgress}% ➔`;
+    }
+  },
+
+  markSectorPassed(index) {
+    const sec = document.getElementById(`faceid-sec-${index}`);
+    if (sec) {
+      sec.classList.remove('active');
+      sec.classList.add('passed');
+    }
+    const nextSec = document.getElementById(`faceid-sec-${index + 1}`);
+    if (nextSec) {
+      nextSec.classList.add('active');
+    }
+  },
+
+  onEnrollmentComplete(isHi) {
     const banner = document.getElementById('liveness-challenge-banner');
     const guide = document.getElementById('liveness-face-guide');
+    const progressRing = document.getElementById('faceid-progress-ring');
+    const btn = document.getElementById('btn-manual-verify-snap');
 
     if (banner) {
       banner.className = 'liveness-challenge-bar ok';
-      banner.textContent = isHi ? '✓ चुनौती पूर्ण! कृपया स्थिर रहें...' : '✓ Challenge Passed! Hold steady...';
+      banner.textContent = isHi ? '✓ संपूर्ण 3D फेस-आईडी स्कैन पूर्ण! सत्यापित...' : '✓ Full Face ID Scan Complete! Verified...';
     }
     if (guide) guide.className = 'liveness-face-oval passed';
+    if (progressRing) progressRing.className = 'faceid-ring';
+    if (btn) btn.innerHTML = '✅ Verified 100%';
 
-    if (this.currentChallengeIndex === 0) {
-      setTimeout(() => {
-        this.startChallenge(1);
-      }, 700);
-    } else {
-      setTimeout(() => {
-        this.completeVerification();
-      }, 600);
-    }
+    setTimeout(() => {
+      this.completeVerification();
+    }, 600);
   },
 
   captureAndVerifyManual() {
@@ -9959,18 +10184,28 @@ const LivenessEngine = {
 
     const frameData = this.ctx.getImageData(0, 0, cw, ch);
 
-    // Audit face and mask before capturing
-    const condition = this.detectFaceAndMask(frameData, cw, ch);
+    // Audit face and occlusion before allowing capture
+    const condition = this.detectFaceAndOcclusion(frameData, cw, ch);
     if (condition.status === 'low_light') {
-      showToast(isHi ? `⚠️ रोशनी बहुत कम है (${condition.avgLum}/255)! कृपया लाइट जलाएं।` : `⚠️ Lighting too low (${condition.avgLum}/255)! Please face a light source.`);
+      showToast(isHi ? `⚠️ रोशनी बहुत कम है (${condition.avgLum}/255)! कृपया लाइट चालू करें।` : `⚠️ Lighting too low (${condition.avgLum}/255)! Please face a light source.`);
       return;
     }
     if (condition.status === 'mask_detected') {
-      showToast(isHi ? '🚫 मास्क या चेहरा ढंका पाया गया! कृपया चेहरा पूरा खोलें।' : '🚫 Face mask or obstruction detected! Please remove face covering to verify.');
+      showToast(isHi ? '🚫 मास्क या चेहरा ढंका पाया गया! कृपया चेहरा पूरा खोलें।' : '🚫 Face mask detected! Please remove face mask to verify.');
+      return;
+    }
+    if (condition.status === 'face_covered') {
+      showToast(isHi ? '🚫 चेहरा हाथ या कपड़े से ढंका है! कृपया हाथ हटाएं और चेहरा साफ रखें।' : '🚫 Face is covered by hand or obstruction! Please remove hands to verify.');
       return;
     }
     if (condition.status === 'no_face') {
-      showToast(isHi ? '⚠️ चेहरा नहीं दिख रहा! कृपया अपना चेहरा घेरे में रखें।' : '⚠️ No face detected inside the oval! Please position your face.');
+      showToast(isHi ? '⚠️ चेहरा नहीं दिख रहा! कृपया अपना चेहरा घेरे में रखें।' : '⚠️ No face detected inside the circle! Please position your face.');
+      return;
+    }
+
+    // Require user to have completed at least 50% of the scan (both front and turn angles)
+    if (this.scanProgress < 50) {
+      showToast(isHi ? '⚠️ कृपया फेस-आईडी की तरह सिर दाईं व बाईं ओर घुमाकर पूरा स्कैन करें।' : '⚠️ Please complete the Face ID angle scan (slowly turn right and left).');
       return;
     }
 
