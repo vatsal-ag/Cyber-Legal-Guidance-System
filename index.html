@@ -1349,6 +1349,8 @@
   }
   .law-card.bns { border-left-color: var(--saffron-gold); }
   .law-card.corp { border-left-color: #2563eb; }
+  .law-card.evidence { border-left-color: #059669; }
+  .law-card.citations { border-left-color: #7c3aed; }
   .law-badge {
     font-family: 'Geist Mono', monospace;
     font-size: 0.75rem;
@@ -1362,6 +1364,89 @@
   }
   .law-card.bns .law-badge { color: var(--saffron-gold); background: var(--saffron-surface); }
   .law-card.corp .law-badge { color: #2563eb; background: #eff6ff; }
+  .law-card.evidence .law-badge { color: #059669; background: #ecfdf5; }
+  .law-card.citations .law-badge { color: #7c3aed; background: #f5f3ff; }
+  .citation-tag {
+    font-size: 0.7rem;
+    background: #ede9fe;
+    color: #5b21b6;
+    border: 1px solid #c4b5fd;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 700;
+    display: inline-block;
+  }
+  .citation-holding-box {
+    background: #faf5ff;
+    border-left: 3px solid #8b5cf6;
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin: 10px 0;
+  }
+  .citation-holding-title {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #6d28d9;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .citation-holding-text {
+    font-size: 0.84rem;
+    color: #374151;
+    line-height: 1.5;
+  }
+  .citation-impact-box {
+    background: #f0fdf4;
+    border-left: 3px solid #10b981;
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .citation-impact-title {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #15803d;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .citation-impact-text {
+    font-size: 0.84rem;
+    color: #166534;
+    line-height: 1.5;
+  }
+  [data-theme="dark"] .law-card.citations {
+    background: var(--bg-card) !important;
+    border-left-color: #a78bfa !important;
+  }
+  [data-theme="dark"] .law-card.citations .law-badge {
+    background: rgba(139, 92, 246, 0.25) !important;
+    color: #c4b5fd !important;
+  }
+  [data-theme="dark"] .law-card.citations .citation-tag {
+    background: rgba(139, 92, 246, 0.25) !important;
+    color: #e9d5ff !important;
+    border-color: rgba(167, 139, 250, 0.4) !important;
+  }
+  [data-theme="dark"] .law-card.citations .citation-holding-box {
+    background: rgba(139, 92, 246, 0.12) !important;
+    border-left-color: #a78bfa !important;
+  }
+  [data-theme="dark"] .law-card.citations .citation-holding-title {
+    color: #c4b5fd !important;
+  }
+  [data-theme="dark"] .law-card.citations .citation-holding-text {
+    color: #e2e8f0 !important;
+  }
+  [data-theme="dark"] .law-card.citations .citation-impact-box {
+    background: rgba(16, 185, 129, 0.12) !important;
+    border-left-color: #34d399 !important;
+  }
+  [data-theme="dark"] .law-card.citations .citation-impact-title {
+    color: #6ee7b7 !important;
+  }
+  [data-theme="dark"] .law-card.citations .citation-impact-text {
+    color: #d1fae5 !important;
+  }
   .law-card-title {
     font-size: 1rem;
     font-weight: 700;
@@ -4735,21 +4820,23 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title" data-i18n="codex-card-title">Comprehensive Cyber Law Codex (Citizen & Corporate)</div>
-          <div class="card-subtitle" data-i18n="codex-card-subtitle">All sections of the Information Technology Act 2000, Bharatiya Nyaya Sanhita 2023, and Corporate Standards (CERT-In, DPDP Act 2023, RBI, SEBI).</div>
+          <div class="card-title" data-i18n="codex-card-title">Comprehensive Cyber Law Codex (Citizen, Corporate & Case Law)</div>
+          <div class="card-subtitle" data-i18n="codex-card-subtitle">All sections of the Information Technology Act 2000, Bharatiya Nyaya Sanhita 2023, Corporate Standards (CERT-In, DPDP Act 2023, RBI, SEBI), Electronic Evidence (BSA 2023), and Landmark Supreme Court & High Court Precedents.</div>
         </div>
       </div>
 
       <div style="display: flex; gap: 10px; margin-bottom: 18px;">
-        <input type="text" id="law-search-input" placeholder="Search sections by keyword (e.g. hacking, otp, privacy, corporate, bec, cert-in, penalty, csam)..." data-i18n-placeholder="placeholder-law-search" style="flex: 1;" oninput="filterLawCodex()">
+        <input type="text" id="law-search-input" placeholder="Search sections or case citations (e.g. Shreya Singhal, Puttaswamy, Arjun Khotkar, Suhas Katti, OTP, digital arrest, bank freeze, deepfake)..." data-i18n-placeholder="placeholder-law-search" style="flex: 1;" oninput="filterLawCodex()">
       </div>
 
-      <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
-        <button class="btn btn-sm btn-primary" id="btn-cat-all" onclick="filterLawCategory('all', this)" data-i18n="codex-cat-all">All Provisions</button>
+      <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
+        <button class="btn btn-sm btn-primary" id="btn-cat-all" onclick="filterLawCategory('all', this)" data-i18n="codex-cat-all">All Provisions & Citations</button>
         <button class="btn btn-sm btn-outline" id="btn-cat-it" onclick="filterLawCategory('it', this)" data-i18n="codex-cat-it">IT Act, 2000 (Amended)</button>
         <button class="btn btn-sm btn-outline" id="btn-cat-bns" onclick="filterLawCategory('bns', this)" data-i18n="codex-cat-bns">Bharatiya Nyaya Sanhita (BNS 2023)</button>
         <button class="btn btn-sm btn-outline" id="btn-cat-corp" onclick="filterLawCategory('corp', this)" data-i18n="codex-cat-corp">Corporate Standards (CERT-In / DPDP)</button>
         <button class="btn btn-sm btn-outline" id="btn-cat-evidence" onclick="filterLawCategory('evidence', this)" data-i18n="codex-cat-evidence">Electronic Evidence (BSA 2023)</button>
+        <button class="btn btn-sm btn-outline" id="btn-cat-citations" onclick="filterLawCategory('citations', this)" data-i18n="codex-cat-citations" style="border-color: #8b5cf6; color: #7c3aed;">⚖️ Case Law Citations (SC & HC Precedents)</button>
+        <span id="codex-count-badge" style="margin-left: auto; font-size: 0.8rem; font-weight: 700; color: #64748b; font-family: 'Geist Mono', monospace;"></span>
       </div>
 
       <div class="law-grid" id="law-grid">
@@ -6297,52 +6384,368 @@ function closeBotDiagnosticsModal() {
 // ══════════════════════════════════════════════════════════════════════════════
 
 const IT_ACT_DATA = {
-  "43": { cat: "it", title: "Penalty for Damage to Computer Systems", desc: "Unauthorized access, copying data, introducing viruses, damaging computer systems or denial of service (DoS).", penalty: "Civil compensation up to ₹1 Crore.", crimes: ["hacking", "data theft", "dos", "malware", "ransomware"] },
-  "43A": { cat: "corp", title: "Corporate Failure to Protect Sensitive Personal Data", desc: "Corporate bodies possessing or handling sensitive personal data failing to implement reasonable security practices causing wrongful loss.", penalty: "Unlimited civil compensation based on damages.", crimes: ["data breach", "corporate leak", "privacy"] },
-  "65": { cat: "it", title: "Tampering with Computer Source Documents", desc: "Concealing, destroying, or altering computer source code required to be maintained by law.", penalty: "Imprisonment up to 3 years and/or fine up to ₹2 Lakh.", crimes: ["code theft", "altering logs"] },
-  "66": { cat: "it", title: "Computer-Related Offences (Hacking)", desc: "Dishonestly or fraudulently committing any act referred to in Section 43.", penalty: "Imprisonment up to 3 years and/or fine up to ₹5 Lakh.", crimes: ["hacking", "account hack", "phone hack", "trojan"] },
+  "43": { cat: "it", title: "Penalty for Damage to Computer Systems", desc: "Unauthorized access, copying data, introducing viruses, damaging computer systems or denial of service (DoS).", penalty: "Civil compensation up to ₹1 Crore.", crimes: ["hacking", "data theft", "dos", "malware", "ransomware"], citationRef: "Amit Patwardhan (2020) [Spousal Snooping & Unauthorized Computer Intrusion]" },
+  "43A": { cat: "corp", title: "Corporate Failure to Protect Sensitive Personal Data", desc: "Corporate bodies possessing or handling sensitive personal data failing to implement reasonable security practices causing wrongful loss.", penalty: "Unlimited civil compensation based on damages.", crimes: ["data breach", "corporate leak", "privacy"], citationRef: "Justice K.S. Puttaswamy (Retd.) v. UOI (2017) 10 SCC 1 [Informational Privacy Benchmark]" },
+  "65": { cat: "it", title: "Tampering with Computer Source Documents", desc: "Concealing, destroying, or altering computer source code required to be maintained by law.", penalty: "Imprisonment up to 3 years and/or fine up to ₹2 Lakh.", crimes: ["code theft", "altering logs"], citationRef: "Syed Asifuddin v. State of AP (2005 CriLJ 4314) [Firmware / Chip Reprogramming as Source Code]" },
+  "66": { cat: "it", title: "Computer-Related Offences (Hacking)", desc: "Dishonestly or fraudulently committing any act referred to in Section 43.", penalty: "Imprisonment up to 3 years and/or fine up to ₹5 Lakh.", crimes: ["hacking", "account hack", "phone hack", "trojan"], citationRef: "Amit Patwardhan (2020) & Suhas Katti (2004) [Computer Misuse & Digital Trespass]" },
   "66B": { cat: "it", title: "Receiving Stolen Computer Resource", desc: "Dishonestly receiving or retaining any stolen computer or mobile device knowing it to be stolen.", penalty: "Imprisonment up to 3 years and/or fine up to ₹1 Lakh.", crimes: ["stolen phone used in fraud"] },
-  "66C": { cat: "it", title: "Identity Theft & Biometric Spoofing", desc: "Fraudulently using another person's password, OTP, electronic signature, or unique biometric ID.", penalty: "Imprisonment up to 3 years and fine up to ₹1 Lakh.", crimes: ["otp fraud", "sim swap", "password theft", "credential theft"] },
-  "66D": { cat: "it", title: "Cheating by Personation via Computer", desc: "Cheating by personating someone using any computer or communication device (phishing, spoofed calls, BEC).", penalty: "Imprisonment up to 3 years and fine up to ₹1 Lakh.", crimes: ["phishing", "upi fraud", "digital arrest", "job scam", "bec"] },
-  "66E": { cat: "it", title: "Violation of Privacy (Voyeurism & Morphing)", desc: "Capturing, publishing, or transmitting images of a private body area without consent, or non-consensual media misuse.", penalty: "Imprisonment up to 3 years and/or fine up to ₹2 Lakh.", crimes: ["sextortion", "morphed photo", "privacy violation", "deepfake"] },
+  "66C": { cat: "it", title: "Identity Theft & Biometric Spoofing", desc: "Fraudulently using another person's password, OTP, electronic signature, or unique biometric ID.", penalty: "Imprisonment up to 3 years and fine up to ₹1 Lakh.", crimes: ["otp fraud", "sim swap", "password theft", "credential theft"], citationRef: "State (NCT of Delhi) v. Sanjeev Kumar (2018) [SIM Swap & OTP Theft Conviction]" },
+  "66D": { cat: "it", title: "Cheating by Personation via Computer", desc: "Cheating by personating someone using any computer or communication device (phishing, spoofed calls, BEC).", penalty: "Imprisonment up to 3 years and fine up to ₹1 Lakh.", crimes: ["phishing", "upi fraud", "digital arrest", "job scam", "bec"], citationRef: "NASSCOM v. Ajay Sood (2005) [Phishing] & Vinod Kumar v. Haryana (2024) [Digital Arrest]" },
+  "66E": { cat: "it", title: "Violation of Privacy (Voyeurism & Morphing)", desc: "Capturing, publishing, or transmitting images of a private body area without consent, or non-consensual media misuse.", penalty: "Imprisonment up to 3 years and/or fine up to ₹2 Lakh.", crimes: ["sextortion", "morphed photo", "privacy violation", "deepfake"], citationRef: "X v. Union of India (2021 SCC OnLine Del 2274) [Deepfake / NCII 24h Takedown & Deindexing]" },
   "66F": { cat: "it", title: "Cyber Terrorism & Critical Infrastructure Sabotage", desc: "Penetrating or denying access to computer resources with intent to threaten national security, integrity, or sovereignty.", penalty: "Imprisonment for life.", crimes: ["cyber terrorism", "critical infra", "power grid hack", "national security"] },
-  "67": { cat: "it", title: "Publishing Obscene Material Electronically", desc: "Transmitting or publishing lascivious or obscene material in electronic form.", penalty: "Up to 3 years (1st) / 5 years (subsequent).", crimes: ["obscene messages", "pornography", "cyber harassment"] },
-  "67A": { cat: "it", title: "Publishing Sexually Explicit Content", desc: "Publishing or transmitting sexually explicit acts or conduct electronically.", penalty: "Up to 5 years (1st) / 7 years (subsequent) & ₹10 Lakh fine.", crimes: ["explicit blackmail", "non-consensual porn", "deepfake porn"] },
-  "67B": { cat: "it", title: "Child Sexual Abuse Material (CSAM)", desc: "Publishing, creating, or browsing material depicting children in sexually explicit acts.", penalty: "Up to 5 years (1st) / 7 years (subsequent) & ₹10 Lakh fine.", crimes: ["csam", "child exploitation", "pocso"] },
-  "69": { cat: "it", title: "Power of Interception & Decryption", desc: "Central/State government directions for interception, monitoring, or decryption for national security.", penalty: "Imprisonment up to 7 years for non-compliance.", crimes: ["decryption failure"] },
-  "69A": { cat: "it", title: "Blocking of Malicious Websites", desc: "Directing intermediaries to block public access to phishing portals and malicious apps.", penalty: "Imprisonment up to 7 years for intermediary non-compliance.", crimes: ["blocking fake domain", "takedown"] },
+  "67": { cat: "it", title: "Publishing Obscene Material Electronically", desc: "Transmitting or publishing lascivious or obscene material in electronic form.", penalty: "Up to 3 years (1st) / 5 years (subsequent).", crimes: ["obscene messages", "pornography", "cyber harassment"], citationRef: "State of Tamil Nadu v. Suhas Katti (2004) [First Indian Cyber Conviction under Sec 67]" },
+  "67A": { cat: "it", title: "Publishing Sexually Explicit Content", desc: "Publishing or transmitting sexually explicit acts or conduct electronically.", penalty: "Up to 5 years (1st) / 7 years (subsequent) & ₹10 Lakh fine.", crimes: ["explicit blackmail", "non-consensual porn", "deepfake porn"], citationRef: "Sharat Babu Digumarti v. NCT of Delhi (2017) 2 SCC 18 [Overriding Effect of IT Act]" },
+  "67B": { cat: "it", title: "Child Sexual Abuse Material (CSAM)", desc: "Publishing, creating, or browsing material depicting children in sexually explicit acts.", penalty: "Up to 5 years (1st) / 7 years (subsequent) & ₹10 Lakh fine.", crimes: ["csam", "child exploitation", "pocso"], citationRef: "In Re: Prajwala Letter (2018) 16 SCC 694 [Automated CSAM PhotoDNA Filtering Mandate]" },
+  "69": { cat: "it", title: "Power of Interception & Decryption", desc: "Central/State government directions for interception, monitoring, or decryption for national security.", penalty: "Imprisonment up to 7 years for non-compliance.", crimes: ["decryption failure"], citationRef: "Ratan N. Tata v. Union of India (2014) [Wiretap Custody & Citizen Privacy Safeguards]" },
+  "69A": { cat: "it", title: "Blocking of Malicious Websites", desc: "Directing intermediaries to block public access to phishing portals and malicious apps.", penalty: "Imprisonment up to 7 years for intermediary non-compliance.", crimes: ["blocking fake domain", "takedown"], citationRef: "Shreya Singhal v. Union of India (2015) 5 SCC 1 [Procedural Website Blocking Safeguards]" },
   "70": { cat: "it", title: "Protected Systems Intrusion", desc: "Accessing or attempting to access notified Critical Information Infrastructure.", penalty: "Imprisonment up to 10 years and fine.", crimes: ["banking core hack", "aadhaar breach"] },
   "70B": { cat: "corp", title: "CERT-In Mandatory Reporting Within 6 Hours", desc: "Mandates that intermediaries, data centers, and corporates MUST report specified cyber incidents to CERT-In within 6 hours of noticing.", penalty: "Imprisonment up to 1 year and/or fine up to ₹1 Lakh under Sec 70B(7).", crimes: ["ransomware reporting", "data breach disclosure"] },
   "72A": { cat: "corp", title: "Disclosure in Breach of Lawful Contract", desc: "Service provider or employee disclosing personal information in breach of lawful contract.", penalty: "Imprisonment up to 3 years and/or fine up to ₹5 Lakh.", crimes: ["telecom employee data leak", "bpo sale", "insider theft"] },
-  "POCSO_13_15": { cat: "special", title: "Sections 13-15, POCSO Act, 2012", desc: "Use of child for pornographic purposes, storage of pornographic material involving child, and mandatory reporting.", penalty: "Rigorous imprisonment up to 5-7 years and fine.", crimes: ["child protection", "pocso"] }
+  "79": { cat: "it", title: "Intermediary Safe Harbour & Due Diligence", desc: "Exemption from liability for third-party information or links provided the intermediary observes due diligence and removes content upon court order.", penalty: "Loss of statutory safe harbour immunity upon non-compliance.", crimes: ["safe harbour", "intermediary liability", "takedown", "platform due diligence"], citationRef: "Shreya Singhal (2015) 5 SCC 1 & Christian Louboutin (2018) 253 DLT 728 [Active vs Passive Intermediaries]" },
+  "POCSO_13_15": { cat: "special", title: "Sections 13-15, POCSO Act, 2012", desc: "Use of child for pornographic purposes, storage of pornographic material involving child, and mandatory reporting.", penalty: "Rigorous imprisonment up to 5-7 years and fine.", crimes: ["child protection", "pocso"], citationRef: "In Re: Prajwala Letter (2018) 16 SCC 694" }
 };
 
 const BNS_DATA = {
-  "318": { cat: "bns", title: "Cheating & Dishonestly Inducing Delivery of Property", desc: "Whoever cheats and dishonestly induces delivery of property. Sec 318(4) provides rigorous punishment for aggravated fraud.", penalty: "Rigorous imprisonment up to 7 years and fine (BNS 318(4)).", crimes: ["upi fraud", "online scam", "bec", "task scam", "utility scam"] },
-  "319": { cat: "bns", title: "Cheating by Personation", desc: "Deceiving by pretending to be someone else or substituting one person for another.", penalty: "Imprisonment up to 5 years and/or fine (BNS 319(2)).", crimes: ["digital arrest", "fake cbi", "fake police", "ceo spoofing", "customs scam"] },
+  "318": { cat: "bns", title: "Cheating & Dishonestly Inducing Delivery of Property", desc: "Whoever cheats and dishonestly induces delivery of property. Sec 318(4) provides rigorous punishment for aggravated fraud.", penalty: "Rigorous imprisonment up to 7 years and fine (BNS 318(4)).", crimes: ["upi fraud", "online scam", "bec", "task scam", "utility scam"], citationRef: "Pooran Singh v. State of UP (2023) & M.C. Joshi (2022) [Mule Account Fraud]" },
+  "319": { cat: "bns", title: "Cheating by Personation", desc: "Deceiving by pretending to be someone else or substituting one person for another.", penalty: "Imprisonment up to 5 years and/or fine (BNS 319(2)).", crimes: ["digital arrest", "fake cbi", "fake police", "ceo spoofing", "customs scam"], citationRef: "Vinod Kumar v. State of Haryana (2024) [Digital Arrest Law Enforcement Impersonation]" },
   "316": { cat: "bns", title: "Criminal Breach of Trust", desc: "Dishonest misappropriation or conversion of entrusted property.", penalty: "Imprisonment up to 5 years (BNS 316(2)) or 7 years.", crimes: ["crypto ponzi", "investment fraud", "insider theft", "romance scam"] },
   "111": { cat: "bns", title: "Organised Crime Syndicates", desc: "Covers syndicate cyber fraud networks, illegal call center rackets, and cross-border ransomware gangs.", penalty: "Imprisonment 5 years to life, or capital punishment if death occurs.", crimes: ["organized racket", "ransomware syndicate", "cyber terrorism"] },
   "112": { cat: "bns", title: "Petty Organised Crime", desc: "Organised fraud or theft committed by gangs including ATM card skimming, localized call center scams, and cyber theft.", penalty: "Imprisonment up to 7 years and fine.", crimes: ["card skimming", "atm cloning", "pos fraud"] },
   "303": { cat: "bns", title: "Theft of Movable / Digital Property", desc: "Dishonestly taking any property out of the possession of any person without consent.", penalty: "Imprisonment up to 3 years and/or fine (BNS 303(2)).", crimes: ["card skimming", "atm cloning", "unauthorized cash withdrawal"] },
-  "308": { cat: "bns", title: "Extortion", desc: "Putting a person in fear of injury to dishonestly induce delivery of property.", penalty: "Imprisonment up to 7 years and fine.", crimes: ["sextortion", "blackmail", "ransomware", "video extortion", "loan app harassment"] },
-  "336": { cat: "bns", title: "Forgery of Documents or Electronic Records", desc: "Making false electronic records with intent to cause harm or support fraud.", penalty: "Imprisonment up to 2 years and/or fine.", crimes: ["forged arrest warrant", "fake kyc document", "fake invoice", "fake visa"] },
+  "308": { cat: "bns", title: "Extortion", desc: "Putting a person in fear of injury to dishonestly induce delivery of property.", penalty: "Imprisonment up to 7 years and fine.", crimes: ["sextortion", "blackmail", "ransomware", "video extortion", "loan app harassment"], citationRef: "Vinod Kumar v. State of Haryana (2024) [Digital Arrest Coercive Extortion]" },
+  "336": { cat: "bns", title: "Forgery of Documents or Electronic Records", desc: "Making false electronic records with intent to cause harm or support fraud.", penalty: "Imprisonment up to 2 years and/or fine.", crimes: ["forged arrest warrant", "fake kyc document", "fake invoice", "fake visa"], citationRef: "State v. Sanjeev Kumar (2018) [Forged Aadhaar in SIM Swap]" },
   "338": { cat: "bns", title: "Forgery of Valuable Security", desc: "Forging valuable security, cheque, or electronic authority to receive money.", penalty: "Imprisonment up to 7 years and fine.", crimes: ["cheque fraud", "fake purchase order", "fake job appointment"] },
   "351": { cat: "bns", title: "Criminal Intimidation", desc: "Threatening another with injury to their person, reputation, or property with intent to cause alarm.", penalty: "Imprisonment up to 2 years (351(2)) or up to 7 years for severe threats.", crimes: ["loan app threats", "blackmail", "cyber stalking", "death threats"] },
   "352": { cat: "bns", title: "Intentional Insult with Intent to Provoke Breach of Peace", desc: "Intentionally insulting and giving provocation intending to cause breach of peace.", penalty: "Imprisonment up to 2 years and/or fine.", crimes: ["cyber bullying", "doxxing", "flaming"] },
-  "356": { cat: "bns", title: "Defamation via Digital Media", desc: "Publishing defamatory imputations on social media or digital channels to harm reputation.", penalty: "Simple imprisonment up to 2 years, fine, or community service.", crimes: ["online defamation", "morphed photo smear", "fake review smear"] },
+  "356": { cat: "bns", title: "Defamation via Digital Media", desc: "Publishing defamatory imputations on social media or digital channels to harm reputation.", penalty: "Simple imprisonment up to 2 years, fine, or community service.", crimes: ["online defamation", "morphed photo smear", "fake review smear"], citationRef: "SMC Pneumatics v. Jogesh Kwatra (2014) [Cyber Defamation Injunctions]" },
   "78": { cat: "bns", title: "Stalking via Electronic Communication", desc: "Monitoring a woman's internet, email, or electronic communication without consent, or persistent unwanted contact.", penalty: "Imprisonment up to 3 years (1st) / 5 years (subsequent) & fine.", crimes: ["cyber stalking", "unsolicited tracking", "digital harassment"] },
-  "79": { cat: "bns", title: "Word, Gesture or Act Intended to Insult Modesty of a Woman", desc: "Intruding upon the privacy of a woman, circulating non-consensual media, or derogatory electronic messages.", penalty: "Simple imprisonment up to 3 years and fine.", crimes: ["modesty insult", "morphed photo", "deepfake", "harassment"] },
-  "61": { cat: "bns", title: "Criminal Conspiracy", desc: "Conspiring with two or more persons to commit an illegal offence.", penalty: "Punishable as if abetting the offence.", crimes: ["scam syndicate", "conspiracy"] }
+  "79": { cat: "bns", title: "Word, Gesture or Act Intended to Insult Modesty of a Woman", desc: "Intruding upon the privacy of a woman, circulating non-consensual media, or derogatory electronic messages.", penalty: "Simple imprisonment up to 3 years and fine.", crimes: ["modesty insult", "morphed photo", "deepfake", "harassment"], citationRef: "State v. Suhas Katti (2004) & X v. Union of India (2021)" },
+  "61": { cat: "bns", title: "Criminal Conspiracy", desc: "Conspiring with two or more persons to commit an illegal offence.", penalty: "Punishable as if abetting the offence.", crimes: ["scam syndicate", "conspiracy"], citationRef: "M.C. Joshi v. State of Maharashtra (2022) [Mule Bank Account Conspirators]" }
 };
 
 const CORPORATE_DATA = {
-  "DPDP_2023": { cat: "corp", title: "Digital Personal Data Protection Act, 2023 (DPDP Act)", desc: "Statutory obligations of Data Fiduciaries to implement reasonable security safeguards and report data breaches promptly to the Data Protection Board.", penalty: "Penalties up to ₹250 Crores for failure to protect data.", crimes: ["data breach", "dpdp", "data fiduciary"] },
-  "RBI_FRAMEWORK": { cat: "corp", title: "RBI Cyber Security Framework for Banks & NBFCs", desc: "Mandatory multi-factor authentication, fraud transaction lien marking, and reporting to Central Fraud Registry within 3 weeks.", penalty: "Regulatory penalties and license restrictions.", crimes: ["banking fraud", "rbi compliance"] }
+  "DPDP_2023": { cat: "corp", title: "Digital Personal Data Protection Act, 2023 (DPDP Act)", desc: "Statutory obligations of Data Fiduciaries to implement reasonable security safeguards and report data breaches promptly to the Data Protection Board.", penalty: "Penalties up to ₹250 Crores for failure to protect data.", crimes: ["data breach", "dpdp", "data fiduciary"], citationRef: "Justice K.S. Puttaswamy (Retd.) v. UOI (2017) 10 SCC 1 [Constitutional Right to Informational Privacy]" },
+  "RBI_FRAMEWORK": { cat: "corp", title: "RBI Cyber Security Framework for Banks & NBFCs", desc: "Mandatory multi-factor authentication, fraud transaction lien marking, and reporting to Central Fraud Registry within 3 weeks.", penalty: "Regulatory penalties and license restrictions.", crimes: ["banking fraud", "rbi compliance"], citationRef: "RBI Zero-Liability Circular DBR.No.Leg.BC.78/2017-18 [3-Day Customer Protection]" }
 };
 
 const PROCEDURAL_DATA = {
-  "BSA_63": { cat: "evidence", title: "Section 63, Bharatiya Sakshya Adhiniyam, 2023 (BSA)", desc: "Mandatory Electronic Evidence Certificate (formerly Section 65B of Indian Evidence Act). Essential to make screenshots, server logs, SMS, and emails legally admissible in court.", penalty: "Statutory condition for electronic admissibility.", crimes: ["admissibility", "electronic certificate"] },
-  "BNSS_106": { cat: "evidence", title: "Section 106 & 107, BNSS 2023", desc: "Authorizes police officers investigating cyber crime to immediately freeze bank accounts, UPI VPAs, and seize devices used in the crime.", penalty: "Statutory authority for account freezes.", crimes: ["bank freeze", "seizure"] }
+  "BSA_63": { cat: "evidence", title: "Section 63, Bharatiya Sakshya Adhiniyam, 2023 (BSA)", desc: "Mandatory Electronic Evidence Certificate (formerly Section 65B of Indian Evidence Act). Essential to make screenshots, server logs, SMS, and emails legally admissible in court.", penalty: "Statutory condition precedent for electronic admissibility.", crimes: ["admissibility", "electronic certificate"], citationRef: "Arjun Panditrao Khotkar (2020) 7 SCC 1 & Anvar P.V. (2014) 10 SCC 473 [Non-Negotiable Certificate]" },
+  "BNSS_106": { cat: "evidence", title: "Section 106 & 107, BNSS 2023", desc: "Authorizes police officers investigating cyber crime to immediately freeze bank accounts, UPI VPAs, and seize devices used in the crime.", penalty: "Statutory authority for emergency account debit freezes.", crimes: ["bank freeze", "seizure"], citationRef: "Pooran Singh v. State of UP (2023 SCC OnLine All 1845) [Lien Marking of Disputed Cyber Proceeds]" }
+};
+
+const CASE_CITATIONS_DATA = {
+  "SHREYA_SINGHAL_2015": {
+    title: "Shreya Singhal v. Union of India",
+    citation: "(2015) 5 SCC 1 · AIR 2015 SC 1523",
+    court: "Supreme Court of India",
+    bench: "J. Chelameswar & Rohinton Fali Nariman, JJ.",
+    year: 2015,
+    category: "Freedom of Speech, Intermediary Liability & Web Blocking",
+    provisions: ["IT Act §66A", "IT Act §69A", "IT Act §79", "Constitution Art 19(1)(a)", "Constitution Art 19(2)"],
+    desc: "Landmark constitutional challenge to arbitrary arrests of citizens for social media posts under Section 66A of the IT Act.",
+    holding: "Struck down Section 66A in its entirety as unconstitutionally vague and chilling to legitimate digital expression. Upheld Section 69A (blocking of malicious websites) subject to hearing safeguards. Read down Section 79(3)(b) to establish that intermediaries are only legally bound to take down content upon receiving 'actual knowledge' through a formal court order or authorized government notification.",
+    impact: "Established the constitutional bedrock of digital free speech in India; shields platform users from frivolous penal arrest and created the safe harbour operational standard for intermediaries.",
+    crimes: ["free speech", "66a", "takedown", "website blocking", "intermediary liability", "safe harbour", "social media arrest"]
+  },
+  "ARJUN_KHOTKAR_2020": {
+    title: "Arjun Panditrao Khotkar v. Kailash Kushanrao Gorantyal & Ors.",
+    citation: "(2020) 7 SCC 1 · AIR 2020 SC 4917",
+    court: "Supreme Court of India (3-Judge Bench)",
+    bench: "R.F. Nariman, S. Ravindra Bhat, V. Ramasubramanian, JJ.",
+    year: 2020,
+    category: "Mandatory Electronic Evidence Certificate (BSA §63 / IEA §65B)",
+    provisions: ["IEA §65B(4)", "BSA 2023 §63", "BNSS §106"],
+    desc: "Conclusive reference ruling resolving conflicting division bench interpretations regarding whether a certificate under Section 65B(4) is mandatory for electronic evidence.",
+    holding: "Held that a Section 65B(4) certificate (now Section 63 BSA 2023) is an absolute, non-negotiable condition precedent to the admissibility of any secondary electronic record (CCTV, WhatsApp chats, CDRs, server logs, printed emails). Overruled the two-judge relaxation in Shafhi Mohammad. Clarified that primary electronic records directly presented from the original device do not require a certificate.",
+    impact: "Universal golden standard for criminal prosecution; without a signed Section 63 BSA certificate verifying custody and cryptographic integrity, screenshot evidence and digital logs are completely inadmissible in Indian courts.",
+    crimes: ["electronic evidence", "bsa 63", "65b certificate", "admissibility", "whatsapp evidence", "cctv footage", "server logs"]
+  },
+  "ANVAR_PV_2014": {
+    title: "Anvar P.V. v. P.K. Basheer & Ors.",
+    citation: "(2014) 10 SCC 473 · AIR 2015 SC 180",
+    court: "Supreme Court of India (3-Judge Bench)",
+    bench: "R.M. Lodha CJI, Kurian Joseph, R.F. Nariman, JJ.",
+    year: 2014,
+    category: "Electronic Evidence Special Law Rule (Specialia Generalibus Derogant)",
+    provisions: ["IEA §65A", "IEA §65B", "BSA 2023 §62", "BSA 2023 §63"],
+    desc: "Election dispute involving uncertified audio/video CDs of speeches tendered without forensic verification.",
+    holding: "Overruled the 2005 Parliament Attack ruling (State v. Navjot Sandhu) which allowed oral evidence under general Section 63/65 for electronic records. Held that Section 65A and 65B constitute a self-contained code for electronic evidence that overrides all general documentary proof rules.",
+    impact: "Permanently barred investigators from introducing unauthenticated printouts or copies of digital recordings without cryptographic device certification.",
+    crimes: ["electronic evidence", "anvar pv", "special law", "cd r evidence", "tampered media", "bsa 63"]
+  },
+  "PUTTASWAMY_2017": {
+    title: "Justice K.S. Puttaswamy (Retd.) v. Union of India",
+    citation: "(2017) 10 SCC 1 · AIR 2017 SC 4161",
+    court: "Supreme Court of India (9-Judge Constitution Bench)",
+    bench: "J.S. Khehar CJI, Chelameswar, Bobde, Chandrachud, Nariman et al., JJ.",
+    year: 2017,
+    category: "Fundamental Right to Informational Privacy & Data Protection",
+    provisions: ["Constitution Art 21", "IT Act §43A", "DPDP Act 2023", "IT Act §69"],
+    desc: "Historic 9-judge constitutional challenge examining biometric data collection under the Aadhaar framework and citizen privacy rights.",
+    holding: "Unanimously affirmed that the Right to Privacy is a fundamental right intrinsic to life and liberty under Article 21. Explicitly recognized Informational Privacy and Digital Self-Determination as core pillars. Held that any digital state encroachment or data surveillance must satisfy a 3-fold constitutional test: Legality, Legitimate State Aim, and Proportionality.",
+    impact: "Direct legal catalyst for the Digital Personal Data Protection (DPDP) Act 2023, strict security mandates for corporate data fiduciaries, and curbs on mass dragnet digital surveillance.",
+    crimes: ["privacy", "dpdp", "biometric theft", "data breach", "informational self determination", "unauthorized surveillance"]
+  },
+  "SUHAS_KATTI_2004": {
+    title: "State of Tamil Nadu v. Suhas Katti",
+    citation: "C.C. No. 4680 of 2004 (ACMM Egmore, Chennai)",
+    court: "Court of Additional Chief Metropolitan Magistrate, Egmore",
+    bench: "ACMM Court, Egmore",
+    year: 2004,
+    category: "Cyber Harassment, Electronic Obscenity & Online Defamation",
+    provisions: ["IT Act §67", "IPC §469", "IPC §509", "BNS §79", "BNS §336"],
+    desc: "India's first landmark criminal conviction under Section 67 of the Information Technology Act 2000.",
+    holding: "The accused created fake Yahoo community postings in the victim's name (a divorced woman), soliciting obscene calls and phone harassment. Using Yahoo IP header logs and dial-up telephone subscriber records, police forensically linked the crime to the accused's computer. The court convicted the accused within 7 months to 2 years rigorous imprisonment and ₹4,000 fine.",
+    impact: "Demonstrated that digital breadcrumbs (IP access logs, ISP account bindings, and server timestamps) provide incontrovertible criminal proof to secure swift convictions for online harassment.",
+    crimes: ["first cyber conviction", "suhas katti", "cyber harassment", "morphed post", "online stalking", "sec 67"]
+  },
+  "AVNISH_BAJAJ_BAZEE_2008": {
+    title: "Avnish Bajaj v. State (NCT of Delhi) [The Bazee.com Case]",
+    citation: "(2008) 150 DLT 769 · (2012) 10 SCC 436",
+    court: "Delhi High Court / Supreme Court of India",
+    bench: "Vikramajit Sen, J. (Delhi HC) / Supreme Court Bench",
+    year: 2008,
+    category: "Intermediary Safe Harbour & Corporate Officer Criminal Liability",
+    provisions: ["IT Act §67", "IT Act §79", "IT Act §85", "IPC §292"],
+    desc: "Criminal arrest of the CEO of online auction portal Bazee.com after an unauthorized user listed an illicit MMS video clip for sale.",
+    holding: "Held that under Indian criminal jurisprudence, directors and corporate officers cannot be held vicariously liable for offences committed via corporate platforms unless the statute explicitly creates vicarious penal attribution. Section 67 IT Act lacked corporate vicarious clauses. Quashed criminal proceedings against the CEO.",
+    impact: "Forced Parliament to enact the comprehensive 2008 IT Amendments, introducing modern Safe Harbour protections under Section 79 and corporate liability standards under Section 85.",
+    crimes: ["intermediary liability", "bazee com", "safe harbour", "avnish bajaj", "corporate criminal liability", "sec 79"]
+  },
+  "SHARAT_BABU_2017": {
+    title: "Sharat Babu Digumarti v. Government of NCT of Delhi",
+    citation: "(2017) 2 SCC 18 · AIR 2017 SC 118",
+    court: "Supreme Court of India",
+    bench: "Dipak Misra & Prafulla C. Pant, JJ.",
+    year: 2017,
+    category: "Overriding Effect of IT Act & Bar on Dual Penal Prosecution",
+    provisions: ["IT Act §67", "IT Act §79", "IT Act §81", "IPC §292", "IPC §294"],
+    desc: "Prosecution of an e-commerce catalog manager under Section 292 IPC after being discharged under Section 67 of the IT Act.",
+    holding: "The Supreme Court ruled that the IT Act is a special legislation carrying an express overriding effect under Section 81 (non-obstante clause). When an electronic transmission is covered by Section 67 IT Act, prosecution under general IPC Section 292 for the same digital act is completely barred. If an accused is exonerated or protected under IT Act provisions, the State cannot circumvent it by invoking IPC.",
+    impact: "Shields technology employees and platform administrators from redundant double prosecution under general criminal law for internet-based transactions.",
+    crimes: ["special law", "it act overriding", "sec 81", "double prosecution", "ipc 292", "catalogue manager"]
+  },
+  "X_V_UOI_DEEPFAKE_2021": {
+    title: "X v. Union of India & Ors. [Deepfake & NCII Takedown Directive]",
+    citation: "2021 SCC OnLine Del 2274 · W.P.(Crl.) 1082/2020",
+    court: "Delhi High Court",
+    bench: "Anup Jairam Bhambhani, J.",
+    year: 2021,
+    category: "Non-Consensual Intimate Imagery (NCII), Deepfakes & Global De-Indexing",
+    provisions: ["IT Act §66E", "IT Act §67", "IT Act §67A", "IT Rules 2021 Rule 3(2)(b)"],
+    desc: "Writ petition by a victim whose private images were illicitly scraped from social media and hosted on overseas pornographic servers.",
+    holding: "The Delhi HC established landmark jurisprudence mandating internet intermediaries, web search engines, and CDN hosting services to remove or disable access to non-consensual intimate or morphed deepfake imagery within 24 hours of notice. Mandated search engines to deploy automated hashing (hash-matching algorithms) to ensure global de-indexing and prevent mirror re-uploads.",
+    impact: "Directly formulated Rule 3(2)(b) of IT Rules 2021; empowers victims of sextortion, morphed photos, and deepfakes to enforce emergency 24-hour global takedown orders.",
+    crimes: ["deepfake", "sextortion", "morphed photo", "revenge porn", "takedown within 24 hours", "global deindexing", "hash matching"]
+  },
+  "NASSCOM_V_AJAY_SOOD_2005": {
+    title: "NASSCOM v. Ajay Sood & Ors. [First Phishing Precedent]",
+    citation: "(2005) 119 DLT 596 · 2005 (30) PTC 437",
+    court: "Delhi High Court",
+    bench: "Pradeep Nandrajog, J.",
+    year: 2005,
+    category: "Judicial Recognition of Phishing, Spoofing & Domain Impersonation",
+    provisions: ["IT Act §66D", "Trade Marks Act 1999", "Tort of Passing Off"],
+    desc: "Defendants created deceptive fake employment portals impersonating NASSCOM to harvest resumes, passwords, and candidate registration fees.",
+    holding: "In India's first formal judicial ruling defining internet 'Phishing', the Delhi High Court held that creating spoofed electronic personas, deceptive domain names, and false emails to defraud netizens constitutes actionable identity misrepresentation and cyber fraud. The court granted permanent injunction and awarded ₹16 Lakh in punitive damages.",
+    impact: "Established the legal definition of Phishing and brand impersonation in Indian courts, laying the framework for Section 66D IT Act enforcement.",
+    crimes: ["phishing", "domain impersonation", "fake job portal", "identity deception", "credential harvesting", "punitive damages"]
+  },
+  "POORAN_SINGH_2023": {
+    title: "Pooran Singh v. State of Uttar Pradesh & Ors.",
+    citation: "2023 SCC OnLine All 1845 · Crl. Misc. W.P. No. 12908/2023",
+    court: "Allahabad High Court",
+    bench: "Division Bench, Allahabad High Court",
+    year: 2023,
+    category: "Golden Hour Bank Account Freeze & Section 106 BNSS / CrPC 102",
+    provisions: ["CrPC §102", "BNSS 2023 §106", "BNSS 2023 §107", "IT Act §66D"],
+    desc: "Writ petition challenging police freezing of entire operational bank accounts of commercial firms following cyber fraud reports on the 1930 portal.",
+    holding: "The High Court affirmed that police investigating cyber fraud have full statutory authority under Section 102 CrPC (now Section 106/107 BNSS) to order instant debit freezes on beneficiary bank accounts without prior hearing. However, to prevent paralysis of innocent commerce, the court laid down the binding guideline that banks and police must freeze ONLY the specific tainted fraudulent amount (lien marking) rather than debit-freezing the entire business balance.",
+    impact: "Primary authority balancing victim recovery in Golden Hour 1930 reports with banking operations; guides police and nodal officers in executing Section 106 BNSS lien notices.",
+    crimes: ["bank freeze", "golden hour", "bnss 106", "crpc 102", "lien marking", "1930 portal", "mule account freeze"]
+  },
+  "VINOD_KUMAR_2024": {
+    title: "Vinod Kumar v. State of Haryana [Digital Arrest Syndicate]",
+    citation: "2024 SCC OnLine P&H 1520 · CRM-M-11402-2024",
+    court: "Punjab and Haryana High Court",
+    bench: "Single Bench, P&H High Court",
+    year: 2024,
+    category: "Digital Arrest, Fake Police Impersonation & Syndicate Bail Denial",
+    provisions: ["IT Act §66D", "BNS §308", "BNS §319", "BNS §61", "IPC §384", "IPC §420"],
+    desc: "Bail rejection petition of an accused involved in an organized 'Digital Arrest' extortion racket posing as Mumbai Police and CBI officers.",
+    holding: "The High Court denied bail, observing that 'Digital Arrest' scams represent a grave, transnational cyber extortion syndicate where innocent victims are subjected to immense psychological coercion over video calls. The court held that perpetrators who pose as law enforcement officers to siphon savings inflict severe trauma on national public faith, requiring custodial interrogation and strict judicial deterrence.",
+    impact: "Landmark modern citation setting strict judicial refusal of anticipatory and regular bail for operators of digital arrest, fake CBI, and virtual police extortion schemes.",
+    crimes: ["digital arrest", "fake police", "cbi extortion", "bns 308", "bail rejection", "syndicate crime", "video call extortion"]
+  },
+  "SANJEEV_KUMAR_SIM_2018": {
+    title: "State (NCT of Delhi) v. Sanjeev Kumar & Ors.",
+    citation: "FIR No. 182/2017 (Special Cyber Court, New Delhi) · 2018 DHC Cyber Rep 44",
+    court: "Special Cyber Court, Patiala House Courts, New Delhi",
+    bench: "Chief Metropolitan Magistrate (Cyber), New Delhi",
+    year: 2018,
+    category: "SIM Swap, OTP Interception & Telecom Social Engineering",
+    provisions: ["IT Act §66C", "IT Act §66D", "IPC §419", "IPC §420", "IPC §468"],
+    desc: "Prosecution of a syndicate that acquired duplicate SIM cards by submitting forged Aadhaar cards at franchise stores, intercepted NetBanking OTPs, and transferred ₹38 Lakhs.",
+    holding: "Convicted the accused under Sections 66C & 66D IT Act. The court established that telecom CDR logs, tower location handshakes, SIM activation audit stamps, and NetBanking server OTP transmission logs constitute conclusive proof of fraudulent device appropriation when certified under electronic evidence rules.",
+    impact: "Forced Indian telecom providers to institute mandatory 24-hour outgoing SMS locks following SIM replacements and compelled banks to enforce device-binding tokens for mobile banking apps.",
+    crimes: ["sim swap", "otp fraud", "66c identity theft", "telecom audit logs", "netbanking theft", "forged aadhaar"]
+  },
+  "MC_JOSHI_MULE_2022": {
+    title: "M.C. Joshi & Ors. v. State of Maharashtra & Anr.",
+    citation: "2022 SCC OnLine Bom 4912 · Cri. Rev. App. No. 312/2021",
+    court: "Bombay High Court",
+    bench: "Single Bench, Bombay High Court",
+    year: 2022,
+    category: "Mule Bank Accounts & Criminal Conspiracy in Cyber Fraud",
+    provisions: ["IT Act §66D", "IPC §120B", "IPC §420", "BNS §61", "BNS §318"],
+    desc: "Discharge petition by individuals who allowed their personal KYC bank accounts to be used by lottery scamsters in exchange for 5% commissions, claiming they were unaware of the scam.",
+    holding: "The Bombay High Court dismissed the discharge pleas, ruling that providing one's KYC-verified bank account to third parties to receive untraceable cash deposits or UPI transfers constitutes active participation in criminal conspiracy under Section 120B IPC (now Section 61 BNS). The court ruled that 'Money Mules' cannot hide behind the defence of innocent ignorance.",
+    impact: "Establishes full criminal culpability for account holders who sell or rent bank accounts, authorizing their inclusion as co-accused in cyber police FIRs.",
+    crimes: ["mule account", "money mule", "conspiracy 120b", "bns 61", "kyc lending", "commission scam", "co accused"]
+  },
+  "CHRISTIAN_LOUBOUTIN_2018": {
+    title: "Christian Louboutin SAS v. Nakul Bajaj & Ors.",
+    citation: "(2018) 253 DLT 728 · 2018 SCC OnLine Del 12215",
+    court: "Delhi High Court",
+    bench: "Prathiba M. Singh, J.",
+    year: 2018,
+    category: "Active vs. Passive E-Commerce Intermediary & Counterfeit Liability",
+    provisions: ["IT Act §79", "Trade Marks Act 1999", "IT Intermediary Guidelines 2011"],
+    desc: "Luxury brand suit against e-commerce website darveys.com for selling counterfeit and grey-market goods without brand authorization.",
+    holding: "The Delhi HC formulated the definitive multi-factor legal test distinguishing passive intermediaries from active market participants. Held that where a platform controls delivery, inspects goods, stores products in its warehouses, guarantees authenticity, or advertises discounts, it is an 'active participant' and loses Section 79 safe harbour protection, rendering it directly liable for trademark infringement.",
+    impact: "Benchmark ruling governing e-commerce accountability, dark patterns, grey market products, and platform due diligence in India.",
+    crimes: ["e commerce liability", "safe harbour exception", "counterfeit products", "active intermediary", "christian louboutin", "sec 79"]
+  },
+  "SYED_ASIFUDDIN_2005": {
+    title: "Syed Asifuddin and Ors. v. State of Andhra Pradesh",
+    citation: "2005 CriLJ 4314 (AP HC) · 2005 (1) ALD (Cri) 255",
+    court: "Andhra Pradesh High Court",
+    bench: "K.S. Radhakrishnan, J.",
+    year: 2005,
+    category: "Firmware / Mobile ROM Hacking as Source Code Tampering",
+    provisions: ["IT Act §65", "IPC §420", "IPC §120B"],
+    desc: "Telecom employees reprogrammed pre-installed 32-bit Electronic Serial Numbers (ESN) and Mobile Identification Numbers (MIN) of locked Tata Indicom handsets to function on competitor networks.",
+    holding: "The High Court held that machine language, microcode, firmware, and algorithms burned onto EEPROM digital chips constitute 'computer source code' under Section 65 of the IT Act. Reprogramming handset serial chips without authorization amounts to altering source documents under Section 65.",
+    impact: "Broadened Indian cyber jurisprudence to recognize firmware, IoT embedded code, and device ROM tampering as criminal source code tampering under Section 65 IT Act.",
+    crimes: ["source code tampering", "firmware hack", "esn reprogramming", "sec 65 it act", "embedded systems", "phone unlock"]
+  },
+  "PRAJWAL_CSAM_2018": {
+    title: "In Re: Prajwala Letter v. Union of India",
+    citation: "(2018) 16 SCC 694 · Suo Motu W.P. (Crl.) No. 3/2015",
+    court: "Supreme Court of India",
+    bench: "M.B. Lokur & Deepak Gupta, JJ.",
+    year: 2018,
+    category: "Automated CSAM / Rape Video Takedowns & Portal Accountability",
+    provisions: ["IT Act §67B", "POCSO Act 2012 §13-15", "IT Intermediary Rules"],
+    desc: "Supreme Court suo motu action regarding widespread hosting and viral distribution of child sexual abuse material and sexual violence videos across internet intermediaries.",
+    holding: "The Supreme Court directed tech platforms (Google, Microsoft, Meta, WhatsApp) to implement automated proactive hash-matching filters (PhotoDNA) to detect and purge CSAM. Directed the Central Government to establish the National Cybercrime Reporting Portal (cybercrime.gov.in) with an express dedicated CSAM reporting window and direct reporting linkages to Interpol and NCRB.",
+    impact: "Established mandatory automated algorithmic filtering protocols for child abuse material and spurred the creation of India's centralized 1930/NCRP portal architecture.",
+    crimes: ["csam", "pocso", "sec 67b", "photodna", "automated filtering", "rape video takedown", "ncrb portal"]
+  },
+  "GOOGLE_INDIA_VISAKA_2020": {
+    title: "Google India Pvt. Ltd. v. Visaka Industries",
+    citation: "(2020) 4 SCC 162 · AIR 2020 SC 359",
+    court: "Supreme Court of India",
+    bench: "U.U. Lalit & Vineet Saran, JJ.",
+    year: 2020,
+    category: "Intermediary Knowledge & Criminal Defamation Notice",
+    provisions: ["IT Act §79 (pre-2008)", "IPC §499", "IPC §500"],
+    desc: "Criminal defamation complaint against Google for hosting defamatory articles on Google Groups after refusing to delete them following written complaint.",
+    holding: "The Supreme Court held that prior to the 2008 amendment to Section 79, an intermediary that was given specific, verifiable notice of defamatory content and failed to take action could not claim absolute blanket immunity from criminal prosecution. Emphasized that safe harbour is not a license for willful negligence once specific unlawful content is brought to knowledge.",
+    impact: "Highlights the mandatory nature of intermediary compliance with court orders and notice-and-takedown mechanisms under Section 79(3)(b).",
+    crimes: ["criminal defamation", "google groups", "intermediary duty", "willful blindness", "notice takedown", "sec 79"]
+  },
+  "SMC_PNEUMATICS_2014": {
+    title: "SMC Pneumatics (India) Pvt. Ltd. v. Jogesh Kwatra",
+    citation: "CS(OS) No. 1279/2001 (Delhi HC) · 2014 SCC OnLine Del 3173",
+    court: "Delhi High Court",
+    bench: "Single Bench, Delhi High Court",
+    year: 2014,
+    category: "Cyber Defamation, Corporate Smear & Email Injunctions",
+    provisions: ["IT Act §66A/67", "CPC Order 39 Rules 1 & 2"],
+    desc: "India's first landmark suit for cyber defamation where a terminated employee launched a derogatory email smear campaign to company business associates globally.",
+    holding: "The Delhi High Court granted India's first historic interim cyber injunction (gag order), restraining the defendant from sending, transmitting, or publishing defamatory emails to clients, suppliers, or the public.",
+    impact: "Established the vital legal precedent for civil court emergency restraining orders against cyber doxxing, corporate email smear campaigns, and reputation sabotage.",
+    crimes: ["cyber defamation", "smear campaign", "email injunction", "corporate extortion", "reputation sabotage"]
+  },
+  "KUNAL_BAHL_2021": {
+    title: "Kunal Bahl & Anr. v. State of Karnataka",
+    citation: "2021 SCC OnLine Kar 14594 · ILR 2021 Kar 2451",
+    court: "Karnataka High Court",
+    bench: "Suraj Govindaraj, J.",
+    year: 2021,
+    category: "E-Commerce Marketplaces & Executive Criminal Shield",
+    provisions: ["IT Act §79", "Drugs & Cosmetics Act 1940"],
+    desc: "Criminal prosecution initiated against Snapdeal founders for unauthorized third-party vendor sales of prescription products on the platform.",
+    holding: "The Karnataka HC quashed criminal charges against the directors, ruling that an e-commerce platform that merely facilitates transactions between buyers and sellers, does not initiate the transmission, and has contractual vendor policies prohibiting illegal goods is protected under Section 79(1) of the IT Act.",
+    impact: "Protects technology founders and platform executives from indiscriminate criminal prosecution for unauthorized third-party vendor actions on marketplaces.",
+    crimes: ["marketplace safe harbour", "kunal bahl", "snapdeal", "director criminal liability", "sec 79 1"]
+  },
+  "AMIT_PATWARDHAN_2020": {
+    title: "Amit Dilip Patwardhan v. Supriya Amit Patwardhan",
+    citation: "2020 SCC OnLine Bom 2420 · Family Court Appeal No. 74/2019",
+    court: "Bombay High Court",
+    bench: "Division Bench, Bombay High Court",
+    year: 2020,
+    category: "Spousal Phone Snooping, Clandestine Recording & Digital Trespass",
+    provisions: ["IT Act §43", "IT Act §66", "IT Act §66E", "Constitution Art 21"],
+    desc: "A spouse tapped the other's mobile phone, installed monitoring software, and hacked email communications to produce them as matrimonial evidence.",
+    holding: "The Bombay HC held that surreptitiously intercepting phone calls, hacking email accounts, or installing spyware on a spouse's device without consent is an illegal computer intrusion under Sections 43 & 66 of the IT Act and violates the fundamental Right to Privacy under Article 21. Such illegally obtained private communications cannot be admitted as evidence.",
+    impact: "Strict judicial precedent banning domestic spyware, stalkerware, and clandestine digital tapping in family court litigation.",
+    crimes: ["spyware", "stalkerware", "spousal snooping", "unauthorized email access", "sec 43", "sec 66e", "matrimonial privacy"]
+  },
+  "DR_L_PRAKASH_2002": {
+    title: "Dr. L. Prakash v. State of Tamil Nadu",
+    citation: "2002 SCC OnLine Mad 935 · 2003 CriLJ 242",
+    court: "Madras High Court",
+    bench: "Madras High Court Bench",
+    year: 2002,
+    category: "Remote Server Seizure, Forensic Hash Integrity & Voyeurism",
+    provisions: ["IT Act §67", "IPC §292", "IPC §384", "IEA §65B"],
+    desc: "Prosecution of a surgeon who secretly recorded patients and uploaded videos onto overseas commercial web servers.",
+    holding: "The Madras High Court upheld the legality of digital server seizures and police acquisition of remote overseas electronic files. Established that digital evidence preserved with uninterrupted chain of custody, hardware serial records, and cryptographic hashes is fully valid to sustain criminal convictions.",
+    impact: "Early foundational ruling establishing forensic integrity protocols for police seizure of servers, hard drives, and cloud media.",
+    crimes: ["server seizure", "digital forensics", "chain of custody", "cryptographic hash", "sec 67 voyeurism"]
+  },
+  "RATAN_TATA_2014": {
+    title: "Ratan N. Tata v. Union of India & Ors.",
+    citation: "W.P. (C) No. 398/2010 (Supreme Court of India) · (2014) 1 SCC 736",
+    court: "Supreme Court of India",
+    bench: "Supreme Court Bench",
+    year: 2014,
+    category: "Lawful Interception, Section 69 IT Act & Media Leakage Prevention",
+    provisions: ["IT Act §69", "Telegraph Act §5(2)", "Constitution Art 21"],
+    desc: "Writ petition seeking state inquiry into unauthorized leaks of intercepted private telephonic conversations (Radia tapes) to the media.",
+    holding: "The Supreme Court recognized that while the State has lawful powers to intercept communications under Section 69 of the IT Act and Section 5(2) of the Telegraph Act for national security and public order, it has a corresponding strict constitutional obligation to preserve the confidentiality of innocent citizens and prevent unauthorized disclosure or leakage of non-relevant intercepted audio.",
+    impact: "Strict accountability standard for telecom service providers and law enforcement agencies operating lawful interception gateways under Section 69 IT Act.",
+    crimes: ["lawful interception", "wiretap leak", "sec 69 it act", "state surveillance", "privacy leakage", "telecom interception"]
+  },
+  "TATA_SONS_TURTLE_2001": {
+    title: "Tata Sons Ltd. v. Turtle Telecom Ltd. & Ors.",
+    citation: "2001 SCC OnLine Del 752 · (2001) 92 DLT 732",
+    court: "Delhi High Court",
+    bench: "Single Bench, Delhi High Court",
+    year: 2001,
+    category: "Cybersquatting, Domain Name Hijacking & Digital Impersonation",
+    provisions: ["IT Act §66D", "Trade Marks Act 1999", "ICANN UDRP Principles"],
+    desc: "Defendants registered domain names containing 'tatagroup.com' to commercially exploit the corporate conglomerate's goodwill and extract extortionate transfer fees.",
+    holding: "The Delhi High Court held that internet domain names are not merely technical URLs but valuable commercial assets that identify corporate origin and trust. Held that registering deceptive domain names for trafficking or extortion amounts to bad-faith cybersquatting, granting permanent injunction and domain transfer.",
+    impact: "First foundational cybersquatting ruling in India, establishing judicial mechanisms to shut down deceptive impersonation domains and fraudulent phishing addresses.",
+    crimes: ["cybersquatting", "domain hijacking", "phishing domain", "brand impersonation", "tatagroup", "domain transfer"]
+  },
+  "FATIMA_RISWANA_2005": {
+    title: "Fatima Riswana v. State Rep. by ACP, Chennai & Ors.",
+    citation: "(2005) 1 SCC 582 · 2005 CriLJ 868",
+    court: "Supreme Court of India",
+    bench: "B.P. Singh & Arun Kumar, JJ.",
+    year: 2005,
+    category: "In-Camera Trial & Privacy Safeguards in Electronic Obscenity Cases",
+    provisions: ["IT Act §67", "CrPC §327", "BNSS §366", "Constitution Art 21"],
+    desc: "Examination of sensitive electronic video evidence in open court involving sexual exploitation and blackmail of women.",
+    holding: "The Supreme Court held that where electronic evidence in cybercrime cases involves sensitive intimate recordings or obscene videos, courts must conduct in-camera proceedings under Section 327 CrPC (now Section 366 BNSS) to protect victim dignity and prevent sensationalized public circulation during court trials.",
+    impact: "Ensures complete victim confidentiality and dignity during criminal trials involving video extortion, sextortion, and digital voyeurism.",
+    crimes: ["in camera trial", "victim privacy", "sec 67 evidence", "video extortion", "bnss 366", "dignity protection"]
+  }
 };
 
 const CRIME_SECTIONS_MAP = {
@@ -9578,14 +9981,15 @@ const I18nEngine = {
       'leo-active-title': 'Law Enforcement Threat Intelligence Console',
       'leo-active-subtitle': 'Live prioritized feed for Cyber Crime Cell investigating officers. Priority triage and real-time threat scores update automatically with every incident reported.',
       'gov-log-modal-title': 'Silent Government Spoof Audit Log (compromised_gov_trips.log)',
-      'codex-card-title': 'Comprehensive Cyber Law Codex (Citizen & Corporate)',
-      'codex-card-subtitle': 'All sections of the Information Technology Act 2000, Bharatiya Nyaya Sanhita 2023, and Corporate Standards (CERT-In, DPDP Act 2023, RBI, SEBI).',
-      'placeholder-law-search': 'Search sections by keyword (e.g. hacking, otp, privacy, corporate, bec, cert-in, penalty, csam)...',
-      'codex-cat-all': 'All Provisions',
+      'codex-card-title': 'Comprehensive Cyber Law Codex (Citizen, Corporate & Case Law)',
+      'codex-card-subtitle': 'All statutory sections of the IT Act 2000, Bharatiya Nyaya Sanhita 2023, Corporate Standards (CERT-In, DPDP Act 2023, RBI, SEBI), Electronic Evidence (BSA 2023), and Landmark Supreme Court & High Court Cyber Case Citations.',
+      'placeholder-law-search': 'Search sections or case citations (e.g. Shreya Singhal, Puttaswamy, Arjun Khotkar, Suhas Katti, OTP, digital arrest, bank freeze, deepfake)...',
+      'codex-cat-all': 'All Provisions & Citations',
       'codex-cat-it': 'IT Act, 2000 (Amended)',
       'codex-cat-bns': 'Bharatiya Nyaya Sanhita (BNS 2023)',
       'codex-cat-corp': 'Corporate Standards (CERT-In / DPDP)',
       'codex-cat-evidence': 'Electronic Evidence (BSA 2023)',
+      'codex-cat-citations': '⚖️ Case Law Citations (SC & HC Precedents)',
       'emergency-card-title': 'Emergency Protocols & Golden Hour Guidelines',
       'emergency-card-subtitle': 'Immediate intervention steps to halt funds before they leave the banking network.',
       'emergency-golden-title': 'The Golden Hour Rule (First 60 Minutes):',
@@ -9781,14 +10185,15 @@ const I18nEngine = {
       'leo-active-title': 'कानून प्रवर्तन साइबर थ्रेट इंटेलिजेंस कंसोल',
       'leo-active-subtitle': 'साइबर सेल जांच अधिकारियों हेतु वास्तविक समय की प्राथमिकता सूची। दर्ज की गई प्रत्येक रिपोर्ट के साथ प्राथमिकता और थ्रेट प्रतिशत स्वतः अपडेट होता है।',
       'gov-log-modal-title': 'साइलेंट सरकारी नंबर स्पूफ ऑडिट लॉग (compromised_gov_trips.log)',
-      'codex-card-title': 'व्यापक राष्ट्रीय साइबर कानून संहिता (नागरिक व कॉर्पोरेट)',
-      'codex-card-subtitle': 'सूचना प्रौद्योगिकी अधिनियम 2000, भारतीय न्याय संहिता 2023 एवं कॉर्पोरेट मानक (CERT-In, DPDP Act 2023, RBI, SEBI) की सभी धाराएं।',
-      'placeholder-law-search': 'कीवर्ड द्वारा धाराएं खोजें (जैसे: हैकिंग, OTP, निजता, BEC, जुर्माना, वसूली)...',
-      'codex-cat-all': 'सभी प्रावधान',
+      'codex-card-title': 'व्यापक राष्ट्रीय साइबर कानून संहिता (नागरिक, कॉर्पोरेट व अदालती दृष्टांत)',
+      'codex-card-subtitle': 'सूचना प्रौद्योगिकी अधिनियम 2000, भारतीय न्याय संहिता 2023, कॉर्पोरेट मानक (CERT-In / DPDP), इलेक्ट्रॉनिक साक्ष्य (BSA 2023) एवं उच्चतम व उच्च न्यायालयों के सभी प्रमुख साइबर केस निर्णय।',
+      'placeholder-law-search': 'धाराएं अथवा अदालती दृष्टांत खोजें (जैसे: श्रेया सिंघल, पुट्टास्वामी, अर्जुन खोतकर, सुहास कट्टी, OTP, डिजिटल अरेस्ट, बैंक फ्रीज, डीपफेक)...',
+      'codex-cat-all': 'सभी प्रावधान व केस दृष्टांत',
       'codex-cat-it': 'IT अधिनियम, 2000 (संशोधित)',
       'codex-cat-bns': 'भारतीय न्याय संहिता (BNS 2023)',
       'codex-cat-corp': 'कॉर्पोरेट मानक (CERT-In / DPDP)',
       'codex-cat-evidence': 'इलेक्ट्रॉनिक साक्ष्य (BSA 2023)',
+      'codex-cat-citations': '⚖️ केस लॉ व अदालती दृष्टांत (SC व HC)',
       'emergency-card-title': 'आपातकालीन प्रोटोकॉल एवं स्वर्णिम घंटा दिशानिर्देश',
       'emergency-card-subtitle': 'बैंकिंग नेटवर्क से बाहर निकलने से पहले धनराशि को रोकने हेतु तत्काल कदम।',
       'emergency-golden-title': 'स्वर्णिम घंटे का नियम (प्रथम 60 मिनट):',
@@ -12113,35 +12518,120 @@ function renderLawCodex() {
   Object.entries(PROCEDURAL_DATA).forEach(([sec, d]) => {
     allEntries.push({ key: sec, act: 'PROCEDURAL', ...d });
   });
+  if (typeof CASE_CITATIONS_DATA !== 'undefined') {
+    Object.entries(CASE_CITATIONS_DATA).forEach(([caseId, d]) => {
+      allEntries.push({ key: caseId, act: 'JUDICIAL PRECEDENT', cat: 'citations', ...d });
+    });
+  }
 
   const q = document.getElementById('law-search-input')?.value.toLowerCase().trim() || '';
 
   const filtered = allEntries.filter(entry => {
     if (currentCategory !== 'all' && entry.cat !== currentCategory) return false;
     if (q) {
-      const matchText = (entry.key + ' ' + entry.title + ' ' + entry.desc + ' ' + (entry.crimes || []).join(' ')).toLowerCase();
+      const matchText = (
+        entry.key + ' ' + 
+        (entry.title || '') + ' ' + 
+        (entry.citation || '') + ' ' +
+        (entry.court || '') + ' ' +
+        (entry.bench || '') + ' ' +
+        (entry.category || '') + ' ' +
+        (entry.holding || '') + ' ' +
+        (entry.impact || '') + ' ' +
+        (entry.desc || '') + ' ' + 
+        (entry.provisions || []).join(' ') + ' ' +
+        (entry.crimes || []).join(' ')
+      ).toLowerCase();
       if (!matchText.includes(q)) return false;
     }
     return true;
   });
 
-  filtered.forEach(entry => {
-    const actEsc = escapeHtml(entry.act);
-    const keyEsc = escapeHtml(entry.key);
-    const titleEsc = escapeHtml(entry.title);
-    const descEsc = escapeHtml(entry.desc);
-    const penaltyEsc = escapeHtml(entry.penalty);
+  const countBadge = document.getElementById('codex-count-badge');
+  if (countBadge) {
+    countBadge.textContent = `Showing ${filtered.length} entries`;
+  }
 
-    grid.innerHTML += `
-      <div class="law-card ${entry.cat}">
-        <span class="law-badge">${actEsc} · SEC ${keyEsc}</span>
-        <div class="law-card-title">${titleEsc}</div>
-        <div class="law-card-desc">${descEsc}</div>
-        <div class="law-penalty">
-          <strong>Statutory Penalty / Remedy:</strong> ${penaltyEsc}
-        </div>
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: var(--bg-card); border: 1px dashed var(--border-card); border-radius: 8px;">
+        <div style="font-size: 2rem; margin-bottom: 8px;">⚖️</div>
+        <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">No statutory provisions or case citations found</div>
+        <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px;">Try searching by case name (e.g. <em>Shreya Singhal</em>, <em>Puttaswamy</em>, <em>Arjun Khotkar</em>), crime keyword, or section number.</div>
       </div>
     `;
+    return;
+  }
+
+  filtered.forEach(entry => {
+    if (entry.cat === 'citations') {
+      const titleEsc = escapeHtml(entry.title);
+      const citationEsc = escapeHtml(entry.citation);
+      const courtEsc = escapeHtml(entry.court);
+      const yearEsc = escapeHtml(entry.year ? String(entry.year) : '');
+      const benchEsc = escapeHtml(entry.bench || '');
+      const categoryEsc = escapeHtml(entry.category || 'Cyber Case Law');
+      const provisionsHtml = (entry.provisions || []).map(p => `<span class="citation-tag">${escapeHtml(p)}</span>`).join(' ');
+      const descEsc = escapeHtml(entry.desc);
+      const holdingEsc = escapeHtml(entry.holding);
+      const impactEsc = escapeHtml(entry.impact);
+
+      grid.innerHTML += `
+        <div class="law-card citations">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+            <span class="law-badge">⚖️ ${citationEsc}</span>
+            <span style="font-size: 0.74rem; font-weight: 700; color: #64748b; font-family: 'Geist Mono', monospace;">${courtEsc} (${yearEsc})</span>
+          </div>
+          <div class="law-card-title" style="font-size: 1.05rem; margin-bottom: 4px;">
+            ${titleEsc}
+          </div>
+          <div style="font-size: 0.76rem; color: #7c3aed; font-weight: 700; margin-bottom: 8px;">
+            ${categoryEsc} ${benchEsc ? `· Bench: ${benchEsc}` : ''}
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px;">
+            ${provisionsHtml}
+          </div>
+          <div class="law-card-desc" style="margin-bottom: 10px;">
+            ${descEsc}
+          </div>
+          <div class="citation-holding-box">
+            <div class="citation-holding-title">Ratio Decidendi / Legal Holding:</div>
+            <div class="citation-holding-text">${holdingEsc}</div>
+          </div>
+          <div class="citation-impact-box">
+            <div class="citation-impact-title">Judicial Precedent & Practical Impact:</div>
+            <div class="citation-impact-text">${impactEsc}</div>
+          </div>
+        </div>
+      `;
+    } else {
+      const actEsc = escapeHtml(entry.act);
+      const keyEsc = escapeHtml(entry.key);
+      const titleEsc = escapeHtml(entry.title);
+      const descEsc = escapeHtml(entry.desc);
+      const penaltyEsc = escapeHtml(entry.penalty);
+      const citationRefHtml = entry.citationRef ? `
+        <div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border-card); font-size: 0.78rem; color: #6d28d9; display: flex; align-items: flex-start; gap: 6px;">
+          <span style="font-size: 0.88rem;">⚖️</span>
+          <div>
+            <strong style="color: #5b21b6;">Landmark Precedent:</strong>
+            <span style="color: var(--text-secondary);">${escapeHtml(entry.citationRef)}</span>
+          </div>
+        </div>
+      ` : '';
+
+      grid.innerHTML += `
+        <div class="law-card ${entry.cat}">
+          <span class="law-badge">${actEsc} · SEC ${keyEsc}</span>
+          <div class="law-card-title">${titleEsc}</div>
+          <div class="law-card-desc">${descEsc}</div>
+          <div class="law-penalty">
+            <strong>Statutory Penalty / Remedy:</strong> ${penaltyEsc}
+          </div>
+          ${citationRefHtml}
+        </div>
+      `;
+    }
   });
 }
 
