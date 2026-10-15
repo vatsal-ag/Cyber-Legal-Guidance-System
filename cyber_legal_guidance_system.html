@@ -9581,6 +9581,8 @@ const LivenessEngine = {
   targetStep: 2,
   verifiedThumbnail: null,
   isPausedForCondition: false,
+  isEnrollmentComplete: false,
+  bestFrontalSnapshot: null,
 
   // Face ID Biometric Enrollment Stages
   scanProgress: 0, // 0 to 100%
@@ -9639,6 +9641,9 @@ const LivenessEngine = {
     if (this.canvasEl) this.ctx = this.canvasEl.getContext('2d', { willReadFrequently: true });
 
     // Reset Face ID enrollment state
+    this.isEnrollmentComplete = false;
+    this.bestFrontalSnapshot = null;
+    this.verifiedThumbnail = null;
     this.scanProgress = 0;
     this.currentPhase = 0;
     this.phaseHoldFrames = 0;
@@ -9767,8 +9772,17 @@ const LivenessEngine = {
         const frameData = this.ctx.getImageData(0, 0, cw, ch);
 
         this.analyzeFrame(frameData, cw, ch);
+
+        // While user is looking directly at camera in Phase 0 with no occlusion, keep a backup frontal selfie frame
+        if (this.currentPhase === 0 && !this.isPausedForCondition && this.phaseHoldFrames >= 3) {
+          try {
+            this.bestFrontalSnapshot = this.canvasEl.toDataURL('image/jpeg', 0.92);
+          } catch (e) {}
+        }
       }
-      this.animId = requestAnimationFrame(loop);
+      if (!this.isEnrollmentComplete) {
+        this.animId = requestAnimationFrame(loop);
+      }
     };
     this.animId = requestAnimationFrame(loop);
   },
@@ -10173,6 +10187,8 @@ const LivenessEngine = {
         this.scanProgress = Math.min(100, 75 + Math.round((this.phaseHoldFrames / 10) * 25));
         this.updateFaceIDUI(3);
         if (this.phaseHoldFrames >= 10 && this.scanProgress >= 100) {
+          if (this.isEnrollmentComplete) return;
+          this.isEnrollmentComplete = true;
           if (arrowEl) arrowEl.style.display = 'none';
           this.markSectorPassed(3);
           this.onEnrollmentComplete(isHi);
@@ -10211,6 +10227,13 @@ const LivenessEngine = {
   },
 
   onEnrollmentComplete(isHi) {
+    // 1. Immediately cancel detection loop so no duplicate frames or timeouts are fired
+    if (this.animId) cancelAnimationFrame(this.animId);
+    this.animId = null;
+
+    // 2. Immediately capture the verified face snapshot while the live video track is active
+    this.captureVerifiedSnapshot();
+
     const banner = document.getElementById('liveness-challenge-banner');
     const guide = document.getElementById('liveness-face-guide');
     const progressRing = document.getElementById('faceid-progress-ring');
@@ -10269,7 +10292,90 @@ const LivenessEngine = {
       return;
     }
 
+    if (this.isEnrollmentComplete) return;
+    this.isEnrollmentComplete = true;
+
+    if (this.animId) cancelAnimationFrame(this.animId);
+    this.animId = null;
+
+    this.captureVerifiedSnapshot();
     this.completeVerification();
+  },
+
+  captureVerifiedSnapshot() {
+    if (this.verifiedThumbnail && typeof this.verifiedThumbnail === 'string' && this.verifiedThumbnail.length > 500) {
+      return this.verifiedThumbnail;
+    }
+
+    // Method 1: Capture from live video element (full camera resolution)
+    if (this.videoEl && this.videoEl.videoWidth > 0 && this.videoEl.readyState >= 2) {
+      try {
+        const vw = this.videoEl.videoWidth;
+        const vh = this.videoEl.videoHeight;
+        const snapCanvas = document.createElement('canvas');
+        snapCanvas.width = vw;
+        snapCanvas.height = vh;
+        const snapCtx = snapCanvas.getContext('2d');
+        if (snapCtx) {
+          // Mirror horizontally to match preview
+          snapCtx.translate(vw, 0);
+          snapCtx.scale(-1, 1);
+          snapCtx.drawImage(this.videoEl, 0, 0, vw, vh);
+
+          // Verify image is not pure black
+          const testData = snapCtx.getImageData(Math.floor(vw * 0.2), Math.floor(vh * 0.2), Math.floor(vw * 0.6), Math.floor(vh * 0.6));
+          let lumSum = 0;
+          for (let i = 0; i < testData.data.length; i += 16) {
+            lumSum += testData.data[i] + testData.data[i + 1] + testData.data[i + 2];
+          }
+          if (lumSum > 500) {
+            this.verifiedThumbnail = snapCanvas.toDataURL('image/jpeg', 0.92);
+            return this.verifiedThumbnail;
+          }
+        }
+      } catch (e1) {
+        console.warn('Video element direct snapshot error:', e1);
+      }
+    }
+
+    // Method 2: Capture from live analysis buffer canvas (mirrored)
+    if (this.canvasEl && this.ctx) {
+      try {
+        const cw = this.canvasEl.width || 320;
+        const ch = this.canvasEl.height || 240;
+        const bufCanvas = document.createElement('canvas');
+        bufCanvas.width = cw;
+        bufCanvas.height = ch;
+        const bufCtx = bufCanvas.getContext('2d');
+        if (bufCtx) {
+          bufCtx.translate(cw, 0);
+          bufCtx.scale(-1, 1);
+          bufCtx.drawImage(this.canvasEl, 0, 0, cw, ch);
+
+          const testData = bufCtx.getImageData(0, 0, cw, ch);
+          let lumSum = 0;
+          for (let i = 0; i < testData.data.length; i += 16) {
+            lumSum += testData.data[i] + testData.data[i + 1] + testData.data[i + 2];
+          }
+          if (lumSum > 500) {
+            this.verifiedThumbnail = bufCanvas.toDataURL('image/jpeg', 0.90);
+            return this.verifiedThumbnail;
+          }
+        }
+      } catch (e2) {
+        console.warn('Buffer canvas snapshot error:', e2);
+      }
+    }
+
+    // Method 3: Fallback to best buffered frontal snapshot from Phase 0
+    if (this.bestFrontalSnapshot) {
+      this.verifiedThumbnail = this.bestFrontalSnapshot;
+      return this.verifiedThumbnail;
+    }
+
+    // Method 4: Statutory cryptographic legal affidavit fallback
+    this.verifiedThumbnail = this.generateAffidavitBadge();
+    return this.verifiedThumbnail;
   },
 
   updateCardUI() {
@@ -10281,12 +10387,13 @@ const LivenessEngine = {
     const infoText = document.getElementById('kyc-photo-info-text');
 
     if (!this.verifiedThumbnail) {
-      this.verifiedThumbnail = this.generateAffidavitBadge();
+      this.captureVerifiedSnapshot();
     }
 
     if (previewBox && this.verifiedThumbnail) {
-      previewBox.innerHTML = `<img src="${this.verifiedThumbnail}" alt="Verified Complainant Live Photo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" />`;
+      previewBox.innerHTML = `<img src="${this.verifiedThumbnail}" alt="Verified Complainant Live Photo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; display: block;" />`;
       previewBox.style.border = '2px solid var(--status-green)';
+      previewBox.style.background = '#020617';
     }
 
     if (badgeBox) {
@@ -10321,6 +10428,8 @@ const LivenessEngine = {
 
   resetToInitialState() {
     this.isVerified = false;
+    this.isEnrollmentComplete = false;
+    this.bestFrontalSnapshot = null;
     this.verifiedThumbnail = null;
     this.scanProgress = 0;
     this.currentPhase = 0;
@@ -10341,6 +10450,7 @@ const LivenessEngine = {
         <span data-i18n="kyc-photo-no-face">${isHi ? 'लाइव फोटो नहीं' : 'No Live Photo'}</span>
       `;
       previewBox.style.border = '2px dashed #475569';
+      previewBox.style.background = '#0f172a';
     }
 
     // 2. Reset Status Badge to Pending
@@ -10417,28 +10527,13 @@ const LivenessEngine = {
   },
 
   completeVerification() {
+    if (this.isVerified) return;
     this.isVerified = true;
     const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
 
-    // Capture verified snapshot thumbnail from canvas
-    if (this.canvasEl && this.videoEl && this.videoEl.videoWidth > 0) {
-      try {
-        const snapCanvas = document.createElement('canvas');
-        snapCanvas.width = this.videoEl.videoWidth || 640;
-        snapCanvas.height = this.videoEl.videoHeight || 480;
-        const snapCtx = snapCanvas.getContext('2d');
-        // Mirror horizontally to match preview
-        snapCtx.translate(snapCanvas.width, 0);
-        snapCtx.scale(-1, 1);
-        snapCtx.drawImage(this.videoEl, 0, 0, snapCanvas.width, snapCanvas.height);
-        this.verifiedThumbnail = snapCanvas.toDataURL('image/jpeg', 0.90);
-      } catch (e) {
-        console.warn('High-res snapshot failed, using buffer canvas', e);
-        this.verifiedThumbnail = this.canvasEl.toDataURL('image/jpeg', 0.85);
-      }
-    }
+    // Ensure snapshot is captured BEFORE stream stops
     if (!this.verifiedThumbnail) {
-      this.verifiedThumbnail = this.generateAffidavitBadge();
+      this.captureVerifiedSnapshot();
     }
 
     // Stop streams
