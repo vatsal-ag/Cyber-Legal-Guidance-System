@@ -1684,6 +1684,8 @@
   }
   .liveness-face-oval.active { border-color: #f59e0b; border-style: solid; box-shadow: 0 0 18px rgba(245,158,11,0.3); }
   .liveness-face-oval.passed { border-color: var(--status-green); border-style: solid; box-shadow: 0 0 22px rgba(16,185,129,0.35); }
+  .liveness-face-oval.warning { border-color: #f59e0b; border-style: dashed; box-shadow: 0 0 22px rgba(245,158,11,0.55); }
+  .liveness-face-oval.danger { border-color: #ef4444; border-style: solid; box-shadow: 0 0 26px rgba(239,68,68,0.65); }
   .liveness-challenge-bar {
     position: absolute;
     bottom: 10px; left: 50%;
@@ -2175,7 +2177,8 @@
     color: #f8fafc;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 -8px 24px rgba(14, 36, 66, 0.25);
-    z-index: 9995;
+    z-index: 10020 !important;
+    pointer-events: auto !important;
     padding: 16px 24px;
     animation: cmpSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -2221,6 +2224,11 @@
   .cmp-actions .btn {
     font-size: 0.8rem;
     padding: 7px 14px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    position: relative;
+    z-index: 10021;
   }
   .btn-cmp-outline {
     background: rgba(255,255,255,0.06);
@@ -3534,7 +3542,7 @@
       font-size: 0.80rem;
     }
     body.has-cmp-banner .cyber-sahayak-fab {
-      bottom: calc(14px + var(--cmp-banner-height, 170px));
+      display: none !important; /* Hides FAB so it never obstructs Essential Cookies button on small screens */
     }
     .cyber-sahayak-window {
       bottom: 0 !important;
@@ -3553,7 +3561,8 @@
       padding: 12px 14px;
       border-top: 2px solid var(--tiranga-saffron);
       box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.45);
-      z-index: 9996;
+      z-index: 10020 !important;
+      pointer-events: auto !important;
     }
     .cmp-container {
       gap: 10px;
@@ -4066,6 +4075,24 @@
                 </button>
                 <span id="kyc-photo-timestamp" style="font-size: 0.78rem; color: var(--status-green); font-weight: 700; display: none;"></span>
               </div>
+            </div>
+          </div>
+
+          <!-- OFFICIAL GOVERNMENT ID DOCUMENT UPLOAD (AADHAAR / VOTER ID / PASSPORT / DL) -->
+          <div style="margin-top: 14px; padding: 14px 16px; background: rgba(14, 36, 66, 0.03); border-radius: var(--radius-sm); border: 1.5px dashed #3b82f6; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 1.6rem;">🪪</span>
+              <div>
+                <div style="font-weight: 700; font-size: 0.88rem; color: var(--text-primary);" data-i18n="gov-id-title">Official Government Identity Document</div>
+                <div style="font-size: 0.77rem; color: var(--text-secondary);" data-i18n="gov-id-subtitle">Attach official Aadhaar, Voter ID, Passport, or Driving License (PDF, PNG, JPG)</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <input type="file" id="gov-id-upload-input" accept="image/png, image/jpeg, image/webp, application/pdf" style="display: none;" onchange="handleGovIdUpload(event)"/>
+              <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('gov-id-upload-input').click()" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+                <span>📁</span> <span id="gov-id-btn-label" data-i18n="btn-upload-gov-id">Upload Government ID Document</span>
+              </button>
+              <span id="gov-id-status-badge" style="font-size: 0.80rem; font-weight: 700; color: #166534; display: none;"></span>
             </div>
           </div>
         </div>
@@ -5323,6 +5350,18 @@
 
       <!-- Video Viewport -->
       <div class="liveness-camera-box">
+        <!-- Permission & Direct Activation Overlay for Mobile & Desktop -->
+        <div id="liveness-permission-prompt" style="display: none; position: absolute; inset: 0; background: rgba(15, 23, 42, 0.94); z-index: 6; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center;">
+          <div style="font-size: 2.4rem; margin-bottom: 8px;">📷</div>
+          <div style="font-weight: 700; color: #ffffff; font-size: 0.98rem; margin-bottom: 6px;">Live Camera Access Required</div>
+          <div style="font-size: 0.78rem; color: #cbd5e1; max-width: 290px; margin-bottom: 16px; line-height: 1.45;">
+            Tap below to trigger the browser camera permission prompt and start real-time face verification.
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" onclick="LivenessEngine.requestCameraPermissionDirect()" style="padding: 10px 22px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.5);">
+            📷 Allow Camera & Start Scan
+          </button>
+        </div>
+
         <video id="liveness-video" autoplay playsinline muted></video>
         <canvas id="liveness-canvas" width="320" height="240"></canvas>
         <div class="liveness-face-oval" id="liveness-face-guide"></div>
@@ -5569,9 +5608,9 @@
       </p>
     </div>
     <div class="cmp-actions">
-      <button class="btn btn-sm btn-cmp-outline" onclick="openCookieModal()">Preferences</button>
-      <button class="btn btn-sm btn-cmp-outline" onclick="acceptCookies('essential')">Essential Only</button>
-      <button class="btn btn-sm btn-cmp-primary" onclick="acceptCookies('all')">Acknowledge & Accept</button>
+      <button type="button" class="btn btn-sm btn-cmp-outline" id="btn-cmp-pref" onclick="openCookieModal()">Preferences</button>
+      <button type="button" class="btn btn-sm btn-cmp-outline" id="btn-cmp-essential" onclick="acceptCookies('essential')">Essential Only</button>
+      <button type="button" class="btn btn-sm btn-cmp-primary" id="btn-cmp-all" onclick="acceptCookies('all')">Acknowledge & Accept</button>
     </div>
   </div>
 </div>
@@ -6985,6 +7024,10 @@ const CMPManager = {
   },
 
   accept(type) {
+    const banner = document.getElementById('cmp-consent-banner');
+    if (banner) banner.style.display = 'none';
+    document.documentElement.style.removeProperty('--cmp-banner-height');
+    document.body.classList.remove('has-cmp-banner');
     try {
       const payload = {
         tier: type,
@@ -6993,14 +7036,10 @@ const CMPManager = {
         gdpr_basis: 'art_6_1_c_and_f'
       };
       localStorage.setItem(this.storageKey, JSON.stringify(payload));
-      const banner = document.getElementById('cmp-consent-banner');
-      if (banner) banner.style.display = 'none';
-      document.documentElement.style.removeProperty('--cmp-banner-height');
-      document.body.classList.remove('has-cmp-banner');
-      showToast(type === 'all' ? '✅ Privacy settings saved. Full session protection active.' : '🛡️ Essential cryptographic storage active.');
     } catch (e) {
       console.warn('Storage write failed', e);
     }
+    showToast(type === 'all' ? '✅ Privacy settings saved. Full session protection active.' : '🛡️ Essential cryptographic storage active.');
   },
 
   openPreferences() {
@@ -9298,6 +9337,7 @@ const LegalDisclaimerEngine = {
 };
 
 // ══════════════════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════════════════
 // ON-SPOT LIVE PHOTO & ANTI-SPOOFING IDENTITY VERIFICATION ENGINE
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -9311,6 +9351,7 @@ const LivenessEngine = {
   timerInterval: null,
   targetStep: 2,
   verifiedThumbnail: null,
+  isPausedForCondition: false,
 
   // Challenge definitions (Bilingual)
   challengesPool: [
@@ -9327,6 +9368,39 @@ const LivenessEngine = {
   motionHistory: [],
   staticFrameCount: 0,
   consecutivePassFrames: 0,
+  lowLightWarningCount: 0,
+
+  async getCameraStream() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      throw new Error('Camera API not supported in this browser context (requires HTTPS or modern browser).');
+    }
+
+    // Level 1: Mobile-friendly front-facing camera with ideal portrait resolution
+    try {
+      return await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
+        audio: false
+      });
+    } catch (e1) {
+      console.warn('Level 1 camera constraints failed, attempting fallback...', e1);
+    }
+
+    // Level 2: Front camera without strict resolution constraint
+    try {
+      return await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user' },
+        audio: false
+      });
+    } catch (e2) {
+      console.warn('Level 2 camera constraints failed, attempting generic camera...', e2);
+    }
+
+    // Level 3: Generic video device (works on all hardware)
+    return await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: false
+    });
+  },
 
   async start(targetStep = 2) {
     this.targetStep = targetStep;
@@ -9345,30 +9419,63 @@ const LivenessEngine = {
     this.staticFrameCount = 0;
     this.consecutivePassFrames = 0;
     this.prevFrameData = null;
+    this.lowLightWarningCount = 0;
 
     // Reset UI
     this.resetUI();
     modal.style.display = 'flex';
 
-    // Request front-facing camera
+    // Attempt automatic camera connection
     try {
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        throw new Error('Camera API not supported in this browser context.');
-      }
-      this.stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
-        audio: false
-      });
-      if (this.videoEl) {
-        this.videoEl.srcObject = this.stream;
-        await this.videoEl.play();
-      }
-      this.startChallenge(0);
-      this.runDetectionLoop();
+      this.stream = await this.getCameraStream();
+      await this.attachStreamAndStart();
     } catch (err) {
-      console.warn('Liveness camera access failed:', err);
+      console.warn('Initial camera access check:', err);
+      // Show user-activation overlay button so mobile Chrome/Safari gets a direct touch event
+      const promptOverlay = document.getElementById('liveness-permission-prompt');
+      if (promptOverlay) {
+        promptOverlay.style.display = 'flex';
+      } else {
+        this.handleCameraFallback(err);
+      }
+    }
+  },
+
+  async requestCameraPermissionDirect() {
+    const promptOverlay = document.getElementById('liveness-permission-prompt');
+    const banner = document.getElementById('liveness-challenge-banner');
+    if (banner) banner.textContent = 'Requesting Camera Permission...';
+
+    try {
+      this.stream = await this.getCameraStream();
+      if (promptOverlay) promptOverlay.style.display = 'none';
+      await this.attachStreamAndStart();
+    } catch (err) {
+      console.warn('Direct camera permission failed:', err);
+      if (promptOverlay) promptOverlay.style.display = 'none';
       this.handleCameraFallback(err);
     }
+  },
+
+  async attachStreamAndStart() {
+    if (!this.videoEl || !this.stream) return;
+    this.videoEl.srcObject = this.stream;
+    this.videoEl.setAttribute('playsinline', '');
+    this.videoEl.setAttribute('webkit-playsinline', '');
+    this.videoEl.muted = true;
+    this.videoEl.playsInline = true;
+
+    try {
+      await this.videoEl.play();
+    } catch (playErr) {
+      console.warn('Video play error:', playErr);
+    }
+
+    const promptOverlay = document.getElementById('liveness-permission-prompt');
+    if (promptOverlay) promptOverlay.style.display = 'none';
+
+    this.startChallenge(0);
+    this.runDetectionLoop();
   },
 
   resetUI() {
@@ -9378,6 +9485,7 @@ const LivenessEngine = {
     const banner = document.getElementById('liveness-challenge-banner');
     const errEl = document.getElementById('liveness-error-msg');
     const retryBtn = document.getElementById('btn-liveness-retry');
+    const promptOverlay = document.getElementById('liveness-permission-prompt');
 
     if (dot1) dot1.className = 'liveness-dot now';
     if (dot2) dot2.className = 'liveness-dot';
@@ -9385,9 +9493,11 @@ const LivenessEngine = {
     if (banner) {
       banner.className = 'liveness-challenge-bar';
       banner.textContent = 'Connecting Camera...';
+      banner.style.background = 'rgba(14,36,66,0.88)';
     }
     if (errEl) errEl.style.display = 'none';
     if (retryBtn) retryBtn.style.display = 'none';
+    if (promptOverlay) promptOverlay.style.display = 'none';
   },
 
   startChallenge(index) {
@@ -9395,6 +9505,7 @@ const LivenessEngine = {
     this.challengeStartTime = Date.now();
     this.consecutivePassFrames = 0;
     this.motionHistory = [];
+    this.isPausedForCondition = false;
 
     const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
     const challenge = this.activeChallenges[index];
@@ -9417,6 +9528,7 @@ const LivenessEngine = {
     if (banner) {
       banner.className = 'liveness-challenge-bar';
       banner.textContent = text;
+      banner.style.background = 'rgba(14,36,66,0.88)';
     }
     if (statusLabel) {
       statusLabel.textContent = isHi ? `चुनौती ${index + 1}/2: ${text}` : `Challenge ${index + 1}/2: ${text}`;
@@ -9432,6 +9544,9 @@ const LivenessEngine = {
     if (timerFg) timerFg.style.strokeDashoffset = '0';
 
     this.timerInterval = setInterval(() => {
+      // Pause countdown if lighting is bad or face is masked/absent
+      if (this.isPausedForCondition) return;
+
       timeLeft -= 1;
       if (timerNum) timerNum.textContent = Math.max(0, timeLeft) + 's';
       if (timerFg) {
@@ -9474,6 +9589,8 @@ const LivenessEngine = {
       const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
       verifyBtn.innerHTML = '📸 ' + (isHi ? 'लाइव चेहरा सत्यापित करें ➔' : 'Verify Live Face Now ➔');
       verifyBtn.className = 'btn btn-primary btn-sm';
+      verifyBtn.style.background = '';
+      verifyBtn.style.borderColor = '';
       verifyBtn.onclick = () => LivenessEngine.captureAndVerifyManual();
     }
     await this.start(this.targetStep);
@@ -9497,16 +9614,114 @@ const LivenessEngine = {
     this.animId = requestAnimationFrame(loop);
   },
 
+  detectFaceAndMask(frameData, width, height) {
+    const data = frameData.data;
+
+    const minX = Math.floor(width * 0.28);
+    const maxX = Math.floor(width * 0.72);
+    const minY = Math.floor(height * 0.22);
+    const maxY = Math.floor(height * 0.78);
+
+    let totalLum = 0;
+    let sampledPixels = 0;
+    let skinPixels = 0;
+
+    // Upper Face zone (forehead, brows, eyes: 25% to 50% of height)
+    const upperY1 = Math.floor(height * 0.25);
+    const upperY2 = Math.floor(height * 0.50);
+    let upperR = 0, upperG = 0, upperB = 0, upperCount = 0;
+
+    // Lower Face zone (nose bridge down to lips and chin: 56% to 80% of height)
+    const lowerY1 = Math.floor(height * 0.56);
+    const lowerY2 = Math.floor(height * 0.80);
+    let lowerR = 0, lowerG = 0, lowerB = 0, lowerCount = 0;
+
+    for (let y = minY; y < maxY; y += 3) {
+      for (let x = minX; x < maxX; x += 3) {
+        const idx = (y * width + x) * 4;
+        const r = data[idx];
+        const g = data[idx + 1];
+        const b = data[idx + 2];
+        const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+        totalLum += lum;
+        sampledPixels++;
+
+        // Melanin skin chroma filter
+        if (r > 45 && g > 35 && b > 20 && r > g && (r - b) > 10 && (r - g) > 4) {
+          skinPixels++;
+        }
+
+        if (y >= upperY1 && y <= upperY2) {
+          upperR += r; upperG += g; upperB += b;
+          upperCount++;
+        }
+
+        if (y >= lowerY1 && y <= lowerY2) {
+          lowerR += r; lowerG += g; lowerB += b;
+          lowerCount++;
+        }
+      }
+    }
+
+    const avgLum = sampledPixels > 0 ? (totalLum / sampledPixels) : 0;
+    const skinRatio = sampledPixels > 0 ? (skinPixels / sampledPixels) : 0;
+
+    // 1. Lighting assessment
+    if (avgLum < 38) {
+      return { status: 'low_light', avgLum: Math.round(avgLum) };
+    }
+    if (avgLum > 238) {
+      return { status: 'overexposed', avgLum: Math.round(avgLum) };
+    }
+
+    // 2. Face presence assessment
+    if (skinRatio < 0.20) {
+      return { status: 'no_face' };
+    }
+
+    // 3. Mask / Obstruction assessment
+    const avgUpR = upperCount > 0 ? (upperR / upperCount) : 0;
+    const avgUpG = upperCount > 0 ? (upperG / upperCount) : 0;
+    const avgUpB = upperCount > 0 ? (upperB / upperCount) : 0;
+    const avgUpLum = 0.299 * avgUpR + 0.587 * avgUpG + 0.114 * avgUpB;
+
+    const avgLowR = lowerCount > 0 ? (lowerR / lowerCount) : 0;
+    const avgLowG = lowerCount > 0 ? (lowerG / lowerCount) : 0;
+    const avgLowB = lowerCount > 0 ? (lowerB / lowerCount) : 0;
+    const avgLowLum = 0.299 * avgLowR + 0.587 * avgLowG + 0.114 * avgLowB;
+
+    // MASK TEST 1: Surgical Blue/Green Mask (Human skin NEVER has B or G higher than R)
+    if (avgLowB > avgLowR + 6 || avgLowG > avgLowR + 6) {
+      return { status: 'mask_detected', type: 'surgical' };
+    }
+
+    // MASK TEST 2: Dark / Black Mask (drastic drop in lower face luminance)
+    if (avgUpLum > 55 && avgLowLum < 32 && (avgUpLum - avgLowLum) > 34) {
+      return { status: 'mask_detected', type: 'dark_mask' };
+    }
+
+    // MASK TEST 3: White / Medical N95 Mask (flat white/gray lower zone vs warm skin upper zone)
+    if (avgLowR > 175 && avgLowG > 175 && avgLowB > 175 && Math.abs(avgLowR - avgLowB) < 16 && (avgUpR - avgUpB) > 28) {
+      return { status: 'mask_detected', type: 'white_mask' };
+    }
+
+    // MASK TEST 4: Chromatic Disconnect
+    const upRedness = avgUpR / (avgUpB + 1);
+    const lowRedness = avgLowR / (avgLowB + 1);
+    if (Math.abs(upRedness - lowRedness) > 0.42 && skinRatio < 0.48) {
+      return { status: 'mask_detected', type: 'covering' };
+    }
+
+    return { status: 'ok', avgLum: Math.round(avgLum) };
+  },
+
   detectStaticOrIdCard(frameData, width, height) {
     const data = frameData.data;
 
-    // 1. Check for lack of temporal micro-motion (static image held to lens)
     if (this.staticFrameCount > 14) {
       return { isSpoof: true, reason: 'static_photo' };
     }
 
-    // 2. High-Contrast Rectangular Edge Detection (Physical College / Govt ID Cards)
-    // ID cards held close to the camera create sharp rectilinear edge boundaries
     let sharpHorizontalEdges = 0;
     const step = 4;
     for (let y = Math.floor(height * 0.22); y < Math.floor(height * 0.78); y += 8) {
@@ -9529,6 +9744,102 @@ const LivenessEngine = {
   },
 
   analyzeFrame(frameData, width, height) {
+    const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
+    const banner = document.getElementById('liveness-challenge-banner');
+    const guide = document.getElementById('liveness-face-guide');
+    const diagText = document.getElementById('liveness-diag-text');
+
+    // 1. Face & Mask & Lighting Multi-Factor Audit
+    const condition = this.detectFaceAndMask(frameData, width, height);
+
+    if (condition.status === 'low_light') {
+      this.isPausedForCondition = true;
+      if (banner) {
+        banner.className = 'liveness-challenge-bar warning';
+        banner.style.background = '#d97706';
+        banner.textContent = isHi 
+          ? `⚠️ रोशनी बहुत कम है (${condition.avgLum}/255)! कृपया लाइट जलाएं या रोशनी की ओर मुंह करें` 
+          : `⚠️ Lighting too low (${condition.avgLum}/255)! Please face a light source or turn on room lights`;
+      }
+      if (guide) guide.className = 'liveness-face-oval warning';
+      if (diagText) {
+        diagText.textContent = `⚠️ Low Lighting (${condition.avgLum}/255) - Increase Light`;
+        diagText.style.color = '#f59e0b';
+      }
+      this.consecutivePassFrames = 0;
+      return;
+    }
+
+    if (condition.status === 'overexposed') {
+      this.isPausedForCondition = true;
+      if (banner) {
+        banner.className = 'liveness-challenge-bar warning';
+        banner.style.background = '#d97706';
+        banner.textContent = isHi 
+          ? '⚠️ रोशनी अत्यधिक तेज है! सीधे बैकलाइट से बचें' 
+          : '⚠️ Lighting too harsh or overexposed! Avoid direct backlight behind your head';
+      }
+      if (guide) guide.className = 'liveness-face-oval warning';
+      this.consecutivePassFrames = 0;
+      return;
+    }
+
+    if (condition.status === 'no_face') {
+      this.isPausedForCondition = true;
+      if (banner) {
+        banner.className = 'liveness-challenge-bar warning';
+        banner.style.background = '#d97706';
+        banner.textContent = isHi 
+          ? '⚠️ चेहरा नहीं दिख रहा! कृपया अपना चेहरा अंडाकार घेरे के अंदर रखें' 
+          : '⚠️ No face detected! Please position your face inside the oval';
+      }
+      if (guide) guide.className = 'liveness-face-oval active';
+      if (diagText) {
+        diagText.textContent = 'Searching for Live Human Face...';
+        diagText.style.color = '#94a3b8';
+      }
+      this.consecutivePassFrames = 0;
+      return;
+    }
+
+    if (condition.status === 'mask_detected') {
+      this.isPausedForCondition = true;
+      if (banner) {
+        banner.className = 'liveness-challenge-bar danger';
+        banner.style.background = '#dc2626';
+        banner.textContent = isHi 
+          ? '🚫 मास्क / चेहरा ढंका पाया गया! कृपया मास्क या कपड़ा हटाएं' 
+          : '🚫 Face Mask / Obstruction Detected! Please remove your mask or cloth covering';
+      }
+      if (guide) guide.className = 'liveness-face-oval danger';
+      if (diagText) {
+        diagText.textContent = '🚫 Face Obstruction: Mask Detected (Must be removed)';
+        diagText.style.color = '#ef4444';
+      }
+      this.consecutivePassFrames = 0;
+      return;
+    }
+
+    // Condition OK: Resume challenge
+    this.isPausedForCondition = false;
+    if (guide && !guide.classList.contains('passed')) {
+      guide.className = 'liveness-face-oval active';
+    }
+    if (diagText) {
+      diagText.textContent = '🛡️ Face Verified (No Mask, Lighting OK) · Micro-Motion Active';
+      diagText.style.color = 'var(--status-green)';
+    }
+
+    // Restore challenge prompt text if not passed
+    if (banner && !banner.classList.contains('ok')) {
+      const challenge = this.activeChallenges[this.currentChallengeIndex];
+      if (challenge) {
+        banner.textContent = isHi ? challenge.hi : challenge.en;
+        banner.style.background = 'rgba(14,36,66,0.88)';
+      }
+    }
+
+    // 2. Optical Motion & Temporal Micro-Movement Analysis
     if (!this.prevFrameData) {
       this.prevFrameData = frameData;
       return;
@@ -9540,7 +9851,6 @@ const LivenessEngine = {
     let motionCenterY = 0;
     let changedPixelsCount = 0;
 
-    // Scan bounding oval area (center 60% of frame)
     const minX = Math.floor(width * 0.2);
     const maxX = Math.floor(width * 0.8);
     const minY = Math.floor(height * 0.15);
@@ -9563,33 +9873,22 @@ const LivenessEngine = {
 
     this.prevFrameData = frameData;
 
-    // ── ANTI-SPOOF CHECK 1: ZERO MICRO-MOTION / STATIC PHOTO CHECK ──
+    // Check for static photo (zero micro-motion)
     if (changedPixelsCount < 12) {
       this.staticFrameCount++;
-      if (this.staticFrameCount > 25) {
-        const diagText = document.getElementById('liveness-diag-text');
-        if (diagText) {
-          diagText.textContent = '⚠️ Static Photo / ID Card Detected (Zero Optical Micro-Motion)';
-          diagText.style.color = '#ef4444';
-        }
+      if (this.staticFrameCount > 25 && diagText) {
+        diagText.textContent = '⚠️ Static Photo / ID Card Detected (Zero Optical Micro-Motion)';
+        diagText.style.color = '#ef4444';
       }
     } else {
       this.staticFrameCount = Math.max(0, this.staticFrameCount - 2);
-      const diagText = document.getElementById('liveness-diag-text');
-      if (diagText) {
-        diagText.textContent = 'Live Optical Motion & Flesh Micro-Frequency Active';
-        diagText.style.color = 'var(--status-green)';
-      }
     }
 
-    // ── ANTI-SPOOF CHECK 2: ID CARD RECTANGULAR EDGE CHECK ──
+    // Check for ID card rectangular boundaries
     const spoofCheck = this.detectStaticOrIdCard(frameData, width, height);
-    if (spoofCheck.isSpoof && spoofCheck.reason === 'id_card_detected') {
-      const diagText = document.getElementById('liveness-diag-text');
-      if (diagText) {
-        diagText.textContent = '🚫 Physical ID Card Boundary Detected (Rejected)';
-        diagText.style.color = '#ef4444';
-      }
+    if (spoofCheck.isSpoof && spoofCheck.reason === 'id_card_detected' && diagText) {
+      diagText.textContent = '🚫 Physical ID Card Boundary Detected (Rejected)';
+      diagText.style.color = '#ef4444';
     }
 
     if (changedPixelsCount > 25) {
@@ -9604,7 +9903,6 @@ const LivenessEngine = {
     const challenge = this.activeChallenges[this.currentChallengeIndex];
     let matched = false;
 
-    // Relative positions (remember canvas is mirrored scaleX(-1) in display)
     if (challenge.id === 'turn_left') {
       if (avgX > width * 0.48 && count > 32) matched = true;
     } else if (challenge.id === 'turn_right') {
@@ -9635,83 +9933,22 @@ const LivenessEngine = {
     }
     if (guide) guide.className = 'liveness-face-oval passed';
 
-    // If challenge 1 passed, move to challenge 2
     if (this.currentChallengeIndex === 0) {
       setTimeout(() => {
         this.startChallenge(1);
       }, 700);
     } else {
-      // Both challenges passed!
       setTimeout(() => {
         this.completeVerification();
       }, 600);
     }
   },
 
-  generateAffidavitBadge() {
-    try {
-      const canvas = document.createElement('canvas');
-      canvas.width = 180;
-      canvas.height = 180;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return null;
-
-      // Official Navy/Emerald security gradient
-      const grad = ctx.createLinearGradient(0, 0, 180, 180);
-      grad.addColorStop(0, '#064e3b');
-      grad.addColorStop(0.5, '#0f172a');
-      grad.addColorStop(1, '#064e3b');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 180, 180);
-
-      // Gold/Emerald dual security rings
-      ctx.strokeStyle = '#10b981';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.arc(90, 90, 80, 0, Math.PI * 2);
-      ctx.stroke();
-
-      ctx.strokeStyle = '#f59e0b';
-      ctx.lineWidth = 1.5;
-      ctx.setLineDash([5, 4]);
-      ctx.beginPath();
-      ctx.arc(90, 90, 72, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      // Shield Emblem
-      ctx.fillStyle = '#34d399';
-      ctx.font = '36px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('🛡️', 90, 52);
-
-      // Statutory Text
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 10px monospace';
-      ctx.fillText('LEGAL AFFIDAVIT', 90, 90);
-
-      ctx.fillStyle = '#a7f3d0';
-      ctx.font = '8.5px sans-serif';
-      ctx.fillText('BNS 2023 §318 VERIFIED', 90, 105);
-
-      const hashStr = 'ID-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-AUTH';
-      ctx.fillStyle = '#cbd5e1';
-      ctx.font = '8px monospace';
-      ctx.fillText(hashStr, 90, 122);
-
-      return canvas.toDataURL('image/png');
-    } catch (e) {
-      return null;
-    }
-  },
-
   captureAndVerifyManual() {
     const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
 
-    // If camera stream is not active, guide user to fallback rather than spitting "too dark" error
     if (!this.stream || !this.stream.active || !this.videoEl || !this.videoEl.srcObject) {
-      this.handleCameraFallback({ message: 'Live camera stream not connected or permission denied.' });
+      this.handleCameraFallback({ message: 'Live camera stream not connected or permission was denied.' });
       return;
     }
 
@@ -9721,35 +9958,19 @@ const LivenessEngine = {
     this.ctx.drawImage(this.videoEl, 0, 0, cw, ch);
 
     const frameData = this.ctx.getImageData(0, 0, cw, ch);
-    const data = frameData.data;
-    let brightnessSum = 0;
-    for (let i = 0; i < data.length; i += 16) {
-      brightnessSum += data[i] + data[i + 1] + data[i + 2];
-    }
-    const avgBrightness = brightnessSum / (data.length / 16 * 3);
 
-    if (avgBrightness < 18) {
-      showToast(isHi ? '⚠️ कैमरा बहुत धुंधला या अंधेरे में है। कृपया प्रकाश में आएं।' : '⚠️ Camera obscured or too dark. Please position your face in good light.');
+    // Audit face and mask before capturing
+    const condition = this.detectFaceAndMask(frameData, cw, ch);
+    if (condition.status === 'low_light') {
+      showToast(isHi ? `⚠️ रोशनी बहुत कम है (${condition.avgLum}/255)! कृपया लाइट जलाएं।` : `⚠️ Lighting too low (${condition.avgLum}/255)! Please face a light source.`);
       return;
     }
-
-    // Anti-Spoof Check: Disallow static photo or card
-    const spoofCheck = this.detectStaticOrIdCard(frameData, cw, ch);
-    if (spoofCheck.isSpoof) {
-      const banner = document.getElementById('liveness-challenge-banner');
-      const errEl = document.getElementById('liveness-error-msg');
-      if (banner) {
-        banner.className = 'liveness-challenge-bar';
-        banner.style.background = '#dc2626';
-        banner.textContent = isHi ? '🚫 फोटो / आईडी कार्ड अस्वीकृत! लाइव चेहरा हिलाएं' : '🚫 Static Photo/ID Card Detected! Move live face';
-      }
-      if (errEl) {
-        errEl.innerHTML = isHi 
-          ? '⚠️ <strong>स्थिर फोटो या आईडी कार्ड अस्वीकृत:</strong> कॉलेज या सरकारी आईडी अथवा फोटो कार्ड स्वीकार्य नहीं है। कैमरे के सामने लाइव चेहरा हिलाएं।'
-          : '⚠️ <strong>Anti-Spoof Reject:</strong> Static photograph or College/Govt ID card detected. A physical live human face with active motion is strictly mandatory.';
-        errEl.style.display = 'block';
-      }
-      showToast(isHi ? '🚫 फोटो/आईडी कार्ड अस्वीकृत! लाइव चेहरा हिलाएं।' : '🚫 Static photo/ID card rejected! Move live face.');
+    if (condition.status === 'mask_detected') {
+      showToast(isHi ? '🚫 मास्क या चेहरा ढंका पाया गया! कृपया चेहरा पूरा खोलें।' : '🚫 Face mask or obstruction detected! Please remove face covering to verify.');
+      return;
+    }
+    if (condition.status === 'no_face') {
+      showToast(isHi ? '⚠️ चेहरा नहीं दिख रहा! कृपया अपना चेहरा घेरे में रखें।' : '⚠️ No face detected inside the oval! Please position your face.');
       return;
     }
 
@@ -9768,34 +9989,34 @@ const LivenessEngine = {
     }
 
     if (previewBox && this.verifiedThumbnail) {
-      previewBox.innerHTML = `<img src="${this.verifiedThumbnail}" alt="Verified Complainant Live Photo / Affidavit" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" />`;
+      previewBox.innerHTML = `<img src="${this.verifiedThumbnail}" alt="Verified Complainant Live Photo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" />`;
       previewBox.style.border = '2px solid var(--status-green)';
     }
 
     if (badgeBox) {
       badgeBox.innerHTML = `
         <span style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8rem; border-radius: 8px; background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; font-weight: 700;">
-          <span>✅</span> <span>Identity & Legal Undertaking Verified</span>
+          <span>✅</span> <span>Live Identity Verified (Anti-Spoof & Mask Checked)</span>
         </span>
       `;
     }
 
     if (btn) {
-      btn.innerHTML = '<span>🔄</span> <span>Re-Verify Identity / Photo</span>';
+      btn.innerHTML = '<span>🔄</span> <span>Re-Verify Live Photo</span>';
       btn.className = 'btn btn-outline btn-sm';
     }
 
     if (timestampEl) {
       const now = new Date();
-      timestampEl.textContent = `Verified: ${now.toLocaleTimeString()} (${now.toLocaleDateString()}) - Statutory Undertaking Affirmed`;
+      timestampEl.textContent = `Verified: ${now.toLocaleTimeString()} (${now.toLocaleDateString()}) - Live Biometric Pass`;
       timestampEl.style.display = 'inline';
     }
 
     if (infoText) {
       infoText.innerHTML = `
-        <strong style="color: var(--status-green);">✅ Complainant Legal Undertaking & Identity Verification Complete.</strong>
+        <strong style="color: var(--status-green);">✅ Complainant Live Facial Identity Verification Complete.</strong>
         <div style="font-size: 0.77rem; color: var(--text-muted); margin-top: 2px;">
-          Statutory affirmation recorded under Bharatiya Nyaya Sanhita 2023 & IT Act 2000. Step 2 Evidence Locker is unlocked.
+          Authentic live human face recorded. Static photos and masks blocked under BNS 2023 §318. Step 2 Evidence Locker is unlocked.
         </div>
       `;
     }
@@ -9806,11 +10027,20 @@ const LivenessEngine = {
     const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
 
     // Capture verified snapshot thumbnail from canvas
-    if (this.canvasEl) {
+    if (this.canvasEl && this.videoEl && this.videoEl.videoWidth > 0) {
       try {
-        this.verifiedThumbnail = this.canvasEl.toDataURL('image/jpeg', 0.82);
+        const snapCanvas = document.createElement('canvas');
+        snapCanvas.width = this.videoEl.videoWidth || 640;
+        snapCanvas.height = this.videoEl.videoHeight || 480;
+        const snapCtx = snapCanvas.getContext('2d');
+        // Mirror horizontally to match preview
+        snapCtx.translate(snapCanvas.width, 0);
+        snapCtx.scale(-1, 1);
+        snapCtx.drawImage(this.videoEl, 0, 0, snapCanvas.width, snapCanvas.height);
+        this.verifiedThumbnail = snapCanvas.toDataURL('image/jpeg', 0.90);
       } catch (e) {
-        console.warn('Snapshot capture failed', e);
+        console.warn('High-res snapshot failed, using buffer canvas', e);
+        this.verifiedThumbnail = this.canvasEl.toDataURL('image/jpeg', 0.85);
       }
     }
     if (!this.verifiedThumbnail) {
@@ -9836,6 +10066,60 @@ const LivenessEngine = {
       showToast(isHi ? '✅ ऑन-स्पॉट पहचान सत्यापन सफल! साक्ष्य लॉकर अनलॉक हुआ।' : '✅ Live Identity Verified! Step 2 Evidence Locker Unlocked.');
       this.checkAndAdvance();
     }, 800);
+  },
+
+  generateAffidavitBadge() {
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 180;
+      canvas.height = 180;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return null;
+
+      const grad = ctx.createLinearGradient(0, 0, 180, 180);
+      grad.addColorStop(0, '#064e3b');
+      grad.addColorStop(0.5, '#0f172a');
+      grad.addColorStop(1, '#064e3b');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 180, 180);
+
+      ctx.strokeStyle = '#10b981';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(90, 90, 80, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      ctx.arc(90, 90, 72, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = '#34d399';
+      ctx.font = '36px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('🛡️', 90, 52);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 10px monospace';
+      ctx.fillText('LEGAL AFFIDAVIT', 90, 90);
+
+      ctx.fillStyle = '#a7f3d0';
+      ctx.font = '8.5px sans-serif';
+      ctx.fillText('BNS 2023 §318 VERIFIED', 90, 105);
+
+      const hashStr = 'ID-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-AUTH';
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '8px monospace';
+      ctx.fillText(hashStr, 90, 122);
+
+      return canvas.toDataURL('image/png');
+    } catch (e) {
+      return null;
+    }
   },
 
   stopStream() {
@@ -9873,19 +10157,15 @@ const LivenessEngine = {
           </div>
           <div style="color: var(--text-secondary); font-size: 0.77rem; line-height: 1.45; margin-bottom: 10px;">
             ${isHi 
-              ? 'ब्राउज़र में कैमरा अनुमति देने हेतु URL बार में लॉक (🔒) आइकन पर क्लिक करें। यदि कैमरा उपलब्ध नहीं है तो वैधानिक शपथ-पत्र (Affidavit) अथवा फोटो अपलोड द्वारा तुरंत सत्यापन पूरा करें।' 
-              : 'Camera access was blocked by the browser. You can allow it via the lock/tune (🔒) icon in the address bar and click <strong>Retry</strong>. Or proceed immediately using your <strong>Statutory Legal Affidavit</strong> or <strong>Photo Upload</strong>.'}
+              ? 'ब्राउज़र में कैमरा अनुमति देने हेतु URL बार में लॉक (🔒) या ट्यून आइकन पर क्लिक कर कैमरा <strong>Allow</strong> करें, फिर <strong>पुनः प्रयास करें</strong> पर टैप करें। अथवा वैधानिक शपथ-पत्र (Affidavit) द्वारा पुष्टि करें।' 
+              : 'Camera access was blocked by the browser. To allow your camera, tap the <strong>🔒 Lock or Tune icon</strong> in your browser address bar (top left), switch Camera to <strong>Allow</strong>, and tap <strong>Retry Camera Access</strong> below.'}
           </div>
           <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-            <button type="button" class="btn btn-sm btn-primary" onclick="LivenessEngine.bypassForEnvironment()" style="background: #16a34a; border-color: #16a34a; font-weight: 700; padding: 7px 14px;">
-              📜 ${isHi ? 'वैधानिक शपथ-पत्र से तुरंत आगे बढ़ें' : 'Proceed with Statutory Affidavit Undertaking'}
+            <button type="button" class="btn btn-sm btn-primary" onclick="LivenessEngine.retry()" style="font-weight: 700; padding: 7px 14px;">
+              🔄 ${isHi ? 'कैमरा पुनः प्रयास करें' : 'Retry Camera Access'}
             </button>
-            <label class="btn btn-sm btn-outline" style="cursor: pointer; margin: 0; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px;">
-              📁 <span>${isHi ? 'फोटो अपलोड करें' : 'Upload Selfie Photo'}</span>
-              <input type="file" accept="image/*" style="display: none;" onchange="LivenessEngine.handlePhotoUpload(event)">
-            </label>
-            <button type="button" class="btn btn-sm btn-outline" onclick="LivenessEngine.runSimulationDemo()" style="border-color: #3b82f6; color: #2563eb; padding: 6px 12px;">
-              🧪 <span>${isHi ? 'मोशन सिमुलेशन' : 'Simulate Live Motion (Demo)'}</span>
+            <button type="button" class="btn btn-sm btn-outline" onclick="LivenessEngine.bypassForEnvironment()" style="border-color: #16a34a; color: #16a34a; font-weight: 600; padding: 7px 14px;">
+              📜 ${isHi ? 'शपथ-पत्र से पुष्टि (हार्डवेयर अभाव)' : 'Statutory Affidavit (No Webcam)'}
             </button>
           </div>
         </div>
@@ -9898,84 +10178,13 @@ const LivenessEngine = {
       retryBtn.style.display = 'inline-block';
     }
 
-    // Adapt primary modal footer button so clicking it proceeds with Affidavit seamlessly
     if (verifyBtn) {
-      verifyBtn.innerHTML = '📜 ' + (isHi ? 'वैधानिक शपथ-पत्र से पुष्टि करें ➔' : 'Confirm via Statutory Affidavit ➔');
+      verifyBtn.innerHTML = '🔄 ' + (isHi ? 'कैमरा पुनः कनेक्ट करें ➔' : 'Retry Camera Access ➔');
       verifyBtn.className = 'btn btn-primary btn-sm';
-      verifyBtn.style.background = '#16a34a';
-      verifyBtn.style.borderColor = '#16a34a';
-      verifyBtn.onclick = () => LivenessEngine.bypassForEnvironment();
+      verifyBtn.style.background = '';
+      verifyBtn.style.borderColor = '';
+      verifyBtn.onclick = () => LivenessEngine.retry();
     }
-  },
-
-  handlePhotoUpload(event) {
-    const file = event.target.files && event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      this.verifiedThumbnail = e.target.result;
-      this.isVerified = true;
-      this.stopStream();
-      this.updateCardUI();
-      const modal = document.getElementById('liveness-modal');
-      if (modal) modal.style.display = 'none';
-      const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
-      showToast(isHi ? '✅ फोटो साक्ष्य अपलोड एवं पहचान सत्यापित!' : '✅ Complainant Photo Uploaded & Identity Verified!');
-      this.checkAndAdvance();
-    };
-    reader.readAsDataURL(file);
-  },
-
-  runSimulationDemo() {
-    const canvas = this.canvasEl || document.getElementById('liveness-canvas');
-    if (!canvas) return;
-    canvas.style.display = 'block';
-    const ctx = canvas.getContext('2d');
-    const w = canvas.width, h = canvas.height;
-
-    let frame = 0;
-    const banner = document.getElementById('liveness-challenge-banner');
-    if (banner) {
-      banner.className = 'liveness-challenge-bar ok';
-      banner.style.background = '#2563eb';
-      banner.textContent = 'Simulating Active Live Face Motion & Optical Flow...';
-    }
-
-    const simInterval = setInterval(() => {
-      frame++;
-      ctx.fillStyle = '#0f172a';
-      ctx.fillRect(0, 0, w, h);
-
-      // Draw synthetic face with active motion
-      const shiftX = Math.sin(frame * 0.25) * 22;
-      const shiftY = Math.cos(frame * 0.25) * 8;
-      
-      // Face oval
-      ctx.fillStyle = '#fed7aa';
-      ctx.beginPath();
-      ctx.ellipse(w / 2 + shiftX, h / 2 + shiftY, 48, 62, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Eyes
-      ctx.fillStyle = '#0f172a';
-      ctx.beginPath();
-      ctx.arc(w / 2 + shiftX - 16, h / 2 + shiftY - 10, 4, 0, Math.PI * 2);
-      ctx.arc(w / 2 + shiftX + 16, h / 2 + shiftY - 10, 4, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Smile
-      ctx.strokeStyle = '#c2410c';
-      ctx.lineWidth = 2.5;
-      ctx.beginPath();
-      ctx.arc(w / 2 + shiftX, h / 2 + shiftY + 12, 14, 0.2, Math.PI - 0.2);
-      ctx.stroke();
-
-      if (frame > 14) {
-        clearInterval(simInterval);
-        this.verifiedThumbnail = canvas.toDataURL('image/jpeg', 0.85);
-        this.completeVerification();
-      }
-    }, 120);
   },
 
   bypassForEnvironment() {
@@ -9994,7 +10203,6 @@ const LivenessEngine = {
   },
 
   checkAndAdvance() {
-    // If Step 1 fields are valid, proceed smoothly to target step
     if (typeof ValidationEngine !== 'undefined') {
       const isStep1Valid = ValidationEngine.validateStep1(currentComplainantMode);
       if (isStep1Valid) {
@@ -10002,11 +10210,26 @@ const LivenessEngine = {
         return;
       }
     }
-    // If Step 1 fields still need user input, inform gently without red error block
     const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
     showToast(isHi ? 'ℹ️ पहचान सत्यापित हुई! कृपया आगे बढ़ने हेतु नाम एवं मोबाइल नंबर भरें।' : 'ℹ️ Complainant Identity Verified! Please complete your Name & Phone in Step 1 to proceed to Step 2.');
   }
 };
+
+function handleGovIdUpload(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  const badge = document.getElementById('gov-id-status-badge');
+  const btnLabel = document.getElementById('gov-id-btn-label');
+  if (badge) {
+    const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
+    badge.innerHTML = `✅ ${isHi ? 'संलग्न:' : 'Attached:'} <strong>${escapeHtml(file.name)}</strong> (${(file.size / 1024).toFixed(1)} KB)`;
+    badge.style.display = 'inline-block';
+  }
+  if (btnLabel) {
+    btnLabel.textContent = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi') ? 'आईडी बदलें' : 'Change ID Document';
+  }
+  showToast((typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi') ? '✅ सरकारी पहचान पत्र सफलतापूर्वक संलग्न किया गया।' : '✅ Official Government ID Document Attached.');
+}
 
 // ══════════════════════════════════════════════════════════════════════════════
 // BILINGUAL LANGUAGE LOCALIZATION ENGINE (ENGLISH ⇄ हिन्दी)
