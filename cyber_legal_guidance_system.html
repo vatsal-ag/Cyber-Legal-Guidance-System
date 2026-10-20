@@ -5542,8 +5542,8 @@
       <!-- 4 Face ID Biometric Angle Stages -->
       <div class="faceid-sectors-row">
         <div class="faceid-sector active" id="faceid-sec-0">
-          <span class="sec-icon">🎯</span>
-          <span class="sec-txt">1. Center</span>
+          <span class="sec-icon">👁️</span>
+          <span class="sec-txt">1. Center & Blink</span>
         </div>
         <div class="faceid-sector" id="faceid-sec-1">
           <span class="sec-icon">➡️</span>
@@ -5560,7 +5560,7 @@
       </div>
 
       <div class="liveness-info" id="liveness-status-label">
-        Position your face inside the circle and slowly complete the angles like Face ID
+        Position your face inside the oval, blink naturally, then slowly turn right & left for side profiles
       </div>
 
       <!-- Real-Time Anti-Spoof Diagnostics Badge -->
@@ -9596,11 +9596,47 @@ const LivenessEngine = {
   staticFrameCount: 0,
   lowLightWarningCount: 0,
 
+  // Baseline Face Metrics (Calibrated during Phase 0)
+  baselineCenterX: null,
+  baselineCenterY: null,
+  baselineEyeOpenness: null,
+  baselineEyeVariance: null,
+
+  // Blink Detection State Machine
+  blinkState: 'WAITING', // 'WAITING', 'EYES_OPEN', 'EYES_DIP', 'CONFIRMED'
+  blinkOpenFrames: 0,
+  blinkDipFrames: 0,
+  hasBlinked: false,
+
   stages: [
-    { id: 'center', en: '🎯 Step 1/4: Center Face Inside Scanner', hi: '🎯 चरण 1/4: चेहरा सीधे केंद्र में रखें', descEn: 'Hold still looking directly at the camera', descHi: 'कैमरे के समक्ष स्थिर रहें' },
-    { id: 'turn_right', en: '➡️ Step 2/4: Slowly Turn Head to the RIGHT', hi: '➡️ चरण 2/4: सिर धीरे-धीरे दाईं ओर घुमाएं', descEn: 'Turn head rightward to scan side profile', descHi: 'दायां प्रोफ़ाइल स्कैन करने हेतु सिर घुमाएं' },
-    { id: 'turn_left', en: '⬅️ Step 3/4: Slowly Turn Head to the LEFT', hi: '⬅️ चरण 3/4: सिर धीरे-धीरे बाईं ओर घुमाएं', descEn: 'Turn head leftward to scan side profile', descHi: 'बायां प्रोफ़ाइल स्कैन करने हेतु सिर घुमाएं' },
-    { id: 'tilt_vertical', en: '↕️ Step 4/4: Tilt Head Slightly UP & DOWN', hi: '↕️ चरण 4/4: सिर थोड़ा ऊपर/नीचे हिलाएं', descEn: 'Complete 3D depth biometric envelope', descHi: '3D बायोमेट्रिक स्कैन पूरा करें' }
+    { 
+      id: 'center', 
+      en: '👁️ Step 1/4: Center Face & BLINK Your Eyes', 
+      hi: '👁️ चरण 1/4: चेहरा केंद्र में रखें और पलकें झपकाएं', 
+      descEn: 'Position face in oval, then blink naturally to verify live human presence', 
+      descHi: 'चेहरा घेरे में रखें और सजीवता की पुष्टि हेतु पलकें झपकाएं' 
+    },
+    { 
+      id: 'turn_right', 
+      en: '➡️ Step 2/4: Turn Head to the RIGHT Profile', 
+      hi: '➡️ चरण 2/4: सिर दाईं ओर घुमाकर दायां प्रोफाइल दिखाएं', 
+      descEn: 'Turn head rightward until side profile angle is recorded', 
+      descHi: 'दायां प्रोफ़ाइल कैमरे में आने तक सिर दाईं ओर घुमाएं' 
+    },
+    { 
+      id: 'turn_left', 
+      en: '⬅️ Step 3/4: Turn Head to the LEFT Profile', 
+      hi: '⬅️ चरण 3/4: सिर बाईं ओर घुमाकर बायां प्रोफाइल दिखाएं', 
+      descEn: 'Turn head leftward until side profile angle is recorded', 
+      descHi: 'बायां प्रोफ़ाइल कैमरे में आने तक सिर बाईं ओर घुमाएं' 
+    },
+    { 
+      id: 'tilt_vertical', 
+      en: '↕️ Step 4/4: Tilt Head UP / DOWN (Nod)', 
+      hi: '↕️ चरण 4/4: सिर थोड़ा ऊपर/नीचे करें (नोडिंग)', 
+      descEn: 'Nod head up or down to complete 3D depth scan', 
+      descHi: '3D बायोमेट्रिक स्कैन पूर्ण करने हेतु सिर ऊपर/नीचे करें' 
+    }
   ],
 
   async getCameraStream() {
@@ -9660,6 +9696,14 @@ const LivenessEngine = {
     this.staticFrameCount = 0;
     this.lowLightWarningCount = 0;
     this.isPausedForCondition = false;
+    this.baselineCenterX = null;
+    this.baselineCenterY = null;
+    this.baselineEyeOpenness = null;
+    this.baselineEyeVariance = null;
+    this.blinkState = 'WAITING';
+    this.blinkOpenFrames = 0;
+    this.blinkDipFrames = 0;
+    this.hasBlinked = false;
 
     // Reset UI
     this.resetUI();
@@ -9745,8 +9789,8 @@ const LivenessEngine = {
     }
 
     // Reset sectors with original icons and labels
-    const secIcons = ['🎯', '➡️', '⬅️', '↕️'];
-    const secLabels = ['1. Center', '2. Turn Right', '3. Turn Left', '4. Tilt 3D'];
+    const secIcons = ['👁️', '➡️', '⬅️', '↕️'];
+    const secLabels = ['1. Center & Blink', '2. Right Profile', '3. Left Profile', '4. Tilt 3D'];
     for (let i = 0; i < 4; i++) {
       const sec = document.getElementById(`faceid-sec-${i}`);
       if (sec) {
@@ -9815,26 +9859,34 @@ const LivenessEngine = {
   detectFaceAndOcclusion(frameData, width, height) {
     const data = frameData.data;
 
-    const minX = Math.floor(width * 0.22);
-    const maxX = Math.floor(width * 0.78);
-    const minY = Math.floor(height * 0.16);
-    const maxY = Math.floor(height * 0.84);
+    const minX = Math.floor(width * 0.20);
+    const maxX = Math.floor(width * 0.80);
+    const minY = Math.floor(height * 0.15);
+    const maxY = Math.floor(height * 0.85);
 
     let totalLum = 0;
     let sampledPixels = 0;
     let skinPixels = 0;
+    let skinXSum = 0;
+    let skinYSum = 0;
+    let leftHalfSkin = 0;
+    let rightHalfSkin = 0;
+    const midX = width / 2;
 
     const zoneForehead = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
-    const zoneLeftEye = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
-    const zoneRightEye = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
+    const zoneLeftEye = { r: 0, g: 0, b: 0, count: 0, lum: 0, lumSq: 0 };
+    const zoneRightEye = { r: 0, g: 0, b: 0, count: 0, lum: 0, lumSq: 0 };
+    const zoneNose = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
     const zoneCheeks = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
     const zoneMouth = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
     const zoneChin = { r: 0, g: 0, b: 0, count: 0, lum: 0 };
 
     const fhY1 = Math.floor(height * 0.18), fhY2 = Math.floor(height * 0.30);
     const eyeY1 = Math.floor(height * 0.32), eyeY2 = Math.floor(height * 0.46);
-    const eyeLeftX1 = Math.floor(width * 0.26), eyeLeftX2 = Math.floor(width * 0.46);
-    const eyeRightX1 = Math.floor(width * 0.54), eyeRightX2 = Math.floor(width * 0.74);
+    const eyeLeftX1 = Math.floor(width * 0.26), eyeLeftX2 = Math.floor(width * 0.45);
+    const eyeRightX1 = Math.floor(width * 0.55), eyeRightX2 = Math.floor(width * 0.74);
+    const noseY1 = Math.floor(height * 0.34), noseY2 = Math.floor(height * 0.50);
+    const noseX1 = Math.floor(width * 0.45), noseX2 = Math.floor(width * 0.55);
     const chkY1 = Math.floor(height * 0.48), chkY2 = Math.floor(height * 0.64);
     const mthY1 = Math.floor(height * 0.65), mthY2 = Math.floor(height * 0.80);
     const mthX1 = Math.floor(width * 0.34), mthX2 = Math.floor(width * 0.66);
@@ -9853,16 +9905,25 @@ const LivenessEngine = {
 
         // Melanin skin chroma filter
         const isSkin = (r > 45 && g > 35 && b > 20 && r > g && (r - b) > 10 && (r - g) > 4);
-        if (isSkin) skinPixels++;
+        if (isSkin) {
+          skinPixels++;
+          skinXSum += x;
+          skinYSum += y;
+          if (x < midX) leftHalfSkin++;
+          else rightHalfSkin++;
+        }
 
         if (y >= fhY1 && y <= fhY2 && x >= minX && x <= maxX) {
           zoneForehead.r += r; zoneForehead.g += g; zoneForehead.b += b; zoneForehead.lum += lum; zoneForehead.count++;
         }
         if (y >= eyeY1 && y <= eyeY2 && x >= eyeLeftX1 && x <= eyeLeftX2) {
-          zoneLeftEye.r += r; zoneLeftEye.g += g; zoneLeftEye.b += b; zoneLeftEye.lum += lum; zoneLeftEye.count++;
+          zoneLeftEye.r += r; zoneLeftEye.g += g; zoneLeftEye.b += b; zoneLeftEye.lum += lum; zoneLeftEye.lumSq += (lum * lum); zoneLeftEye.count++;
         }
         if (y >= eyeY1 && y <= eyeY2 && x >= eyeRightX1 && x <= eyeRightX2) {
-          zoneRightEye.r += r; zoneRightEye.g += g; zoneRightEye.b += b; zoneRightEye.lum += lum; zoneRightEye.count++;
+          zoneRightEye.r += r; zoneRightEye.g += g; zoneRightEye.b += b; zoneRightEye.lum += lum; zoneRightEye.lumSq += (lum * lum); zoneRightEye.count++;
+        }
+        if (y >= noseY1 && y <= noseY2 && x >= noseX1 && x <= noseX2) {
+          zoneNose.r += r; zoneNose.g += g; zoneNose.b += b; zoneNose.lum += lum; zoneNose.count++;
         }
         if (y >= chkY1 && y <= chkY2 && (x < mthX1 || x > mthX2)) {
           zoneCheeks.r += r; zoneCheeks.g += g; zoneCheeks.b += b; zoneCheeks.lum += lum; zoneCheeks.count++;
@@ -9878,33 +9939,55 @@ const LivenessEngine = {
 
     const avgLum = sampledPixels > 0 ? (totalLum / sampledPixels) : 0;
     const skinRatio = sampledPixels > 0 ? (skinPixels / sampledPixels) : 0;
+    const skinCenterX = skinPixels > 0 ? (skinXSum / skinPixels) : (width / 2);
+    const skinCenterY = skinPixels > 0 ? (skinYSum / skinPixels) : (height / 2);
 
     // 1. Lighting assessment
     if (avgLum < 20) return { status: 'low_light', avgLum: Math.round(avgLum) };
     if (avgLum > 245) return { status: 'overexposed', avgLum: Math.round(avgLum) };
 
-    // 2. Face presence assessment (calibrated for profile turns)
-    const minSkin = (this.currentPhase === 0) ? 0.16 : 0.10;
+    // 2. Face presence assessment
+    const minSkin = (this.currentPhase === 0) ? 0.18 : 0.10;
     if (skinRatio < minSkin) return { status: 'no_face' };
 
     const fhLum = zoneForehead.count > 0 ? zoneForehead.lum / zoneForehead.count : 0;
     const leftEyeLum = zoneLeftEye.count > 0 ? zoneLeftEye.lum / zoneLeftEye.count : 0;
     const rightEyeLum = zoneRightEye.count > 0 ? zoneRightEye.lum / zoneRightEye.count : 0;
+    const noseLum = zoneNose.count > 0 ? zoneNose.lum / zoneNose.count : 0;
     const cheeksLum = zoneCheeks.count > 0 ? zoneCheeks.lum / zoneCheeks.count : 0;
     const mouthLum = zoneMouth.count > 0 ? zoneMouth.lum / zoneMouth.count : 0;
-    const chinLum = zoneChin.count > 0 ? zoneChin.lum / zoneChin.count : 0;
 
     const mouthR = zoneMouth.count > 0 ? zoneMouth.r / zoneMouth.count : 0;
     const mouthG = zoneMouth.count > 0 ? zoneMouth.g / zoneMouth.count : 0;
     const mouthB = zoneMouth.count > 0 ? zoneMouth.b / zoneMouth.count : 0;
 
-    const cheeksR = zoneCheeks.count > 0 ? zoneCheeks.r / zoneCheeks.count : 0;
-    const cheeksG = zoneCheeks.count > 0 ? zoneCheeks.g / zoneCheeks.count : 0;
-    const cheeksB = zoneCheeks.count > 0 ? zoneCheeks.b / zoneCheeks.count : 0;
+    // Calculate Eye Internal Texture / Variance (Real eyes have pupils/brows; walls/hands are flat)
+    const leftEyeVar = zoneLeftEye.count > 0 ? Math.max(0, (zoneLeftEye.lumSq / zoneLeftEye.count) - (leftEyeLum * leftEyeLum)) : 0;
+    const rightEyeVar = zoneRightEye.count > 0 ? Math.max(0, (zoneRightEye.lumSq / zoneRightEye.count) - (rightEyeLum * rightEyeLum)) : 0;
+    const avgEyeStdDev = (Math.sqrt(leftEyeVar) + Math.sqrt(rightEyeVar)) / 2;
 
-    // 3. Occlusion and Mask Tests - Strictly Enforced during Phase 0 (Frontal Center Alignment)
-    // During head turns (Phases 1-3), fixed sampling zones shift off-center; passing Phase 0 verifies an uncovered face.
+    const avgEyeLum = (leftEyeLum + rightEyeLum) / 2;
+    const eyeContrast = Math.max(0, fhLum - avgEyeLum);
+
+    // Phase 0 Structural Facial Landmark Audit (Distinguishes real face from wall, hand, desk, or floor)
     if (this.currentPhase === 0) {
+      // Test A: Center of skin mass must be positioned inside the scanner oval
+      const isSkinCentered = (
+        skinCenterX >= width * 0.30 && 
+        skinCenterX <= width * 0.70 && 
+        skinCenterY >= height * 0.25 && 
+        skinCenterY <= height * 0.75
+      );
+      if (!isSkinCentered) {
+        return { status: 'no_face', reason: 'off_center' };
+      }
+
+      // Test B: Dual eye sockets must have darker contrast and internal pupil/brow texture
+      // A plain wall, table, ceiling, or flat hand has avgEyeStdDev < 4.2 and eyeContrast < 4.0
+      if (avgEyeStdDev < 4.2 && eyeContrast < 3.8) {
+        return { status: 'no_face', reason: 'no_facial_features' };
+      }
+
       // Mask / Non-skin covering checks
       if (mouthB > mouthR + 15 || mouthG > mouthR + 15) return { status: 'mask_detected', type: 'surgical' };
       if (fhLum > 55 && mouthLum < 22 && (fhLum - mouthLum) > 36) return { status: 'mask_detected', type: 'dark_mask' };
@@ -9917,8 +10000,6 @@ const LivenessEngine = {
       }
 
       // Eyes covered by fingers/sunglasses
-      const avgEyeLum = (leftEyeLum + rightEyeLum) / 2;
-      const eyeContrast = Math.max(0, fhLum - avgEyeLum);
       if (eyeContrast < 0.6 && skinRatio > 0.70) {
         return { status: 'face_covered', reason: 'eyes_covered' };
       }
@@ -9929,9 +10010,18 @@ const LivenessEngine = {
       }
     }
 
-    const avgEyeLum = (leftEyeLum + rightEyeLum) / 2;
-    const eyeContrast = Math.max(0, fhLum - avgEyeLum);
-    return { status: 'ok', avgLum: Math.round(avgLum), eyeContrast: Math.round(eyeContrast) };
+    return { 
+      status: 'ok', 
+      avgLum: Math.round(avgLum), 
+      eyeContrast: Math.round(eyeContrast),
+      eyeOpenness: eyeContrast,
+      eyeStdDev: avgEyeStdDev,
+      skinCenterX,
+      skinCenterY,
+      leftHalfSkin,
+      rightHalfSkin,
+      skinPixels
+    };
   },
 
   detectStaticOrIdCard(frameData, width, height) {
@@ -10121,11 +10211,11 @@ const LivenessEngine = {
     const avgX = changedPixelsCount > 0 ? (motionCenterX / changedPixelsCount) : (width / 2);
     const avgY = changedPixelsCount > 0 ? (motionCenterY / changedPixelsCount) : (height / 2);
 
-    // 3. Advance Face ID Multi-Stage Enrollment
-    this.advanceFaceIDEnrollment(avgX, avgY, changedPixelsCount, width, height, isHi);
+    // 3. Advance Face ID Multi-Stage Enrollment with facial condition metrics
+    this.advanceFaceIDEnrollment(condition, avgX, avgY, changedPixelsCount, width, height, isHi);
   },
 
-  advanceFaceIDEnrollment(avgX, avgY, count, width, height, isHi) {
+  advanceFaceIDEnrollment(condition, avgX, avgY, count, width, height, isHi) {
     if (this.isVerified) return;
 
     const stage = this.stages[this.currentPhase];
@@ -10141,20 +10231,85 @@ const LivenessEngine = {
       statusLabel.textContent = isHi ? stage.descHi : stage.descEn;
     }
 
-    // Phase 0: Center Face alignment (0% to 25%)
+    // Phase 0: Center Face & BLINK Natural Detection (0% to 25%)
     if (this.currentPhase === 0) {
       if (arrowEl) arrowEl.style.display = 'none';
-      this.phaseHoldFrames++;
-      this.scanProgress = Math.min(25, Math.round((this.phaseHoldFrames / 10) * 25));
-      this.updateFaceIDUI(0);
-      if (this.phaseHoldFrames >= 10) {
+
+      // Establish baseline center of face
+      if (condition && condition.skinCenterX) {
+        this.baselineCenterX = this.baselineCenterX ? (0.8 * this.baselineCenterX + 0.2 * condition.skinCenterX) : condition.skinCenterX;
+        this.baselineCenterY = this.baselineCenterY ? (0.8 * this.baselineCenterY + 0.2 * condition.skinCenterY) : condition.skinCenterY;
+      }
+
+      const eyeVal = (condition && (condition.eyeOpenness || condition.eyeContrast)) || 10;
+      const eyeDev = (condition && condition.eyeStdDev) || 8;
+
+      // Track open-eye baseline and store high-quality open-eyed selfie frame
+      if (this.blinkState === 'WAITING' || this.blinkState === 'EYES_OPEN') {
+        this.blinkOpenFrames++;
+        if (this.blinkOpenFrames >= 3) {
+          this.blinkState = 'EYES_OPEN';
+          this.baselineEyeOpenness = this.baselineEyeOpenness 
+            ? (0.85 * this.baselineEyeOpenness + 0.15 * eyeVal) 
+            : eyeVal;
+          this.baselineEyeVariance = this.baselineEyeVariance 
+            ? (0.85 * this.baselineEyeVariance + 0.15 * eyeDev) 
+            : eyeDev;
+          // Capture best open-eyed frontal snapshot
+          try {
+            if (this.canvasEl) this.bestFrontalSnapshot = this.canvasEl.toDataURL('image/jpeg', 0.92);
+          } catch (e) {}
+        }
+      }
+
+      // Detect Eye Blink (Eyelids closing over pupils)
+      if (this.blinkState === 'EYES_OPEN') {
+        const isClosed = (eyeVal < this.baselineEyeOpenness * 0.70) || (eyeDev < this.baselineEyeVariance * 0.65) || (this.baselineEyeOpenness - eyeVal > 4.5);
+        if (isClosed) {
+          this.blinkState = 'EYES_DIP';
+          this.blinkDipFrames = 1;
+        }
+      } else if (this.blinkState === 'EYES_DIP') {
+        this.blinkDipFrames++;
+        // Eyelid reopened within natural human blink window (1 to 10 frames: 33ms to 330ms)
+        const isReopened = (eyeVal >= this.baselineEyeOpenness * 0.82) || (eyeDev >= this.baselineEyeVariance * 0.75);
+        if (isReopened && this.blinkDipFrames >= 1 && this.blinkDipFrames <= 10) {
+          this.hasBlinked = true;
+          this.blinkState = 'CONFIRMED';
+        } else if (this.blinkDipFrames > 12) {
+          // Closed too long (squinting or sleeping), reset to open
+          this.blinkState = 'WAITING';
+          this.blinkOpenFrames = 0;
+          this.blinkDipFrames = 0;
+        }
+      }
+
+      // Progress animation in Phase 0
+      if (!this.hasBlinked) {
+        this.phaseHoldFrames = Math.min(8, this.phaseHoldFrames + 1);
+        this.scanProgress = Math.min(20, Math.round((this.phaseHoldFrames / 8) * 20));
+        this.updateFaceIDUI(0);
+        if (statusLabel) {
+          statusLabel.textContent = isHi 
+            ? '👁️ सजीवता पुष्टि हेतु कृपया अपनी पलकें झपकाएं (Blink Eyes)' 
+            : '👁️ Please BLINK your eyes naturally to verify liveness';
+        }
+      } else {
+        // Blink Confirmed! Complete Phase 0 and seal open-eyed frontal photo
+        this.scanProgress = 25;
+        this.updateFaceIDUI(0);
         this.capturePhaseSnapshot('center');
         this.markSectorPassed(0);
         this.currentPhase = 1;
         this.phaseHoldFrames = 0;
+
+        if (banner) {
+          banner.className = 'liveness-challenge-bar ok';
+          banner.textContent = isHi ? '✓ पलकें झपकाना सत्यापित (सजीव मानव)' : '✓ Live Blink Confirmed!';
+        }
       }
     }
-    // Phase 1: Turn Head Right (25% to 50%)
+    // Phase 1: Turn Head Right Profile (25% to 50%)
     else if (this.currentPhase === 1) {
       if (arrowEl) {
         arrowEl.textContent = '➡️';
@@ -10163,11 +10318,23 @@ const LivenessEngine = {
         arrowEl.style.left = 'auto';
         arrowEl.style.top = '45%';
       }
-      if (count >= 6) {
+
+      const rawShiftX = (this.baselineCenterX && condition && condition.skinCenterX) 
+        ? ((condition.skinCenterX - this.baselineCenterX) / width) 
+        : 0;
+      const skinRatioShift = (condition && condition.skinPixels > 0) 
+        ? ((condition.leftHalfSkin - condition.rightHalfSkin) / condition.skinPixels) 
+        : 0;
+
+      // In mirrored preview, turning head right moves raw X left (negative shift) or creates leftHalf asymmetry
+      const isTurningRight = (rawShiftX < -0.03 || skinRatioShift > 0.12 || (count > 12 && avgX < width * 0.46));
+
+      if (isTurningRight) {
         this.phaseHoldFrames++;
-        this.scanProgress = Math.min(50, 25 + Math.round((this.phaseHoldFrames / 10) * 25));
+        this.scanProgress = Math.min(50, 25 + Math.round((this.phaseHoldFrames / 7) * 25));
         this.updateFaceIDUI(1);
-        if (this.phaseHoldFrames >= 10) {
+        if (this.phaseHoldFrames >= 7) {
+          // Capture at the peak of the right profile turn
           this.capturePhaseSnapshot('turn_right');
           this.markSectorPassed(1);
           this.currentPhase = 2;
@@ -10175,7 +10342,7 @@ const LivenessEngine = {
         }
       }
     }
-    // Phase 2: Turn Head Left (50% to 75%)
+    // Phase 2: Turn Head Left Profile (50% to 75%)
     else if (this.currentPhase === 2) {
       if (arrowEl) {
         arrowEl.textContent = '⬅️';
@@ -10184,11 +10351,23 @@ const LivenessEngine = {
         arrowEl.style.right = 'auto';
         arrowEl.style.top = '45%';
       }
-      if (count >= 6) {
+
+      const rawShiftX = (this.baselineCenterX && condition && condition.skinCenterX) 
+        ? ((condition.skinCenterX - this.baselineCenterX) / width) 
+        : 0;
+      const skinRatioShift = (condition && condition.skinPixels > 0) 
+        ? ((condition.leftHalfSkin - condition.rightHalfSkin) / condition.skinPixels) 
+        : 0;
+
+      // In mirrored preview, turning head left moves raw X right (positive shift) or creates rightHalf asymmetry
+      const isTurningLeft = (rawShiftX > 0.03 || skinRatioShift < -0.12 || (count > 12 && avgX > width * 0.54));
+
+      if (isTurningLeft) {
         this.phaseHoldFrames++;
-        this.scanProgress = Math.min(75, 50 + Math.round((this.phaseHoldFrames / 10) * 25));
+        this.scanProgress = Math.min(75, 50 + Math.round((this.phaseHoldFrames / 7) * 25));
         this.updateFaceIDUI(2);
-        if (this.phaseHoldFrames >= 10) {
+        if (this.phaseHoldFrames >= 7) {
+          // Capture at the peak of the left profile turn
           this.capturePhaseSnapshot('turn_left');
           this.markSectorPassed(2);
           this.currentPhase = 3;
@@ -10205,11 +10384,17 @@ const LivenessEngine = {
         arrowEl.style.right = 'auto';
         arrowEl.style.top = '22%';
       }
-      if (count >= 6) {
+
+      const rawShiftY = (this.baselineCenterY && condition && condition.skinCenterY) 
+        ? ((condition.skinCenterY - this.baselineCenterY) / height) 
+        : 0;
+      const isTilting = (Math.abs(rawShiftY) > 0.03 || (count > 14 && (avgY < height * 0.44 || avgY > height * 0.56)));
+
+      if (isTilting) {
         this.phaseHoldFrames++;
-        this.scanProgress = Math.min(100, 75 + Math.round((this.phaseHoldFrames / 10) * 25));
+        this.scanProgress = Math.min(100, 75 + Math.round((this.phaseHoldFrames / 7) * 25));
         this.updateFaceIDUI(3);
-        if (this.phaseHoldFrames >= 10 && this.scanProgress >= 100) {
+        if (this.phaseHoldFrames >= 7 && this.scanProgress >= 100) {
           if (this.isEnrollmentComplete) return;
           this.isEnrollmentComplete = true;
           this.capturePhaseSnapshot('tilt_vertical');
@@ -10377,6 +10562,12 @@ const LivenessEngine = {
       return;
     }
 
+    // Require eye blink verification before proceeding
+    if (!this.hasBlinked) {
+      showToast(isHi ? '⚠️ लाइव ब्लिंक सत्यापन आवश्यक! कृपया एक बार स्वाभाविक रूप से पलक झपकाएं।' : '⚠️ Live eye blink required! Please blink naturally to confirm human liveness.');
+      return;
+    }
+
     // Require user to have completed at least 50% of the scan (both front and turn angles)
     if (this.scanProgress < 50) {
       showToast(isHi ? '⚠️ कृपया फेस-आईडी की तरह सिर दाईं व बाईं ओर घुमाकर पूरा स्कैन करें।' : '⚠️ Please complete the Face ID angle scan (slowly turn right and left).');
@@ -10526,10 +10717,10 @@ const LivenessEngine = {
     if (multiGallery) {
       multiGallery.style.display = 'block';
       const shots = [
-        { key: 'center', labelEn: '1. Frontal (Center)', labelHi: '1. सम्मुख (केंद्र)', icon: '🎯' },
-        { key: 'turn_right', labelEn: '2. Right Profile', labelHi: '2. दायां प्रोफाइल', icon: '➡️' },
-        { key: 'turn_left', labelEn: '3. Left Profile', labelHi: '3. बायां प्रोफाइल', icon: '⬅️' },
-        { key: 'tilt_vertical', labelEn: '4. 3D Tilt Biometric', labelHi: '4. 3D टिल्ट बायोमेट्रिक', icon: '↕️' }
+        { key: 'center', labelEn: '1. Frontal (Blink Verified)', labelHi: '1. सम्मुख (ब्लिंक सत्यापित)', icon: '👁️', badge: '✓ Live Blink' },
+        { key: 'turn_right', labelEn: '2. Right Profile', labelHi: '2. दायां प्रोफाइल', icon: '➡️', badge: '✓ Profile Pass' },
+        { key: 'turn_left', labelEn: '3. Left Profile', labelHi: '3. बायां प्रोफाइल', icon: '⬅️', badge: '✓ Profile Pass' },
+        { key: 'tilt_vertical', labelEn: '4. 3D Tilt Biometric', labelHi: '4. 3D टिल्ट बायोमेट्रिक', icon: '↕️', badge: '✓ 3D Depth' }
       ];
 
       const fallbackThumb = this.verifiedThumbnail || this.bestFrontalSnapshot || this.generateAffidavitBadge();
@@ -10556,7 +10747,7 @@ const LivenessEngine = {
                     ${s.icon}
                   </span>
                   <span style="position: absolute; bottom: 4px; right: 4px; font-size: 0.65rem; background: rgba(34, 197, 94, 0.9); color: #ffffff; padding: 1px 5px; border-radius: 3px; font-weight: 700;">
-                    ✓ Pass
+                    ${s.badge}
                   </span>
                 </div>
                 <div style="padding: 6px 4px; font-size: 0.72rem; font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
@@ -10586,6 +10777,14 @@ const LivenessEngine = {
     this.staticFrameCount = 0;
     this.lowLightWarningCount = 0;
     this.isPausedForCondition = false;
+    this.baselineCenterX = null;
+    this.baselineCenterY = null;
+    this.baselineEyeOpenness = null;
+    this.baselineEyeVariance = null;
+    this.blinkState = 'WAITING';
+    this.blinkOpenFrames = 0;
+    this.blinkDipFrames = 0;
+    this.hasBlinked = false;
     this.stopStream();
 
     const isHi = (typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi');
