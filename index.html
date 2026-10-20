@@ -1351,6 +1351,7 @@
   .law-card.corp { border-left-color: #2563eb; }
   .law-card.evidence { border-left-color: #059669; }
   .law-card.citations { border-left-color: #7c3aed; }
+  .law-card.intl { border-left-color: #0284c7; }
   .law-badge {
     font-family: 'Geist Mono', monospace;
     font-size: 0.75rem;
@@ -1366,6 +1367,7 @@
   .law-card.corp .law-badge { color: #2563eb; background: #eff6ff; }
   .law-card.evidence .law-badge { color: #059669; background: #ecfdf5; }
   .law-card.citations .law-badge { color: #7c3aed; background: #f5f3ff; }
+  .law-card.intl .law-badge { color: #0284c7; background: #e0f2fe; }
   .citation-tag {
     font-size: 0.7rem;
     background: #ede9fe;
@@ -1375,6 +1377,37 @@
     border-radius: 4px;
     font-weight: 700;
     display: inline-block;
+  }
+  .law-card.intl .citation-tag {
+    background: #e0f2fe;
+    color: #0369a1;
+    border-color: #bae6fd;
+  }
+  .law-card.intl .citation-holding-box {
+    background: #f0f9ff;
+    border-left: 3px solid #0284c7;
+  }
+  .law-card.intl .citation-holding-title {
+    color: #0284c7;
+  }
+  .citation-comparative-box {
+    background: #faf5ff;
+    border-left: 3px solid #8b5cf6;
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .citation-comparative-title {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #6d28d9;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .citation-comparative-text {
+    font-size: 0.84rem;
+    color: #4c1d95;
+    line-height: 1.5;
   }
   .citation-holding-box {
     background: #faf5ff;
@@ -1446,6 +1479,49 @@
   }
   [data-theme="dark"] .law-card.citations .citation-impact-text {
     color: #d1fae5 !important;
+  }
+  [data-theme="dark"] .law-card.intl {
+    background: var(--bg-card) !important;
+    border-left-color: #38bdf8 !important;
+  }
+  [data-theme="dark"] .law-card.intl .law-badge {
+    background: rgba(14, 165, 233, 0.25) !important;
+    color: #7dd3fc !important;
+  }
+  [data-theme="dark"] .law-card.intl .citation-tag {
+    background: rgba(14, 165, 233, 0.25) !important;
+    color: #bae6fd !important;
+    border-color: rgba(56, 189, 248, 0.4) !important;
+  }
+  [data-theme="dark"] .law-card.intl .citation-holding-box {
+    background: rgba(14, 165, 233, 0.12) !important;
+    border-left-color: #38bdf8 !important;
+  }
+  [data-theme="dark"] .law-card.intl .citation-holding-title {
+    color: #7dd3fc !important;
+  }
+  [data-theme="dark"] .law-card.intl .citation-holding-text {
+    color: #e2e8f0 !important;
+  }
+  [data-theme="dark"] .law-card.intl .citation-impact-box {
+    background: rgba(16, 185, 129, 0.12) !important;
+    border-left-color: #34d399 !important;
+  }
+  [data-theme="dark"] .law-card.intl .citation-impact-title {
+    color: #6ee7b7 !important;
+  }
+  [data-theme="dark"] .law-card.intl .citation-impact-text {
+    color: #d1fae5 !important;
+  }
+  [data-theme="dark"] .citation-comparative-box {
+    background: rgba(139, 92, 246, 0.12) !important;
+    border-left-color: #a78bfa !important;
+  }
+  [data-theme="dark"] .citation-comparative-title {
+    color: #c4b5fd !important;
+  }
+  [data-theme="dark"] .citation-comparative-text {
+    color: #e9d5ff !important;
   }
   .law-card-title {
     font-size: 1rem;
@@ -5000,12 +5076,12 @@
       <div class="card-header">
         <div>
           <div class="card-title" data-i18n="codex-card-title">Comprehensive Cyber Law Codex (Citizen, Corporate & Case Law)</div>
-          <div class="card-subtitle" data-i18n="codex-card-subtitle">All sections of the Information Technology Act 2000, Bharatiya Nyaya Sanhita 2023, Corporate Standards (CERT-In, DPDP Act 2023, RBI, SEBI), Electronic Evidence (BSA 2023), and Landmark Supreme Court & High Court Precedents.</div>
+          <div class="card-subtitle" data-i18n="codex-card-subtitle">All sections of the Information Technology Act 2000, Bharatiya Nyaya Sanhita 2023, Corporate Standards (CERT-In, DPDP Act 2023, RBI, SEBI), Electronic Evidence (BSA 2023), Landmark Supreme Court & High Court Precedents, and International Cyber Jurisprudence.</div>
         </div>
       </div>
 
       <div style="display: flex; gap: 10px; margin-bottom: 18px;">
-        <input type="text" id="law-search-input" placeholder="Search sections or case citations (e.g. Shreya Singhal, Puttaswamy, Arjun Khotkar, Suhas Katti, OTP, digital arrest, bank freeze, deepfake)..." data-i18n-placeholder="placeholder-law-search" style="flex: 1;" oninput="filterLawCodex()">
+        <input type="text" id="law-search-input" placeholder="Search sections or case citations (e.g. Shreya Singhal, Puttaswamy, Google Spain, Carpenter, Schrems II, Riley, Arjun Khotkar, OTP, digital arrest, bank freeze, deepfake)..." data-i18n-placeholder="placeholder-law-search" style="flex: 1;" oninput="filterLawCodex()">
       </div>
 
       <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
@@ -5014,7 +5090,8 @@
         <button class="btn btn-sm btn-outline" id="btn-cat-bns" onclick="filterLawCategory('bns', this)" data-i18n="codex-cat-bns">Bharatiya Nyaya Sanhita (BNS 2023)</button>
         <button class="btn btn-sm btn-outline" id="btn-cat-corp" onclick="filterLawCategory('corp', this)" data-i18n="codex-cat-corp">Corporate Standards (CERT-In / DPDP)</button>
         <button class="btn btn-sm btn-outline" id="btn-cat-evidence" onclick="filterLawCategory('evidence', this)" data-i18n="codex-cat-evidence">Electronic Evidence (BSA 2023)</button>
-        <button class="btn btn-sm btn-outline" id="btn-cat-citations" onclick="filterLawCategory('citations', this)" data-i18n="codex-cat-citations" style="border-color: #8b5cf6; color: #7c3aed;">⚖️ Case Law Citations (SC & HC Precedents)</button>
+        <button class="btn btn-sm btn-outline" id="btn-cat-citations" onclick="filterLawCategory('citations', this)" data-i18n="codex-cat-citations" style="border-color: #8b5cf6; color: #7c3aed;">⚖️ Indian Case Law (SC & HC Precedents)</button>
+        <button class="btn btn-sm btn-outline" id="btn-cat-intl" onclick="filterLawCategory('intl', this)" data-i18n="codex-cat-intl" style="border-color: #0284c7; color: #0284c7;">🌐 International Citations (Global Precedents)</button>
         <span id="codex-count-badge" style="margin-left: auto; font-size: 0.8rem; font-weight: 700; color: #64748b; font-family: 'Geist Mono', monospace;"></span>
       </div>
 
@@ -7004,6 +7081,189 @@ const CASE_CITATIONS_DATA = {
     holding: "The Supreme Court held that where electronic evidence in cybercrime cases involves sensitive intimate recordings or obscene videos, courts must conduct in-camera proceedings under Section 327 CrPC (now Section 366 BNSS) to protect victim dignity and prevent sensationalized public circulation during court trials.",
     impact: "Ensures complete victim confidentiality and dignity during criminal trials involving video extortion, sextortion, and digital voyeurism.",
     crimes: ["in camera trial", "victim privacy", "sec 67 evidence", "video extortion", "bnss 366", "dignity protection"]
+  }
+};
+
+const INTERNATIONAL_CITATIONS_DATA = {
+  "GOOGLE_SPAIN_2014": {
+    title: "Google Spain SL, Google Inc. v. Agencia Española de Protección de Datos (AEPD) & Mario Costeja González",
+    citation: "Case C-131/12 · ECLI:EU:C:2014:317",
+    court: "Court of Justice of the European Union (CJEU Grand Chamber)",
+    jurisdiction: "European Union / International",
+    bench: "V. Skouris (President), K. Lenaerts, R. Silva de Lapuerta et al., JJ.",
+    year: 2014,
+    category: "Right to be Forgotten, Search Engine Dereferencing & Personal Data Erasure",
+    provisions: ["EU Directive 95/46/EC Art 12 & 14", "EU Charter of Fundamental Rights Art 7 & 8", "GDPR Art 17"],
+    comparativeContext: "Directly guided the Supreme Court of India in Justice K.S. Puttaswamy (2017) and formed the statutory foundation for Section 12 ('Right to Erasure of Personal Data') in India's Digital Personal Data Protection (DPDP) Act 2023, as well as landmark High Court de-indexing judgments (Jorawer Singh Mundy v. Union of India).",
+    desc: "A Spanish citizen requested Google remove search results linking his name to an outdated 1998 debt-recovery real estate notice, arguing the debt had been fully resolved and the link caused ongoing reputational damage.",
+    holding: "The CJEU held that internet search engines operate as 'data controllers'. Individuals possess a fundamental right under data protection laws to request search engines de-index search results returned against their name when the information is inaccurate, inadequate, irrelevant, or excessive in light of the passage of time, balancing privacy against the public's right to know.",
+    impact: "Created the global 'Right to be Forgotten' doctrine adopted across 100+ countries, forcing search engines and platforms worldwide to build formal user de-listing and reputation rehabilitation mechanisms.",
+    crimes: ["right to be forgotten", "google spain", "costeja", "search de indexing", "reputational harm", "dpdp sec 12", "gdpr art 17", "data erasure"]
+  },
+  "CARPENTER_2018": {
+    title: "Carpenter v. United States",
+    citation: "585 U.S. 296 (2018) · 138 S. Ct. 2206",
+    court: "Supreme Court of the United States",
+    jurisdiction: "United States",
+    bench: "Roberts CJ, Ginsburg, Breyer, Sotomayor, Kagan, JJ. (5-4)",
+    year: 2018,
+    category: "Historical Cell-Site Location Information (CSLI) & Warrantless Digital Surveillance",
+    provisions: ["US Constitution Fourth Amendment", "Stored Communications Act (18 U.S.C. § 2703)"],
+    comparativeContext: "Critical persuasive authority in Indian constitutional litigation challenging mass police collection of Call Detail Records (CDRs) and cell-tower dumps without judicial warrants under Section 94 BNSS and Section 69 IT Act.",
+    desc: "Federal prosecutors obtained 127 days of historical cell-site location records (CSLI) totaling 12,898 location points from wireless carriers without a probable-cause search warrant to place the defendant at multiple robbery scenes.",
+    holding: "The US Supreme Court held that individuals hold a legitimate and reasonable expectation of privacy in the whole of their physical movements catalogued by cell phones. Accessing historical cell-site location information constitutes a Fourth Amendment 'search'. The government must obtain a judicial warrant supported by probable cause rather than a mere administrative subpoena. The 'third-party doctrine' does not apply to pervasive, unavoidable digital tracking.",
+    impact: "Overturned decades of third-party disclosure assumptions, legally recognizing that continuous automated digital logging by service providers cannot strip citizens of their constitutional privacy protections.",
+    crimes: ["carpenter", "csli", "cell site tracking", "call detail records", "warrantless surveillance", "cdr privacy", "fourth amendment", "digital tracking"]
+  },
+  "SCHREMS_II_2020": {
+    title: "Data Protection Commissioner v. Facebook Ireland Ltd and Maximillian Schrems ('Schrems II')",
+    citation: "Case C-311/18 · ECLI:EU:C:2020:559",
+    court: "Court of Justice of the European Union (CJEU Grand Chamber)",
+    jurisdiction: "European Union / United States",
+    bench: "CJEU Grand Chamber",
+    year: 2020,
+    category: "Cross-Border Cloud Data Transfers, Extraterritorial Surveillance & Privacy Redress",
+    provisions: ["EU GDPR Art 45 & 46", "EU Charter of Fundamental Rights Art 7, 8, 47", "US FISA Section 702", "US Executive Order 12333"],
+    comparativeContext: "Formed the international justification for India's domestic data localization mandates (RBI payment data localization directive, CERT-In 2022 cloud logging rules, and Section 16 DPDP Act 2023 on restricted cross-border transfer jurisdictions).",
+    desc: "Austrian privacy advocate Max Schrems challenged Facebook transferring EU user data to servers in the United States, where US surveillance laws allow government intelligence agencies dragnet access without judicial oversight for foreign citizens.",
+    holding: "The CJEU invalidated the EU-US 'Privacy Shield' framework, ruling that US surveillance programs (PRISM, Upstream under FISA 702) do not provide protections essentially equivalent to EU fundamental rights, nor do foreign citizens possess effective legal redress. Standard Contractual Clauses (SCCs) were upheld but require companies to verify that the destination nation does not intercept cloud data in transit.",
+    impact: "Radically reshaped global cloud architectures, compelling multinational corporations to build regional data sovereign clusters and end-to-end encrypted storage enclaves.",
+    crimes: ["schrems ii", "cross border transfer", "cloud sovereignty", "privacy shield", "gdpr", "data localization", "fisa 702", "surveillance"]
+  },
+  "RILEY_CALIFORNIA_2014": {
+    title: "Riley v. California",
+    citation: "573 U.S. 373 (2014) · 134 S. Ct. 2473",
+    court: "Supreme Court of the United States",
+    jurisdiction: "United States",
+    bench: "Roberts CJ (Unanimous 9-0)",
+    year: 2014,
+    category: "Warrantless Mobile Device Search Incident to Arrest & Digital Privacy",
+    provisions: ["US Constitution Fourth Amendment", "Search Incident to Arrest Doctrine"],
+    comparativeContext: "Universally cited by Indian advocates and High Courts in device seizure guidelines (e.g. Foundation for Media Professionals v. Union of India), establishing that police cannot compel passwords or clone smartphones without a specific judicial warrant under BNSS §105/§106.",
+    desc: "Following a traffic stop and arrest on concealed weapons charges, police officers extensively searched the digital contents of the arrestee's Samsung smartphone without a warrant, discovering gang photos, contacts, and video evidence linking him to an earlier shooting.",
+    holding: "The US Supreme Court unanimously held that police officers must obtain a judicial warrant before searching digital information on a cell phone seized from an arrestee. Chief Justice Roberts famously ruled that modern mobile phones are not mere physical containers, but pocket computers holding 'the privacies of life'—vast repositories of medical, personal, photographic, and financial histories that cannot be rifled through without judicial scrutiny.",
+    impact: "Established the universal digital rule that physical seizure of hardware does not grant law enforcement an open license to search stored digital communications without targeted warrants.",
+    crimes: ["riley", "smartphone seizure", "mobile search", "device privacy", "forced password", "warrantless phone search", "privacies of life"]
+  },
+  "HIQ_LINKEDIN_2022": {
+    title: "hiQ Labs, Inc. v. LinkedIn Corp.",
+    citation: "938 F.3d 985 (9th Cir. 2019) · 31 F.4th 1180 (9th Cir. 2022)",
+    court: "US Court of Appeals for the Ninth Circuit",
+    jurisdiction: "United States",
+    bench: "Wallace, Berzon, Murguia, Circuit Judges",
+    year: 2022,
+    category: "Automated Web Scraping, Open Web Data & Scope of Computer Anti-Hacking Law",
+    provisions: ["Computer Fraud and Abuse Act (CFAA) 18 U.S.C. § 1030(a)(2)", "Digital Copyright"],
+    comparativeContext: "Critical precedent for interpreting Section 43(a) and Section 66 of the Indian IT Act 2000 regarding whether scraping public website data or utilizing OSINT research tools constitutes unauthorized access.",
+    desc: "LinkedIn sent a formal cease-and-desist letter and IP-blocked hiQ Labs, an analytics company that harvested publicly accessible member profiles to predict employee attrition. hiQ sued, seeking a preliminary injunction to prevent LinkedIn from blocking its automated web scrapers.",
+    holding: "The 9th Circuit held that scraping public websites that do not require an authentication paywall or user login does not constitute accessing a computer 'without authorization' under the CFAA. The court reasoned that applying computer fraud anti-hacking statutes to open-access public websites would give platform monopolies private veto power over public web information.",
+    impact: "Affirmed the legal distinction between true cyber hacking (breaching authentication walls) and automated collection of publicly available web data, establishing crucial protections for researchers, search indexers, and competitive intelligence.",
+    crimes: ["hiq", "linkedin", "web scraping", "cfaa", "unauthorized access", "osint scraping", "public data", "bot harvesting"]
+  },
+  "VAN_BUREN_2021": {
+    title: "Van Buren v. United States",
+    citation: "141 S. Ct. 1638 (2021) · 593 U.S. 374",
+    court: "Supreme Court of the United States",
+    jurisdiction: "United States",
+    bench: "Barrett, Breyer, Sotomayor, Kagan, Gorsuch, Kavanaugh, JJ. (6-3)",
+    year: 2021,
+    category: "Definition of 'Exceeding Authorized Access' & Scope of Insider Hacking",
+    provisions: ["Computer Fraud and Abuse Act (CFAA) 18 U.S.C. § 1030(a)(2)"],
+    comparativeContext: "Directly instructs Indian cyber courts on Section 43(a) and Section 66 IT Act, distinguishing between an employee breaching corporate employment policies versus genuine technical computer penetration.",
+    desc: "A police officer used his official police computer credentials to access a law enforcement license plate database in exchange for a ₹5,000 bribe from an acquaintance, violating department terms-of-use policies.",
+    holding: "The US Supreme Court held that an individual 'exceeds authorized access' under federal cyber anti-hacking law only when they access files, folders, or databases on a computer system that their access permissions do not encompass under any circumstances. Merely accessing permitted files for an unauthorized purpose, personal motive, or in violation of website Terms of Service does not transform the user into a criminal hacker.",
+    impact: "Narrowed the scope of anti-hacking statutes worldwide, preventing prosecutors from weaponizing computer fraud laws against minor contract breaches or workplace policy infractions.",
+    crimes: ["van buren", "exceeds authorized access", "insider threat", "cfaa", "database misuse", "terms of service violation", "employee data access"]
+  },
+  "US_V_MORRIS_1991": {
+    title: "United States v. Morris",
+    citation: "928 F.2d 504 (2d Cir. 1991)",
+    court: "US Court of Appeals for the Second Circuit",
+    jurisdiction: "United States",
+    bench: "Newman, Miner, Winter, Circuit Judges",
+    year: 1991,
+    category: "First Internet Worm Prosecution, Mens Rea & Malware Dissemination",
+    provisions: ["Computer Fraud and Abuse Act 18 U.S.C. § 1030(a)(5)"],
+    comparativeContext: "Historical international foundation for evaluating criminal intent (Mens Rea) versus reckless dissemination of computer viruses and malware under Section 43(c) and Section 66 of the Indian IT Act 2000.",
+    desc: "Cornell graduate student Robert Tappan Morris released the first self-replicating Internet worm in November 1988, exploiting vulnerabilities in UNIX sendmail and fingerd. A design flaw caused the program to reinfect computers repeatedly, crashing over 6,000 university and military host servers worldwide.",
+    holding: "The Second Circuit upheld Morris's felony conviction under the CFAA, ruling that the government is only required to prove that the defendant intended to access the computers without authorization, not that he specifically intended to cause catastrophic denial-of-service damage or monetary loss.",
+    impact: "Established the global legal precedent that programmers are strictly criminally responsible for releasing autonomous, self-replicating code that infects computer networks, regardless of benign or experimental intentions.",
+    crimes: ["morris worm", "first internet worm", "malware intent", "virus dissemination", "cfaa felony", "dos attack", "unauthorized access"]
+  },
+  "TWITTER_TAAMNEH_2023": {
+    title: "Twitter, Inc. v. Taamneh & Gonzalez v. Google LLC",
+    citation: "598 U.S. 471 (2023) · 143 S. Ct. 1206",
+    court: "Supreme Court of the United States",
+    jurisdiction: "United States",
+    bench: "Thomas J. (Unanimous 9-0)",
+    year: 2023,
+    category: "Algorithmic Content Recommendations, Intermediary Liability & Anti-Terrorism",
+    provisions: ["Section 230 CDA (47 U.S.C. § 230)", "Anti-Terrorism Act (18 U.S.C. § 2333)", "JASTA"],
+    comparativeContext: "Vital international precedent for interpreting intermediary safe harbour under Section 79 of the IT Act 2000 and the Information Technology Intermediary Guidelines Rules 2021 regarding automated algorithmic recommendation feeds.",
+    desc: "Families of victims killed in an ISIS terror attack in Istanbul sued Twitter, Google, and Meta, alleging the platforms 'aided and abetted' terrorism by operating algorithmic recommendation systems that matched terrorist recruitment videos with interested users.",
+    holding: "The US Supreme Court unanimously ruled that operating generic, neutral algorithmic recommendation engines that match users with content does not constitute 'aiding and abetting' terrorism under criminal law. The court held that platforms could not be held liable without evidence that they specifically assisted in the commission of the terror attack or actively conspired with the perpetrators.",
+    impact: "Shielded global web search engines and social media platforms from sweeping tort liability for autonomous algorithmic recommendation feeds, reinforcing the core structure of digital platform immunity.",
+    crimes: ["twitter taamneh", "gonzalez v google", "section 230", "algorithm liability", "intermediary safe harbour", "sec 79 it act", "terrorist content"]
+  },
+  "VIDAL_HALL_2015": {
+    title: "Vidal-Hall & Ors v. Google Inc.",
+    citation: "[2015] EWCA Civ 311 · [2016] QB 1003",
+    court: "Court of Appeal of England and Wales (Civil Division)",
+    jurisdiction: "United Kingdom",
+    bench: "Lord Dyson MR, McFarlane, Sharp, LJJ.",
+    year: 2015,
+    category: "Browser Cookie Tracking, Misuse of Private Information & Non-Pecuniary Distress",
+    provisions: ["UK Data Protection Act 1998 §13", "European Directive 95/46/EC Art 23", "Human Rights Act 1998"],
+    comparativeContext: "Critical benchmark for statutory damages under Section 43A IT Act and Section 33 DPDP Act 2023, proving that digital anxiety, loss of control over personal data, and privacy distress constitute compensable legal injuries without requiring monetary fraud loss.",
+    desc: "Google bypassed Apple Safari browser default privacy settings using secret client-side code ('Safari Workaround') to install tracking cookies, collecting internet browsing histories to serve targeted commercial advertising without consent.",
+    holding: "The UK Court of Appeal held that 'misuse of private information' is an independent tort in common law. The court decisively held that individuals can claim financial compensation for distress, anxiety, and loss of digital autonomy caused by unauthorized data tracking, striking down the requirement that a victim must suffer tangible monetary damage.",
+    impact: "Paved the way for modern digital privacy class-action lawsuits and established that human distress and loss of privacy autonomy are compensable civil damages in the internet era.",
+    crimes: ["vidal hall", "safari workaround", "cookie tracking", "distress compensation", "misuse of private info", "data privacy tort", "dpdp compensation"]
+  },
+  "APPLE_SAN_BERNARDINO_2016": {
+    title: "In the Matter of the Search of an Apple iPhone (San Bernardino Dispute)",
+    citation: "No. ED 15-0451M (C.D. Cal. 2016)",
+    court: "US District Court for the Central District of California",
+    jurisdiction: "United States",
+    bench: "Sheri Pym, US Magistrate Judge",
+    year: 2016,
+    category: "Compelled Encryption Backdoors, Forced Code-Signing & Digital Security Integrity",
+    provisions: ["All Writs Act (28 U.S.C. § 1651)", "US Constitution First & Fifth Amendments"],
+    comparativeContext: "The gold-standard international reference cited in ongoing Indian litigation over end-to-end encryption traceability under Rule 4(2) of the IT Rules 2021 (WhatsApp LLC v. Union of India) and government compelled decryption orders.",
+    desc: "The FBI obtained an ex-parte court order under the 1789 All Writs Act compelling Apple to engineer a custom modified operating system ('GovtOS') to bypass auto-erase PIN brute-force protections on an encrypted iPhone 5C used in a mass shooting.",
+    holding: "Apple formally refused compliance, filing historic legal briefs arguing that compelling a technology developer to write and cryptographically sign custom software designed to weaken security creates an extraordinarily dangerous global backdoor, violates the First Amendment right against compelled speech, and fatally compromises security for all smartphone users. (The FBI subsequently withdrew its motion after acquiring a zero-day exploit).",
+    impact: "The definitive global legal and ethical dispute establishing the boundaries of government backdoors versus consumer end-to-end device encryption.",
+    crimes: ["apple fbi", "san bernardino", "encryption backdoor", "forced code signing", "all writs act", "end to end encryption", "rule 4 2 traceability"]
+  },
+  "R_V_GOLD_1988": {
+    title: "R v. Gold & Schifreen",
+    citation: "[1988] 1 AC 1063 · [1988] 2 All ER 186",
+    court: "House of Lords (United Kingdom)",
+    jurisdiction: "United Kingdom",
+    bench: "Lord Mackay of Clashfern LC, Lord Keith, Lord Brandon, Lord Griffiths, Lord Goff",
+    year: 1988,
+    category: "British Telecom Prestel Hack & Inadequacy of Traditional Penal Laws for Cyber Crime",
+    provisions: ["UK Forgery and Counterfeiting Act 1981 §1 & §8"],
+    comparativeContext: "The exact catalyst that triggered dedicated statutory cybercrime legislation worldwide (including the UNCITRAL 1996 model law and India's Information Technology Act 2000), demonstrating why traditional penal code forgery (IPC/BNS) cannot adequately prosecute computer intrusions.",
+    desc: "Two computer researchers discovered a British Telecom technician password left written on a slip of paper and accessed BT's Prestel network, modifying user databases and leaving unauthorized messages in the personal account of HRH Prince Philip.",
+    holding: "The UK House of Lords acquitted the defendants of criminal forgery. The Law Lords held that transient electronic impulses stored in a computer's microchip memory do not constitute a 'false instrument' or documentary forgery under traditional penal statutes, ruling that courts cannot stretch centuries-old paper forgery laws to cover computer hacking.",
+    impact: "Led directly to the enactment of the UK Computer Misuse Act 1990 and inspired national cyber legislation globally, proving that digital penetration requires specialized statutory cybercrime enactments.",
+    crimes: ["r v gold", "prestel hack", "computer misuse act", "forgery limits", "traditional law gap", "it act origins", "unauthorized hacking"]
+  },
+  "ENCROCHAT_2020": {
+    title: "EncroChat Mobile Cryptophone Infiltration Rulings",
+    citation: "[2020] EWCA Crim 1438 · France Cour de Cassation No. 21-86.812",
+    court: "Cour de Cassation (France) & Court of Appeal (England and Wales)",
+    jurisdiction: "European Union / United Kingdom / France",
+    bench: "French & British Appellate Courts",
+    year: 2020,
+    category: "Law Enforcement Remote Malware Implantation, Bulk Device Hacking & MLATs",
+    provisions: ["French Code of Criminal Procedure Art 706-102-1", "UK Investigatory Powers Act 2016", "Mutual Legal Assistance (MLAT)"],
+    comparativeContext: "Key international authority referenced in cross-border cyber forensics, state hacking tools, remote device exploitation under Section 69 IT Act, and obtaining foreign encrypted evidence through MLAT treaties.",
+    desc: "French National Gendarmerie and Dutch police secretly infiltrated EncroChat, a custom-encrypted cryptophone mobile network used by 60,000 organized crime syndicates. Police pushed a remote software implant masquerading as an automatic operating system update, silently exfiltrating 100M+ encrypted messages.",
+    holding: "Appellate courts upheld the admissibility of the intercepted communications. The courts held that state-directed remote software interception of data while stored on the device or in memory does not violate wiretap regulations if conducted under statutory 'equipment interference' judicial authorisations, allowing cross-border intelligence sharing with allied foreign police.",
+    impact: "The largest transnational cyber-police malware operation in history, setting ground rules for bulk software exploits, state spyware, and cross-border forensic evidence exchange in cyber syndicates.",
+    crimes: ["encrochat", "remote implant", "state malware", "equipment interference", "cross border evidence", "mlat", "encrypted phones", "organized cyber crime"]
   }
 };
 
@@ -11270,7 +11530,8 @@ const I18nEngine = {
       'codex-cat-bns': 'Bharatiya Nyaya Sanhita (BNS 2023)',
       'codex-cat-corp': 'Corporate Standards (CERT-In / DPDP)',
       'codex-cat-evidence': 'Electronic Evidence (BSA 2023)',
-      'codex-cat-citations': '⚖️ Case Law Citations (SC & HC Precedents)',
+      'codex-cat-citations': '⚖️ Indian Case Law (SC & HC Precedents)',
+      'codex-cat-intl': '🌐 International Citations (Global Precedents)',
       'emergency-card-title': 'Emergency Protocols & Golden Hour Guidelines',
       'emergency-card-subtitle': 'Immediate intervention steps to halt funds before they leave the banking network.',
       'emergency-golden-title': 'The Golden Hour Rule (First 60 Minutes):',
@@ -11474,7 +11735,8 @@ const I18nEngine = {
       'codex-cat-bns': 'भारतीय न्याय संहिता (BNS 2023)',
       'codex-cat-corp': 'कॉर्पोरेट मानक (CERT-In / DPDP)',
       'codex-cat-evidence': 'इलेक्ट्रॉनिक साक्ष्य (BSA 2023)',
-      'codex-cat-citations': '⚖️ केस लॉ व अदालती दृष्टांत (SC व HC)',
+      'codex-cat-citations': '⚖️ भारतीय केस लॉ व दृष्टांत (SC व HC)',
+      'codex-cat-intl': '🌐 अंतर्राष्ट्रीय वाद निर्णय (वैश्विक नज़ीरें)',
       'emergency-card-title': 'आपातकालीन प्रोटोकॉल एवं स्वर्णिम घंटा दिशानिर्देश',
       'emergency-card-subtitle': 'बैंकिंग नेटवर्क से बाहर निकलने से पहले धनराशि को रोकने हेतु तत्काल कदम।',
       'emergency-golden-title': 'स्वर्णिम घंटे का नियम (प्रथम 60 मिनट):',
@@ -13809,6 +14071,11 @@ function renderLawCodex() {
       allEntries.push({ key: caseId, act: 'JUDICIAL PRECEDENT', cat: 'citations', ...d });
     });
   }
+  if (typeof INTERNATIONAL_CITATIONS_DATA !== 'undefined') {
+    Object.entries(INTERNATIONAL_CITATIONS_DATA).forEach(([caseId, d]) => {
+      allEntries.push({ key: caseId, act: 'GLOBAL PRECEDENT', cat: 'intl', ...d });
+    });
+  }
 
   const q = document.getElementById('law-search-input')?.value.toLowerCase().trim() || '';
 
@@ -13821,6 +14088,8 @@ function renderLawCodex() {
         (entry.citation || '') + ' ' +
         (entry.court || '') + ' ' +
         (entry.bench || '') + ' ' +
+        (entry.jurisdiction || '') + ' ' +
+        (entry.comparativeContext || '') + ' ' +
         (entry.category || '') + ' ' +
         (entry.holding || '') + ' ' +
         (entry.impact || '') + ' ' +
@@ -13843,14 +14112,65 @@ function renderLawCodex() {
       <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: var(--bg-card); border: 1px dashed var(--border-card); border-radius: 8px;">
         <div style="font-size: 2rem; margin-bottom: 8px;">⚖️</div>
         <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">No statutory provisions or case citations found</div>
-        <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px;">Try searching by case name (e.g. <em>Shreya Singhal</em>, <em>Puttaswamy</em>, <em>Arjun Khotkar</em>), crime keyword, or section number.</div>
+        <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px;">Try searching by case name (e.g. <em>Shreya Singhal</em>, <em>Google Spain</em>, <em>Carpenter</em>, <em>Puttaswamy</em>, <em>Arjun Khotkar</em>), crime keyword, or section number.</div>
       </div>
     `;
     return;
   }
 
   filtered.forEach(entry => {
-    if (entry.cat === 'citations') {
+    if (entry.cat === 'intl') {
+      const titleEsc = escapeHtml(entry.title);
+      const citationEsc = escapeHtml(entry.citation);
+      const courtEsc = escapeHtml(entry.court);
+      const jurisdictionEsc = escapeHtml(entry.jurisdiction || 'International');
+      const yearEsc = escapeHtml(entry.year ? String(entry.year) : '');
+      const benchEsc = escapeHtml(entry.bench || '');
+      const categoryEsc = escapeHtml(entry.category || 'Global Cyber Jurisprudence');
+      const provisionsHtml = (entry.provisions || []).map(p => `<span class="citation-tag">${escapeHtml(p)}</span>`).join(' ');
+      const descEsc = escapeHtml(entry.desc);
+      const holdingEsc = escapeHtml(entry.holding);
+      const impactEsc = escapeHtml(entry.impact);
+      const comparativeEsc = escapeHtml(entry.comparativeContext || '');
+
+      grid.innerHTML += `
+        <div class="law-card intl">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+            <span class="law-badge">🌐 GLOBAL PRECEDENT · ${jurisdictionEsc}</span>
+            <span style="font-size: 0.74rem; font-weight: 700; color: #0284c7; font-family: 'Geist Mono', monospace;">${courtEsc} (${yearEsc})</span>
+          </div>
+          <div class="law-card-title" style="font-size: 1.05rem; margin-bottom: 4px; color: #0369a1;">
+            ${titleEsc}
+          </div>
+          <div style="font-size: 0.76rem; color: #0284c7; font-weight: 700; margin-bottom: 6px;">
+            ${categoryEsc} ${benchEsc ? `· Bench: ${benchEsc}` : ''}
+          </div>
+          <div style="font-size: 0.75rem; color: #64748b; font-family: 'Geist Mono', monospace; margin-bottom: 8px;">
+            Citation: ${citationEsc}
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px;">
+            ${provisionsHtml}
+          </div>
+          <div class="law-card-desc" style="margin-bottom: 10px;">
+            ${descEsc}
+          </div>
+          <div class="citation-holding-box">
+            <div class="citation-holding-title">Ratio Decidendi / Global Judicial Ruling:</div>
+            <div class="citation-holding-text">${holdingEsc}</div>
+          </div>
+          ${comparativeEsc ? `
+            <div class="citation-comparative-box">
+              <div class="citation-comparative-title">🇮🇳 Comparative Relevance to Indian Cyber Law (BNS / IT / DPDP):</div>
+              <div class="citation-comparative-text">${comparativeEsc}</div>
+            </div>
+          ` : ''}
+          <div class="citation-impact-box">
+            <div class="citation-impact-title">International Precedent & Industry Impact:</div>
+            <div class="citation-impact-text">${impactEsc}</div>
+          </div>
+        </div>
+      `;
+    } else if (entry.cat === 'citations') {
       const titleEsc = escapeHtml(entry.title);
       const citationEsc = escapeHtml(entry.citation);
       const courtEsc = escapeHtml(entry.court);
@@ -14873,8 +15193,11 @@ const CyberSahayakChatbot = {
     }
     const catBtn = document.getElementById(
       category === 'citations' ? 'btn-cat-citations' : 
+      category === 'intl' ? 'btn-cat-intl' : 
       category === 'it' ? 'btn-cat-it' : 
-      category === 'bns' ? 'btn-cat-bns' : 'btn-cat-all'
+      category === 'bns' ? 'btn-cat-bns' : 
+      category === 'corp' ? 'btn-cat-corp' : 
+      category === 'evidence' ? 'btn-cat-evidence' : 'btn-cat-all'
     );
     if (catBtn && typeof filterLawCategory === 'function') {
       filterLawCategory(category, catBtn);
@@ -14967,13 +15290,58 @@ const CyberSahayakChatbot = {
 
     for (const [kw, key] of Object.entries(keywordMap)) {
       if (lower.includes(kw) && CASE_CITATIONS_DATA[key]) {
-        return CASE_CITATIONS_DATA[key];
+        return { ...CASE_CITATIONS_DATA[key], cat: 'citations' };
+      }
+    }
+
+    if (typeof INTERNATIONAL_CITATIONS_DATA !== 'undefined') {
+      const intlKeywordMap = {
+        'google spain': 'GOOGLE_SPAIN_2014',
+        'costeja': 'GOOGLE_SPAIN_2014',
+        'right to be forgotten': 'GOOGLE_SPAIN_2014',
+        'carpenter': 'CARPENTER_2018',
+        'csli': 'CARPENTER_2018',
+        'cell-site': 'CARPENTER_2018',
+        'schrems': 'SCHREMS_II_2020',
+        'privacy shield': 'SCHREMS_II_2020',
+        'riley': 'RILEY_CALIFORNIA_2014',
+        'phone search': 'RILEY_CALIFORNIA_2014',
+        'hiq': 'HIQ_LINKEDIN_2022',
+        'web scraping': 'HIQ_LINKEDIN_2022',
+        'van buren': 'VAN_BUREN_2021',
+        'exceeding authorized access': 'VAN_BUREN_2021',
+        'morris worm': 'US_V_MORRIS_1991',
+        'robert morris': 'US_V_MORRIS_1991',
+        'taamneh': 'TWITTER_TAAMNEH_2023',
+        'gonzalez v google': 'TWITTER_TAAMNEH_2023',
+        'vidal hall': 'VIDAL_HALL_2015',
+        'safari workaround': 'VIDAL_HALL_2015',
+        'san bernardino': 'APPLE_SAN_BERNARDINO_2016',
+        'apple fbi': 'APPLE_SAN_BERNARDINO_2016',
+        'r v gold': 'R_V_GOLD_1988',
+        'schifreen': 'R_V_GOLD_1988',
+        'prestel': 'R_V_GOLD_1988',
+        'encrochat': 'ENCROCHAT_2020'
+      };
+
+      for (const [kw, key] of Object.entries(intlKeywordMap)) {
+        if (lower.includes(kw) && INTERNATIONAL_CITATIONS_DATA[key]) {
+          return { ...INTERNATIONAL_CITATIONS_DATA[key], cat: 'intl' };
+        }
       }
     }
 
     for (const [key, item] of Object.entries(CASE_CITATIONS_DATA)) {
       if (lower.includes(item.title.toLowerCase()) || (item.crimes && item.crimes.some(c => lower.includes(c)))) {
-        return item;
+        return { ...item, cat: 'citations' };
+      }
+    }
+
+    if (typeof INTERNATIONAL_CITATIONS_DATA !== 'undefined') {
+      for (const [key, item] of Object.entries(INTERNATIONAL_CITATIONS_DATA)) {
+        if (lower.includes(item.title.toLowerCase()) || (item.crimes && item.crimes.some(c => lower.includes(c)))) {
+          return { ...item, cat: 'intl' };
+        }
       }
     }
     return null;
@@ -15171,7 +15539,7 @@ const CyberSahayakChatbot = {
           <div style="font-size: 0.76rem; color: #cbd5e1; margin-bottom: 10px;">
             <strong>Key Provisions:</strong> ${matchedCase.provisions ? matchedCase.provisions.map(p => `<span style="background: rgba(59,130,246,0.15); padding: 2px 6px; border-radius: 4px; margin-right: 4px; color: #93c5fd;">${escapeHtml(p)}</span>`).join('') : ''}
           </div>
-          <button class="btn btn-sm btn-outline" style="border-color: #8b5cf6; color: #c4b5fd; font-size: 0.8rem; font-weight: 600; width: 100%;" onclick="CyberSahayakChatbot.openCodexWithSearch('${escapeHtml(matchedCase.title.split('v.')[0].trim())}', 'citations')">
+          <button class="btn btn-sm btn-outline" style="border-color: ${matchedCase.cat === 'intl' ? '#0284c7' : '#8b5cf6'}; color: ${matchedCase.cat === 'intl' ? '#7dd3fc' : '#c4b5fd'}; font-size: 0.8rem; font-weight: 600; width: 100%;" onclick="CyberSahayakChatbot.openCodexWithSearch('${escapeHtml(matchedCase.title.split('v.')[0].trim())}', '${matchedCase.cat === 'intl' ? 'intl' : 'citations'}')">
             🔍 View Full Citation in Cyber Law Codex ➔
           </button>
         </div>
