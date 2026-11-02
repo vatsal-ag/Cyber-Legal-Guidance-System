@@ -46,6 +46,8 @@
   "rewrites": [
     { "source": "/cockpit", "destination": "/index.html" },
     { "source": "/fir", "destination": "/index.html" },
-    { "source": "/directory", "destination": "/index.html" }
+    { "source": "/directory", "destination": "/index.html" },
+    { "source": "/officials", "destination": "/officials_portal.html" },
+    { "source": "/leo", "destination": "/officials_portal.html" }
   ]
 }

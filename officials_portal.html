@@ -1,0 +1,2273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber Law Enforcement & Investigation Command Portal | National Cyber Crime Cell</title>
+  <meta name="description" content="Authorized Law Enforcement Agency (LEA) Portal for Cyber Crime Investigation, Section 106 BNSS Bank Freezes, BSA Section 63 Evidence Verification, and Database Management.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Geist & Geist Mono Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #070c18;
+      --bg-panel: #0d1527;
+      --bg-card: #131f38;
+      --bg-card-hover: #1a2a4b;
+      --bg-input: #0a1122;
+      --border-color: #1e2f52;
+      --border-accent: #2e4474;
+      
+      --gold-primary: #f59e0b;
+      --gold-hover: #d97706;
+      --gold-surface: rgba(245, 158, 11, 0.12);
+      
+      --cyan-accent: #06b6d4;
+      --cyan-surface: rgba(6, 182, 212, 0.12);
+      
+      --green-status: #10b981;
+      --green-surface: rgba(16, 185, 129, 0.14);
+      
+      --red-alert: #ef4444;
+      --red-surface: rgba(239, 68, 68, 0.14);
+      
+      --purple-accent: #8b5cf6;
+      
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.65);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* TOP COMMAND BAR */
+    .command-header {
+      background: linear-gradient(180deg, #0f1930 0%, #0b1224 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-branding {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .emblem-shield {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+      border: 1px solid #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+      flex-shrink: 0;
+    }
+
+    .brand-titles h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-classified {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--red-surface);
+      color: var(--red-alert);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      text-transform: uppercase;
+    }
+
+    .brand-titles p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .officer-badge-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 8px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .officer-badge-pill:hover {
+      border-color: var(--gold-primary);
+      background: var(--bg-card-hover);
+    }
+
+    .officer-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green-status);
+      box-shadow: 0 0 8px var(--green-status);
+    }
+
+    .live-sync-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--cyan-accent);
+      background: var(--cyan-surface);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cyan-accent);
+      animation: pulseAnim 1.8s infinite;
+    }
+
+    @keyframes pulseAnim {
+      0% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.3); }
+      100% { opacity: 0.4; transform: scale(0.9); }
+    }
+
+    .btn-portal-switch {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: #fff;
+      border: 1px solid #3b82f6;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-portal-switch:hover {
+      filter: brightness(1.15);
+      box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-icon-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .btn-icon-toggle:hover {
+      color: var(--text-white);
+      border-color: var(--border-accent);
+    }
+
+    /* NAVIGATION TABS */
+    .command-nav {
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      overflow-x: auto;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 2px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      padding: 12px 18px;
+      font-size: 0.86rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-white);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .tab-btn.active {
+      color: var(--gold-primary);
+      border-bottom-color: var(--gold-primary);
+      font-weight: 600;
+      background: var(--gold-surface);
+    }
+
+    .tab-badge {
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-white);
+      font-family: var(--font-mono);
+    }
+
+    .tab-btn.active .tab-badge {
+      background: var(--gold-primary);
+      color: #000;
+      font-weight: 700;
+    }
+
+    /* MAIN CONTAINER */
+    .command-container {
+      flex: 1;
+      padding: 24px;
+      max-width: 1700px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* KPI OVERVIEW GRID */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .kpi-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-accent);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--border-accent);
+    }
+
+    .kpi-card.gold::before { background: var(--gold-primary); }
+    .kpi-card.red::before { background: var(--red-alert); }
+    .kpi-card.cyan::before { background: var(--cyan-accent); }
+    .kpi-card.green::before { background: var(--green-status); }
+
+    .kpi-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .kpi-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .kpi-icon {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+
+    .kpi-value {
+      font-size: 1.85rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--text-white);
+      margin-bottom: 4px;
+    }
+
+    .kpi-subtitle {
+      font-size: 0.74rem;
+      color: var(--text-dim);
+    }
+
+    /* CONTROLS TOOLBAR */
+    .toolbar-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .toolbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 280px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 7px;
+      padding: 10px 14px 10px 38px;
+      color: var(--text-white);
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--cyan-accent);
+      box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      pointer-events: none;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 7px;
+      padding: 9px 12px;
+      color: var(--text-white);
+      font-size: 0.82rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      border-color: var(--gold-primary);
+    }
+
+    .btn-action {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      color: var(--text-white);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--gold-primary);
+    }
+
+    .btn-action.primary {
+      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+      border-color: #f59e0b;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .btn-action.primary:hover {
+      filter: brightness(1.15);
+    }
+
+    .btn-action.cyan {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      border-color: #38bdf8;
+      color: #fff;
+    }
+
+    .btn-action.danger {
+      background: var(--red-surface);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: var(--red-alert);
+    }
+
+    .btn-action.danger:hover {
+      background: rgba(239, 68, 68, 0.25);
+    }
+
+    /* TABLE SECTION */
+    .table-container {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .complaints-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.84rem;
+    }
+
+    .complaints-table th {
+      background: #090e1b;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.5px;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    .complaints-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(30, 47, 82, 0.5);
+      vertical-align: middle;
+      color: var(--text-white);
+    }
+
+    .complaints-table tbody tr {
+      transition: background-color 0.15s ease;
+    }
+
+    .complaints-table tbody tr:hover {
+      background-color: rgba(30, 47, 82, 0.35);
+    }
+
+    .complaints-table tbody tr.newly-received {
+      animation: highlightRow 3s ease forwards;
+    }
+
+    @keyframes highlightRow {
+      0% { background-color: rgba(16, 185, 129, 0.3); }
+      100% { background-color: transparent; }
+    }
+
+    /* TABLE PILLS & BADGES */
+    .case-id-badge {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 0.82rem;
+      color: var(--cyan-accent);
+      background: var(--cyan-surface);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .case-id-badge:hover {
+      text-decoration: underline;
+    }
+
+    .status-select-badge {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .status-select-badge.status-pending { color: #f59e0b; border-color: rgba(245, 158, 11, 0.4); }
+    .status-select-badge.status-frozen { color: #06b6d4; border-color: rgba(6, 182, 212, 0.4); background: rgba(6, 182, 212, 0.1); }
+    .status-select-badge.status-investigating { color: #8b5cf6; border-color: rgba(139, 92, 246, 0.4); }
+    .status-select-badge.status-fir { color: #10b981; border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.1); }
+    .status-select-badge.status-closed { color: #64748b; border-color: rgba(100, 116, 139, 0.4); }
+
+    .priority-pill {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-block;
+      text-transform: uppercase;
+    }
+
+    .priority-p1 {
+      background: var(--red-surface);
+      color: var(--red-alert);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    .priority-p2 {
+      background: var(--gold-surface);
+      color: var(--gold-primary);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .priority-p3 {
+      background: rgba(148, 163, 184, 0.1);
+      color: var(--text-muted);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .bio-verified-tag {
+      font-size: 0.72rem;
+      color: var(--green-status);
+      background: var(--green-surface);
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-tbl-action {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-white);
+      padding: 5px 9px;
+      border-radius: 5px;
+      font-size: 0.74rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+
+    .btn-tbl-action:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-accent);
+    }
+
+    .btn-tbl-freeze {
+      border-color: rgba(6, 182, 212, 0.4);
+      color: var(--cyan-accent);
+    }
+
+    .btn-tbl-freeze:hover {
+      background: var(--cyan-surface);
+    }
+
+    .empty-state {
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    /* MODAL STYLES */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(4, 7, 15, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 950px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-header {
+      padding: 18px 24px;
+      background: #090e1b;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-header h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.3rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal-close-btn:hover {
+      color: var(--text-white);
+    }
+
+    .modal-tabs {
+      display: flex;
+      background: #0b1222;
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 16px;
+      overflow-x: auto;
+    }
+
+    .modal-tab-btn {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .modal-tab-btn.active {
+      color: var(--cyan-accent);
+      border-bottom-color: var(--cyan-accent);
+      font-weight: 600;
+    }
+
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      background: #090e1b;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* BIOMETRICS 4-ANGLE GALLERY */
+    .bio-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .bio-preview-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bio-thumb-img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #050811;
+      border: 1px solid var(--border-accent);
+    }
+
+    .bio-angle-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--cyan-accent);
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+
+    /* DOSSIER SECTIONS */
+    .dossier-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .dossier-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .dossier-card h4 {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dossier-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+      gap: 12px;
+    }
+
+    .dossier-label {
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    .dossier-val {
+      color: var(--text-white);
+      font-weight: 500;
+      text-align: right;
+      word-break: break-all;
+    }
+
+    .code-sheet {
+      background: #050811;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      white-space: pre-wrap;
+      color: #cbd5e1;
+      line-height: 1.45;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    /* CASE DIARY TIMELINE */
+    .timeline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .timeline-list::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 6px;
+      width: 2px;
+      background: var(--border-accent);
+    }
+
+    .timeline-entry {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+    }
+
+    .timeline-entry::before {
+      content: '';
+      position: absolute;
+      left: -18px;
+      top: 14px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      box-shadow: 0 0 6px var(--gold-primary);
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-dim);
+      font-size: 0.74rem;
+      margin-bottom: 4px;
+      font-family: var(--font-mono);
+    }
+
+    .timeline-action {
+      font-weight: 600;
+      color: var(--gold-primary);
+      margin-bottom: 2px;
+    }
+
+    /* TOAST NOTIFICATION */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      border: 1px solid var(--green-status);
+      border-radius: 8px;
+      padding: 12px 18px;
+      color: #fff;
+      font-size: 0.86rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 2000;
+      max-width: 420px;
+    }
+
+    .toast-box.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 900px) {
+      .dossier-grid { grid-template-columns: 1fr; }
+      .bio-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .command-header { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP COMMAND HEADER -->
+  <header class="command-header">
+    <div class="header-branding">
+      <div class="emblem-shield" title="National Cyber Crime Reporting & Investigation Network">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="M12 8v4M12 16h.01"/>
+        </svg>
+      </div>
+      <div class="brand-titles">
+        <h1>
+          CYBER INVESTIGATION & ENFORCEMENT COMMAND
+          <span class="badge-classified">LEO RESTRICTED</span>
+        </h1>
+        <p>National Cyber Crime Police Desk · Section 106 BNSS Freeze Dispatch · BSA §63 Evidence Core</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div class="live-sync-indicator" title="Connected to Citizen Complaint Filing Portal via BroadcastChannel & Local DB Bus">
+        <span class="pulse-dot"></span>
+        <span id="sync-status-text">LIVE SYNC ACTIVE</span>
+      </div>
+
+      <div class="officer-badge-pill" onclick="AuthManager.openAuthModal()" title="Officer Identity & Verification Badge. Click to switch officer credentials.">
+        <span class="officer-status-dot"></span>
+        <span id="officer-badge-display">Insp. V. Singh (#LEO-DL-2026)</span>
+      </div>
+
+      <button class="btn-icon-toggle" id="btn-sound-toggle" onclick="SoundManager.toggle()" title="Toggle Real-Time Audio Chimes on Incoming Complaints">
+        🔔
+      </button>
+
+      <a href="cyber_legal_guidance_system.html" target="_blank" class="btn-portal-switch" title="Open Citizen Cyber Complaint Drafter in New Tab">
+        <span>🏠 Citizen Filing Portal ➔</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="command-nav">
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="PortalApp.switchTab('complaints', this)">
+        <span>📋 Complaints Explorer</span>
+        <span class="tab-badge" id="badge-total-count">0</span>
+      </button>
+      <button class="tab-btn" onclick="PortalApp.switchTab('db_console', this)">
+        <span>🗄️ Database Management Console</span>
+      </button>
+      <button class="tab-btn" onclick="PortalApp.switchTab('bank_freezes', this)">
+        <span>⚡ Golden Hour Freezes (§106 BNSS)</span>
+        <span class="tab-badge" id="badge-freeze-count">0</span>
+      </button>
+      <button class="tab-btn" onclick="PortalApp.switchTab('biometrics_vault', this)">
+        <span>👁️ Biometric Verification Archive</span>
+      </button>
+      <button class="tab-btn" onclick="PortalApp.switchTab('suspect_intel', this)">
+        <span>🛡️ Accused & Mule Directory</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="command-container">
+
+    <!-- KPI CARDS OVERVIEW -->
+    <section class="kpi-grid">
+      <div class="kpi-card gold">
+        <div class="kpi-header">
+          <span class="kpi-title">Total Filed Complaints</span>
+          <span class="kpi-icon">📁</span>
+        </div>
+        <div class="kpi-value" id="kpi-total-complaints">0</div>
+        <div class="kpi-subtitle">Ingested from Citizen Intake & Police GD</div>
+      </div>
+
+      <div class="kpi-card cyan">
+        <div class="kpi-header">
+          <span class="kpi-title">Active Bank Freezes (§106)</span>
+          <span class="kpi-icon">❄️</span>
+        </div>
+        <div class="kpi-value" id="kpi-active-freezes">0</div>
+        <div class="kpi-subtitle">Emergency Lien Notices Dispatched to Banks</div>
+      </div>
+
+      <div class="kpi-card red">
+        <div class="kpi-header">
+          <span class="kpi-title">Monitored Fraud Volume</span>
+          <span class="kpi-icon">₹</span>
+        </div>
+        <div class="kpi-value" id="kpi-total-defrauded">₹ 0</div>
+        <div class="kpi-subtitle">Cumulative Amount across Disputed UTRs</div>
+      </div>
+
+      <div class="kpi-card green">
+        <div class="kpi-header">
+          <span class="kpi-title">High-Priority Escalations</span>
+          <span class="kpi-icon">🚨</span>
+        </div>
+        <div class="kpi-value" id="kpi-priority-threats">0</div>
+        <div class="kpi-subtitle">Digital Arrest / Sextortion / Govt Spoof</div>
+      </div>
+    </section>
+
+    <!-- TAB VIEW 1: COMPLAINTS EXPLORER -->
+    <div id="view-complaints" class="portal-view">
+      <div class="toolbar-panel">
+        <div class="toolbar-row">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="complaints-search" class="search-input" placeholder="Search by Case ID, Complainant, Phone, Suspect UPI, Bank, or UTR..." oninput="PortalApp.renderTable()">
+          </div>
+
+          <div class="filter-group">
+            <select id="filter-status" class="filter-select" onchange="PortalApp.renderTable()">
+              <option value="all">Status: All Statuses</option>
+              <option value="Pending Triage">⏳ Pending Triage</option>
+              <option value="Golden Hour Freeze Notice Issued">🚨 Freeze Notice Issued</option>
+              <option value="Under Active Investigation">🔍 Under Investigation</option>
+              <option value="FIR Formally Registered">📋 FIR Registered</option>
+              <option value="Recovered & Closed">✅ Recovered & Closed</option>
+            </select>
+
+            <select id="filter-crime" class="filter-select" onchange="PortalApp.renderTable()">
+              <option value="all">Crime: All Categories</option>
+              <option value="digital_arrest">Digital Arrest / Coercion</option>
+              <option value="upi_fraud">UPI & QR Code Scam</option>
+              <option value="sextortion_blackmail">Sextortion / AI Deepfake</option>
+              <option value="business_email_compromise">Business Email Compromise</option>
+              <option value="illegal_loan_apps">Loan App Harassment</option>
+              <option value="stock_trading_scam">Fake Stock Trading Scam</option>
+            </select>
+
+            <select id="filter-priority" class="filter-select" onchange="PortalApp.renderTable()">
+              <option value="all">Priority: All</option>
+              <option value="p1">Priority 1 (Critical / Govt Spoof)</option>
+              <option value="p2">Priority 2 (High-Value > ₹1L)</option>
+              <option value="p3">Priority 3 (Standard)</option>
+            </select>
+
+            <select id="sort-order" class="filter-select" onchange="PortalApp.renderTable()">
+              <option value="newest">Sort: Newest First</option>
+              <option value="oldest">Sort: Oldest First</option>
+              <option value="amount_high">Sort: Amount (High to Low)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="toolbar-row" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+          <div style="font-size: 0.8rem; color: var(--text-muted);">
+            Showing <strong id="filter-count-display" style="color: #fff;">0</strong> complaints in live database
+          </div>
+          <div class="filter-group">
+            <button class="btn-action cyan" onclick="PortalApp.openNewComplaintModal()">
+              <span>➕ New Complaint (LEO Entry)</span>
+            </button>
+            <button class="btn-action" onclick="PortalApp.exportBackupJSON()">
+              <span>💾 Export JSON</span>
+            </button>
+            <button class="btn-action" onclick="PortalApp.importBackupJSON()">
+              <span>📂 Import JSON</span>
+            </button>
+            <button class="btn-action" onclick="PortalApp.exportCSV()">
+              <span>📊 Export CSV</span>
+            </button>
+            <button class="btn-action primary" onclick="PortalApp.seedSamples()">
+              <span>🧪 Seed Realistic Incidents</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPLAINTS DATA TABLE -->
+      <div class="table-container" style="margin-top: 16px;">
+        <table class="complaints-table">
+          <thead>
+            <tr>
+              <th>Case Reference</th>
+              <th>Filed Date/Time</th>
+              <th>Complainant Details</th>
+              <th>Offence & Priority</th>
+              <th>Suspect / Destination</th>
+              <th>Defrauded Amount & UTR</th>
+              <th>BSA §63 Evidence</th>
+              <th>Investigation Status</th>
+              <th>Official Actions</th>
+            </tr>
+          </thead>
+          <tbody id="complaints-table-body">
+            <!-- Dynamic rows rendered by JS -->
+          </tbody>
+        </table>
+        <div id="table-empty-msg" class="empty-state" style="display: none;">
+          <h3>No complaints found matching current search/filter criteria.</h3>
+          <p style="margin-top: 6px; font-size: 0.85rem;">Click "Seed Realistic Incidents" or file a test complaint from the Citizen Portal.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB VIEW 2: DATABASE MANAGEMENT CONSOLE -->
+    <div id="view-db_console" class="portal-view" style="display: none;">
+      <div class="toolbar-panel">
+        <div class="toolbar-row">
+          <div>
+            <h3 style="font-size: 1rem; color: #fff;">🗄️ GUI Database Management Console</h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+              Direct administrative access to local storage database (`clgs_official_complaints_db_v1`). Inspect raw record JSONs, modify fields, and run schema validations.
+            </p>
+          </div>
+          <div class="filter-group">
+            <button class="btn-action" onclick="PortalApp.renderDBConsole()">🔄 Refresh Records</button>
+            <button class="btn-action cyan" onclick="PortalApp.openNewComplaintModal()">➕ Add Record</button>
+            <button class="btn-action danger" onclick="PortalApp.clearDatabase()">⚠️ Wipe / Reset DB</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container" style="margin-top: 16px;">
+        <table class="complaints-table">
+          <thead>
+            <tr>
+              <th>Key ID</th>
+              <th>Schema Object Type</th>
+              <th>Complainant</th>
+              <th>Suspect Destination</th>
+              <th>Financial Loss</th>
+              <th>Evidence Hash Count</th>
+              <th>Raw JSON / Edit</th>
+            </tr>
+          </thead>
+          <tbody id="db-console-tbody">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB VIEW 3: GOLDEN HOUR BANK FREEZES -->
+    <div id="view-bank_freezes" class="portal-view" style="display: none;">
+      <div class="toolbar-panel">
+        <div class="toolbar-row">
+          <div>
+            <h3 style="font-size: 1rem; color: var(--cyan-accent);">⚡ Section 106 BNSS Golden Hour Freeze Dispatcher</h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+              Statutory emergency lien directives to Banking Intermediaries & Payment Gateways to freeze funds before mule account layering.
+            </p>
+          </div>
+          <div class="filter-group">
+            <button class="btn-action cyan" onclick="PortalApp.renderFreezeTable()">🔄 Refresh Freeze Register</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container" style="margin-top: 16px;">
+        <table class="complaints-table">
+          <thead>
+            <tr>
+              <th>Case ID</th>
+              <th>Complainant</th>
+              <th>Suspect Account / UPI</th>
+              <th>Loss Amount</th>
+              <th>UTR Reference</th>
+              <th>Freeze Status</th>
+              <th>Legal Notice Actions</th>
+            </tr>
+          </thead>
+          <tbody id="freezes-table-body">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB VIEW 4: BIOMETRICS ARCHIVE -->
+    <div id="view-biometrics_vault" class="portal-view" style="display: none;">
+      <div class="toolbar-panel">
+        <h3 style="font-size: 1rem; color: var(--green-status);">👁️ 4-Angle Biometric Verification & Liveness Archive</h3>
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+          Cryptographic facial verification audit logs verifying Natural Eye-Blink, Left 30° Yaw, Right 30° Yaw, and 3D Eye-Socket Depth.
+        </p>
+      </div>
+      <div id="bio-archive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 16px; margin-top: 16px;">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- TAB VIEW 5: SUSPECT INTEL -->
+    <div id="view-suspect_intel" class="portal-view" style="display: none;">
+      <div class="toolbar-panel">
+        <h3 style="font-size: 1rem; color: var(--red-alert);">🛡️ Unified Accused Threat & Mule Registry</h3>
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+          Cross-case intelligence directory aggregating flagged telephone numbers, mule bank accounts, fraudulent UPI VPAs, and phishing URLs.
+        </p>
+      </div>
+      <div class="table-container" style="margin-top: 16px;">
+        <table class="complaints-table">
+          <thead>
+            <tr>
+              <th>Target Identifier</th>
+              <th>Entity Type</th>
+              <th>Associated Crime Type</th>
+              <th>Associated Case Refs</th>
+              <th>Total Defrauded (₹)</th>
+              <th>Enforcement Action</th>
+            </tr>
+          </thead>
+          <tbody id="suspects-table-body">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL: FULL CASE DOSSIER -->
+  <div class="modal-overlay" id="modal-dossier">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>
+          <span>📁 OFFICIAL CASE DOSSIER:</span>
+          <span id="dossier-modal-id" style="color: var(--cyan-accent); font-family: var(--font-mono);"></span>
+        </h2>
+        <button class="modal-close-btn" onclick="PortalApp.closeModal('modal-dossier')">&times;</button>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="modal-tab-btn active" onclick="PortalApp.switchDossierTab('summary', this)">1. Summary & KYC</button>
+        <button class="modal-tab-btn" onclick="PortalApp.switchDossierTab('biometrics', this)">2. Biometrics (4 Angles)</button>
+        <button class="modal-tab-btn" onclick="PortalApp.switchDossierTab('fir', this)">3. Formal FIR Text</button>
+        <button class="modal-tab-btn" onclick="PortalApp.switchDossierTab('bsa_cert', this)">4. BSA §63 Evidence</button>
+        <button class="modal-tab-btn" onclick="PortalApp.switchDossierTab('case_diary', this)">5. Case Diary & Notes</button>
+      </div>
+
+      <div class="modal-body" id="dossier-modal-body">
+        <!-- Rendered by JS based on active subtab -->
+      </div>
+
+      <div class="modal-footer">
+        <div id="dossier-footer-status"></div>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-action cyan" onclick="PortalApp.openFreezeNoticeFromDossier()">⚡ Issue Bank Freeze Notice (§106 BNSS)</button>
+          <button class="btn-action primary" onclick="PortalApp.printCurrentDossier()">🖨️ Print Full Case File</button>
+          <button class="btn-action" onclick="PortalApp.closeModal('modal-dossier')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SECTION 106 BNSS BANK FREEZE NOTICE -->
+  <div class="modal-overlay" id="modal-freeze-notice">
+    <div class="modal-content" style="max-width: 850px;">
+      <div class="modal-header">
+        <h2 style="color: var(--cyan-accent);">
+          <span>❄️ STATUTORY BANK FREEZE DIRECTIVE (BNSS §106 / CRPC §91)</span>
+        </h2>
+        <button class="modal-close-btn" onclick="PortalApp.closeModal('modal-freeze-notice')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="code-sheet" id="freeze-notice-text"></div>
+      </div>
+      <div class="modal-footer">
+        <span style="font-size: 0.78rem; color: var(--text-muted);">Admissible legal notice to Nodal Officer of Bank under Section 106 BNSS.</span>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-action cyan" onclick="PortalApp.copyFreezeNotice()">📋 Copy Order Text</button>
+          <button class="btn-action primary" onclick="PortalApp.printFreezeNotice()">🖨️ Print / Save PDF</button>
+          <button class="btn-action" onclick="PortalApp.closeModal('modal-freeze-notice')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD MANUAL COMPLAINT / EDIT RECORD -->
+  <div class="modal-overlay" id="modal-edit-complaint">
+    <div class="modal-content" style="max-width: 750px;">
+      <div class="modal-header">
+        <h2 id="modal-edit-title">➕ Insert Official Complaint Record</h2>
+        <button class="modal-close-btn" onclick="PortalApp.closeModal('modal-edit-complaint')">&times;</button>
+      </div>
+      <div class="modal-body" style="gap: 14px;">
+        <input type="hidden" id="edit-rec-id">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Complainant Full Name *</label>
+            <input type="text" id="edit-comp-name" class="search-input" placeholder="e.g. Ramesh Kumar">
+          </div>
+          <div>
+            <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Complainant Phone *</label>
+            <input type="text" id="edit-comp-phone" class="search-input" placeholder="+91-98765-43210">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Crime Offence Type</label>
+            <select id="edit-crime-type" class="filter-select" style="width: 100%;">
+              <option value="digital_arrest">Digital Arrest / Coercive Extortion</option>
+              <option value="upi_fraud">UPI & QR Code Payment Scam</option>
+              <option value="sextortion_blackmail">Sextortion & AI Deepfake Blackmail</option>
+              <option value="business_email_compromise">Business Email Compromise (BEC)</option>
+              <option value="illegal_loan_apps">Predatory Loan App Harassment</option>
+              <option value="stock_trading_scam">Fake Stock Trading / VIP WhatsApp Scam</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Defrauded Amount (₹)</label>
+            <input type="text" id="edit-fin-amount" class="search-input" placeholder="e.g. 50,000">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Suspect Phone / Calling ID</label>
+            <input type="text" id="edit-susp-phone" class="search-input" placeholder="+91-98XXX-XXXXX">
+          </div>
+          <div>
+            <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Suspect Bank / UPI Destination</label>
+            <input type="text" id="edit-susp-target" class="search-input" placeholder="e.g. Axis Bank A/C or fraud@upi">
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Modus Operandi / Narrative</label>
+          <textarea id="edit-narration" class="search-input" style="height: 90px; resize: vertical;" placeholder="Detailed description of cyber fraud..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-action" onclick="PortalApp.closeModal('modal-edit-complaint')">Cancel</button>
+        <button class="btn-action primary" onclick="PortalApp.saveEditedComplaint()">Save to Database</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: OFFICER CREDENTIALS AUTH -->
+  <div class="modal-overlay" id="modal-auth">
+    <div class="modal-content" style="max-width: 480px;">
+      <div class="modal-header">
+        <h2>👮 Law Enforcement Authentication</h2>
+        <button class="modal-close-btn" onclick="PortalApp.closeModal('modal-auth')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px;">
+          Restricted Law Enforcement System. Enter your Official Station credentials or click Instant Demo Access.
+        </div>
+        <div>
+          <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Officer Name & Rank</label>
+          <input type="text" id="auth-officer-name" class="search-input" value="Inspector Vikramaditya Singh">
+        </div>
+        <div style="margin-top: 10px;">
+          <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Police Station / Cyber Cell Jurisdiction</label>
+          <input type="text" id="auth-officer-station" class="search-input" value="Cyber Crime Police Station, Central District, Delhi">
+        </div>
+        <div style="margin-top: 10px;">
+          <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Badge ID Number / LEO PIN</label>
+          <input type="text" id="auth-officer-badge" class="search-input" value="LEO-DL-2026-89">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-action cyan" onclick="AuthManager.loginDemo()">⚡ 1-Click Demo Login</button>
+        <button class="btn-action primary" onclick="AuthManager.saveCredentials()">Authorize & Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-box" id="portal-toast">
+    <span id="toast-icon">🚨</span>
+    <span id="toast-text">Alert message</span>
+  </div>
+
+  <!-- Include Shared Database Script -->
+  <script src="Antigravity/clgs_db.js"></script>
+
+  <script>
+    // ══════════════════════════════════════════════════════════════════════════
+    // WEB AUDIO API SOUND CHIME SYNTHESIZER
+    // ══════════════════════════════════════════════════════════════════════════
+    const SoundManager = {
+      enabled: true,
+      audioCtx: null,
+
+      init() {
+        try {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.audioCtx = new AudioContext();
+        } catch (e) {
+          console.warn('AudioContext not supported');
+        }
+      },
+
+      toggle() {
+        this.enabled = !this.enabled;
+        const btn = document.getElementById('btn-sound-toggle');
+        if (btn) {
+          btn.textContent = this.enabled ? '🔔' : '🔕';
+          btn.title = this.enabled ? 'Audio Chimes: ON' : 'Audio Chimes: MUTED';
+        }
+        PortalApp.showToast(this.enabled ? '🔔 Sound notifications enabled.' : '🔕 Sound notifications muted.', 'info');
+      },
+
+      playAlertChime() {
+        if (!this.enabled) return;
+        try {
+          if (!this.audioCtx) this.init();
+          if (!this.audioCtx) return;
+          if (this.audioCtx.state === 'suspended') this.audioCtx.resume();
+
+          const now = this.audioCtx.currentTime;
+          const osc1 = this.audioCtx.createOscillator();
+          const osc2 = this.audioCtx.createOscillator();
+          const gain = this.audioCtx.createGain();
+
+          osc1.type = 'sine';
+          osc1.frequency.setValueAtTime(587.33, now); // D5
+          osc1.frequency.exponentialRampToValueAtTime(880, now + 0.15); // A5
+
+          osc2.type = 'triangle';
+          osc2.frequency.setValueAtTime(440, now);
+          osc2.frequency.exponentialRampToValueAtTime(659.25, now + 0.18);
+
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(this.audioCtx.destination);
+
+          osc1.start(now);
+          osc2.start(now);
+          osc1.stop(now + 0.45);
+          osc2.stop(now + 0.45);
+        } catch (e) {
+          console.warn('Audio chime playback failed:', e);
+        }
+      }
+    };
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // OFFICER AUTHENTICATION MANAGER
+    // ══════════════════════════════════════════════════════════════════════════
+    const AuthManager = {
+      officer: {
+        name: 'Insp. Vikramaditya Singh',
+        station: 'Cyber Crime Police Station, Central District, Delhi',
+        badge: 'LEO-DL-2026-89'
+      },
+
+      init() {
+        try {
+          const saved = localStorage.getItem('clgs_leo_officer_creds');
+          if (saved) {
+            this.officer = JSON.parse(saved);
+          }
+        } catch (e) {}
+        this.updateHeaderDisplay();
+      },
+
+      updateHeaderDisplay() {
+        const el = document.getElementById('officer-badge-display');
+        if (el) {
+          el.textContent = `${this.officer.name} (#${this.officer.badge})`;
+        }
+      },
+
+      openAuthModal() {
+        document.getElementById('auth-officer-name').value = this.officer.name;
+        document.getElementById('auth-officer-station').value = this.officer.station;
+        document.getElementById('auth-officer-badge').value = this.officer.badge;
+        document.getElementById('modal-auth').style.display = 'flex';
+      },
+
+      saveCredentials() {
+        this.officer.name = document.getElementById('auth-officer-name').value.trim() || 'Investigating Officer';
+        this.officer.station = document.getElementById('auth-officer-station').value.trim() || 'Cyber Crime Police Station';
+        this.officer.badge = document.getElementById('auth-officer-badge').value.trim() || 'LEO-2026';
+        try {
+          localStorage.setItem('clgs_leo_officer_creds', JSON.stringify(this.officer));
+        } catch (e) {}
+        this.updateHeaderDisplay();
+        PortalApp.closeModal('modal-auth');
+        PortalApp.showToast(`👮 Credentials saved: ${this.officer.name} (${this.officer.badge})`, 'success');
+      },
+
+      loginDemo() {
+        this.officer = {
+          name: 'Insp. Vikramaditya Singh',
+          station: 'Cyber Crime Police Station, Central District, Delhi',
+          badge: 'LEO-DL-2026-89'
+        };
+        try {
+          localStorage.setItem('clgs_leo_officer_creds', JSON.stringify(this.officer));
+        } catch (e) {}
+        this.updateHeaderDisplay();
+        PortalApp.closeModal('modal-auth');
+        PortalApp.showToast('⚡ Authorized as Inspector Vikramaditya Singh (Delhi Cyber Cell)', 'success');
+      }
+    };
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // MAIN PORTAL APPLICATION CONTROLLER
+    // ══════════════════════════════════════════════════════════════════════════
+    const PortalApp = {
+      activeTab: 'complaints',
+      activeDossierSubTab: 'summary',
+      currentViewingComplaint: null,
+
+      init() {
+        AuthManager.init();
+        SoundManager.init();
+
+        // Connect to CLGS_DB shared storage
+        if (typeof CLGS_DB !== 'undefined') {
+          CLGS_DB.init();
+          CLGS_DB.subscribe((msg) => this.handleDbUpdate(msg));
+        }
+
+        this.renderAll();
+      },
+
+      handleDbUpdate(msg) {
+        console.log('CLGS_DB Update received in Officials Portal:', msg);
+        if (msg.type === 'NEW_COMPLAINT') {
+          SoundManager.playAlertChime();
+          const comp = msg.payload || msg.complaint;
+          const name = comp?.complainant?.name || 'Complainant';
+          const crime = comp?.incident?.crimeLabel || 'Cyber Offence';
+          this.showToast(`🚨 New Complaint Filed: #${comp?.id || 'NEW'} from ${name} (${crime})`, 'alert');
+        }
+
+        // Re-render UI
+        this.renderAll();
+      },
+
+      renderAll() {
+        this.renderKPIs();
+        this.renderTable();
+        this.renderFreezeTable();
+        this.renderDBConsole();
+        this.renderBioArchive();
+        this.renderSuspectRegistry();
+      },
+
+      switchTab(tabId, btn) {
+        this.activeTab = tabId;
+        document.querySelectorAll('.portal-view').forEach(v => v.style.display = 'none');
+        const targetView = document.getElementById('view-' + tabId);
+        if (targetView) targetView.style.display = 'block';
+
+        document.querySelectorAll('.command-nav .tab-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+
+        if (tabId === 'db_console') this.renderDBConsole();
+        if (tabId === 'bank_freezes') this.renderFreezeTable();
+        if (tabId === 'biometrics_vault') this.renderBioArchive();
+        if (tabId === 'suspect_intel') this.renderSuspectRegistry();
+      },
+
+      renderKPIs() {
+        const complaints = (typeof CLGS_DB !== 'undefined') ? CLGS_DB.getAll() : [];
+        const total = complaints.length;
+        const freezes = complaints.filter(c => c.financial?.freezeNoticeIssued || c.status === 'Golden Hour Freeze Notice Issued').length;
+        
+        let sum = 0;
+        let p1Count = 0;
+        complaints.forEach(c => {
+          const cleanAmt = String(c.financial?.amount || '0').replace(/[^0-9]/g, '');
+          sum += (parseInt(cleanAmt, 10) || 0);
+          if (c.priority && c.priority.includes('Priority 1')) {
+            p1Count++;
+          }
+        });
+
+        document.getElementById('kpi-total-complaints').textContent = total;
+        document.getElementById('badge-total-count').textContent = total;
+        document.getElementById('kpi-active-freezes').textContent = freezes;
+        document.getElementById('badge-freeze-count').textContent = freezes;
+        document.getElementById('kpi-total-defrauded').textContent = '₹ ' + sum.toLocaleString('en-IN');
+        document.getElementById('kpi-priority-threats').textContent = p1Count;
+      },
+
+      renderTable() {
+        const tbody = document.getElementById('complaints-table-body');
+        const emptyMsg = document.getElementById('table-empty-msg');
+        if (!tbody) return;
+
+        const complaints = (typeof CLGS_DB !== 'undefined') ? CLGS_DB.getAll() : [];
+        const q = (document.getElementById('complaints-search')?.value || '').toLowerCase().trim();
+        const fStatus = document.getElementById('filter-status')?.value || 'all';
+        const fCrime = document.getElementById('filter-crime')?.value || 'all';
+        const fPriority = document.getElementById('filter-priority')?.value || 'all';
+        const sOrder = document.getElementById('sort-order')?.value || 'newest';
+
+        let filtered = complaints.filter(c => {
+          if (fStatus !== 'all' && c.status !== fStatus) return false;
+          if (fCrime !== 'all' && c.incident?.crimeType !== fCrime) return false;
+          if (fPriority !== 'all') {
+            if (fPriority === 'p1' && (!c.priority || !c.priority.includes('Priority 1'))) return false;
+            if (fPriority === 'p2' && (!c.priority || !c.priority.includes('Priority 2'))) return false;
+            if (fPriority === 'p3' && (!c.priority || !c.priority.includes('Priority 3'))) return false;
+          }
+
+          if (q) {
+            const str = [
+              c.id,
+              c.complainant?.name,
+              c.complainant?.phone,
+              c.complainant?.city,
+              c.complainant?.state,
+              c.suspect?.phone,
+              c.suspect?.upi,
+              c.suspect?.bank,
+              c.financial?.utr,
+              c.financial?.amount,
+              c.incident?.crimeLabel
+            ].filter(Boolean).join(' ').toLowerCase();
+            if (!str.includes(q)) return false;
+          }
+          return true;
+        });
+
+        // Sorting
+        filtered.sort((a, b) => {
+          if (sOrder === 'newest') return new Date(b.filedAt || 0) - new Date(a.filedAt || 0);
+          if (sOrder === 'oldest') return new Date(a.filedAt || 0) - new Date(b.filedAt || 0);
+          if (sOrder === 'amount_high') {
+            const amtA = parseInt(String(a.financial?.amount || '0').replace(/[^0-9]/g, ''), 10) || 0;
+            const amtB = parseInt(String(b.financial?.amount || '0').replace(/[^0-9]/g, ''), 10) || 0;
+            return amtB - amtA;
+          }
+          return 0;
+        });
+
+        document.getElementById('filter-count-display').textContent = filtered.length;
+
+        if (filtered.length === 0) {
+          tbody.innerHTML = '';
+          if (emptyMsg) emptyMsg.style.display = 'block';
+          return;
+        }
+
+        if (emptyMsg) emptyMsg.style.display = 'none';
+
+        tbody.innerHTML = filtered.map(c => {
+          const dateStr = c.filedAt ? new Date(c.filedAt).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'N/A';
+          const pClass = (c.priority && c.priority.includes('Priority 1')) ? 'priority-p1' : (c.priority && c.priority.includes('Priority 2')) ? 'priority-p2' : 'priority-p3';
+          const pLabel = (c.priority && c.priority.includes('Priority 1')) ? 'P1 CRITICAL' : (c.priority && c.priority.includes('Priority 2')) ? 'P2 HIGH' : 'P3 NORMAL';
+          
+          const statusClass = c.status === 'Golden Hour Freeze Notice Issued' ? 'status-frozen' 
+            : c.status === 'Under Active Investigation' ? 'status-investigating'
+            : c.status === 'FIR Formally Registered' ? 'status-fir'
+            : c.status === 'Recovered & Closed' ? 'status-closed' : 'status-pending';
+
+          const evidenceCount = (c.evidence && c.evidence.length) || 0;
+          const isBioVerified = c.biometrics?.isVerified;
+
+          return `
+            <tr>
+              <td>
+                <span class="case-id-badge" onclick="PortalApp.openDossier('${c.id}')" title="Click to open case dossier">#${c.id}</span>
+              </td>
+              <td style="font-size: 0.76rem; color: var(--text-dim); white-space: nowrap;">
+                ${dateStr}
+              </td>
+              <td>
+                <div style="font-weight: 600; color: #fff;">${this.escapeHtml(c.complainant?.name || 'Complainant')}</div>
+                <div style="font-size: 0.74rem; color: var(--text-muted);">${this.escapeHtml(c.complainant?.phone || '')} · ${this.escapeHtml(c.complainant?.city || '')}</div>
+                ${isBioVerified ? '<div style="margin-top: 3px;"><span class="bio-verified-tag">✓ 4-Angle Bio Verified</span></div>' : ''}
+              </td>
+              <td>
+                <div style="font-weight: 500; font-size: 0.8rem; margin-bottom: 4px;">${this.escapeHtml(c.incident?.crimeLabel || c.incident?.crimeType || 'Offence')}</div>
+                <span class="priority-pill ${pClass}">${pLabel}</span>
+              </td>
+              <td style="font-size: 0.78rem;">
+                <div style="color: #38bdf8; font-family: var(--font-mono);">${this.escapeHtml(c.suspect?.upi || c.suspect?.phone || 'Unknown')}</div>
+                <div style="color: var(--text-dim); font-size: 0.72rem;">${this.escapeHtml(c.suspect?.bank || 'Bank not specified')}</div>
+              </td>
+              <td>
+                <div style="font-weight: 700; color: #f59e0b; font-family: var(--font-mono);">₹ ${this.escapeHtml(String(c.financial?.amount || '0'))}</div>
+                <div style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">UTR: ${this.escapeHtml(c.financial?.utr || 'N/A')}</div>
+              </td>
+              <td style="font-size: 0.76rem;">
+                <span style="color: var(--green-status); font-weight: 600;">🔒 ${evidenceCount} Records</span>
+                <div style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--font-mono);">SHA-256 Verified</div>
+              </td>
+              <td>
+                <select class="status-select-badge ${statusClass}" onchange="PortalApp.onStatusChange('${c.id}', this.value)">
+                  <option value="Pending Triage" ${c.status === 'Pending Triage' ? 'selected' : ''}>⏳ Pending Triage</option>
+                  <option value="Golden Hour Freeze Notice Issued" ${c.status === 'Golden Hour Freeze Notice Issued' ? 'selected' : ''}>🚨 Freeze Issued</option>
+                  <option value="Under Active Investigation" ${c.status === 'Under Active Investigation' ? 'selected' : ''}>🔍 Under Investigation</option>
+                  <option value="FIR Formally Registered" ${c.status === 'FIR Formally Registered' ? 'selected' : ''}>📋 FIR Registered</option>
+                  <option value="Recovered & Closed" ${c.status === 'Recovered & Closed' ? 'selected' : ''}>✅ Closed / Recovered</option>
+                </select>
+              </td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-tbl-action" onclick="PortalApp.openDossier('${c.id}')" title="Inspect Full Case Dossier">
+                    👁️ Dossier
+                  </button>
+                  <button class="btn-tbl-action btn-tbl-freeze" onclick="PortalApp.openFreezeNotice('${c.id}')" title="Generate Section 106 BNSS Freeze Notice">
+                    ⚡ Freeze
+                  </button>
+                  <button class="btn-tbl-action" style="color: var(--red-alert);" onclick="PortalApp.deleteComplaint('${c.id}')" title="Delete Complaint">
+                    🗑️
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      },
+
+      onStatusChange(id, newStatus) {
+        if (typeof CLGS_DB !== 'undefined') {
+          CLGS_DB.updateStatus(id, newStatus, `Official status modified to ${newStatus} from portal GUI.`, AuthManager.officer.name, AuthManager.officer.badge);
+          this.showToast(`Updated status of #${id} to: ${newStatus}`, 'success');
+        }
+      },
+
+      openDossier(id) {
+        const complaint = (typeof CLGS_DB !== 'undefined') ? CLGS_DB.getById(id) : null;
+        if (!complaint) return;
+        this.currentViewingComplaint = complaint;
+        document.getElementById('dossier-modal-id').textContent = '#' + complaint.id;
+        this.switchDossierTab(this.activeDossierSubTab || 'summary');
+        document.getElementById('modal-dossier').style.display = 'flex';
+      },
+
+      switchDossierTab(subTab, btn) {
+        this.activeDossierSubTab = subTab;
+        if (btn) {
+          document.querySelectorAll('.modal-tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        }
+        const body = document.getElementById('dossier-modal-body');
+        const c = this.currentViewingComplaint;
+        if (!c || !body) return;
+
+        if (subTab === 'summary') {
+          body.innerHTML = `
+            <div class="dossier-grid">
+              <div class="dossier-card">
+                <h4>Complainant Demographics & KYC</h4>
+                <div class="dossier-row"><span class="dossier-label">Full Name:</span><span class="dossier-val">${this.escapeHtml(c.complainant?.name || '')}</span></div>
+                <div class="dossier-row"><span class="dossier-label">Contact Phone:</span><span class="dossier-val">${this.escapeHtml(c.complainant?.phone || '')}</span></div>
+                <div class="dossier-row"><span class="dossier-label">Email Address:</span><span class="dossier-val">${this.escapeHtml(c.complainant?.email || '')}</span></div>
+                <div class="dossier-row"><span class="dossier-label">Address:</span><span class="dossier-val">${this.escapeHtml(c.complainant?.address || '')}</span></div>
+                <div class="dossier-row"><span class="dossier-label">City / State:</span><span class="dossier-val">${this.escapeHtml(c.complainant?.city || '')}, ${this.escapeHtml(c.complainant?.state || '')} (${this.escapeHtml(c.complainant?.pincode || '')})</span></div>
+                <div class="dossier-row"><span class="dossier-label">Intake Mode:</span><span class="dossier-val">${c.complainantMode === 'corporate' ? 'Corporate / Enterprise' : 'Individual Citizen'}</span></div>
+              </div>
+
+              <div class="dossier-card">
+                <h4>Suspect & Financial Intelligence</h4>
+                <div class="dossier-row"><span class="dossier-label">Suspect Phone:</span><span class="dossier-val" style="color: #38bdf8;">${this.escapeHtml(c.suspect?.phone || 'N/A')}</span></div>
+                <div class="dossier-row"><span class="dossier-label">Suspect UPI VPA:</span><span class="dossier-val" style="color: #38bdf8;">${this.escapeHtml(c.suspect?.upi || 'N/A')}</span></div>
+                <div class="dossier-row"><span class="dossier-label">Suspect Bank Acc:</span><span class="dossier-val">${this.escapeHtml(c.suspect?.bank || 'N/A')}</span></div>
+                <div class="dossier-row"><span class="dossier-label">Defrauded Amount:</span><span class="dossier-val" style="color: #f59e0b; font-weight: 700;">₹ ${this.escapeHtml(String(c.financial?.amount || '0'))}/-</span></div>
+                <div class="dossier-row"><span class="dossier-label">Transaction UTR:</span><span class="dossier-val" style="font-family: var(--font-mono);">${this.escapeHtml(c.financial?.utr || 'N/A')}</span></div>
+                <div class="dossier-row"><span class="dossier-label">Phishing URL / Domain:</span><span class="dossier-val">${this.escapeHtml(c.suspect?.url || 'N/A')}</span></div>
+              </div>
+            </div>
+
+            <div class="dossier-card" style="margin-top: 10px;">
+              <h4>Modus Operandi & Incident Narrative</h4>
+              <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">${this.escapeHtml(c.incident?.narration || 'No narrative provided.')}</p>
+            </div>
+          `;
+        } else if (subTab === 'biometrics') {
+          const snaps = c.biometrics?.snapshots || {};
+          body.innerHTML = `
+            <div class="dossier-card">
+              <h4>
+                <span>4-Angle Anti-Spoof Biometric Capture Gallery</span>
+                <span class="bio-verified-tag">Score: ${c.biometrics?.score || 98.5}% Validated</span>
+              </h4>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px;">
+                Verified under ISO/IEC 30107-3 standards. Validates live involuntary blinking, yaw head movement, and 3D eye-socket texture to block static photos and phone replay spoofing.
+              </p>
+              <div class="bio-gallery-grid">
+                <div class="bio-preview-card">
+                  <img src="${snaps.center || (typeof BIO_SVGS !== 'undefined' ? BIO_SVGS.blink : '')}" class="bio-thumb-img" alt="Center Live Blink">
+                  <span class="bio-angle-label">1. Live Eye-Blink</span>
+                </div>
+                <div class="bio-preview-card">
+                  <img src="${snaps.turn_left || (typeof BIO_SVGS !== 'undefined' ? BIO_SVGS.profile_left : '')}" class="bio-thumb-img" alt="Left 30 Profile">
+                  <span class="bio-angle-label">2. Left Profile 30°</span>
+                </div>
+                <div class="bio-preview-card">
+                  <img src="${snaps.turn_right || (typeof BIO_SVGS !== 'undefined' ? BIO_SVGS.profile_right : '')}" class="bio-thumb-img" alt="Right 30 Profile">
+                  <span class="bio-angle-label">3. Right Profile 30°</span>
+                </div>
+                <div class="bio-preview-card">
+                  <img src="${snaps.tilt_vertical || (typeof BIO_SVGS !== 'undefined' ? BIO_SVGS.depth_3d : '')}" class="bio-thumb-img" alt="3D Depth Pass">
+                  <span class="bio-angle-label">4. 3D Depth Pass</span>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (subTab === 'fir') {
+          body.innerHTML = `
+            <div class="dossier-card">
+              <h4>Formal FIR Complaint Text Application</h4>
+              <div class="code-sheet">${this.escapeHtml(c.documents?.firText || c.incident?.narration || 'FIR text not yet rendered.')}</div>
+            </div>
+          `;
+        } else if (subTab === 'bsa_cert') {
+          const evidenceList = (c.evidence || []).map((e, idx) => `
+            <div class="dossier-row" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding: 6px 0;">
+              <div>
+                <strong style="color: #fff;">Item ${idx + 1}: ${this.escapeHtml(e.name)}</strong>
+                <div style="font-size: 0.72rem; color: var(--text-dim);">${this.escapeHtml(e.category)} · ${this.escapeHtml(e.size)}</div>
+              </div>
+              <div style="text-align: right; font-family: var(--font-mono); font-size: 0.72rem; color: var(--cyan-accent);">
+                SHA-256: ${this.escapeHtml(e.sha256?.substring(0, 24))}...
+              </div>
+            </div>
+          `).join('');
+
+          body.innerHTML = `
+            <div class="dossier-card">
+              <h4>Statutory Section 63 BSA Electronic Records Register</h4>
+              <div style="margin-bottom: 14px;">${evidenceList || '<p style="color: var(--text-dim);">No electronic evidence attachments registered.</p>'}</div>
+              <h4>Section 63(4) BSA Evidence Certificate</h4>
+              <div class="code-sheet">${this.escapeHtml(c.documents?.bsaCertText || 'Certificate generated in compliant NIST SHA-256 format.')}</div>
+            </div>
+          `;
+        } else if (subTab === 'case_diary') {
+          const entries = (c.caseDiary || []).map(entry => `
+            <div class="timeline-entry">
+              <div class="timeline-header">
+                <span>${entry.officerName || 'Officer'} (${entry.officerBadge || 'LEO'})</span>
+                <span>${entry.timestamp ? new Date(entry.timestamp).toLocaleString('en-IN') : ''}</span>
+              </div>
+              <div class="timeline-action">${this.escapeHtml(entry.action || 'Investigation Note')}</div>
+              <div style="color: #cbd5e1; font-size: 0.8rem;">${this.escapeHtml(entry.notes || '')}</div>
+            </div>
+          `).join('');
+
+          body.innerHTML = `
+            <div class="dossier-card">
+              <h4>Add New Case Diary Entry</h4>
+              <div style="display: flex; gap: 10px; margin-bottom: 16px;">
+                <input type="text" id="new-diary-note" class="search-input" placeholder="Type official case diary entry / investigation action...">
+                <button class="btn-action primary" onclick="PortalApp.addCaseDiaryEntry()">Add Note</button>
+              </div>
+
+              <h4>Investigation Chronology Log</h4>
+              <div class="timeline-list">${entries || '<p style="color: var(--text-dim);">No diary entries logged.</p>'}</div>
+            </div>
+          `;
+        }
+      },
+
+      addCaseDiaryEntry() {
+        const c = this.currentViewingComplaint;
+        if (!c) return;
+        const input = document.getElementById('new-diary-note');
+        const text = input ? input.value.trim() : '';
+        if (!text) return;
+
+        if (typeof CLGS_DB !== 'undefined') {
+          CLGS_DB.addCaseDiaryNote(c.id, text, AuthManager.officer.name, AuthManager.officer.badge);
+          input.value = '';
+          this.switchDossierTab('case_diary');
+          this.showToast('Case diary entry recorded successfully.', 'success');
+        }
+      },
+
+      openFreezeNotice(id) {
+        const c = (typeof CLGS_DB !== 'undefined') ? CLGS_DB.getById(id) : null;
+        if (!c) return;
+        this.currentViewingComplaint = c;
+        const noticeText = (typeof CLGS_DB !== 'undefined') ? CLGS_DB.generateFreezeNoticeText(c, AuthManager.officer) : '';
+        document.getElementById('freeze-notice-text').textContent = noticeText;
+        document.getElementById('modal-freeze-notice').style.display = 'flex';
+      },
+
+      openFreezeNoticeFromDossier() {
+        if (!this.currentViewingComplaint) return;
+        this.openFreezeNotice(this.currentViewingComplaint.id);
+      },
+
+      copyFreezeNotice() {
+        const text = document.getElementById('freeze-notice-text').textContent;
+        navigator.clipboard.writeText(text);
+        this.showToast('📋 Section 106 BNSS Freeze Notice copied to clipboard.', 'success');
+      },
+
+      printFreezeNotice() {
+        window.print();
+      },
+
+      printCurrentDossier() {
+        window.print();
+      },
+
+      deleteComplaint(id) {
+        if (!confirm(`Are you sure you want to delete Case #${id} from the database?`)) return;
+        if (typeof CLGS_DB !== 'undefined') {
+          CLGS_DB.delete(id);
+          this.showToast(`Deleted Case #${id}.`, 'info');
+        }
+      },
+
+      renderDBConsole() {
+        const tbody = document.getElementById('db-console-tbody');
+        if (!tbody) return;
+        const complaints = (typeof CLGS_DB !== 'undefined') ? CLGS_DB.getAll() : [];
+
+        tbody.innerHTML = complaints.map(c => `
+          <tr>
+            <td style="font-family: var(--font-mono); color: var(--cyan-accent); font-weight: 600;">${c.id}</td>
+            <td style="font-size: 0.78rem; color: var(--text-muted);">${c.complainantMode || 'citizen'} / ${c.incident?.crimeType || 'offence'}</td>
+            <td>${this.escapeHtml(c.complainant?.name || '')} (${this.escapeHtml(c.complainant?.phone || '')})</td>
+            <td style="font-family: var(--font-mono); font-size: 0.78rem; color: #38bdf8;">${this.escapeHtml(c.suspect?.bank || c.suspect?.upi || 'N/A')}</td>
+            <td style="font-family: var(--font-mono); color: #f59e0b;">₹ ${this.escapeHtml(String(c.financial?.amount || '0'))}</td>
+            <td style="color: var(--green-status);">${(c.evidence && c.evidence.length) || 0} files</td>
+            <td>
+              <div style="display: flex; gap: 6px;">
+                <button class="btn-tbl-action" onclick="PortalApp.openRecordJSONViewer('${c.id}')">View JSON</button>
+                <button class="btn-tbl-action" style="color: var(--cyan-accent);" onclick="PortalApp.openEditModal('${c.id}')">Edit</button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+      },
+
+      openRecordJSONViewer(id) {
+        const c = (typeof CLGS_DB !== 'undefined') ? CLGS_DB.getById(id) : null;
+        if (!c) return;
+        alert(JSON.stringify(c, null, 2));
+      },
+
+      renderFreezeTable() {
+        const tbody = document.getElementById('freezes-table-body');
+        if (!tbody) return;
+        const complaints = (typeof CLGS_DB !== 'undefined') ? CLGS_DB.getAll() : [];
+        const freezeCases = complaints.filter(c => (c.financial && parseInt(String(c.financial.amount || '0').replace(/[^0-9]/g, ''), 10) > 0));
+
+        tbody.innerHTML = freezeCases.map(c => `
+          <tr>
+            <td><span class="case-id-badge" onclick="PortalApp.openDossier('${c.id}')">#${c.id}</span></td>
+            <td><strong>${this.escapeHtml(c.complainant?.name || '')}</strong></td>
+            <td style="font-family: var(--font-mono); color: #38bdf8;">${this.escapeHtml(c.suspect?.bank || c.suspect?.upi || 'N/A')}</td>
+            <td style="font-family: var(--font-mono); color: #f59e0b; font-weight: 700;">₹ ${this.escapeHtml(String(c.financial?.amount || '0'))}</td>
+            <td style="font-family: var(--font-mono); font-size: 0.76rem;">${this.escapeHtml(c.financial?.utr || 'N/A')}</td>
+            <td>
+              <span class="status-select-badge ${c.financial?.freezeNoticeIssued ? 'status-frozen' : 'status-pending'}">
+                ${c.financial?.freezeNoticeIssued ? '❄️ Freeze Order Issued' : '⏳ Action Pending'}
+              </span>
+            </td>
+            <td>
+              <button class="btn-action cyan" style="padding: 4px 10px; font-size: 0.75rem;" onclick="PortalApp.openFreezeNotice('${c.id}')">
+                Generate Order ➔
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      },
+
+      renderBioArchive() {
+        const container = document.getElementById('bio-archive-grid');
+        if (!container) return;
+        const complaints = (typeof CLGS_DB !== 'undefined') ? CLGS_DB.getAll() : [];
+
+        container.innerHTML = complaints.map(c => {
+          const snaps = c.biometrics?.snapshots || {};
+          return `
+            <div class="dossier-card">
+              <h4>
+                <span>#${c.id} — ${this.escapeHtml(c.complainant?.name || 'Complainant')}</span>
+                <span class="bio-verified-tag">${c.biometrics?.isVerified ? '✓ Verified' : 'Pending'}</span>
+              </h4>
+              <div class="bio-gallery-grid" style="margin-top: 10px;">
+                <div class="bio-preview-card">
+                  <img src="${snaps.center || (typeof BIO_SVGS !== 'undefined' ? BIO_SVGS.blink : '')}" class="bio-thumb-img" alt="Blink">
+                  <span class="bio-angle-label">Live Blink</span>
+                </div>
+                <div class="bio-preview-card">
+                  <img src="${snaps.turn_left || (typeof BIO_SVGS !== 'undefined' ? BIO_SVGS.profile_left : '')}" class="bio-thumb-img" alt="Left">
+                  <span class="bio-angle-label">Left 30°</span>
+                </div>
+                <div class="bio-preview-card">
+                  <img src="${snaps.turn_right || (typeof BIO_SVGS !== 'undefined' ? BIO_SVGS.profile_right : '')}" class="bio-thumb-img" alt="Right">
+                  <span class="bio-angle-label">Right 30°</span>
+                </div>
+                <div class="bio-preview-card">
+                  <img src="${snaps.tilt_vertical || (typeof BIO_SVGS !== 'undefined' ? BIO_SVGS.depth_3d : '')}" class="bio-thumb-img" alt="3D">
+                  <span class="bio-angle-label">3D Depth</span>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      },
+
+      renderSuspectRegistry() {
+        const tbody = document.getElementById('suspects-table-body');
+        if (!tbody) return;
+        const complaints = (typeof CLGS_DB !== 'undefined') ? CLGS_DB.getAll() : [];
+
+        const targets = [];
+        complaints.forEach(c => {
+          if (c.suspect?.phone && c.suspect.phone !== 'N/A') {
+            targets.push({ id: c.suspect.phone, type: 'Mobile Phone / Calling ID', crime: c.incident?.crimeLabel, caseId: c.id, amt: c.financial?.amount });
+          }
+          if (c.suspect?.upi && c.suspect.upi !== 'N/A') {
+            targets.push({ id: c.suspect.upi, type: 'Beneficiary UPI VPA', crime: c.incident?.crimeLabel, caseId: c.id, amt: c.financial?.amount });
+          }
+          if (c.suspect?.bank && c.suspect.bank !== 'N/A') {
+            targets.push({ id: c.suspect.bank, type: 'Mule Bank Account', crime: c.incident?.crimeLabel, caseId: c.id, amt: c.financial?.amount });
+          }
+        });
+
+        tbody.innerHTML = targets.map(t => `
+          <tr>
+            <td style="font-family: var(--font-mono); color: #38bdf8; font-weight: 600;">${this.escapeHtml(t.id)}</td>
+            <td style="font-size: 0.78rem; color: var(--text-muted);">${t.type}</td>
+            <td>${this.escapeHtml(t.crime || 'Cyber Fraud')}</td>
+            <td><span class="case-id-badge" onclick="PortalApp.openDossier('${t.caseId}')">#${t.caseId}</span></td>
+            <td style="font-family: var(--font-mono); color: #f59e0b;">₹ ${this.escapeHtml(String(t.amt || '0'))}</td>
+            <td>
+              <button class="btn-tbl-action btn-tbl-freeze" onclick="PortalApp.openFreezeNotice('${t.caseId}')">Freeze Lien</button>
+            </td>
+          </tr>
+        `).join('');
+      },
+
+      openNewComplaintModal() {
+        document.getElementById('modal-edit-title').textContent = '➕ Insert Official Complaint Record';
+        document.getElementById('edit-rec-id').value = '';
+        document.getElementById('edit-comp-name').value = '';
+        document.getElementById('edit-comp-phone').value = '';
+        document.getElementById('edit-fin-amount').value = '';
+        document.getElementById('edit-susp-phone').value = '';
+        document.getElementById('edit-susp-target').value = '';
+        document.getElementById('edit-narration').value = '';
+        document.getElementById('modal-edit-complaint').style.display = 'flex';
+      },
+
+      openEditModal(id) {
+        const c = (typeof CLGS_DB !== 'undefined') ? CLGS_DB.getById(id) : null;
+        if (!c) return;
+        document.getElementById('modal-edit-title').textContent = `✏️ Edit Complaint #${c.id}`;
+        document.getElementById('edit-rec-id').value = c.id;
+        document.getElementById('edit-comp-name').value = c.complainant?.name || '';
+        document.getElementById('edit-comp-phone').value = c.complainant?.phone || '';
+        document.getElementById('edit-crime-type').value = c.incident?.crimeType || 'digital_arrest';
+        document.getElementById('edit-fin-amount').value = c.financial?.amount || '';
+        document.getElementById('edit-susp-phone').value = c.suspect?.phone || '';
+        document.getElementById('edit-susp-target').value = c.suspect?.bank || c.suspect?.upi || '';
+        document.getElementById('edit-narration').value = c.incident?.narration || '';
+        document.getElementById('modal-edit-complaint').style.display = 'flex';
+      },
+
+      saveEditedComplaint() {
+        const recId = document.getElementById('edit-rec-id').value;
+        const name = document.getElementById('edit-comp-name').value.trim() || 'Complainant Citizen';
+        const phone = document.getElementById('edit-comp-phone').value.trim() || '+91-98765-43210';
+        const crimeType = document.getElementById('edit-crime-type').value;
+        const amount = document.getElementById('edit-fin-amount').value.trim() || '0';
+        const suspPhone = document.getElementById('edit-susp-phone').value.trim() || 'N/A';
+        const suspTarget = document.getElementById('edit-susp-target').value.trim() || 'N/A';
+        const narration = document.getElementById('edit-narration').value.trim() || 'Official case logged.';
+
+        let existing = recId ? CLGS_DB.getById(recId) : null;
+        const record = existing || {};
+
+        if (!record.id) record.id = recId || undefined;
+        record.complainant = Object.assign(record.complainant || {}, { name, phone });
+        record.incident = Object.assign(record.incident || {}, { crimeType, narration });
+        record.financial = Object.assign(record.financial || {}, { amount });
+        record.suspect = Object.assign(record.suspect || {}, { phone: suspPhone, bank: suspTarget });
+
+        if (!record.biometrics) {
+          record.biometrics = {
+            isVerified: true,
+            score: 98.2,
+            snapshots: {
+              center: BIO_SVGS.blink,
+              turn_left: BIO_SVGS.profile_left,
+              turn_right: BIO_SVGS.profile_right,
+              tilt_vertical: BIO_SVGS.depth_3d
+            }
+          };
+        }
+
+        CLGS_DB.save(record);
+        this.closeModal('modal-edit-complaint');
+        this.showToast('Record saved to database successfully.', 'success');
+      },
+
+      seedSamples() {
+        if (typeof CLGS_DB !== 'undefined') {
+          CLGS_DB.seedSampleData(true);
+          this.showToast('🧪 Seeded 6 realistic cyber crime investigation cases into database.', 'success');
+        }
+      },
+
+      clearDatabase() {
+        if (!confirm('⚠️ EXTREME ACTION: Wipe all complaints from local database?')) return;
+        if (typeof CLGS_DB !== 'undefined') {
+          CLGS_DB.clear();
+          this.showToast('Database wiped.', 'info');
+        }
+      },
+
+      exportBackupJSON() {
+        if (typeof CLGS_DB === 'undefined') return;
+        const json = CLGS_DB.exportJSON();
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `CLGS_Complaints_Database_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        this.showToast('Database exported to JSON.', 'success');
+      },
+
+      importBackupJSON() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json,application/json';
+        input.onchange = (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            try {
+              const count = CLGS_DB.importJSON(evt.target.result);
+              PortalApp.showToast(`Imported ${count} complaints successfully.`, 'success');
+            } catch (err) {
+              alert('Import failed: ' + err.message);
+            }
+          };
+          reader.readAsText(file);
+        };
+        input.click();
+      },
+
+      exportCSV() {
+        const complaints = (typeof CLGS_DB !== 'undefined') ? CLGS_DB.getAll() : [];
+        if (complaints.length === 0) {
+          alert('No complaints to export.');
+          return;
+        }
+
+        const headers = ['Case ID', 'Filed At', 'Status', 'Priority', 'Complainant Name', 'Phone', 'City', 'State', 'Crime Type', 'Loss Amount (INR)', 'UTR', 'Suspect Phone', 'Suspect Destination'];
+        const rows = complaints.map(c => [
+          `"${c.id}"`,
+          `"${c.filedAt || ''}"`,
+          `"${c.status || ''}"`,
+          `"${c.priority || ''}"`,
+          `"${(c.complainant?.name || '').replace(/"/g, '""')}"`,
+          `"${c.complainant?.phone || ''}"`,
+          `"${c.complainant?.city || ''}"`,
+          `"${c.complainant?.state || ''}"`,
+          `"${(c.incident?.crimeLabel || c.incident?.crimeType || '').replace(/"/g, '""')}"`,
+          `"${c.financial?.amount || '0'}"`,
+          `"${c.financial?.utr || ''}"`,
+          `"${c.suspect?.phone || ''}"`,
+          `"${(c.suspect?.bank || c.suspect?.upi || '').replace(/"/g, '""')}"`
+        ]);
+
+        const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Cyber_Crime_Investigation_Register_${new Date().toISOString().slice(0, 10)}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        this.showToast('Exported CSV investigation register.', 'success');
+      },
+
+      closeModal(id) {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      },
+
+      showToast(msg, type = 'info') {
+        const toast = document.getElementById('portal-toast');
+        const text = document.getElementById('toast-text');
+        const icon = document.getElementById('toast-icon');
+        if (!toast || !text) return;
+
+        text.textContent = msg;
+        if (icon) {
+          icon.textContent = type === 'alert' ? '🚨' : type === 'success' ? '✅' : 'ℹ️';
+        }
+        toast.className = 'toast-box show';
+        setTimeout(() => {
+          toast.className = 'toast-box';
+        }, 4000);
+      },
+
+      escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+    };
+
+    // Initialize application on load
+    document.addEventListener('DOMContentLoaded', () => {
+      PortalApp.init();
+    });
+  </script>
+</body>
+</html>
