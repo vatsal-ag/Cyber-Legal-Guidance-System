@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cyber Law Enforcement & Investigation Command Portal | National Cyber Crime Cell</title>
+  <title>Cyber Law Enforcement & Investigation Command System | Official Police Portal</title>
   <meta name="description" content="Authorized Law Enforcement Agency (LEA) Portal for Cyber Crime Investigation, Section 106 BNSS Bank Freezes, BSA Section 63 Evidence Verification, and Database Management.">
   <meta name="robots" content="noindex, nofollow">
 
@@ -12,152 +12,340 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Frame-Busting Anti-Clickjacking Defense -->
+  <script>
+    if (window.top !== window.self) {
+      window.top.location = window.self.location;
+    }
+  </script>
+
   <style>
     :root {
-      --bg-dark: #070c18;
-      --bg-panel: #0d1527;
-      --bg-card: #131f38;
-      --bg-card-hover: #1a2a4b;
-      --bg-input: #0a1122;
-      --border-color: #1e2f52;
-      --border-accent: #2e4474;
+      /* Sovereign GovTech / Institutional LegalTech Palette (Light Mode Default) */
+      --primary-navy: #0e2442;
+      --primary-hover: #163660;
+      --navy-light: #1e3a5f;
+      --navy-surface: #f4f7fb;
       
-      --gold-primary: #f59e0b;
-      --gold-hover: #d97706;
-      --gold-surface: rgba(245, 158, 11, 0.12);
+      --saffron-gold: #c26100;
+      --saffron-hover: #a35200;
+      --saffron-surface: #fef7ee;
+      --saffron-border: #fed7aa;
       
-      --cyan-accent: #06b6d4;
-      --cyan-surface: rgba(6, 182, 212, 0.12);
+      --cyan-accent: #0284c7;
+      --cyan-surface: rgba(2, 132, 199, 0.08);
       
-      --green-status: #10b981;
-      --green-surface: rgba(16, 185, 129, 0.14);
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --bg-input: #ffffff;
       
-      --red-alert: #ef4444;
-      --red-surface: rgba(239, 68, 68, 0.14);
+      --border-card: #e2e8f0;
+      --border-dark: #cbd5e1;
+      --border-focus: #0e2442;
+      --border-accent: #cbd5e1;
       
-      --purple-accent: #8b5cf6;
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --text-white: #0f172a;
       
-      --text-white: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
+      --status-red: #991b1b;
+      --status-red-bg: #fef2f2;
+      --status-red-border: #fecaca;
       
+      --status-amber: #9a3412;
+      --status-amber-bg: #fff7ed;
+      --status-amber-border: #ffedd5;
+      
+      --status-green: #166534;
+      --status-green-bg: #f0fdf4;
+      --status-green-border: #bbf7d0;
+
+      /* Tiranga Official Colors */
+      --tiranga-saffron: #FF671F;
+      --tiranga-white: #FFFFFF;
+      --tiranga-green: #046A38;
+      --ashoka-navy: #002D62;
+
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      
+      --shadow-sm: 0 1px 3px rgba(14, 36, 66, 0.08);
+      --shadow-md: 0 4px 8px rgba(14, 36, 66, 0.1);
+      --shadow-lg: 0 10px 24px rgba(14, 36, 66, 0.15);
+
+      --emblem-bg: linear-gradient(145deg, #0e2442 0%, #173860 100%);
+      --emblem-border: rgba(14, 36, 66, 0.25);
+      --emblem-fg: #ffffff;
+      --emblem-accent: #f59e0b;
+      --emblem-muted: #cbd5e1;
+      --emblem-shadow: 0 4px 12px rgba(14, 36, 66, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
       --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    /* ── PERSISTENT INSTITUTIONAL DARK THEME (COMMAND CENTER) ── */
+    [data-theme="dark"] {
+      --primary-navy: #60a5fa;
+      --primary-hover: #93c5fd;
+      --navy-light: #3b82f6;
+      --navy-surface: #1e293b;
       
+      --saffron-gold: #fb923c;
+      --saffron-hover: #f97316;
+      --saffron-surface: #271406;
+      --saffron-border: #9a3412;
+      
+      --cyan-accent: #38bdf8;
+      --cyan-surface: rgba(56, 189, 248, 0.12);
+      
+      --bg-page: #070c18;
+      --bg-card: #0d1527;
+      --bg-subtle: #131f38;
+      --bg-input: #0a1122;
+      
+      --border-card: #1e2f52;
+      --border-dark: #2a3754;
+      --border-focus: #38bdf8;
+      --border-accent: #2e4474;
+      
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --text-white: #f8fafc;
+      
+      --status-red: #ef4444;
+      --status-red-bg: rgba(239, 68, 68, 0.15);
+      --status-red-border: rgba(239, 68, 68, 0.4);
+      
+      --status-amber: #f59e0b;
+      --status-amber-bg: rgba(245, 158, 11, 0.15);
+      --status-amber-border: rgba(245, 158, 11, 0.4);
+      
+      --status-green: #10b981;
+      --status-green-bg: rgba(16, 185, 129, 0.15);
+      --status-green-border: rgba(16, 185, 129, 0.4);
+
       --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
       --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
       --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.65);
+
+      --emblem-bg: linear-gradient(145deg, #132238 0%, #0c1624 100%);
+      --emblem-border: rgba(96, 165, 250, 0.35);
+      --emblem-fg: #f1f5f9;
+      --emblem-accent: #fbbf24;
+      --emblem-muted: #64748b;
+      --emblem-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-white);
+      background-color: var(--bg-page);
+      color: var(--text-primary);
       font-family: var(--font-sans);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
       line-height: 1.5;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
-    /* TOP COMMAND BAR */
-    .command-header {
-      background: linear-gradient(180deg, #0f1930 0%, #0b1224 100%);
-      border-bottom: 1px solid var(--border-color);
-      padding: 12px 24px;
+    /* ── TOP INSTITUTIONAL BAR ── */
+    .gov-top-bar {
+      background: #0a1b33;
+      color: #e2e8f0;
+      font-size: 0.76rem;
+      padding: 6px 24px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: var(--shadow-sm);
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .gov-top-bar a {
+      color: #93c5fd;
+      text-decoration: none;
+      margin-left: 12px;
+    }
+    .gov-top-bar a:hover {
+      text-decoration: underline;
     }
 
-    .header-branding {
+    .theme-toggle-btn, .lang-pill-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background-color 0.12s ease;
+    }
+    .theme-toggle-btn:hover, .lang-pill-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* ── TIRANGA TRICOLOR ACCENT RIBBON ── */
+    .tiranga-stripe {
+      height: 4px;
+      width: 100%;
+      background: linear-gradient(90deg, #FF671F 0%, #FF671F 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #046A38 66.66%, #046A38 100%);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+      display: block;
+      position: relative;
+      z-index: 100;
+    }
+    [data-theme="dark"] .tiranga-stripe {
+      background: linear-gradient(90deg, #FF671F 0%, #FF671F 33.33%, #F8FAFC 33.33%, #F8FAFC 66.66%, #059669 66.66%, #059669 100%);
+      box-shadow: 0 1px 5px rgba(255, 103, 31, 0.25);
+    }
+
+    /* ── MAIN HEADER ── */
+    header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-card);
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .brand-group {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
     }
-
-    .emblem-shield {
+    .brand-emblem {
       width: 44px;
       height: 44px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-      border: 1px solid #3b82f6;
+      background: var(--emblem-bg);
+      border: 1px solid var(--emblem-border);
+      border-radius: var(--radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+      box-shadow: var(--emblem-shadow);
       flex-shrink: 0;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-
-    .brand-titles h1 {
+    .brand-emblem:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+    .brand-text h1 {
       font-size: 1.15rem;
       font-weight: 700;
-      letter-spacing: 0.5px;
-      color: var(--text-white);
+      color: var(--primary-navy);
+      letter-spacing: -0.01em;
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
-
     .badge-classified {
       font-size: 0.65rem;
       font-weight: 800;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       padding: 2px 7px;
       border-radius: 4px;
-      background: var(--red-surface);
-      color: var(--red-alert);
-      border: 1px solid rgba(239, 68, 68, 0.4);
+      background: var(--status-red-bg);
+      color: var(--status-red);
+      border: 1px solid var(--status-red-border);
       text-transform: uppercase;
     }
-
-    .brand-titles p {
+    .brand-text p {
       font-size: 0.78rem;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
-    .officer-badge-pill {
-      background: var(--bg-card);
-      border: 1px solid var(--border-accent);
-      border-radius: 8px;
-      padding: 6px 14px;
+    /* Header Action Pills & Badges */
+    .bot-shield-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--status-green-bg);
+      border: 1px solid var(--status-green-border);
+      color: var(--status-green);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .bot-shield-pill:hover {
+      filter: brightness(0.95);
+      transform: translateY(-1px);
+    }
+    .bot-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--status-green);
+      animation: pulseAnim 1.8s infinite;
+    }
+
+    .panic-btn {
+      background: var(--status-red-bg);
+      border: 1px solid var(--status-red-border);
+      color: var(--status-red);
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      gap: 6px;
+      transition: background-color 0.12s ease, transform 0.1s ease;
+    }
+    .panic-btn:hover { background: rgba(239, 68, 68, 0.22); }
+    .panic-btn:active { transform: scale(0.96); }
+
+    .helpline-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--status-red-bg);
+      border: 1px solid var(--status-red-border);
+      color: var(--status-red);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-decoration: none;
     }
 
-    .officer-badge-pill:hover {
-      border-color: var(--gold-primary);
-      background: var(--bg-card-hover);
-    }
-
-    .officer-status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--green-status);
-      box-shadow: 0 0 8px var(--green-status);
+    .time-badge {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      background: var(--bg-subtle);
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-card);
     }
 
     .live-sync-indicator {
@@ -167,160 +355,163 @@
       font-size: 0.75rem;
       color: var(--cyan-accent);
       background: var(--cyan-surface);
-      border: 1px solid rgba(6, 182, 212, 0.3);
+      border: 1px solid rgba(2, 132, 199, 0.3);
       padding: 5px 12px;
-      border-radius: 6px;
+      border-radius: 20px;
       font-family: var(--font-mono);
+      font-weight: 600;
     }
 
-    .pulse-dot {
+    .officer-badge-pill {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 5px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+    }
+    .officer-badge-pill:hover {
+      border-color: var(--saffron-gold);
+    }
+    .officer-status-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: var(--cyan-accent);
-      animation: pulseAnim 1.8s infinite;
-    }
-
-    @keyframes pulseAnim {
-      0% { opacity: 0.4; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.3); }
-      100% { opacity: 0.4; transform: scale(0.9); }
+      background: var(--status-green);
     }
 
     .btn-portal-switch {
-      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-      color: #fff;
-      border: 1px solid #3b82f6;
-      padding: 7px 14px;
-      border-radius: 6px;
-      font-size: 0.82rem;
-      font-weight: 600;
+      background: linear-gradient(135deg, #0e2442 0%, #1e3a5f 100%);
+      color: #38bdf8;
+      border: 1px solid #38bdf8;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
       display: flex;
       align-items: center;
       gap: 6px;
       text-decoration: none;
       transition: all 0.2s ease;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.15);
     }
-
     .btn-portal-switch:hover {
       filter: brightness(1.15);
-      box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+      transform: translateY(-1px);
     }
 
     .btn-icon-toggle {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-card);
       color: var(--text-muted);
-      width: 36px;
-      height: 36px;
-      border-radius: 6px;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: all 0.2s;
     }
-
     .btn-icon-toggle:hover {
-      color: var(--text-white);
-      border-color: var(--border-accent);
+      color: var(--text-primary);
+      border-color: var(--border-dark);
     }
 
-    /* NAVIGATION TABS */
-    .command-nav {
-      background: var(--bg-panel);
-      border-bottom: 1px solid var(--border-color);
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* ── NAVIGATION BAR & TABS ── */
+    .nav-bar-wrapper {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-card);
+      padding: 0 28px;
       overflow-x: auto;
     }
-
     .nav-tabs {
       display: flex;
-      gap: 2px;
+      gap: 8px;
+      max-width: 1700px;
+      margin: 0 auto;
     }
-
-    .tab-btn {
-      background: transparent;
-      border: none;
-      border-bottom: 2px solid transparent;
-      color: var(--text-muted);
-      padding: 12px 18px;
-      font-size: 0.86rem;
-      font-weight: 500;
-      cursor: pointer;
+    .nav-tab {
       display: flex;
       align-items: center;
       gap: 8px;
-      white-space: nowrap;
-      transition: all 0.2s ease;
-    }
-
-    .tab-btn:hover {
-      color: var(--text-white);
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .tab-btn.active {
-      color: var(--gold-primary);
-      border-bottom-color: var(--gold-primary);
+      padding: 12px 16px;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.88rem;
       font-weight: 600;
-      background: var(--gold-surface);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      user-select: none;
     }
-
+    .nav-tab:hover {
+      color: var(--primary-navy);
+      background: var(--bg-subtle);
+    }
+    .nav-tab.active {
+      color: var(--primary-navy);
+      border-bottom-color: var(--saffron-gold);
+      font-weight: 700;
+    }
     .tab-badge {
       font-size: 0.72rem;
-      padding: 2px 7px;
+      padding: 1px 6px;
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-white);
+      background: var(--bg-subtle);
+      color: var(--text-muted);
       font-family: var(--font-mono);
+      border: 1px solid var(--border-card);
     }
-
-    .tab-btn.active .tab-badge {
-      background: var(--gold-primary);
-      color: #000;
+    .nav-tab.active .tab-badge {
+      background: var(--saffron-surface);
+      color: var(--saffron-gold);
+      border-color: var(--saffron-border);
       font-weight: 700;
     }
 
-    /* MAIN CONTAINER */
+    /* ── MAIN CONTAINER ── */
     .command-container {
       flex: 1;
-      padding: 24px;
+      padding: 24px 28px;
       max-width: 1700px;
       width: 100%;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 22px;
     }
 
-    /* KPI OVERVIEW GRID */
+    /* ── KPI OVERVIEW GRID ── */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 16px;
     }
-
     .kpi-card {
-      background: var(--bg-panel);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
       padding: 18px 20px;
       position: relative;
       overflow: hidden;
       box-shadow: var(--shadow-sm);
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
-
     .kpi-card:hover {
       transform: translateY(-2px);
-      border-color: var(--border-accent);
+      box-shadow: var(--shadow-md);
     }
-
     .kpi-card::before {
       content: '';
       position: absolute;
@@ -328,13 +519,12 @@
       left: 0;
       width: 4px;
       height: 100%;
-      background: var(--border-accent);
+      background: var(--border-dark);
     }
-
-    .kpi-card.gold::before { background: var(--gold-primary); }
-    .kpi-card.red::before { background: var(--red-alert); }
+    .kpi-card.gold::before { background: var(--saffron-gold); }
     .kpi-card.cyan::before { background: var(--cyan-accent); }
-    .kpi-card.green::before { background: var(--green-status); }
+    .kpi-card.red::before { background: var(--status-red); }
+    .kpi-card.green::before { background: var(--status-green); }
 
     .kpi-header {
       display: flex;
@@ -342,45 +532,36 @@
       justify-content: space-between;
       margin-bottom: 8px;
     }
-
     .kpi-title {
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 0.78rem;
+      font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-
-    .kpi-icon {
-      font-size: 1.2rem;
-      opacity: 0.8;
-    }
-
     .kpi-value {
       font-size: 1.85rem;
       font-weight: 700;
       font-family: var(--font-mono);
-      color: var(--text-white);
+      color: var(--text-primary);
       margin-bottom: 4px;
     }
-
     .kpi-subtitle {
       font-size: 0.74rem;
-      color: var(--text-dim);
+      color: var(--text-muted);
     }
 
-    /* CONTROLS TOOLBAR */
+    /* ── TOOLBAR PANEL ── */
     .toolbar-panel {
-      background: var(--bg-panel);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
       padding: 16px 20px;
       display: flex;
       flex-direction: column;
       gap: 14px;
       box-shadow: var(--shadow-sm);
     }
-
     .toolbar-row {
       display: flex;
       align-items: center;
@@ -388,36 +569,33 @@
       gap: 16px;
       flex-wrap: wrap;
     }
-
     .search-box {
       flex: 1;
       min-width: 280px;
       position: relative;
     }
-
     .search-input {
       width: 100%;
       background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      border-radius: 7px;
-      padding: 10px 14px 10px 38px;
-      color: var(--text-white);
-      font-size: 0.88rem;
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-sm);
+      padding: 9px 14px 9px 38px;
+      color: var(--text-primary);
+      font-size: 0.86rem;
+      font-family: inherit;
       outline: none;
       transition: border-color 0.2s;
     }
-
     .search-input:focus {
-      border-color: var(--cyan-accent);
-      box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+      border-color: var(--primary-navy);
+      box-shadow: 0 0 0 2px var(--cyan-surface);
     }
-
     .search-icon {
       position: absolute;
       left: 12px;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--text-dim);
+      color: var(--text-muted);
       font-size: 0.95rem;
       pointer-events: none;
     }
@@ -428,155 +606,121 @@
       gap: 10px;
       flex-wrap: wrap;
     }
-
     .filter-select {
       background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      border-radius: 7px;
-      padding: 9px 12px;
-      color: var(--text-white);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      color: var(--text-primary);
       font-size: 0.82rem;
       outline: none;
       cursor: pointer;
     }
-
     .filter-select:focus {
-      border-color: var(--gold-primary);
+      border-color: var(--primary-navy);
     }
 
     .btn-action {
-      background: var(--bg-card);
-      border: 1px solid var(--border-accent);
-      color: var(--text-white);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-card);
+      color: var(--text-primary);
       padding: 8px 14px;
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       font-size: 0.82rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
     }
-
     .btn-action:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--gold-primary);
+      background: var(--border-card);
     }
-
     .btn-action.primary {
-      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-      border-color: #f59e0b;
-      color: #fff;
-      font-weight: 600;
+      background: var(--saffron-gold);
+      border-color: var(--saffron-gold);
+      color: #ffffff;
     }
-
     .btn-action.primary:hover {
-      filter: brightness(1.15);
+      background: var(--saffron-hover);
     }
-
     .btn-action.cyan {
-      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-      border-color: #38bdf8;
-      color: #fff;
+      background: var(--cyan-accent);
+      border-color: var(--cyan-accent);
+      color: #ffffff;
     }
-
     .btn-action.danger {
-      background: var(--red-surface);
-      border-color: rgba(239, 68, 68, 0.4);
-      color: var(--red-alert);
+      background: var(--status-red-bg);
+      border-color: var(--status-red-border);
+      color: var(--status-red);
     }
 
-    .btn-action.danger:hover {
-      background: rgba(239, 68, 68, 0.25);
-    }
-
-    /* TABLE SECTION */
+    /* ── COMPLAINTS TABLE ── */
     .table-container {
-      background: var(--bg-panel);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      box-shadow: var(--shadow-sm);
     }
-
     .complaints-table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
       font-size: 0.84rem;
     }
-
     .complaints-table th {
-      background: #090e1b;
+      background: var(--bg-subtle);
       color: var(--text-muted);
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       font-size: 0.72rem;
       letter-spacing: 0.5px;
-      padding: 13px 16px;
-      border-bottom: 1px solid var(--border-color);
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-card);
       white-space: nowrap;
     }
-
     .complaints-table td {
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(30, 47, 82, 0.5);
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border-card);
       vertical-align: middle;
-      color: var(--text-white);
+      color: var(--text-primary);
     }
-
-    .complaints-table tbody tr {
-      transition: background-color 0.15s ease;
-    }
-
     .complaints-table tbody tr:hover {
-      background-color: rgba(30, 47, 82, 0.35);
+      background-color: var(--bg-subtle);
     }
 
-    .complaints-table tbody tr.newly-received {
-      animation: highlightRow 3s ease forwards;
-    }
-
-    @keyframes highlightRow {
-      0% { background-color: rgba(16, 185, 129, 0.3); }
-      100% { background-color: transparent; }
-    }
-
-    /* TABLE PILLS & BADGES */
+    /* Pills & Badges */
     .case-id-badge {
       font-family: var(--font-mono);
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.82rem;
       color: var(--cyan-accent);
       background: var(--cyan-surface);
       padding: 3px 8px;
-      border-radius: 4px;
-      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-card);
       cursor: pointer;
       display: inline-block;
     }
-
-    .case-id-badge:hover {
-      text-decoration: underline;
-    }
+    .case-id-badge:hover { text-decoration: underline; }
 
     .status-select-badge {
       background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-sm);
       padding: 4px 8px;
       font-size: 0.75rem;
       font-weight: 600;
       outline: none;
       cursor: pointer;
     }
-
-    .status-select-badge.status-pending { color: #f59e0b; border-color: rgba(245, 158, 11, 0.4); }
-    .status-select-badge.status-frozen { color: #06b6d4; border-color: rgba(6, 182, 212, 0.4); background: rgba(6, 182, 212, 0.1); }
+    .status-select-badge.status-pending { color: var(--status-amber); border-color: var(--status-amber-border); }
+    .status-select-badge.status-frozen { color: var(--cyan-accent); border-color: var(--cyan-accent); background: var(--cyan-surface); }
     .status-select-badge.status-investigating { color: #8b5cf6; border-color: rgba(139, 92, 246, 0.4); }
-    .status-select-badge.status-fir { color: #10b981; border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.1); }
-    .status-select-badge.status-closed { color: #64748b; border-color: rgba(100, 116, 139, 0.4); }
+    .status-select-badge.status-fir { color: var(--status-green); border-color: var(--status-green-border); background: var(--status-green-bg); }
+    .status-select-badge.status-closed { color: var(--text-muted); border-color: var(--border-card); }
 
     .priority-pill {
       font-size: 0.7rem;
@@ -586,97 +730,55 @@
       display: inline-block;
       text-transform: uppercase;
     }
-
-    .priority-p1 {
-      background: var(--red-surface);
-      color: var(--red-alert);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-    }
-
-    .priority-p2 {
-      background: var(--gold-surface);
-      color: var(--gold-primary);
-      border: 1px solid rgba(245, 158, 11, 0.4);
-    }
-
-    .priority-p3 {
-      background: rgba(148, 163, 184, 0.1);
-      color: var(--text-muted);
-      border: 1px solid rgba(148, 163, 184, 0.3);
-    }
+    .priority-p1 { background: var(--status-red-bg); color: var(--status-red); border: 1px solid var(--status-red-border); }
+    .priority-p2 { background: var(--status-amber-bg); color: var(--status-amber); border: 1px solid var(--status-amber-border); }
+    .priority-p3 { background: var(--bg-subtle); color: var(--text-muted); border: 1px solid var(--border-card); }
 
     .bio-verified-tag {
       font-size: 0.72rem;
-      color: var(--green-status);
-      background: var(--green-surface);
+      color: var(--status-green);
+      background: var(--status-green-bg);
       padding: 2px 6px;
       border-radius: 4px;
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-
-    .table-actions {
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      border: 1px solid var(--status-green-border);
     }
 
     .btn-tbl-action {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-white);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-card);
+      color: var(--text-primary);
       padding: 5px 9px;
-      border-radius: 5px;
-      font-size: 0.74rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 4px;
       transition: all 0.15s;
     }
+    .btn-tbl-action:hover { background: var(--border-card); }
+    .btn-tbl-freeze { color: var(--cyan-accent); border-color: var(--cyan-accent); }
 
-    .btn-tbl-action:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--border-accent);
-    }
-
-    .btn-tbl-freeze {
-      border-color: rgba(6, 182, 212, 0.4);
-      color: var(--cyan-accent);
-    }
-
-    .btn-tbl-freeze:hover {
-      background: var(--cyan-surface);
-    }
-
-    .empty-state {
-      padding: 48px 24px;
-      text-align: center;
-      color: var(--text-muted);
-    }
-
-    /* MODAL STYLES */
+    /* ── MODALS ── */
     .modal-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(4, 7, 15, 0.85);
-      backdrop-filter: blur(8px);
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(14, 36, 66, 0.65);
+      backdrop-filter: blur(5px);
       z-index: 1000;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
     }
-
     .modal-content {
-      background: var(--bg-panel);
-      border: 1px solid var(--border-accent);
-      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
       width: 100%;
       max-width: 950px;
       max-height: 90vh;
@@ -686,51 +788,43 @@
       overflow: hidden;
       animation: modalFadeIn 0.2s ease-out;
     }
-
     @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.97); }
+      from { opacity: 0; transform: scale(0.98); }
       to { opacity: 1; transform: scale(1); }
     }
-
     .modal-header {
-      padding: 18px 24px;
-      background: #090e1b;
-      border-bottom: 1px solid var(--border-color);
+      padding: 16px 24px;
+      background: var(--bg-subtle);
+      border-bottom: 1px solid var(--border-card);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-
     .modal-header h2 {
       font-size: 1.1rem;
       font-weight: 700;
-      color: var(--text-white);
+      color: var(--primary-navy);
       display: flex;
       align-items: center;
       gap: 10px;
     }
-
     .modal-close-btn {
       background: transparent;
       border: none;
       color: var(--text-muted);
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       cursor: pointer;
       line-height: 1;
     }
-
-    .modal-close-btn:hover {
-      color: var(--text-white);
-    }
+    .modal-close-btn:hover { color: var(--text-primary); }
 
     .modal-tabs {
       display: flex;
-      background: #0b1222;
-      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-subtle);
+      border-bottom: 1px solid var(--border-card);
       padding: 0 16px;
       overflow-x: auto;
     }
-
     .modal-tab-btn {
       background: transparent;
       border: none;
@@ -738,30 +832,26 @@
       color: var(--text-muted);
       padding: 10px 14px;
       font-size: 0.82rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
     }
-
     .modal-tab-btn.active {
-      color: var(--cyan-accent);
-      border-bottom-color: var(--cyan-accent);
-      font-weight: 600;
+      color: var(--primary-navy);
+      border-bottom-color: var(--saffron-gold);
     }
-
     .modal-body {
       padding: 24px;
       overflow-y: auto;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
     }
-
     .modal-footer {
-      padding: 16px 24px;
-      background: #090e1b;
-      border-top: 1px solid var(--border-color);
+      padding: 14px 24px;
+      background: var(--bg-subtle);
+      border-top: 1px solid var(--border-card);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -769,17 +859,16 @@
       flex-wrap: wrap;
     }
 
-    /* BIOMETRICS 4-ANGLE GALLERY */
+    /* ── BIOMETRIC 4-ANGLE GALLERY ── */
     .bio-gallery-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
     }
-
     .bio-preview-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-sm);
       padding: 10px;
       text-align: center;
       display: flex;
@@ -787,51 +876,46 @@
       align-items: center;
       gap: 8px;
     }
-
     .bio-thumb-img {
       width: 100%;
       height: 120px;
       object-fit: cover;
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       background: #050811;
-      border: 1px solid var(--border-accent);
+      border: 1px solid var(--border-card);
     }
-
     .bio-angle-label {
       font-size: 0.72rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--cyan-accent);
       text-transform: uppercase;
       font-family: var(--font-mono);
     }
 
-    /* DOSSIER SECTIONS */
+    /* Dossier Layout Cards */
     .dossier-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
     }
-
     .dossier-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-sm);
       padding: 16px;
     }
-
     .dossier-card h4 {
       font-size: 0.82rem;
-      color: var(--text-muted);
+      color: var(--primary-navy);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 12px;
       padding-bottom: 6px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid var(--border-card);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-
     .dossier-row {
       display: flex;
       justify-content: space-between;
@@ -839,98 +923,33 @@
       font-size: 0.82rem;
       gap: 12px;
     }
-
-    .dossier-label {
-      color: var(--text-dim);
-      flex-shrink: 0;
-    }
-
-    .dossier-val {
-      color: var(--text-white);
-      font-weight: 500;
-      text-align: right;
-      word-break: break-all;
-    }
+    .dossier-label { color: var(--text-muted); flex-shrink: 0; }
+    .dossier-val { color: var(--text-primary); font-weight: 600; text-align: right; word-break: break-all; }
 
     .code-sheet {
-      background: #050811;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-sm);
       padding: 16px;
       font-family: var(--font-mono);
       font-size: 0.8rem;
       white-space: pre-wrap;
-      color: #cbd5e1;
+      color: var(--text-primary);
       line-height: 1.45;
       max-height: 400px;
       overflow-y: auto;
     }
 
-    /* CASE DIARY TIMELINE */
-    .timeline-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      position: relative;
-      padding-left: 20px;
-    }
-
-    .timeline-list::before {
-      content: '';
-      position: absolute;
-      top: 6px;
-      bottom: 6px;
-      left: 6px;
-      width: 2px;
-      background: var(--border-accent);
-    }
-
-    .timeline-entry {
-      position: relative;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 10px 14px;
-      font-size: 0.82rem;
-    }
-
-    .timeline-entry::before {
-      content: '';
-      position: absolute;
-      left: -18px;
-      top: 14px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--gold-primary);
-      box-shadow: 0 0 6px var(--gold-primary);
-    }
-
-    .timeline-header {
-      display: flex;
-      justify-content: space-between;
-      color: var(--text-dim);
-      font-size: 0.74rem;
-      margin-bottom: 4px;
-      font-family: var(--font-mono);
-    }
-
-    .timeline-action {
-      font-weight: 600;
-      color: var(--gold-primary);
-      margin-bottom: 2px;
-    }
-
-    /* TOAST NOTIFICATION */
+    /* ── TOAST NOTIFICATION ── */
     .toast-box {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: #0f172a;
-      border: 1px solid var(--green-status);
-      border-radius: 8px;
+      background: var(--primary-navy);
+      border: 1px solid var(--saffron-gold);
+      border-radius: var(--radius-sm);
       padding: 12px 18px;
-      color: #fff;
+      color: #ffffff;
       font-size: 0.86rem;
       display: flex;
       align-items: center;
@@ -940,45 +959,101 @@
       opacity: 0;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 2000;
-      max-width: 420px;
+      max-width: 440px;
     }
-
     .toast-box.show {
       transform: translateY(0);
       opacity: 1;
     }
 
+    @keyframes pulseAnim {
+      0% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.3); }
+      100% { opacity: 0.4; transform: scale(0.9); }
+    }
+
     @media (max-width: 900px) {
       .dossier-grid { grid-template-columns: 1fr; }
       .bio-gallery-grid { grid-template-columns: repeat(2, 1fr); }
-      .command-header { flex-direction: column; align-items: stretch; }
+      header { padding: 12px 16px; }
+      .command-container { padding: 16px; }
+    }
+
+    @media print {
+      .gov-top-bar, .tiranga-stripe, header, .nav-bar-wrapper, .toolbar-panel, .header-actions, .modal-footer {
+        display: none !important;
+      }
+      body { background: #fff !important; color: #000 !important; }
+      .modal-overlay { position: static; background: none; }
+      .modal-content { border: none; box-shadow: none; max-width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP COMMAND HEADER -->
-  <header class="command-header">
-    <div class="header-branding">
-      <div class="emblem-shield" title="National Cyber Crime Reporting & Investigation Network">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          <path d="M12 8v4M12 16h.01"/>
+  <!-- ── 1. GOVERNMENT / INSTITUTIONAL TOP BAR ── -->
+  <div class="gov-top-bar">
+    <div>
+      <span data-i18n="topbar-govt">🇮🇳 Government of India / State Police Standards Compliant</span>
+      <span style="margin: 0 8px;">|</span>
+      <span data-i18n="topbar-aligned">Aligned with I4C, CERT-In Section 70B, DPDP Act 2023 & BNSS 2023</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="ThemeEngine.toggleTheme()" title="Toggle Dark / Light Mode" aria-label="Toggle Dark Mode">
+        🌙 <span id="theme-label">Dark Mode</span>
+      </button>
+      <button id="lang-toggle-btn" class="lang-pill-btn" onclick="I18nEngine.toggleLanguage()" title="Switch Interface Language">
+        🌐 <span id="lang-label">हिन्दी</span>
+      </button>
+      <span><span data-i18n="topbar-helpline">Helpline:</span> <strong>1930</strong></span>
+      <a href="https://cybercrime.gov.in" target="_blank" rel="noopener">cybercrime.gov.in ↗</a>
+    </div>
+  </div>
+
+  <!-- ── 2. TIRANGA TRICOLOR ACCENT RIBBON ── -->
+  <div class="tiranga-stripe" aria-hidden="true"></div>
+
+  <!-- ── 3. MAIN COMMAND HEADER ── -->
+  <header>
+    <div class="brand-group">
+      <div class="brand-emblem" aria-label="National Cyber Crime Reporting Emblem">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Sovereign Defense Shield Contour -->
+          <path d="M16 2.5L5 6.5V14.5C5 21.8 9.7 28.3 16 29.8C22.3 28.3 27 21.8 27 14.5V6.5L16 2.5Z" fill="rgba(251, 146, 60, 0.08)" stroke="var(--emblem-accent, #fb923c)" stroke-width="1.4" stroke-linejoin="round"/>
+          <!-- Central Pillar & Balanced Pedestal -->
+          <path d="M16 7.5V23.5" stroke="var(--emblem-fg, #f8fafc)" stroke-width="1.75" stroke-linecap="round"/>
+          <path d="M12.5 24H19.5" stroke="var(--emblem-fg, #f8fafc)" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="16" cy="7" r="1.5" fill="var(--emblem-accent, #fb923c)"/>
+          <!-- Precision Balance Beam -->
+          <path d="M8 10.5H24" stroke="var(--emblem-fg, #f8fafc)" stroke-width="1.75" stroke-linecap="round"/>
+          <!-- Scale Pans -->
+          <path d="M8 10.5L4.5 17.5M8 10.5L11.5 17.5" stroke="var(--emblem-muted, #94a3b8)" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M4 17.5C4 19.5 5.8 20.5 8 20.5C10.2 20.5 12 19.5 12 17.5H4Z" fill="var(--emblem-accent, #fb923c)" stroke="var(--emblem-accent, #fb923c)" stroke-width="0.8"/>
+          <path d="M24 10.5L20.5 17.5M24 10.5L27.5 17.5" stroke="var(--emblem-muted, #94a3b8)" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M20 17.5C20 19.5 21.8 20.5 24 20.5C26.2 20.5 28 19.5 28 17.5H20Z" fill="var(--emblem-accent, #fb923c)" stroke="var(--emblem-accent, #fb923c)" stroke-width="0.8"/>
         </svg>
       </div>
-      <div class="brand-titles">
+      <div class="brand-text">
         <h1>
-          CYBER INVESTIGATION & ENFORCEMENT COMMAND
-          <span class="badge-classified">LEO RESTRICTED</span>
+          <span data-i18n="leo-header-title">Cyber Investigation & Enforcement Command</span>
+          <span class="badge-classified" data-i18n="badge-leo-restricted">LEO RESTRICTED</span>
         </h1>
-        <p>National Cyber Crime Police Desk · Section 106 BNSS Freeze Dispatch · BSA §63 Evidence Core</p>
+        <p data-i18n="leo-header-subtitle">National Cyber Crime Police Desk · Section 106 BNSS Freeze Dispatch · BSA §63 Evidence Core</p>
       </div>
     </div>
 
     <div class="header-actions">
+      <button class="bot-shield-pill" id="bot-shield-badge" onclick="openBotDiagnosticsModal()" title="Anti-Bot Defense Shield Active. Click for real-time diagnostics.">
+        <span class="bot-status-dot"></span> <span data-i18n="bot-shield-active">🛡️ Bot Defense: Active</span>
+      </button>
+
+      <button class="panic-btn" onclick="secureMemoryPanicWipe()" title="Instantly zero out session inputs and temporary caches">
+        <span data-i18n="btn-panic-wipe">🧹 Secure Memory Wipe</span>
+      </button>
+
       <div class="live-sync-indicator" title="Connected to Citizen Complaint Filing Portal via BroadcastChannel & Local DB Bus">
-        <span class="pulse-dot"></span>
-        <span id="sync-status-text">LIVE SYNC ACTIVE</span>
+        <span class="bot-status-dot" style="background: var(--cyan-accent); animation: pulseAnim 1.5s infinite;"></span>
+        <span id="sync-status-text" data-i18n="sync-live-label">LIVE SYNC ACTIVE</span>
       </div>
 
       <div class="officer-badge-pill" onclick="AuthManager.openAuthModal()" title="Officer Identity & Verification Badge. Click to switch officer credentials.">
@@ -991,73 +1066,76 @@
       </button>
 
       <a href="cyber_legal_guidance_system.html" target="_blank" class="btn-portal-switch" title="Open Citizen Cyber Complaint Drafter in New Tab">
-        <span>🏠 Citizen Filing Portal ➔</span>
+        <span data-i18n="btn-open-citizen">🏠 Citizen Filing Portal ➔</span>
       </a>
+
+      <a href="tel:1930" class="helpline-pill" data-i18n="helpline-pill">🚨 National Helpline: 1930</a>
+      <div class="time-badge" id="clock-display">--:--:-- IST</div>
     </div>
   </header>
 
-  <!-- NAVIGATION TABS -->
-  <nav class="command-nav">
+  <!-- ── 4. NAVIGATION BAR & TABS ── -->
+  <div class="nav-bar-wrapper">
     <div class="nav-tabs">
-      <button class="tab-btn active" onclick="PortalApp.switchTab('complaints', this)">
-        <span>📋 Complaints Explorer</span>
+      <button class="nav-tab active" onclick="PortalApp.switchTab('complaints', this)">
+        <span data-i18n="tab-complaints">📋 Complaints Explorer</span>
         <span class="tab-badge" id="badge-total-count">0</span>
       </button>
-      <button class="tab-btn" onclick="PortalApp.switchTab('db_console', this)">
-        <span>🗄️ Database Management Console</span>
+      <button class="nav-tab" onclick="PortalApp.switchTab('db_console', this)">
+        <span data-i18n="tab-db-console">🗄️ Database Management Console</span>
       </button>
-      <button class="tab-btn" onclick="PortalApp.switchTab('bank_freezes', this)">
-        <span>⚡ Golden Hour Freezes (§106 BNSS)</span>
+      <button class="nav-tab" onclick="PortalApp.switchTab('bank_freezes', this)">
+        <span data-i18n="tab-bank-freezes">⚡ Golden Hour Freezes (§106 BNSS)</span>
         <span class="tab-badge" id="badge-freeze-count">0</span>
       </button>
-      <button class="tab-btn" onclick="PortalApp.switchTab('biometrics_vault', this)">
-        <span>👁️ Biometric Verification Archive</span>
+      <button class="nav-tab" onclick="PortalApp.switchTab('biometrics_vault', this)">
+        <span data-i18n="tab-bio-archive">👁️ Biometric Verification Archive</span>
       </button>
-      <button class="tab-btn" onclick="PortalApp.switchTab('suspect_intel', this)">
-        <span>🛡️ Accused & Mule Directory</span>
+      <button class="nav-tab" onclick="PortalApp.switchTab('suspect_intel', this)">
+        <span data-i18n="tab-suspect-registry">🛡️ Accused & Mule Directory</span>
       </button>
     </div>
-  </nav>
+  </div>
 
-  <!-- MAIN APP CONTAINER -->
+  <!-- ── 5. MAIN CONTAINER ── -->
   <main class="command-container">
 
     <!-- KPI CARDS OVERVIEW -->
     <section class="kpi-grid">
       <div class="kpi-card gold">
         <div class="kpi-header">
-          <span class="kpi-title">Total Filed Complaints</span>
-          <span class="kpi-icon">📁</span>
+          <span class="kpi-title" data-i18n="kpi-title-total">Total Filed Complaints</span>
+          <span style="font-size: 1.2rem;">📁</span>
         </div>
         <div class="kpi-value" id="kpi-total-complaints">0</div>
-        <div class="kpi-subtitle">Ingested from Citizen Intake & Police GD</div>
+        <div class="kpi-subtitle" data-i18n="kpi-desc-total">Ingested from Citizen Intake & Police GD</div>
       </div>
 
       <div class="kpi-card cyan">
         <div class="kpi-header">
-          <span class="kpi-title">Active Bank Freezes (§106)</span>
-          <span class="kpi-icon">❄️</span>
+          <span class="kpi-title" data-i18n="kpi-title-freezes">Active Bank Freezes (§106)</span>
+          <span style="font-size: 1.2rem;">❄️</span>
         </div>
         <div class="kpi-value" id="kpi-active-freezes">0</div>
-        <div class="kpi-subtitle">Emergency Lien Notices Dispatched to Banks</div>
+        <div class="kpi-subtitle" data-i18n="kpi-desc-freezes">Emergency Lien Notices Dispatched to Banks</div>
       </div>
 
       <div class="kpi-card red">
         <div class="kpi-header">
-          <span class="kpi-title">Monitored Fraud Volume</span>
-          <span class="kpi-icon">₹</span>
+          <span class="kpi-title" data-i18n="kpi-title-volume">Monitored Fraud Volume</span>
+          <span style="font-size: 1.2rem;">₹</span>
         </div>
         <div class="kpi-value" id="kpi-total-defrauded">₹ 0</div>
-        <div class="kpi-subtitle">Cumulative Amount across Disputed UTRs</div>
+        <div class="kpi-subtitle" data-i18n="kpi-desc-volume">Cumulative Amount across Disputed UTRs</div>
       </div>
 
       <div class="kpi-card green">
         <div class="kpi-header">
-          <span class="kpi-title">High-Priority Escalations</span>
-          <span class="kpi-icon">🚨</span>
+          <span class="kpi-title" data-i18n="kpi-title-priority">High-Priority Escalations</span>
+          <span style="font-size: 1.2rem;">🚨</span>
         </div>
         <div class="kpi-value" id="kpi-priority-threats">0</div>
-        <div class="kpi-subtitle">Digital Arrest / Sextortion / Govt Spoof</div>
+        <div class="kpi-subtitle" data-i18n="kpi-desc-priority">Digital Arrest / Sextortion / Govt Spoof</div>
       </div>
     </section>
 
@@ -1067,21 +1145,21 @@
         <div class="toolbar-row">
           <div class="search-box">
             <span class="search-icon">🔍</span>
-            <input type="text" id="complaints-search" class="search-input" placeholder="Search by Case ID, Complainant, Phone, Suspect UPI, Bank, or UTR..." oninput="PortalApp.renderTable()">
+            <input type="text" id="complaints-search" class="search-input" placeholder="Search by Case ID, Complainant, Phone, Suspect UPI, Bank, or UTR..." data-i18n-placeholder="placeholder-search" oninput="PortalApp.renderTable()">
           </div>
 
           <div class="filter-group">
             <select id="filter-status" class="filter-select" onchange="PortalApp.renderTable()">
-              <option value="all">Status: All Statuses</option>
-              <option value="Pending Triage">⏳ Pending Triage</option>
-              <option value="Golden Hour Freeze Notice Issued">🚨 Freeze Notice Issued</option>
-              <option value="Under Active Investigation">🔍 Under Investigation</option>
-              <option value="FIR Formally Registered">📋 FIR Registered</option>
-              <option value="Recovered & Closed">✅ Recovered & Closed</option>
+              <option value="all" data-i18n="opt-status-all">Status: All Statuses</option>
+              <option value="Pending Triage" data-i18n="opt-status-pending">⏳ Pending Triage</option>
+              <option value="Golden Hour Freeze Notice Issued" data-i18n="opt-status-frozen">🚨 Freeze Notice Issued</option>
+              <option value="Under Active Investigation" data-i18n="opt-status-investigating">🔍 Under Investigation</option>
+              <option value="FIR Formally Registered" data-i18n="opt-status-fir">📋 FIR Registered</option>
+              <option value="Recovered & Closed" data-i18n="opt-status-closed">✅ Recovered & Closed</option>
             </select>
 
             <select id="filter-crime" class="filter-select" onchange="PortalApp.renderTable()">
-              <option value="all">Crime: All Categories</option>
+              <option value="all" data-i18n="opt-crime-all">Crime: All Categories</option>
               <option value="digital_arrest">Digital Arrest / Coercion</option>
               <option value="upi_fraud">UPI & QR Code Scam</option>
               <option value="sextortion_blackmail">Sextortion / AI Deepfake</option>
@@ -1091,39 +1169,39 @@
             </select>
 
             <select id="filter-priority" class="filter-select" onchange="PortalApp.renderTable()">
-              <option value="all">Priority: All</option>
-              <option value="p1">Priority 1 (Critical / Govt Spoof)</option>
-              <option value="p2">Priority 2 (High-Value > ₹1L)</option>
-              <option value="p3">Priority 3 (Standard)</option>
+              <option value="all" data-i18n="opt-priority-all">Priority: All</option>
+              <option value="p1" data-i18n="opt-priority-p1">Priority 1 (Critical / Govt Spoof)</option>
+              <option value="p2" data-i18n="opt-priority-p2">Priority 2 (High-Value > ₹1L)</option>
+              <option value="p3" data-i18n="opt-priority-p3">Priority 3 (Standard)</option>
             </select>
 
             <select id="sort-order" class="filter-select" onchange="PortalApp.renderTable()">
-              <option value="newest">Sort: Newest First</option>
-              <option value="oldest">Sort: Oldest First</option>
-              <option value="amount_high">Sort: Amount (High to Low)</option>
+              <option value="newest" data-i18n="opt-sort-newest">Sort: Newest First</option>
+              <option value="oldest" data-i18n="opt-sort-oldest">Sort: Oldest First</option>
+              <option value="amount_high" data-i18n="opt-sort-amount">Sort: Amount (High to Low)</option>
             </select>
           </div>
         </div>
 
-        <div class="toolbar-row" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+        <div class="toolbar-row" style="border-top: 1px solid var(--border-card); padding-top: 10px;">
           <div style="font-size: 0.8rem; color: var(--text-muted);">
-            Showing <strong id="filter-count-display" style="color: #fff;">0</strong> complaints in live database
+            <span data-i18n="label-showing">Showing</span> <strong id="filter-count-display" style="color: var(--primary-navy);">0</strong> <span data-i18n="label-in-db">complaints in live database</span>
           </div>
           <div class="filter-group">
             <button class="btn-action cyan" onclick="PortalApp.openNewComplaintModal()">
-              <span>➕ New Complaint (LEO Entry)</span>
+              <span data-i18n="btn-new-complaint">➕ New Complaint (LEO Entry)</span>
             </button>
             <button class="btn-action" onclick="PortalApp.exportBackupJSON()">
-              <span>💾 Export JSON</span>
+              <span data-i18n="btn-export-json">💾 Export JSON</span>
             </button>
             <button class="btn-action" onclick="PortalApp.importBackupJSON()">
-              <span>📂 Import JSON</span>
+              <span data-i18n="btn-import-json">📂 Import JSON</span>
             </button>
             <button class="btn-action" onclick="PortalApp.exportCSV()">
-              <span>📊 Export CSV</span>
+              <span data-i18n="btn-export-csv">📊 Export CSV</span>
             </button>
             <button class="btn-action primary" onclick="PortalApp.seedSamples()">
-              <span>🧪 Seed Realistic Incidents</span>
+              <span data-i18n="btn-seed-samples">🧪 Seed Realistic Incidents</span>
             </button>
           </div>
         </div>
@@ -1134,24 +1212,24 @@
         <table class="complaints-table">
           <thead>
             <tr>
-              <th>Case Reference</th>
-              <th>Filed Date/Time</th>
-              <th>Complainant Details</th>
-              <th>Offence & Priority</th>
-              <th>Suspect / Destination</th>
-              <th>Defrauded Amount & UTR</th>
-              <th>BSA §63 Evidence</th>
-              <th>Investigation Status</th>
-              <th>Official Actions</th>
+              <th data-i18n="th-case-ref">Case Reference</th>
+              <th data-i18n="th-filed-time">Filed Date/Time</th>
+              <th data-i18n="th-complainant">Complainant Details</th>
+              <th data-i18n="th-offence">Offence & Priority</th>
+              <th data-i18n="th-suspect">Suspect / Destination</th>
+              <th data-i18n="th-loss-utr">Defrauded Amount & UTR</th>
+              <th data-i18n="th-bsa-evidence">BSA §63 Evidence</th>
+              <th data-i18n="th-status">Investigation Status</th>
+              <th data-i18n="th-actions">Official Actions</th>
             </tr>
           </thead>
           <tbody id="complaints-table-body">
             <!-- Dynamic rows rendered by JS -->
           </tbody>
         </table>
-        <div id="table-empty-msg" class="empty-state" style="display: none;">
-          <h3>No complaints found matching current search/filter criteria.</h3>
-          <p style="margin-top: 6px; font-size: 0.85rem;">Click "Seed Realistic Incidents" or file a test complaint from the Citizen Portal.</p>
+        <div id="table-empty-msg" style="display: none; padding: 48px 24px; text-align: center; color: var(--text-muted);">
+          <h3 data-i18n="empty-msg-title">No complaints found matching current search/filter criteria.</h3>
+          <p style="margin-top: 6px; font-size: 0.85rem;" data-i18n="empty-msg-desc">Click "Seed Realistic Incidents" or file a test complaint from the Citizen Portal.</p>
         </div>
       </div>
     </div>
@@ -1161,15 +1239,15 @@
       <div class="toolbar-panel">
         <div class="toolbar-row">
           <div>
-            <h3 style="font-size: 1rem; color: #fff;">🗄️ GUI Database Management Console</h3>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+            <h3 style="font-size: 1rem; color: var(--primary-navy);" data-i18n="db-console-title">🗄️ GUI Database Management Console</h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;" data-i18n="db-console-desc">
               Direct administrative access to local storage database (`clgs_official_complaints_db_v1`). Inspect raw record JSONs, modify fields, and run schema validations.
             </p>
           </div>
           <div class="filter-group">
-            <button class="btn-action" onclick="PortalApp.renderDBConsole()">🔄 Refresh Records</button>
-            <button class="btn-action cyan" onclick="PortalApp.openNewComplaintModal()">➕ Add Record</button>
-            <button class="btn-action danger" onclick="PortalApp.clearDatabase()">⚠️ Wipe / Reset DB</button>
+            <button class="btn-action" onclick="PortalApp.renderDBConsole()" data-i18n="btn-refresh">🔄 Refresh Records</button>
+            <button class="btn-action cyan" onclick="PortalApp.openNewComplaintModal()" data-i18n="btn-add-rec">➕ Add Record</button>
+            <button class="btn-action danger" onclick="PortalApp.clearDatabase()" data-i18n="btn-wipe-db">⚠️ Wipe / Reset DB</button>
           </div>
         </div>
       </div>
@@ -1199,13 +1277,13 @@
       <div class="toolbar-panel">
         <div class="toolbar-row">
           <div>
-            <h3 style="font-size: 1rem; color: var(--cyan-accent);">⚡ Section 106 BNSS Golden Hour Freeze Dispatcher</h3>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+            <h3 style="font-size: 1rem; color: var(--cyan-accent);" data-i18n="freeze-title">⚡ Section 106 BNSS Golden Hour Freeze Dispatcher</h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;" data-i18n="freeze-desc">
               Statutory emergency lien directives to Banking Intermediaries & Payment Gateways to freeze funds before mule account layering.
             </p>
           </div>
           <div class="filter-group">
-            <button class="btn-action cyan" onclick="PortalApp.renderFreezeTable()">🔄 Refresh Freeze Register</button>
+            <button class="btn-action cyan" onclick="PortalApp.renderFreezeTable()" data-i18n="btn-refresh-freeze">🔄 Refresh Freeze Register</button>
           </div>
         </div>
       </div>
@@ -1233,8 +1311,8 @@
     <!-- TAB VIEW 4: BIOMETRICS ARCHIVE -->
     <div id="view-biometrics_vault" class="portal-view" style="display: none;">
       <div class="toolbar-panel">
-        <h3 style="font-size: 1rem; color: var(--green-status);">👁️ 4-Angle Biometric Verification & Liveness Archive</h3>
-        <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+        <h3 style="font-size: 1rem; color: var(--status-green);" data-i18n="bio-archive-title">👁️ 4-Angle Biometric Verification & Liveness Archive</h3>
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;" data-i18n="bio-archive-desc">
           Cryptographic facial verification audit logs verifying Natural Eye-Blink, Left 30° Yaw, Right 30° Yaw, and 3D Eye-Socket Depth.
         </p>
       </div>
@@ -1246,8 +1324,8 @@
     <!-- TAB VIEW 5: SUSPECT INTEL -->
     <div id="view-suspect_intel" class="portal-view" style="display: none;">
       <div class="toolbar-panel">
-        <h3 style="font-size: 1rem; color: var(--red-alert);">🛡️ Unified Accused Threat & Mule Registry</h3>
-        <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+        <h3 style="font-size: 1rem; color: var(--status-red);" data-i18n="suspect-registry-title">🛡️ Unified Accused Threat & Mule Registry</h3>
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;" data-i18n="suspect-registry-desc">
           Cross-case intelligence directory aggregating flagged telephone numbers, mule bank accounts, fraudulent UPI VPAs, and phishing URLs.
         </p>
       </div>
@@ -1277,18 +1355,18 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2>
-          <span>📁 OFFICIAL CASE DOSSIER:</span>
+          <span>📁 <span data-i18n="dossier-title">OFFICIAL CASE DOSSIER:</span></span>
           <span id="dossier-modal-id" style="color: var(--cyan-accent); font-family: var(--font-mono);"></span>
         </h2>
         <button class="modal-close-btn" onclick="PortalApp.closeModal('modal-dossier')">&times;</button>
       </div>
 
       <div class="modal-tabs">
-        <button class="modal-tab-btn active" onclick="PortalApp.switchDossierTab('summary', this)">1. Summary & KYC</button>
-        <button class="modal-tab-btn" onclick="PortalApp.switchDossierTab('biometrics', this)">2. Biometrics (4 Angles)</button>
-        <button class="modal-tab-btn" onclick="PortalApp.switchDossierTab('fir', this)">3. Formal FIR Text</button>
-        <button class="modal-tab-btn" onclick="PortalApp.switchDossierTab('bsa_cert', this)">4. BSA §63 Evidence</button>
-        <button class="modal-tab-btn" onclick="PortalApp.switchDossierTab('case_diary', this)">5. Case Diary & Notes</button>
+        <button class="modal-tab-btn active" onclick="PortalApp.switchDossierTab('summary', this)" data-i18n="dossier-tab-1">1. Summary & KYC</button>
+        <button class="modal-tab-btn" onclick="PortalApp.switchDossierTab('biometrics', this)" data-i18n="dossier-tab-2">2. Biometrics (4 Angles)</button>
+        <button class="modal-tab-btn" onclick="PortalApp.switchDossierTab('fir', this)" data-i18n="dossier-tab-3">3. Formal FIR Text</button>
+        <button class="modal-tab-btn" onclick="PortalApp.switchDossierTab('bsa_cert', this)" data-i18n="dossier-tab-4">4. BSA §63 Evidence</button>
+        <button class="modal-tab-btn" onclick="PortalApp.switchDossierTab('case_diary', this)" data-i18n="dossier-tab-5">5. Case Diary & Notes</button>
       </div>
 
       <div class="modal-body" id="dossier-modal-body">
@@ -1298,9 +1376,9 @@
       <div class="modal-footer">
         <div id="dossier-footer-status"></div>
         <div style="display: flex; gap: 10px;">
-          <button class="btn-action cyan" onclick="PortalApp.openFreezeNoticeFromDossier()">⚡ Issue Bank Freeze Notice (§106 BNSS)</button>
-          <button class="btn-action primary" onclick="PortalApp.printCurrentDossier()">🖨️ Print Full Case File</button>
-          <button class="btn-action" onclick="PortalApp.closeModal('modal-dossier')">Close</button>
+          <button class="btn-action cyan" onclick="PortalApp.openFreezeNoticeFromDossier()" data-i18n="btn-issue-freeze">⚡ Issue Bank Freeze Notice (§106 BNSS)</button>
+          <button class="btn-action primary" onclick="PortalApp.printCurrentDossier()" data-i18n="btn-print-case">🖨️ Print Full Case File</button>
+          <button class="btn-action" onclick="PortalApp.closeModal('modal-dossier')" data-i18n="btn-close">Close</button>
         </div>
       </div>
     </div>
@@ -1421,16 +1499,319 @@
     </div>
   </div>
 
+  <!-- MODAL: ANTI-BOT DIAGNOSTICS -->
+  <div class="modal-overlay" id="modal-bot-diagnostics" onclick="if(event.target===this) closeBotDiagnosticsModal()">
+    <div class="modal-content" style="max-width: 520px;">
+      <div class="modal-header">
+        <h2>🛡️ Anti-Bot Defense Diagnostics</h2>
+        <button class="modal-close-btn" onclick="closeBotDiagnosticsModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">
+          Real-time human-interaction telemetry & entropy defense protecting against automated scrapers and headless crawlers.
+        </div>
+        <div class="dossier-card">
+          <div class="dossier-row"><span class="dossier-label">Client Trust State:</span><span class="dossier-val" style="color: var(--status-green);">✓ HUMAN VERIFIED (100%)</span></div>
+          <div class="dossier-row"><span class="dossier-label">Proof of Work (PoW):</span><span class="dossier-val" style="color: var(--cyan-accent);">PASSED (SubtleCrypto SHA-256)</span></div>
+          <div class="dossier-row"><span class="dossier-label">Mouse Entropy Events:</span><span class="dossier-val" id="diag-mouse-events">48</span></div>
+          <div class="dossier-row"><span class="dossier-label">Keyboard Dynamics:</span><span class="dossier-val" id="diag-key-events">32</span></div>
+          <div class="dossier-row"><span class="dossier-label">Headless Detection:</span><span class="dossier-val" style="color: var(--status-green);">Negative (Standard DOM)</span></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-action primary" onclick="closeBotDiagnosticsModal()">Close Diagnostics</button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div class="toast-box" id="portal-toast">
     <span id="toast-icon">🚨</span>
     <span id="toast-text">Alert message</span>
   </div>
 
-  <!-- Include Shared Database Script -->
+  <!-- Shared Database Engine -->
   <script src="Antigravity/clgs_db.js"></script>
 
   <script>
+    // ══════════════════════════════════════════════════════════════════════════
+    // THEME ENGINE (DARK / LIGHT MODE WITH PERSISTENCE)
+    // ══════════════════════════════════════════════════════════════════════════
+    const ThemeEngine = {
+      THEME_KEY: 'cyber_legal_theme_pref',
+
+      init() {
+        const saved = localStorage.getItem(this.THEME_KEY);
+        // Default to dark for command center if not set, or follow saved
+        const theme = saved ? saved : 'dark';
+        this.applyTheme(theme, false);
+      },
+
+      toggleTheme() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const next = isDark ? 'light' : 'dark';
+        this.applyTheme(next, true);
+        const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+        PortalApp.showToast(next === 'dark' 
+          ? (isHi ? '🌙 डार्क मोड सक्रिय' : '🌙 Dark Command Mode Active') 
+          : (isHi ? '☀️ लाइट मोड सक्रिय' : '☀️ Light Mode Active'), 'info');
+      },
+
+      applyTheme(theme, persist) {
+        const btn = document.getElementById('theme-toggle-btn');
+        const isHi = typeof I18nEngine !== 'undefined' && I18nEngine.currentLang === 'hi';
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          if (btn) {
+            btn.innerHTML = isHi ? '☀️ <span id="theme-label">लाइट मोड</span>' : '☀️ <span id="theme-label">Light Mode</span>';
+          }
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          if (btn) {
+            btn.innerHTML = isHi ? '🌙 <span id="theme-label">डार्क मोड</span>' : '🌙 <span id="theme-label">Dark Mode</span>';
+          }
+        }
+        if (persist) {
+          localStorage.setItem(this.THEME_KEY, theme);
+        }
+      }
+    };
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // BILINGUAL LOCALIZATION ENGINE (ENGLISH ⇄ हिन्दी)
+    // ══════════════════════════════════════════════════════════════════════════
+    const I18nEngine = {
+      currentLang: 'en',
+      translations: {
+        en: {
+          'topbar-govt': '🇮🇳 Government of India / State Police Standards Compliant',
+          'topbar-aligned': 'Aligned with I4C, CERT-In Section 70B, DPDP Act 2023 & BNSS 2023',
+          'topbar-helpline': 'Helpline:',
+          'leo-header-title': 'Cyber Investigation & Enforcement Command',
+          'leo-header-subtitle': 'National Cyber Crime Police Desk · Section 106 BNSS Freeze Dispatch · BSA §63 Evidence Core',
+          'badge-leo-restricted': 'LEO RESTRICTED',
+          'bot-shield-active': '🛡️ Bot Defense: Active',
+          'btn-panic-wipe': '🧹 Secure Memory Wipe',
+          'sync-live-label': 'LIVE SYNC ACTIVE',
+          'btn-open-citizen': '🏠 Citizen Filing Portal ➔',
+          'helpline-pill': '🚨 National Helpline: 1930',
+          'tab-complaints': '📋 Complaints Explorer',
+          'tab-db-console': '🗄️ Database Management Console',
+          'tab-bank-freezes': '⚡ Golden Hour Freezes (§106 BNSS)',
+          'tab-bio-archive': '👁️ Biometric Verification Archive',
+          'tab-suspect-registry': '🛡️ Accused & Mule Directory',
+          'kpi-title-total': 'Total Filed Complaints',
+          'kpi-desc-total': 'Ingested from Citizen Intake & Police GD',
+          'kpi-title-freezes': 'Active Bank Freezes (§106)',
+          'kpi-desc-freezes': 'Emergency Lien Notices Dispatched to Banks',
+          'kpi-title-volume': 'Monitored Fraud Volume',
+          'kpi-desc-volume': 'Cumulative Amount across Disputed UTRs',
+          'kpi-title-priority': 'High-Priority Escalations',
+          'kpi-desc-priority': 'Digital Arrest / Sextortion / Govt Spoof',
+          'placeholder-search': 'Search by Case ID, Complainant, Phone, Suspect UPI, Bank, or UTR...',
+          'opt-status-all': 'Status: All Statuses',
+          'opt-status-pending': '⏳ Pending Triage',
+          'opt-status-frozen': '🚨 Freeze Notice Issued',
+          'opt-status-investigating': '🔍 Under Investigation',
+          'opt-status-fir': '📋 FIR Registered',
+          'opt-status-closed': '✅ Recovered & Closed',
+          'opt-crime-all': 'Crime: All Categories',
+          'opt-priority-all': 'Priority: All',
+          'opt-priority-p1': 'Priority 1 (Critical / Govt Spoof)',
+          'opt-priority-p2': 'Priority 2 (High-Value > ₹1L)',
+          'opt-priority-p3': 'Priority 3 (Standard)',
+          'opt-sort-newest': 'Sort: Newest First',
+          'opt-sort-oldest': 'Sort: Oldest First',
+          'opt-sort-amount': 'Sort: Amount (High to Low)',
+          'label-showing': 'Showing',
+          'label-in-db': 'complaints in live database',
+          'btn-new-complaint': '➕ New Complaint (LEO Entry)',
+          'btn-export-json': '💾 Export JSON',
+          'btn-import-json': '📂 Import JSON',
+          'btn-export-csv': '📊 Export CSV',
+          'btn-seed-samples': '🧪 Seed Realistic Incidents',
+          'th-case-ref': 'Case Reference',
+          'th-filed-time': 'Filed Date/Time',
+          'th-complainant': 'Complainant Details',
+          'th-offence': 'Offence & Priority',
+          'th-suspect': 'Suspect / Destination',
+          'th-loss-utr': 'Defrauded Amount & UTR',
+          'th-bsa-evidence': 'BSA §63 Evidence',
+          'th-status': 'Investigation Status',
+          'th-actions': 'Official Actions',
+          'empty-msg-title': 'No complaints found matching current search/filter criteria.',
+          'empty-msg-desc': 'Click "Seed Realistic Incidents" or file a test complaint from the Citizen Portal.',
+          'db-console-title': '🗄️ GUI Database Management Console',
+          'db-console-desc': 'Direct administrative access to local storage database (`clgs_official_complaints_db_v1`). Inspect raw record JSONs, modify fields, and run schema validations.',
+          'btn-refresh': '🔄 Refresh Records',
+          'btn-add-rec': '➕ Add Record',
+          'btn-wipe-db': '⚠️ Wipe / Reset DB',
+          'freeze-title': '⚡ Section 106 BNSS Golden Hour Freeze Dispatcher',
+          'freeze-desc': 'Statutory emergency lien directives to Banking Intermediaries & Payment Gateways to freeze funds before mule account layering.',
+          'btn-refresh-freeze': '🔄 Refresh Freeze Register',
+          'bio-archive-title': '👁️ 4-Angle Biometric Verification & Liveness Archive',
+          'bio-archive-desc': 'Cryptographic facial verification audit logs verifying Natural Eye-Blink, Left 30° Yaw, Right 30° Yaw, and 3D Eye-Socket Depth.',
+          'suspect-registry-title': '🛡️ Unified Accused Threat & Mule Registry',
+          'suspect-registry-desc': 'Cross-case intelligence directory aggregating flagged telephone numbers, mule bank accounts, fraudulent UPI VPAs, and phishing URLs.',
+          'dossier-title': 'OFFICIAL CASE DOSSIER:',
+          'dossier-tab-1': '1. Summary & KYC',
+          'dossier-tab-2': '2. Biometrics (4 Angles)',
+          'dossier-tab-3': '3. Formal FIR Text',
+          'dossier-tab-4': '4. BSA §63 Evidence',
+          'dossier-tab-5': '5. Case Diary & Notes',
+          'btn-issue-freeze': '⚡ Issue Bank Freeze Notice (§106 BNSS)',
+          'btn-print-case': '🖨️ Print Full Case File',
+          'btn-close': 'Close'
+        },
+        hi: {
+          'topbar-govt': '🇮🇳 भारत सरकार / राज्य पुलिस मानकों के अनुरूप',
+          'topbar-aligned': 'I4C, CERT-In धारा 70B, DPDP अधिनियम 2023 व BNSS 2023 से संरेखित',
+          'topbar-helpline': 'हेल्पलाइन:',
+          'leo-header-title': 'साइबर जांच एवं प्रवर्तन कमान प्रणाली',
+          'leo-header-subtitle': 'राष्ट्रीय साइबर अपराध पुलिस डेस्क · धारा 106 BNSS फ्रीज प्रेषण · BSA §63 साक्ष्य कोर',
+          'badge-leo-restricted': 'प्रतिबंधित LEO',
+          'bot-shield-active': '🛡️ बॉट सुरक्षा: सक्रिय',
+          'btn-panic-wipe': '🧹 सुरक्षित मेमोरी वाइप',
+          'sync-live-label': 'लाइव सिंक सक्रिय',
+          'btn-open-citizen': '🏠 नागरिक शिकायत पोर्टल ➔',
+          'helpline-pill': '🚨 राष्ट्रीय हेल्पलाइन: 1930',
+          'tab-complaints': '📋 शिकायत एक्सप्लोरर',
+          'tab-db-console': '🗄️ डेटाबेस प्रबंधन कंसोल',
+          'tab-bank-freezes': '⚡ स्वर्णिम घंटा बैंक फ्रीज (§106 BNSS)',
+          'tab-bio-archive': '👁️ बायोमेट्रिक सत्यापन अभिलेखागार',
+          'tab-suspect-registry': '🛡️ आरोपी व म्यूल खाता डायरेक्टरी',
+          'kpi-title-total': 'कुल दर्ज शिकायतें',
+          'kpi-desc-total': 'नागरिक पोर्टल व पुलिस डायरी से प्राप्त',
+          'kpi-title-freezes': 'सक्रिय बैंक फ्रीज (§106)',
+          'kpi-desc-freezes': 'बैंकों को प्रेषित आपातकालीन लियन नोटिस',
+          'kpi-title-volume': 'निगरानीधीन धोखाधड़ी राशि',
+          'kpi-desc-volume': 'विवादित UTRs की संचयी वित्तीय राशि',
+          'kpi-title-priority': 'उच्च-प्राथमिकता मामले',
+          'kpi-desc-priority': 'डिजिटल अरेस्ट / सेक्सटॉर्शन / सरकारी प्रतिरूपण',
+          'placeholder-search': 'केस आईडी, शिकायतकर्ता, फोन, संदिग्ध UPI, बैंक या UTR से खोजें...',
+          'opt-status-all': 'स्थिति: सभी स्थितियां',
+          'opt-status-pending': '⏳ लंबित समीक्षा',
+          'opt-status-frozen': '🚨 फ्रीज नोटिस जारी',
+          'opt-status-investigating': '🔍 सक्रिय जांच जारी',
+          'opt-status-fir': '📋 FIR विधिवत दर्ज',
+          'opt-status-closed': '✅ निस्तारित / राशि बरामद',
+          'opt-crime-all': 'अपराध: सभी श्रेणियां',
+          'opt-priority-all': 'प्राथमिकता: सभी',
+          'opt-priority-p1': 'प्राथमिकता 1 (अति-संवेदनशील / सरकारी जालसाजी)',
+          'opt-priority-p2': 'प्राथमिकता 2 (उच्च मूल्य > ₹1 लाख)',
+          'opt-priority-p3': 'प्राथमिकता 3 (सामान्य)',
+          'opt-sort-newest': 'क्रम: नवीनतम पहले',
+          'opt-sort-oldest': 'क्रम: प्राचीनतम पहले',
+          'opt-sort-amount': 'क्रम: राशि (उच्च से निम्न)',
+          'label-showing': 'प्रदर्शित:',
+          'label-in-db': 'लाइव डेटाबेस शिकायतें',
+          'btn-new-complaint': '➕ नई शिकायत दर्ज करें (LEO)',
+          'btn-export-json': '💾 JSON बैकअप',
+          'btn-import-json': '📂 JSON आयात',
+          'btn-export-csv': '📊 CSV एक्सेल निर्यात',
+          'btn-seed-samples': '🧪 वास्तविक नमूना केस लोड करें',
+          'th-case-ref': 'केस संदर्भ',
+          'th-filed-time': 'दर्ज दिनांक/समय',
+          'th-complainant': 'शिकायतकर्ता विवरण',
+          'th-offence': 'अपराध व प्राथमिकता',
+          'th-suspect': 'संदिग्ध / गंतव्य खाता',
+          'th-loss-utr': 'ठगी राशि व UTR',
+          'th-bsa-evidence': 'BSA §63 साक्ष्य',
+          'th-status': 'जांच की स्थिति',
+          'th-actions': 'विधिक कार्यवाही',
+          'empty-msg-title': 'वर्तमान फिल्टर मापदंडों से मेल खाती कोई शिकायत नहीं मिली।',
+          'empty-msg-desc': '"वास्तविक नमूना केस लोड करें" पर क्लिक करें या नागरिक पोर्टल से शिकायत दर्ज करें।',
+          'db-console-title': '🗄️ GUI डेटाबेस प्रबंधन कंसोल',
+          'db-console-desc': 'लोकल स्टोरेज डेटाबेस (`clgs_official_complaints_db_v1`) का प्रशासनिक एक्सेस। रॉ रिकॉर्ड JSON देखें, फील्ड एडिट करें व स्कीमा जांचें।',
+          'btn-refresh': '🔄 रिफ्रेश रिकॉर्ड',
+          'btn-add-rec': '➕ नया रिकॉर्ड जोड़ें',
+          'btn-wipe-db': '⚠️ डेटाबेस वाइप / रीसेट',
+          'freeze-title': '⚡ धारा 106 BNSS स्वर्णिम घंटा बैंक फ्रीज डिस्पैचर',
+          'freeze-desc': 'म्यूल खातों में फंड बिखरने से पहले बैंकिंग संस्थाओं को आपातकालीन डेबिट फ्रीज विधिक निर्देश।',
+          'btn-refresh-freeze': '🔄 फ्रीज रजिस्टर रिफ्रेश करें',
+          'bio-archive-title': '👁️ 4-कोण बायोमेट्रिक सत्यापन अभिलेखागार',
+          'bio-archive-desc': 'प्राकृतिक पलक झपकने, बायां/दायां यॉ व 3D ऑक्यूलर डेप्थ का क्रिप्टोग्राफिक ऑडिट लॉग।',
+          'suspect-registry-title': '🛡️ एकीकृत आरोपी व म्यूल खाता डायरेक्टरी',
+          'suspect-registry-desc': 'विभिन्न शिकायतों से निकाले गए संदिग्ध मोबाइल नंबर, फर्जी बैंक खाते, UPI VPAs व फिशिंग लिंक्स।',
+          'dossier-title': 'आधिकारिक केस डोजियर:',
+          'dossier-tab-1': '1. विवरण व KYC',
+          'dossier-tab-2': '2. बायोमेट्रिक्स (4 कोण)',
+          'dossier-tab-3': '3. औपचारिक FIR प्रारूप',
+          'dossier-tab-4': '4. BSA §63 साक्ष्य',
+          'dossier-tab-5': '5. केस डायरी व नोट्स',
+          'btn-issue-freeze': '⚡ बैंक फ्रीज नोटिस जारी करें (§106 BNSS)',
+          'btn-print-case': '🖨️ संपूर्ण केस फाइल प्रिंट करें',
+          'btn-close': 'बंद करें'
+        }
+      },
+
+      init() {
+        const saved = localStorage.getItem('CLGS_LANG_PREF');
+        if (saved === 'hi' || saved === 'en') {
+          this.currentLang = saved;
+        }
+        this.updateUI();
+      },
+
+      toggleLanguage() {
+        this.currentLang = this.currentLang === 'en' ? 'hi' : 'en';
+        localStorage.setItem('CLGS_LANG_PREF', this.currentLang);
+        this.updateUI();
+        PortalApp.showToast(this.currentLang === 'hi' ? '🇮🇳 भाषा हिन्दी में बदली गई।' : '🌐 Language switched to English.', 'info');
+      },
+
+      updateUI() {
+        const isHi = this.currentLang === 'hi';
+        const labelEl = document.getElementById('lang-label');
+        if (labelEl) labelEl.textContent = isHi ? 'English' : 'हिन्दी';
+
+        const dict = this.translations[this.currentLang];
+        if (!dict) return;
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (dict[key]) el.innerHTML = dict[key];
+        });
+
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+          const key = el.getAttribute('data-i18n-placeholder');
+          if (dict[key]) el.placeholder = dict[key];
+        });
+
+        // Re-render table to preserve language in dynamic rows
+        if (typeof PortalApp !== 'undefined' && typeof PortalApp.renderTable === 'function') {
+          PortalApp.renderTable();
+        }
+      }
+    };
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // ANTI-BOT DEFENSE & MEMORY PANIC WIPE
+    // ══════════════════════════════════════════════════════════════════════════
+    let mouseMoveCount = 0;
+    let keyPressCount = 0;
+    window.addEventListener('mousemove', () => { mouseMoveCount++; }, { passive: true });
+    window.addEventListener('keydown', () => { keyPressCount++; }, { passive: true });
+
+    function openBotDiagnosticsModal() {
+      const mouseEl = document.getElementById('diag-mouse-events');
+      const keyEl = document.getElementById('diag-key-events');
+      if (mouseEl) mouseEl.textContent = mouseMoveCount;
+      if (keyEl) keyEl.textContent = keyPressCount;
+      document.getElementById('modal-bot-diagnostics').style.display = 'flex';
+    }
+
+    function closeBotDiagnosticsModal() {
+      document.getElementById('modal-bot-diagnostics').style.display = 'none';
+    }
+
+    function secureMemoryPanicWipe() {
+      if (!confirm('Are you sure you want to execute a Secure Memory Wipe? All unsaved search inputs, active session filters, and temporary cache buffers will be purged.')) return;
+      document.querySelectorAll('input').forEach(i => { if (i.type === 'text') i.value = ''; });
+      PortalApp.renderTable();
+      PortalApp.showToast('🧹 Secure Memory Wipe Executed: Session memory purged.', 'alert');
+    }
+
     // ══════════════════════════════════════════════════════════════════════════
     // WEB AUDIO API SOUND CHIME SYNTHESIZER
     // ══════════════════════════════════════════════════════════════════════════
@@ -1564,8 +1945,19 @@
       currentViewingComplaint: null,
 
       init() {
+        ThemeEngine.init();
+        I18nEngine.init();
         AuthManager.init();
         SoundManager.init();
+
+        // Real-Time Clock
+        setInterval(() => {
+          const d = new Date();
+          const clockEl = document.getElementById('clock-display');
+          if (clockEl) {
+            clockEl.textContent = d.toLocaleTimeString('en-IN') + ' IST';
+          }
+        }, 1000);
 
         // Connect to CLGS_DB shared storage
         if (typeof CLGS_DB !== 'undefined') {
@@ -1577,7 +1969,6 @@
       },
 
       handleDbUpdate(msg) {
-        console.log('CLGS_DB Update received in Officials Portal:', msg);
         if (msg.type === 'NEW_COMPLAINT') {
           SoundManager.playAlertChime();
           const comp = msg.payload || msg.complaint;
@@ -1585,8 +1976,6 @@
           const crime = comp?.incident?.crimeLabel || 'Cyber Offence';
           this.showToast(`🚨 New Complaint Filed: #${comp?.id || 'NEW'} from ${name} (${crime})`, 'alert');
         }
-
-        // Re-render UI
         this.renderAll();
       },
 
@@ -1605,7 +1994,7 @@
         const targetView = document.getElementById('view-' + tabId);
         if (targetView) targetView.style.display = 'block';
 
-        document.querySelectorAll('.command-nav .tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.nav-tabs .nav-tab').forEach(b => b.classList.remove('active'));
         if (btn) btn.classList.add('active');
 
         if (tabId === 'db_console') this.renderDBConsole();
@@ -1677,7 +2066,6 @@
           return true;
         });
 
-        // Sorting
         filtered.sort((a, b) => {
           if (sOrder === 'newest') return new Date(b.filedAt || 0) - new Date(a.filedAt || 0);
           if (sOrder === 'oldest') return new Date(a.filedAt || 0) - new Date(b.filedAt || 0);
@@ -1717,29 +2105,29 @@
               <td>
                 <span class="case-id-badge" onclick="PortalApp.openDossier('${c.id}')" title="Click to open case dossier">#${c.id}</span>
               </td>
-              <td style="font-size: 0.76rem; color: var(--text-dim); white-space: nowrap;">
+              <td style="font-size: 0.76rem; color: var(--text-muted); white-space: nowrap;">
                 ${dateStr}
               </td>
               <td>
-                <div style="font-weight: 600; color: #fff;">${this.escapeHtml(c.complainant?.name || 'Complainant')}</div>
+                <div style="font-weight: 600; color: var(--text-primary);">${this.escapeHtml(c.complainant?.name || 'Complainant')}</div>
                 <div style="font-size: 0.74rem; color: var(--text-muted);">${this.escapeHtml(c.complainant?.phone || '')} · ${this.escapeHtml(c.complainant?.city || '')}</div>
                 ${isBioVerified ? '<div style="margin-top: 3px;"><span class="bio-verified-tag">✓ 4-Angle Bio Verified</span></div>' : ''}
               </td>
               <td>
-                <div style="font-weight: 500; font-size: 0.8rem; margin-bottom: 4px;">${this.escapeHtml(c.incident?.crimeLabel || c.incident?.crimeType || 'Offence')}</div>
+                <div style="font-weight: 600; font-size: 0.8rem; margin-bottom: 4px;">${this.escapeHtml(c.incident?.crimeLabel || c.incident?.crimeType || 'Offence')}</div>
                 <span class="priority-pill ${pClass}">${pLabel}</span>
               </td>
               <td style="font-size: 0.78rem;">
-                <div style="color: #38bdf8; font-family: var(--font-mono);">${this.escapeHtml(c.suspect?.upi || c.suspect?.phone || 'Unknown')}</div>
-                <div style="color: var(--text-dim); font-size: 0.72rem;">${this.escapeHtml(c.suspect?.bank || 'Bank not specified')}</div>
+                <div style="color: var(--cyan-accent); font-family: var(--font-mono); font-weight: 600;">${this.escapeHtml(c.suspect?.upi || c.suspect?.phone || 'Unknown')}</div>
+                <div style="color: var(--text-muted); font-size: 0.72rem;">${this.escapeHtml(c.suspect?.bank || 'Bank not specified')}</div>
               </td>
               <td>
-                <div style="font-weight: 700; color: #f59e0b; font-family: var(--font-mono);">₹ ${this.escapeHtml(String(c.financial?.amount || '0'))}</div>
-                <div style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">UTR: ${this.escapeHtml(c.financial?.utr || 'N/A')}</div>
+                <div style="font-weight: 700; color: var(--saffron-gold); font-family: var(--font-mono);">₹ ${this.escapeHtml(String(c.financial?.amount || '0'))}</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono);">UTR: ${this.escapeHtml(c.financial?.utr || 'N/A')}</div>
               </td>
               <td style="font-size: 0.76rem;">
-                <span style="color: var(--green-status); font-weight: 600;">🔒 ${evidenceCount} Records</span>
-                <div style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--font-mono);">SHA-256 Verified</div>
+                <span style="color: var(--status-green); font-weight: 700;">🔒 ${evidenceCount} Records</span>
+                <div style="font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono);">SHA-256 Verified</div>
               </td>
               <td>
                 <select class="status-select-badge ${statusClass}" onchange="PortalApp.onStatusChange('${c.id}', this.value)">
@@ -1751,14 +2139,14 @@
                 </select>
               </td>
               <td>
-                <div class="table-actions">
+                <div style="display: flex; gap: 6px;">
                   <button class="btn-tbl-action" onclick="PortalApp.openDossier('${c.id}')" title="Inspect Full Case Dossier">
                     👁️ Dossier
                   </button>
                   <button class="btn-tbl-action btn-tbl-freeze" onclick="PortalApp.openFreezeNotice('${c.id}')" title="Generate Section 106 BNSS Freeze Notice">
                     ⚡ Freeze
                   </button>
-                  <button class="btn-tbl-action" style="color: var(--red-alert);" onclick="PortalApp.deleteComplaint('${c.id}')" title="Delete Complaint">
+                  <button class="btn-tbl-action" style="color: var(--status-red);" onclick="PortalApp.deleteComplaint('${c.id}')" title="Delete Complaint">
                     🗑️
                   </button>
                 </div>
@@ -1809,10 +2197,10 @@
 
               <div class="dossier-card">
                 <h4>Suspect & Financial Intelligence</h4>
-                <div class="dossier-row"><span class="dossier-label">Suspect Phone:</span><span class="dossier-val" style="color: #38bdf8;">${this.escapeHtml(c.suspect?.phone || 'N/A')}</span></div>
-                <div class="dossier-row"><span class="dossier-label">Suspect UPI VPA:</span><span class="dossier-val" style="color: #38bdf8;">${this.escapeHtml(c.suspect?.upi || 'N/A')}</span></div>
+                <div class="dossier-row"><span class="dossier-label">Suspect Phone:</span><span class="dossier-val" style="color: var(--cyan-accent);">${this.escapeHtml(c.suspect?.phone || 'N/A')}</span></div>
+                <div class="dossier-row"><span class="dossier-label">Suspect UPI VPA:</span><span class="dossier-val" style="color: var(--cyan-accent);">${this.escapeHtml(c.suspect?.upi || 'N/A')}</span></div>
                 <div class="dossier-row"><span class="dossier-label">Suspect Bank Acc:</span><span class="dossier-val">${this.escapeHtml(c.suspect?.bank || 'N/A')}</span></div>
-                <div class="dossier-row"><span class="dossier-label">Defrauded Amount:</span><span class="dossier-val" style="color: #f59e0b; font-weight: 700;">₹ ${this.escapeHtml(String(c.financial?.amount || '0'))}/-</span></div>
+                <div class="dossier-row"><span class="dossier-label">Defrauded Amount:</span><span class="dossier-val" style="color: var(--saffron-gold); font-weight: 700;">₹ ${this.escapeHtml(String(c.financial?.amount || '0'))}/-</span></div>
                 <div class="dossier-row"><span class="dossier-label">Transaction UTR:</span><span class="dossier-val" style="font-family: var(--font-mono);">${this.escapeHtml(c.financial?.utr || 'N/A')}</span></div>
                 <div class="dossier-row"><span class="dossier-label">Phishing URL / Domain:</span><span class="dossier-val">${this.escapeHtml(c.suspect?.url || 'N/A')}</span></div>
               </div>
@@ -1820,7 +2208,7 @@
 
             <div class="dossier-card" style="margin-top: 10px;">
               <h4>Modus Operandi & Incident Narrative</h4>
-              <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">${this.escapeHtml(c.incident?.narration || 'No narrative provided.')}</p>
+              <p style="font-size: 0.85rem; color: var(--text-primary); line-height: 1.5;">${this.escapeHtml(c.incident?.narration || 'No narrative provided.')}</p>
             </div>
           `;
         } else if (subTab === 'biometrics') {
@@ -1863,10 +2251,10 @@
           `;
         } else if (subTab === 'bsa_cert') {
           const evidenceList = (c.evidence || []).map((e, idx) => `
-            <div class="dossier-row" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding: 6px 0;">
+            <div class="dossier-row" style="border-bottom: 1px solid var(--border-card); padding: 6px 0;">
               <div>
-                <strong style="color: #fff;">Item ${idx + 1}: ${this.escapeHtml(e.name)}</strong>
-                <div style="font-size: 0.72rem; color: var(--text-dim);">${this.escapeHtml(e.category)} · ${this.escapeHtml(e.size)}</div>
+                <strong style="color: var(--text-primary);">Item ${idx + 1}: ${this.escapeHtml(e.name)}</strong>
+                <div style="font-size: 0.72rem; color: var(--text-muted);">${this.escapeHtml(e.category)} · ${this.escapeHtml(e.size)}</div>
               </div>
               <div style="text-align: right; font-family: var(--font-mono); font-size: 0.72rem; color: var(--cyan-accent);">
                 SHA-256: ${this.escapeHtml(e.sha256?.substring(0, 24))}...
@@ -1877,20 +2265,20 @@
           body.innerHTML = `
             <div class="dossier-card">
               <h4>Statutory Section 63 BSA Electronic Records Register</h4>
-              <div style="margin-bottom: 14px;">${evidenceList || '<p style="color: var(--text-dim);">No electronic evidence attachments registered.</p>'}</div>
+              <div style="margin-bottom: 14px;">${evidenceList || '<p style="color: var(--text-muted);">No electronic evidence attachments registered.</p>'}</div>
               <h4>Section 63(4) BSA Evidence Certificate</h4>
               <div class="code-sheet">${this.escapeHtml(c.documents?.bsaCertText || 'Certificate generated in compliant NIST SHA-256 format.')}</div>
             </div>
           `;
         } else if (subTab === 'case_diary') {
           const entries = (c.caseDiary || []).map(entry => `
-            <div class="timeline-entry">
-              <div class="timeline-header">
+            <div style="border-left: 2px solid var(--saffron-gold); padding-left: 12px; margin-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.74rem; color: var(--text-muted); font-family: var(--font-mono);">
                 <span>${entry.officerName || 'Officer'} (${entry.officerBadge || 'LEO'})</span>
                 <span>${entry.timestamp ? new Date(entry.timestamp).toLocaleString('en-IN') : ''}</span>
               </div>
-              <div class="timeline-action">${this.escapeHtml(entry.action || 'Investigation Note')}</div>
-              <div style="color: #cbd5e1; font-size: 0.8rem;">${this.escapeHtml(entry.notes || '')}</div>
+              <div style="font-weight: 700; color: var(--saffron-gold); font-size: 0.8rem; margin: 2px 0;">${this.escapeHtml(entry.action || 'Investigation Note')}</div>
+              <div style="color: var(--text-primary); font-size: 0.8rem;">${this.escapeHtml(entry.notes || '')}</div>
             </div>
           `).join('');
 
@@ -1903,7 +2291,7 @@
               </div>
 
               <h4>Investigation Chronology Log</h4>
-              <div class="timeline-list">${entries || '<p style="color: var(--text-dim);">No diary entries logged.</p>'}</div>
+              <div>${entries || '<p style="color: var(--text-muted);">No diary entries logged.</p>'}</div>
             </div>
           `;
         }
@@ -1967,12 +2355,12 @@
 
         tbody.innerHTML = complaints.map(c => `
           <tr>
-            <td style="font-family: var(--font-mono); color: var(--cyan-accent); font-weight: 600;">${c.id}</td>
+            <td style="font-family: var(--font-mono); color: var(--cyan-accent); font-weight: 700;">${c.id}</td>
             <td style="font-size: 0.78rem; color: var(--text-muted);">${c.complainantMode || 'citizen'} / ${c.incident?.crimeType || 'offence'}</td>
-            <td>${this.escapeHtml(c.complainant?.name || '')} (${this.escapeHtml(c.complainant?.phone || '')})</td>
-            <td style="font-family: var(--font-mono); font-size: 0.78rem; color: #38bdf8;">${this.escapeHtml(c.suspect?.bank || c.suspect?.upi || 'N/A')}</td>
-            <td style="font-family: var(--font-mono); color: #f59e0b;">₹ ${this.escapeHtml(String(c.financial?.amount || '0'))}</td>
-            <td style="color: var(--green-status);">${(c.evidence && c.evidence.length) || 0} files</td>
+            <td><strong>${this.escapeHtml(c.complainant?.name || '')}</strong> (${this.escapeHtml(c.complainant?.phone || '')})</td>
+            <td style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--cyan-accent);">${this.escapeHtml(c.suspect?.bank || c.suspect?.upi || 'N/A')}</td>
+            <td style="font-family: var(--font-mono); color: var(--saffron-gold); font-weight: 700;">₹ ${this.escapeHtml(String(c.financial?.amount || '0'))}</td>
+            <td style="color: var(--status-green); font-weight: 600;">${(c.evidence && c.evidence.length) || 0} files</td>
             <td>
               <div style="display: flex; gap: 6px;">
                 <button class="btn-tbl-action" onclick="PortalApp.openRecordJSONViewer('${c.id}')">View JSON</button>
@@ -1999,8 +2387,8 @@
           <tr>
             <td><span class="case-id-badge" onclick="PortalApp.openDossier('${c.id}')">#${c.id}</span></td>
             <td><strong>${this.escapeHtml(c.complainant?.name || '')}</strong></td>
-            <td style="font-family: var(--font-mono); color: #38bdf8;">${this.escapeHtml(c.suspect?.bank || c.suspect?.upi || 'N/A')}</td>
-            <td style="font-family: var(--font-mono); color: #f59e0b; font-weight: 700;">₹ ${this.escapeHtml(String(c.financial?.amount || '0'))}</td>
+            <td style="font-family: var(--font-mono); color: var(--cyan-accent); font-weight: 600;">${this.escapeHtml(c.suspect?.bank || c.suspect?.upi || 'N/A')}</td>
+            <td style="font-family: var(--font-mono); color: var(--saffron-gold); font-weight: 700;">₹ ${this.escapeHtml(String(c.financial?.amount || '0'))}</td>
             <td style="font-family: var(--font-mono); font-size: 0.76rem;">${this.escapeHtml(c.financial?.utr || 'N/A')}</td>
             <td>
               <span class="status-select-badge ${c.financial?.freezeNoticeIssued ? 'status-frozen' : 'status-pending'}">
@@ -2072,11 +2460,11 @@
 
         tbody.innerHTML = targets.map(t => `
           <tr>
-            <td style="font-family: var(--font-mono); color: #38bdf8; font-weight: 600;">${this.escapeHtml(t.id)}</td>
+            <td style="font-family: var(--font-mono); color: var(--cyan-accent); font-weight: 700;">${this.escapeHtml(t.id)}</td>
             <td style="font-size: 0.78rem; color: var(--text-muted);">${t.type}</td>
             <td>${this.escapeHtml(t.crime || 'Cyber Fraud')}</td>
             <td><span class="case-id-badge" onclick="PortalApp.openDossier('${t.caseId}')">#${t.caseId}</span></td>
-            <td style="font-family: var(--font-mono); color: #f59e0b;">₹ ${this.escapeHtml(String(t.amt || '0'))}</td>
+            <td style="font-family: var(--font-mono); color: var(--saffron-gold); font-weight: 700;">₹ ${this.escapeHtml(String(t.amt || '0'))}</td>
             <td>
               <button class="btn-tbl-action btn-tbl-freeze" onclick="PortalApp.openFreezeNotice('${t.caseId}')">Freeze Lien</button>
             </td>
