@@ -44,10 +44,21 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "(?<prefix>.*officials.*|.*leo.*|.*police.*)"
+        }
+      ],
+      "destination": "/officials_portal.html"
+    },
     { "source": "/cockpit", "destination": "/index.html" },
     { "source": "/fir", "destination": "/index.html" },
     { "source": "/directory", "destination": "/index.html" },
     { "source": "/officials", "destination": "/officials_portal.html" },
-    { "source": "/leo", "destination": "/officials_portal.html" }
+    { "source": "/leo", "destination": "/officials_portal.html" },
+    { "source": "/officials_portal", "destination": "/officials_portal.html" }
   ]
 }
